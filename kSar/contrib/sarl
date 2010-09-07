@@ -1,0 +1,28 @@
+#!/bin/sh
+
+## sarl ( 
+# written by FBA/XCH
+
+
+PATH=/usr/lib64/sa:/usr/lib/sa:/bin:/usr/bin
+LANG=C
+TEMP=$1
+SEC=${TEMP:-60}
+
+DATE=`date +%d`
+for i in /var/adm/sa /var/log/sa ; do
+    if [ -d $i ] ; then DDIR=$i ; break ; fi
+done
+
+DFILE=$DDIR/sa$DATE
+cd $DDIR
+
+
+H=`date '+%H'`
+M=`date '+%M'`
+
+LEFT=`expr \( 3600 \* 24 - 1 - $H \* 3600 - $M \* 60 \) / $SEC`  
+LEFT=`expr \( 60 \* 24 - 1 - $H \* 60 - $M \) `
+
+
+( exec sadc $SEC $LEFT $DFILE </dev/null >/dev/null 2>&1 ) &

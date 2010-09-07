@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ConfiG SYSTEM "src/Config.dtd">
+<!--
+    Document   : Config.xml
+    Created on : 10 août 2010, 16:31
+    Author     : Max
+    Description:
+        Configure color of graphs
+
+-->
+
+<ConfiG>
+    <colors>
+        <itemcolor name="rawch/s">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="canch/s">
+            <color>0,255,255</color>
+        </itemcolor>
+        <itemcolor name="outch/s">
+            <color>255,255,0</color>
+        </itemcolor>
+        <itemcolor name="xmtin/s">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="proc/s">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="rcvin/s">
+            <color>0,0,255</color>
+        </itemcolor>
+        <itemcolor name="mdmin/s">
+            <color>255,0,255</color>
+        </itemcolor>
+        <itemcolor name="%usr">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="%sys">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name ="%system">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="%user">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="%idle">
+            <color>127,127,127</color>
+        </itemcolor>
+        <itemcolor name="%nice">
+            <color>255,255,0</color>
+        </itemcolor>
+        <itemcolor name="%steal">
+            <color>255,127,0</color>
+        </itemcolor>
+        <itemcolor name="%iowait">
+            <color>255,0,127</color>
+        </itemcolor>
+        <itemcolor name="%wio">
+            <color>255,0,127</color>
+        </itemcolor>
+        <itemcolor name="intr/s">
+            <color>255,127,127</color>
+        </itemcolor>
+        <itemcolor name="ldavg-1">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="ldavg-5">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="ldavg-15">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="plist-sz">
+            <color>0,255,255</color>
+        </itemcolor>
+        <itemcolor name="runq-sz">
+            <color>255,255,0</color>
+        </itemcolor>
+        <itemcolor name="coll/s">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="rxerr/s">
+            <color>255,255,0</color>
+        </itemcolor>
+        <itemcolor name="rxdrop/s">
+            <color>255,0,255</color>
+        </itemcolor>
+        <itemcolor name="rxfram/s">
+            <color>0,255,255</color>
+        </itemcolor>
+        <itemcolor name="rxfifo/s">
+            <color>255,255,255</color>
+        </itemcolor>
+        <itemcolor name="txerr/s">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="txdrop/s">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="txcarr/s">
+            <color>0,0,255</color>
+        </itemcolor>
+        <itemcolor name="txfifo/s">
+            <color>255,0,255</color>
+        </itemcolor>
+        <itemcolor name="cswch/s">
+            <color>255,0,255</color>
+        </itemcolor>
+        <itemcolor name="blks/s">
+            <color>255,0,255</color>
+            <type>counter</type>
+        </itemcolor>
+        <itemcolor name="tps">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="bread/s">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="bwrtn/s">
+            <color>255,255,0</color>
+        </itemcolor>
+        <itemcolor name="rtps">
+            <color>255,0,255</color>
+        </itemcolor>
+        <itemcolor name="wtps">
+            <color>0,0,255</color>
+        </itemcolor>
+        <itemcolor name="avwait">
+            <color>255,0,0</color>
+            <type>gauge</type>
+        </itemcolor>
+        <itemcolor name="avserv">
+            <color>0,255,0</color>
+            <type>gauge</type>
+        </itemcolor>
+        <itemcolor name="avque">
+            <color>255,0,255</color>
+            <type>gauge</type>
+        </itemcolor>
+        <itemcolor name="r+w/s">
+            <color>0,127,255</color>
+            <type>counter</type>
+        </itemcolor>
+        <itemcolor name="%busy">
+            <color>255,255,0</color>
+            <type>gauge</type>
+        </itemcolor>
+    </colors>
+    
+</ConfiG>
