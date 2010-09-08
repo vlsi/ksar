@@ -12,8 +12,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,6 +44,7 @@ public class GlobalOptions {
     }
 
     GlobalOptions() {
+        String [] OSParserNames = {"AIX", "HPUX",  "Linux", "SunOS"};
         String filename = null;
         InputStream is = null;
         XMLConfig tmp = null;
@@ -55,14 +58,14 @@ public class GlobalOptions {
         HistoryList = new HashMap<String, CnxHistory>();
         is = this.getClass().getResourceAsStream("/Config.xml");
         tmp = new XMLConfig(is);
-        try {
-            Class[] parserlist = getClasses("net.atomique.ksar.Parser");
-            for (int i = 0; i < parserlist.length; i++) {
-                String simplename = parserlist[i].getName().replaceFirst("net.atomique.ksar.Parser.", "").replaceAll("-", "");
-                ParserMap.put(simplename, parserlist[i]);
+        for ( String  OSName : OSParserNames ) {
+            try {
+                Class tmpclass = Class.forName("net.atomique.ksar.Parser."+OSName);
+                ParserMap.put(OSName, tmpclass);
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
             }
-        } catch (ClassNotFoundException ex) {
-            System.err.println("oups no parser in jar");
+            
         }
         for (String parsername : ParserMap.keySet()) {
             is = this.getClass().getResourceAsStream("/" + parsername + ".xml");
@@ -178,45 +181,7 @@ public class GlobalOptions {
         saveHistory();
     }
 
-    /*
-    http://forums.sun.com/thread.jspa?threadID=341935&tstart=0kage
-    @throws ClassNotFoundException if the Package is invalid
-     */
-    public static Class[] getClasses(String pckgname) throws ClassNotFoundException {
-        ArrayList<Class> classes = new ArrayList<Class>();
-        // Get a File object for the package
-        File directory = null;
-        try {
-            ClassLoader cld = Thread.currentThread().getContextClassLoader();
-            if (cld == null) {
-                throw new ClassNotFoundException("Can't get class loader.");
-            }
-            String path = pckgname.replace('.', '/');
-            URL resource = cld.getResource(path);
-            if (resource == null) {
-                throw new ClassNotFoundException("No resource for " + path);
-            }
-            directory = new File(resource.getFile());
-        } catch (NullPointerException x) {
-            throw new ClassNotFoundException(pckgname + " (" + directory + ") does not appear to be a valid package");
-        }
-        if (directory.exists()) {
-            // Get the list of the files contained in the package
-            String[] files = directory.list();
-            for (int i = 0; i < files.length; i++) {
-                // we are only interested in .class files
-                if (files[i].endsWith(".class")) {
-                    // removes the .class extension
-                    classes.add(Class.forName(pckgname + '.' + files[i].substring(0, files[i].length() - 6)));
-                }
-            }
-        } else {
-            throw new ClassNotFoundException(pckgname + " does not appear to be a valid package");
-        }
-        Class[] classesA = new Class[classes.size()];
-        classes.toArray(classesA);
-        return classesA;
-    }
+    
 
     public static void saveHistory() {
         File tmpfile = null;

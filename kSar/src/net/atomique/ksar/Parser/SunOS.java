@@ -123,8 +123,10 @@ public class SunOS extends OSParser {
 
 
         if (lastStat != null) {
-            if (!lastStat.equals(currentStat) && GlobalOptions.isDodebug()) {
+            if (!lastStat.equals(currentStat) ) {
+                if (  GlobalOptions.isDodebug())  {
                 System.out.println("Stat change from " + lastStat + " to " + currentStat);
+                }
                 lastStat = currentStat;
                 under_average = false;
             }

@@ -166,13 +166,16 @@ public class Linux extends OSParser {
 
 
         if (lastStat != null) {
-            if (!lastStat.equals(currentStat) && GlobalOptions.isDodebug()) {
+            if (!lastStat.equals(currentStat) ) {
+                if (  GlobalOptions.isDodebug())  {
                 System.out.println("Stat change from " + lastStat + " to " + currentStat);
+                }
                 lastStat = currentStat;
             }
         } else {
             lastStat = currentStat;
         }
+        
         if ("IGNORE".equals(currentStat)) {
             return 1;
         }

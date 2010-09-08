@@ -22,7 +22,10 @@ import net.atomique.ksar.XML.PlotConfig;
 import net.atomique.ksar.XML.StackConfig;
 import net.atomique.ksar.XML.StatConfig;
 import org.xml.sax.Attributes;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
@@ -33,25 +36,44 @@ public class XMLConfig extends DefaultHandler {
 
     public XMLConfig(String filename) {
         load_config(filename);
+        
     }
 
     public XMLConfig(InputStream is) {
         load_config(is);
     }
 
+    public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+
+            InputSource inputSource = null;
+            try {
+                String dtdFile = systemId.substring(systemId.lastIndexOf("/"));
+                InputStream inputStream = EntityResolver.class.getResourceAsStream(dtdFile);
+                inputSource = new InputSource(inputStream);
+            } catch (Exception e) {
+                // No action; just let the null InputSource pass through
+            }
+
+            // If nothing found, null is returned, for normal processing
+            return inputSource;
+        }
+    
     public void load_config(InputStream is) {
         SAXParserFactory fabric = null;
         SAXParser parser = null;
+        XMLReader reader = null;
         try {
             fabric = SAXParserFactory.newInstance();
             parser = fabric.newSAXParser();
             parser.parse(is, this);
+
         } catch (ParserConfigurationException ex) {
             ex.printStackTrace();
         } catch (SAXException ex) {
             ex.printStackTrace();
         } catch (IOException ioe) {
             ioe.printStackTrace();
+            System.exit(1);
         }
         //dump_XML();
         try {
@@ -68,6 +90,7 @@ public class XMLConfig extends DefaultHandler {
             fabric = SAXParserFactory.newInstance();
             parser = fabric.newSAXParser();
             parser.parse(xmlfile, this);
+
         } catch (ParserConfigurationException ex) {
             ex.printStackTrace();
         } catch (SAXException ex) {
@@ -119,7 +142,7 @@ public class XMLConfig extends DefaultHandler {
     }
 
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        
+
         if ("ConfiG".equals(qName)) {
             // config found
         }
@@ -184,20 +207,20 @@ public class XMLConfig extends DefaultHandler {
                         currentGraph.addStack(currentStack);
                     }
 
-                    if( currentPlot != null) {
+                    if (currentPlot != null) {
                         if ("format".equals(qName)) {
                             currentPlot.setBase(attributes.getValue("base"));
                             currentPlot.setFactor(attributes.getValue("factor"));
                         }
                     }
-                    if( currentStack != null) {
+                    if (currentStack != null) {
                         if ("format".equals(qName)) {
                             currentStack.setBase(attributes.getValue("base"));
                             currentStack.setFactor(attributes.getValue("factor"));
                         }
                     }
                 }
-                
+
             }
         }
     }
@@ -205,7 +228,7 @@ public class XMLConfig extends DefaultHandler {
     public void endElement(String uri, String localName, String qName) throws SAXException {
 
         // clean up tempval;
-        tempval=tempval.trim();
+        tempval = tempval.trim();
         if ("ConfiG".equals(qName)) {
             beenparse = true;
         }
@@ -224,11 +247,11 @@ public class XMLConfig extends DefaultHandler {
         if ("Cnx".equals(qName)) {
             currentCnx = null;
         }
-        if ( "Plot".equals(qName) ) {
+        if ("Plot".equals(qName)) {
             currentPlot = null;
         }
-        if ( "Stack".equals(qName)) {
-            currentStack=null;
+        if ("Stack".equals(qName)) {
+            currentStack = null;
         }
 
         if (currentStat != null) {
@@ -242,12 +265,12 @@ public class XMLConfig extends DefaultHandler {
                 currentStat.setDuplicateTime(tempval);
             }
         }
-        if ( "cols".equals(qName)) {
+        if ("cols".equals(qName)) {
             if (currentPlot != null) {
                 currentPlot.setHeaderStr(tempval);
 
             }
-            if ( currentStack != null) {
+            if (currentStack != null) {
                 currentStack.setHeaderStr(tempval);
             }
         }
@@ -256,11 +279,11 @@ public class XMLConfig extends DefaultHandler {
                 currentPlot.setRange(tempval);
 
             }
-            if ( currentStack != null) {
+            if (currentStack != null) {
                 currentStack.setRange(tempval);
             }
         }
-        
+
 
         if ("itemcolor".equals(qName)) {
             if (currentColor.is_valid()) {
@@ -306,4 +329,7 @@ public class XMLConfig extends DefaultHandler {
     private PlotConfig currentPlot = null;
     private StackConfig currentStack = null;
     private CnxHistory currentCnx = null;
+
+    
 }
+
