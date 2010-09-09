@@ -215,7 +215,7 @@ public class Graph {
         tmp.append("Date;");
         tmp.append(getCsvHeader());
         tmp.append("\n");
-        TimeSeries datelist = (TimeSeries) Stats.get((1 + skipColumn));
+        TimeSeries datelist = (TimeSeries) Stats.get(0);
         Iterator ite = datelist.getTimePeriods().iterator();
         while (ite.hasNext()) {
             TimePeriod item = (TimePeriod) ite.next();

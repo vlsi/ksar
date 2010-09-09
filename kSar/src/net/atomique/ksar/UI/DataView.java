@@ -212,7 +212,6 @@ public class DataView extends javax.swing.JInternalFrame {
 
             SortedTreeNode treenode = (SortedTreeNode) obj;
             if ( treenode.getRoot() == treenode) {
-                System.out.println("in root");
                 if (current_panel != null) {
                     displayPanel.removeAll();
                     current_panel=null;
