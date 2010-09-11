@@ -48,6 +48,7 @@ public class Linux extends OSParser {
         } else if ("MM/DD/YYYY 12:59:59 AM|PM".equals(LinuxDateFormat)) {
             dateFormat = "MM/dd/yy";
             timeFormat = "hh:mm:ss a";
+            timeColumn=2;
         } else if ("DD/MM/YYYY 23:59:59".equals(LinuxDateFormat)) {
             dateFormat = "dd/MM/yy";
         } else if ("YYYY-MM-DD 23:59:59".equals(LinuxDateFormat)) {
@@ -95,7 +96,7 @@ public class Linux extends OSParser {
         }
 
         try {
-            if ( timeColumn ==2) {
+            if ( timeColumn == 2 ) {
                 parsedate = new SimpleDateFormat(timeFormat).parse(columns[0]+" "+columns[1]);
             } else {
                 parsedate = new SimpleDateFormat(timeFormat).parse(columns[0]);

@@ -18,7 +18,6 @@ import net.atomique.ksar.UI.SortedTreeNode;
 import net.atomique.ksar.UI.TreeNodeInfo;
 import net.atomique.ksar.XML.GraphConfig;
 import net.atomique.ksar.kSar;
-import org.jfree.chart.ChartPanel;
 import org.jfree.data.time.Second;
 
 /**
@@ -41,14 +40,14 @@ public class List {
     public int parse_line(Second now,String s) {
         String cols[] = s.split("\\s+");
         Graph tmp = null;
-        if ( ! nodeHashList.containsKey(cols[1])) {
-            tmp= new Graph(mysar, graphconfig,Title + " " + cols[1], HeaderStr, skipColumn+1, null);
-            nodeHashList.put(cols[1], tmp);
-            TreeNodeInfo infotmp= new TreeNodeInfo( cols[1], tmp);
+        if ( ! nodeHashList.containsKey(cols[skipColumn])) {
+            tmp= new Graph(mysar, graphconfig,Title + " " + cols[skipColumn], HeaderStr, skipColumn+1, null);
+            nodeHashList.put(cols[skipColumn], tmp);
+            TreeNodeInfo infotmp= new TreeNodeInfo( cols[skipColumn], tmp);
             SortedTreeNode nodetmp = new SortedTreeNode(infotmp);
             mysar.add2tree(parentTreeNode, nodetmp);
         } else {
-            tmp = (Graph)nodeHashList.get(cols[1]);
+            tmp = (Graph)nodeHashList.get(cols[skipColumn]);
         }
 
         return tmp.parse_line(now,s);
