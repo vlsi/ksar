@@ -101,10 +101,12 @@ public class Graph {
             try {
                 colvalue = new Double(cols[i]);
             } catch (NumberFormatException ne) {
-                System.out.println(graphtitle + " " + cols[i] + "is NaN");
+                System.out.println(graphtitle + " " + cols[i] + " is NaN");
                 return 0;
             } catch (Exception ae) {
-                System.out.println(graphtitle + " " + cols[i] + "is undef " + s);
+                System.out.println(graphtitle + " " + cols[i] + "  is undef " + s);
+                ae.printStackTrace();
+                return 0;
             }
 
             add_datapoint_plot(now, i - skipColumn, HeaderStr[i], colvalue);
