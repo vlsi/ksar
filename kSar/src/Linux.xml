@@ -393,6 +393,11 @@
                 <Stack Title="Used" size="3">
                     <cols>%usr %user %nice %sys %iowait %steal %irq %soft %guest</cols>
                 </Stack>
+                <!--
+                <Plot Title="other" size="3">
+                    <cols>%usr %user %nice %sys %iowait %steal %irq %soft %guest</cols>
+                </Plot>
+                -->
                 <Plot Title="Idle" size="1">
                     <cols>%idle</cols>
                 </Plot>

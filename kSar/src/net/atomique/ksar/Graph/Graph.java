@@ -109,12 +109,12 @@ public class Graph {
                 return 0;
             }
 
-            add_datapoint_plot(now, i - skipColumn, HeaderStr[i], colvalue);
+            add_datapoint_plot(now, i-skipColumn , HeaderStr[i-skipColumn], colvalue);
 
 
             TimeTableXYDataset tmp = StackListbyCol.get(HeaderStr[i]);
             if (tmp != null) {
-                add_datapoint_stack(tmp, now, i - skipColumn, HeaderStr[i], colvalue);
+                add_datapoint_stack(tmp, now, i - skipColumn, HeaderStr[i-skipColumn], colvalue);
             }
         }
 
@@ -123,7 +123,8 @@ public class Graph {
 
     private boolean add_datapoint_stack(TimeTableXYDataset dataset, Second now, int col, String colheader, Double value) {
         try {
-            dataset.add(now, col, colheader);
+            dataset.add(now, value, colheader);
+
             return true;
         } catch (SeriesException se) {
             /*
