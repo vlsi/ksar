@@ -82,34 +82,13 @@ public class HPUX extends OSParser {
             }
             firstdatacolumn = 1;
         } catch (ParseException ex) {
-            if (! "DEVICE".equals(currentStat)) {
+            if ( ! "DEVICE".equals(currentStat) && ! "CPU".equals(currentStat)) {
                 System.out.println("unable to parse time " + columns[0]);
                 return -1;
             }
             firstdatacolumn = 0;
         }
 
-        /*
-        String[] sarTime = columns[0].split(":");
-        if (sarTime.length != 3) {
-        if (!"DEVICE".equals(currentStat)) {
-        return -1;
-        }
-        firstdatacolumn = 0;
-        } else {
-        heure = Integer.parseInt(sarTime[0]);
-        minute = Integer.parseInt(sarTime[1]);
-        seconde = Integer.parseInt(sarTime[2]);
-        now = new Second(seconde, minute, heure, day, month, year);
-        if (startofstat == null) {
-        startofstat = now;
-        }
-        if (now.compareTo(endofstat) > 0) {
-        endofstat = now;
-        }
-        firstdatacolumn = 1;
-        }
-         */
 
         /** XML COLUMN PARSER **/
         String checkStat = myosconfig.getStat(columns, firstdatacolumn);

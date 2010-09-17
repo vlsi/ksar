@@ -54,9 +54,14 @@
                 <headerstr>msg/s sema/s</headerstr>
                 <graphname>MSGS</graphname>
             </Stat>
-            <Graph name="CPU" Title="CPU" type="unique">
+            <Stat name="cpu2">
+                <headerstr>cpu %usr %sys %wio %idle</headerstr>
+                <graphname>CPU</graphname>
+            </Stat>
+            <Graph name="CPU" Title="CPU" type="multiple">
                 <Stack Title="Used" size="3">
                     <cols>%usr %sys %wio</cols>
+                    <range>0,100</range>
                 </Stack>
                 <Plot Title="Idle">
                     <cols>%idle</cols>
