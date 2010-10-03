@@ -17,6 +17,7 @@ import javax.xml.parsers.SAXParserFactory;
 import net.atomique.ksar.XML.CnxHistory;
 import net.atomique.ksar.XML.ColumnConfig;
 import net.atomique.ksar.XML.GraphConfig;
+import net.atomique.ksar.XML.HostInfo;
 import net.atomique.ksar.XML.OSConfig;
 import net.atomique.ksar.XML.PlotConfig;
 import net.atomique.ksar.XML.StackConfig;
@@ -156,6 +157,11 @@ public class XMLConfig extends DefaultHandler {
         if ("History".equals(qName)) {
             in_history = true;
         }
+
+        if ( "HostInfo".equals(qName)) {
+            in_hostinfo=true;
+        }
+        
         // COLORS
         if (in_colors) {
             if ("itemcolor".equals(qName)) {
@@ -171,6 +177,14 @@ public class XMLConfig extends DefaultHandler {
                 in_cnx = true;
             }
         }
+        // hostinfo
+        if (in_hostinfo) {
+            if ("host".equals(qName)) {
+                currentHost = new HostInfo(attributes.getValue("name"));
+                in_host=true;
+            }
+        }
+
         // OS
         if (in_OS) {
             if ("OSType".equals(qName)) {
@@ -253,6 +267,13 @@ public class XMLConfig extends DefaultHandler {
         if ("Stack".equals(qName)) {
             currentStack = null;
         }
+        if ("HostInfo".equals(qName)) {
+            in_hostinfo = false;
+        }
+        if ("host".equals(qName)) {
+            currentHost = null;
+        }
+
 
         if (currentStat != null) {
             if ("headerstr".equals(qName)) {
@@ -265,6 +286,7 @@ public class XMLConfig extends DefaultHandler {
                 currentStat.setDuplicateTime(tempval);
             }
         }
+        
         if ("cols".equals(qName)) {
             if (currentPlot != null) {
                 currentPlot.setHeaderStr(tempval);
@@ -314,7 +336,12 @@ public class XMLConfig extends DefaultHandler {
                 currentCnx = null;
             }
         }
+        if ( in_hostinfo ) {
+            
+        }
     }
+
+    
     public boolean beenparse = false;
     private String tempval;
     private boolean in_color = false;
@@ -322,6 +349,8 @@ public class XMLConfig extends DefaultHandler {
     private boolean in_OS = false;
     private boolean in_history = false;
     private boolean in_cnx = false;
+    private boolean in_hostinfo = false;
+    private boolean in_host = false;
     private ColumnConfig currentColor = null;
     private OSConfig currentOS = null;
     private StatConfig currentStat = null;
@@ -329,6 +358,7 @@ public class XMLConfig extends DefaultHandler {
     private PlotConfig currentPlot = null;
     private StackConfig currentStack = null;
     private CnxHistory currentCnx = null;
+    private HostInfo currentHost = null;
 
     
 }

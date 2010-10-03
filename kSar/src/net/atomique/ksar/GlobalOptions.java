@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import net.atomique.ksar.UI.Desktop;
 import net.atomique.ksar.XML.CnxHistory;
 import net.atomique.ksar.XML.ColumnConfig;
+import net.atomique.ksar.XML.HostInfo;
 import net.atomique.ksar.XML.OSConfig;
 
 /**
@@ -56,6 +57,7 @@ public class GlobalOptions {
         OSlist = new HashMap<String, OSConfig>();
         ParserMap = new HashMap<String, Class>();
         HistoryList = new HashMap<String, CnxHistory>();
+        HostInfoList = new HashMap<String, HostInfo>();
         is = this.getClass().getResourceAsStream("/Config.xml");
         tmp = new XMLConfig(is);
         for ( String  OSName : OSParserNames ) {
@@ -225,6 +227,7 @@ public class GlobalOptions {
     private static HashMap<String, ColumnConfig> columnlist;
     private static HashMap<String, OSConfig> OSlist;
     private static HashMap<String, CnxHistory> HistoryList;
+    private static HashMap<String, HostInfo> HostInfoList;
     private static boolean dodebug = false;
     private static String CLfilename = null;
     private static HashMap<String, Class> ParserMap;

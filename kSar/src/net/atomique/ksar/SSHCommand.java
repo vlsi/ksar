@@ -61,7 +61,9 @@ public class SSHCommand extends Thread {
             userhostModel.addElement(tmp.getLink());
         }
         initComponents(dialog);
-        HostComboBox.setSelectedIndex(0);
+        if ( HostComboBox.getItemCount() > 0) {
+            HostComboBox.setSelectedIndex(0);
+        }
         dialog.setLocationRelativeTo(GlobalOptions.getUI());
         dialog.setVisible(true);
     }

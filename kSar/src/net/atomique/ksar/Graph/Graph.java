@@ -124,7 +124,6 @@ public class Graph {
 
     private boolean add_datapoint_stack(TimeTableXYDataset dataset, Second now, int col, String colheader, Double value) {
         try {
-            System.out.println(now + " add " + colheader + " value" + value);
             dataset.add(now, value, colheader);
 
             return true;
@@ -194,6 +193,9 @@ public class Graph {
                         return false;
                     }
                     ColumnConfig colconfig = GlobalOptions.getColumnConfig(colheader);
+                    if ( colconfig == null ) {
+                        return false;
+                    }
                     if (colconfig.getType() == 1) {
                         tempval = new Double((oldval.doubleValue() + value) / 2);
                     } else if (colconfig.getType() == 2) {
