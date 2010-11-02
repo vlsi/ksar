@@ -96,7 +96,11 @@ public class LocalCommand extends Thread {
     }
 
     public String get_action() {
+        if ( command != null ) {
         return "cmd://" + command;
+        } else {
+            return null;
+        }
     }
     private kSar mysar = null;
     private InputStream in = null;

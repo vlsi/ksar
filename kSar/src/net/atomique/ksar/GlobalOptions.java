@@ -159,6 +159,22 @@ public class GlobalOptions {
         return ParserMap.get(tmp);
     }
 
+    public static HashMap<String, HostInfo> getHostInfoList() {
+        return HostInfoList;
+    }
+
+    public static HostInfo getHostInfo(String s) {
+        if (HostInfoList.isEmpty()) {
+            return null;
+        }
+        return HostInfoList.get(s);
+    }
+
+    public static void addHostInfo(HostInfo s) {
+        HostInfoList.put(s.getHostname(), s);
+        saveHistory();
+    }
+
     public static HashMap<String, CnxHistory> getHistoryList() {
         return HistoryList;
     }
@@ -189,7 +205,8 @@ public class GlobalOptions {
         File tmpfile = null;
         BufferedWriter tmpfile_out = null;
 
-        if (HistoryList.isEmpty()) {
+        if (HistoryList.isEmpty() && HostInfoList.isEmpty()) {
+            System.out.println("list is null");
             return;
         }
 
@@ -203,17 +220,30 @@ public class GlobalOptions {
                 tmpfile_out = new BufferedWriter(new FileWriter(tmpfile));
             }
             //xml header
-            tmpfile_out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<ConfiG>\n\t<History>\n");
+            tmpfile_out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<ConfiG>\n");
+            tmpfile_out.write("\t<History>\n");
             Iterator<String> ite = HistoryList.keySet().iterator();
             while (ite.hasNext()) {
                 CnxHistory tmp = HistoryList.get(ite.next());
                 tmpfile_out.write(tmp.save());
             }
             //xml footer
-            tmpfile_out.write("\t</History>\n</ConfiG>\n");
+            tmpfile_out.write("\t</History>\n");
+            tmpfile_out.write("\t<HostInfo>\n");
+            Iterator<String> ite2 = HostInfoList.keySet().iterator();
+            while (ite2.hasNext()) {
+                HostInfo tmp = HostInfoList.get(ite2.next());
+                tmpfile_out.write(tmp.save());
+            }
+            //xml footer
+            tmpfile_out.write("\t</HostInfo>\n");
+            tmpfile_out.write("</ConfiG>\n");
             tmpfile_out.flush();
             tmpfile_out.close();
-            tmpfile.renameTo(new File(userhome + ".ksarcfg" + fileseparator + "History.xml"));
+            File oldfile = new File(userhome + ".ksarcfg" + fileseparator + "History.xml");
+            oldfile.delete();
+            tmpfile.renameTo(oldfile);
+
         } catch (IOException ex) {
             Logger.getLogger(GlobalOptions.class.getName()).log(Level.SEVERE, null, ex);
         }

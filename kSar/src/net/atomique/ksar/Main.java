@@ -21,9 +21,10 @@ public class Main {
 
     static Config config = null;
     static GlobalOptions globaloptions = null;
-    static ResourceBundle resource = ResourceBundle.getBundle("net/atomique/ksar/Language/Message");;
-    
-    
+    static ResourceBundle resource = ResourceBundle.getBundle("net/atomique/ksar/Language/Message");
+
+    ;
+
     public static void usage() {
         show_version();
     }
@@ -49,7 +50,7 @@ public class Main {
             }
         }
     }
-    
+
     public static void make_ui() {
         SplashScreen mysplash = new SplashScreen(null, 3000);
         while (mysplash.isVisible()) {
@@ -59,31 +60,37 @@ public class Main {
                 ie.printStackTrace();
             }
         }
-        
-        
+
+
         set_lookandfeel();
-        GlobalOptions.setUI(new Desktop());
-        SwingUtilities.updateComponentTreeUI(GlobalOptions.getUI());
-        GlobalOptions.getUI().add_window();
-        GlobalOptions.getUI().maxall();
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
+            public void run() {
+                GlobalOptions.setUI(new Desktop());
+                SwingUtilities.updateComponentTreeUI(GlobalOptions.getUI());
+                GlobalOptions.getUI().add_window();
+                GlobalOptions.getUI().maxall();
+            }
+        });
+
     }
-    
+
     public static void main(String[] args) {
         int i = 0;
         String arg;
         /// load default
         String mrjVersion = System.getProperty("mrj.version");
-        if  (mrjVersion != null) {
+        if (mrjVersion != null) {
             System.setProperty("com.apple.mrj.application.growbox.intrudes", "false");
             System.setProperty("com.apple.mrj.application.apple.menu.about.name", "kSar");
             System.setProperty("apple.laf.useScreenMenuBar", "true");
         }
-         
+
         config = Config.getInstance();
         globaloptions = GlobalOptions.getInstance();
 
-        
-        
+
+
         if (args.length > 0) {
             while (i < args.length && args[i].startsWith("-")) {
                 arg = args[i++];
@@ -95,7 +102,7 @@ public class Main {
                     usage();
                     continue;
                 }
-                if ( "-test".equals(arg)) {
+                if ("-test".equals(arg)) {
                     GlobalOptions.setDodebug(true);
                     continue;
                 }
@@ -111,13 +118,15 @@ public class Main {
         }
 
         make_ui();
+
+
+
         System.out.println("exit");
     }
 
     public static void exit_error(final String message) {
         System.err.println(message);
         System.exit(1);
+
     }
-
-
 }

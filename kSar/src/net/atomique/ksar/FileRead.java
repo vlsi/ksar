@@ -42,7 +42,11 @@ public class FileRead extends Thread {
     }
 
     public String get_action() {
-        return "file://" + sarfilename;
+        if ( sarfilename != null ) {
+            return "file://" + sarfilename;
+        } else {
+            return null;
+        }
     }
 
     private void close() {

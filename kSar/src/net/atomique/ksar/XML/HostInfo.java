@@ -23,6 +23,13 @@ public class HostInfo {
         this.MemBlockSize = MemBlockSize;
     }
 
+    public void setMemBlockSize(String MemBlockSizestr) {
+        try {
+        this.MemBlockSize = Integer.parseInt(MemBlockSizestr);
+        }  catch ( NumberFormatException nfe) {            
+        }
+    }
+    
     public String getAlias() {
         return aka_hostname;
     }
@@ -49,11 +56,11 @@ public class HostInfo {
 
     public String save() {
         StringBuilder tmp = new StringBuilder();
-        tmp.append("\t\t<host=\"" + sar_hostname + "\">\n");
-        tmp.append("\t\t\t<alias>" + aka_hostname + "</alias>");
-        tmp.append("\t\t\t<description>" + description + "</description>");
-        tmp.append("\t\t\t<memblocksize>" + MemBlockSize + "</memblocksize>");
-        tmp.append("\t\t</cnx>\n");
+        tmp.append("\t\t<host name=\"" + sar_hostname + "\">\n");
+        tmp.append("\t\t\t<alias>" + aka_hostname + "</alias>\n");
+        tmp.append("\t\t\t<description>" + description + "</description>\n");
+        tmp.append("\t\t\t<memblocksize>" + MemBlockSize + "</memblocksize>\n");
+        tmp.append("\t\t</host>\n");
         return tmp.toString();
     }
 

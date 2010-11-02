@@ -50,7 +50,11 @@ public class SSHCommand extends Thread {
     }
 
     public String get_action() {
+        if ( command != null ) {
         return "ssh://" + command;
+        } else {
+            return null;
+        }
     }
 
     private void showDialog() {
@@ -224,6 +228,7 @@ public class SSHCommand extends Thread {
         } catch (JSchException ex) {
             if (GlobalOptions.hasUI()) {
                 JOptionPane.showMessageDialog(GlobalOptions.getUI(), "Unable to connect", "SSH error", JOptionPane.ERROR_MESSAGE);
+                mysar.cleared();
             } else {
                 System.err.println("Err: unable to connect");
             }
@@ -234,6 +239,7 @@ public class SSHCommand extends Thread {
         } catch (JSchException ex) {
             if (GlobalOptions.hasUI()) {
                 JOptionPane.showMessageDialog(GlobalOptions.getUI(), "Unable to open Channel", "SSH error", JOptionPane.ERROR_MESSAGE);
+                 mysar.cleared();
             } else {
                 System.err.println("Err: unable to open Channel");
             }
@@ -250,6 +256,7 @@ public class SSHCommand extends Thread {
         } catch (IOException ex) {
             if (GlobalOptions.hasUI()) {
                 JOptionPane.showMessageDialog(GlobalOptions.getUI(), "Unable to open pipe", "SSH error", JOptionPane.ERROR_MESSAGE);
+                 mysar.cleared();
             } else {
                 System.err.println("Err: unable to open pipe");
             }
@@ -260,6 +267,7 @@ public class SSHCommand extends Thread {
         } catch (JSchException ex) {
             if (GlobalOptions.hasUI()) {
                 JOptionPane.showMessageDialog(GlobalOptions.getUI(), "Unable to connect Channel", "SSH error", JOptionPane.ERROR_MESSAGE);
+                 mysar.cleared();
             } else {
                 System.err.println("Err: unable to connect Channel");
             }
@@ -270,12 +278,14 @@ public class SSHCommand extends Thread {
             if (channel.getExitStatus() != 0) {
                 if (GlobalOptions.hasUI()) {
                     JOptionPane.showMessageDialog(GlobalOptions.getUI(), "There was a problem while retrieving stat", "SSH error", JOptionPane.ERROR_MESSAGE);
+                     mysar.cleared();
                 } else {
                     System.err.println("Err: Problem during ssh connection");
                 }
                 return;
             }
         }
+        command = tmp.getUsername() + "@" + tmp.getHostname() + "=" + commandComboBox.getSelectedItem();
         GlobalOptions.addHistory(tmp);
         return;
 

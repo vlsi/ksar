@@ -270,9 +270,7 @@ public class XMLConfig extends DefaultHandler {
         if ("HostInfo".equals(qName)) {
             in_hostinfo = false;
         }
-        if ("host".equals(qName)) {
-            currentHost = null;
-        }
+        
 
 
         if (currentStat != null) {
@@ -337,7 +335,19 @@ public class XMLConfig extends DefaultHandler {
             }
         }
         if ( in_hostinfo ) {
-            
+            if ( "alias".equals(qName)) {
+                currentHost.setAlias(tempval);
+            }
+            if ( "description".equals(qName)) {
+                currentHost.setDescription(tempval);
+            }
+            if ( "memblocksize".equals(qName)) {
+                currentHost.setMemBlockSize(tempval);
+            }
+        }
+        if ( "host".equals(qName)) {
+            GlobalOptions.getHostInfoList().put(currentHost.getHostname(), currentHost);
+            currentHost=null;
         }
     }
 

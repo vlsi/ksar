@@ -97,7 +97,7 @@ public class Graph {
     public int parse_line(Second now, String s) {
         String[] cols = s.split("\\s+");
         Double colvalue = null;
-        System.out.println("graph parsing:" + s);
+        //System.out.println("graph parsing:" + s);
         for (int i = skipColumn; i < HeaderStr.length; i++) {
             try {
                 colvalue = new Double(cols[i]);
@@ -115,7 +115,7 @@ public class Graph {
 
             TimeTableXYDataset tmp = StackListbyCol.get(HeaderStr[i]);
             if (tmp != null) {
-                add_datapoint_stack(tmp, now, i - skipColumn, HeaderStr[i], colvalue);
+                add_datapoint_stack(tmp, now, i , HeaderStr[i], colvalue);
             }
         }
 

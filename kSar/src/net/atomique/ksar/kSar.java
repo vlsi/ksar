@@ -68,25 +68,28 @@ public class kSar {
     public void do_sshread(String cmd) {
         if (cmd == null) {
             launched_action = new SSHCommand(this);
-        //mysar.reload_command=t.get_command();
+            //mysar.reload_command=t.get_command();
         } else {
             launched_action = new SSHCommand(this, cmd);
         }
-        
+
         reload_action = ((SSHCommand) launched_action).get_action();
         do_action();
     }
 
     private void do_action() {
+        if (reload_action == null ) {
+            System.out.println("action is null");
+            return;
+        }
         if (launched_action != null) {
-            if ( dataview != null) {
+            if (dataview != null) {
                 dataview.notifyrun(true);
             }
             launched_action.start();
-            
         }
     }
-    
+
     public int parse(BufferedReader br) {
         String current_line = null;
         long parsing_start = 0L;
@@ -98,14 +101,8 @@ public class kSar {
 
         try {
             while ((current_line = br.readLine()) != null && !action_interrupted) {
-                Parsing=true;
-                /*
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(kSar.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                */
+                Parsing = true;
+
                 lines_parsed++;
                 if (current_line.length() == 0) {
                     continue;
@@ -116,16 +113,17 @@ public class kSar {
                     continue;
                 }
 
-                String ParserType= columns[0];
+                String ParserType = columns[0];
                 try {
                     Class classtmp = GlobalOptions.getParser(ParserType);
                     if (classtmp != null) {
-                        if ( myparser == null) {
-                            myparser =  (AllParser)classtmp.newInstance();
-                            myparser.init(this,current_line);
+                        if (myparser == null) {
+                            myparser = (AllParser) classtmp.newInstance();
+                            myparser.init(this, current_line);
+
                             continue;
                         } else {
-                            if ( myparser.getParserName().equals(columns[0]) ) {
+                            if (myparser.getParserName().equals(columns[0])) {
                                 myparser.parse_header(current_line);
                                 continue;
                             }
@@ -137,76 +135,10 @@ public class kSar {
                     Logger.getLogger(kSar.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                /*
-                // SCO_SV sco 3.2v5.0.7 i80386    09/24/2009
-                if ("SCO_SV".equals(columns[0]) && columns.length == 5) {
-                    if (myOS == null) {
-                        myOS = new OSInfo("SCO", "automatically", current_line, this, null);
-                    }
-                    myOS.setHostname(columns[1]);
-                    myOS.setOSversion(columns[2]);
-                    myOS.setKernel(columns[3]);
-                    myOS.setCpuType(columns[4]);
-                    myOS.setDate(columns[4]);
-                    String[] dateSplit = myOS.getDate().split("/");
-                    if (dateSplit.length == 3) {
-                        day = Integer.parseInt(dateSplit[1]);
-                        month = Integer.parseInt(dateSplit[0]);
-                        year = Integer.parseInt(dateSplit[2]);
-                        if (year < 100) { // solaris 8 show date on two digit
-                            year += 2000;
-                        }
-                    }
-                    continue;
-                }
-                //
-                //
-                if ("Darwin".equals(columns[0])) {
-                    if (myOS == null) {
-                        myOS = new OSInfo("Mac", "automatically", current_line, this, null);
-                    }
-                    myOS.setHostname(columns[1]);
-                    myOS.setOSversion(columns[2]);
-                    myOS.setCpuType(columns[3]);
-                    myOS.setDate(columns[4]);
-                    String[] dateSplit = myOS.getDate().split("/");
-                    if (dateSplit.length == 3) {
-                        day = Integer.parseInt(dateSplit[1]);
-                        month = Integer.parseInt(dateSplit[0]);
-                        year = Integer.parseInt(dateSplit[2]);
-                        if (year < 100) { // solaris 8 show date on two digit
-                            year += 2000;
-                        }
-                    }
-                    continue;
-                }
-                // Esar SunOS host 5.9 Generic_118558-28 sun4u    09/01/2006
-                if ("Esar".equals(columns[0])) {
-                    if (myOS == null) {
-                        myOS = new OSInfo("Esar SunOS", "automatically", current_line, this, null);
-                    }
-                    // skip sunos
 
-                    myOS.setHostname(columns[2]);
-                    myOS.setOSversion(columns[3]);
-                    myOS.setKernel(columns[4]);
-                    myOS.setCpuType(columns[5]);
-                    myOS.setDate(columns[6]);
-                    String[] dateSplit = myOS.getDate().split("/");
-                    if (dateSplit.length == 3) {
-                        day = Integer.parseInt(dateSplit[1]);
-                        month = Integer.parseInt(dateSplit[0]);
-                        year = Integer.parseInt(dateSplit[2]);
-                        if (year < 100) { // solaris 8 show date on two digit
-                            year += 2000;
-                        }
-                    }
-                    continue;
-                }
-                */
                 if (myparser == null) {
                     System.out.println("unknown parser");
-                    Parsing=false;
+                    Parsing = false;
                     return -1;
                 }
 
@@ -222,7 +154,7 @@ public class kSar {
             }
         } catch (IOException ex) {
             Logger.getLogger(kSar.class.getName()).log(Level.SEVERE, null, ex);
-            Parsing=false;
+            Parsing = false;
         }
 
         if (dataview != null) {
@@ -230,16 +162,27 @@ public class kSar {
             dataview.notifyrun(false);
             dataview.setHasData(true);
         }
-        
+
         parsing_end = System.currentTimeMillis();
         if (GlobalOptions.isDodebug()) {
             System.out.println("time to parse: " + (parsing_end - parsing_start) + "ms ");
-            if( myparser != null) {
-                System.out.println("number of datesamples: " +  myparser.DateSamples.size() );
+            if (myparser != null) {
+                System.out.println("number of datesamples: " + myparser.DateSamples.size());
             }
         }
-        Parsing=false;
+        Parsing = false;
         return -1;
+    }
+
+    public void cleared() {
+        aborted();
+    }
+
+    public void aborted() {
+        if (dataview != null) {
+            System.out.println("reset menu");
+            dataview.notifyrun(false);
+        }
     }
 
     public boolean isAction_interrupted() {
@@ -247,24 +190,23 @@ public class kSar {
     }
 
     public void interrupt_parsing() {
-        if ( isParsing()) {
-            action_interrupted=true;
+        if (isParsing()) {
+            action_interrupted = true;
         }
     }
-    
+
     public void add2tree(SortedTreeNode parent, SortedTreeNode newNode) {
         if (dataview != null) {
             dataview.add2tree(parent, newNode);
         }
     }
 
-   
     public int get_page_to_print() {
-        page_to_print=0;
+        page_to_print = 0;
         count_printSelected(graphtree);
         return page_to_print;
     }
-    
+
     public void count_printSelected(SortedTreeNode node) {
         int num = node.getChildCount();
 
@@ -279,13 +221,13 @@ public class kSar {
             if (obj1 instanceof TreeNodeInfo) {
                 TreeNodeInfo tmpnode = (TreeNodeInfo) obj1;
                 Graph nodeobj = tmpnode.getNode_object();
-                if ( nodeobj.isPrintSelected()) {
+                if (nodeobj.isPrintSelected()) {
                     page_to_print++;
                 }
             }
         }
     }
-    
+
     public DataView getDataView() {
         return dataview;
     }
@@ -293,9 +235,6 @@ public class kSar {
     public boolean isParsing() {
         return Parsing;
     }
-
-    
-
     DataView dataview = null;
     private long lines_parsed = 0L;
     private String reload_action = "Empty";
@@ -303,8 +242,7 @@ public class kSar {
     private boolean action_interrupted = false;
     public AllParser myparser = null;
     private boolean Parsing = false;
-    
-    public int total_graph=0;
+    public int total_graph = 0;
     public SortedTreeNode graphtree = new SortedTreeNode("kSar");
-    public int page_to_print=0;
+    public int page_to_print = 0;
 }
