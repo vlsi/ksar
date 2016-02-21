@@ -8,6 +8,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+
 import net.atomique.ksar.Config;
 import net.atomique.ksar.OSParser;
 import net.atomique.ksar.GlobalOptions;
@@ -97,7 +99,7 @@ public class Linux extends OSParser {
 
         try {
             if ( timeColumn == 2 ) {
-                parsedate = new SimpleDateFormat(timeFormat).parse(columns[0]+" "+columns[1]);
+                parsedate = new SimpleDateFormat(timeFormat, Locale.US).parse(columns[0]+" "+columns[1]);
             } else {
                 parsedate = new SimpleDateFormat(timeFormat).parse(columns[0]);
             }
