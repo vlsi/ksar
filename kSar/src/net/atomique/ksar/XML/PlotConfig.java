@@ -49,7 +49,7 @@ public class PlotConfig {
         if (tmp == null) {
             return;
         }
-        this.size = size;
+        this.size = tmp.intValue();
     }
 
 
