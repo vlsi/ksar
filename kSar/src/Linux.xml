@@ -220,6 +220,10 @@
                 <headerstr> CPU MHz</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
+            <Stat name="cpu7">
+                <headerstr>CPU %usr %nice %sys %iowait %steal %irq %soft %guest %gnice %idle</headerstr>
+                <graphname>CPU</graphname>
+            </Stat>
 
             <!-- GRAPHS -->
             <Graph name="PROC" Title="Proc" type="unique">
