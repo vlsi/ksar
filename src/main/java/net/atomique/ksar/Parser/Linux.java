@@ -7,7 +7,6 @@ package net.atomique.ksar.Parser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import net.atomique.ksar.Config;
@@ -19,14 +18,10 @@ import net.atomique.ksar.UI.LinuxDateFormat;
 import net.atomique.ksar.XML.GraphConfig;
 import org.jfree.data.time.Second;
 
-/**
- *
- * @author Max
- */
 public class Linux extends OSParser {
 
     public void parse_header(String s) {
-        boolean retdate = false;
+
         LinuxDateFormat = Config.getLinuxDateFormat();
         String[] columns = s.split("\\s+");
         String tmpstr;
@@ -35,8 +30,8 @@ public class Linux extends OSParser {
         tmpstr = columns[2];
         setHostname(tmpstr.substring(1, tmpstr.length() - 1));
         checkDateFormat();
-        retdate=setDate(columns[3]);
-        
+        setDate(columns[3]);
+
     }
 
     private void checkDateFormat() {
@@ -74,26 +69,17 @@ public class Linux extends OSParser {
     
     @Override
     public int parse(String line, String[] columns) {
-        int heure = 0;
-        int minute = 0;
-        int seconde = 0;
-        Second now = null;
+        int hour;
+        int minute;
+        int second;
+        Second now;
 
         if ("Average:".equals(columns[0])) {
             currentStat = "NONE";
             return 0;
         }
 
-        if (line.indexOf("unix restarts") >= 0 || line.indexOf(" unix restarted") >= 0) {
-            return 0;
-        }
-
-        // match the System [C|c]onfiguration line on AIX
-        if (line.indexOf("System Configuration") >= 0 || line.indexOf("System configuration") >= 0) {
-            return 0;
-        }
-
-        if (line.indexOf("State change") >= 0) {
+        if (line.contains("LINUX RESTART")) {
             return 0;
         }
 
@@ -104,10 +90,10 @@ public class Linux extends OSParser {
                 parsedate = new SimpleDateFormat(timeFormat).parse(columns[0]);
             }
             cal.setTime(parsedate);
-            heure = cal.get(cal.HOUR_OF_DAY);
-            minute = cal.get(cal.MINUTE);
-            seconde = cal.get(cal.SECOND);
-            now = new Second(seconde, minute, heure, day, month, year);
+            hour = cal.get(Calendar.HOUR_OF_DAY);
+            minute = cal.get(Calendar.MINUTE);
+            second = cal.get(Calendar.SECOND);
+            now = new Second(second, minute, hour, day, month, year);
             if (startofstat == null) {
                 startofstat = now;
                 startofgraph = now;
