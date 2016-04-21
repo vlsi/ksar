@@ -389,7 +389,7 @@
                     <cols>sread/s swrite/s saccess/s sgetatt/s</cols>
                 </Plot>
             </Graph>
-            <Graph name="PROC2" Title="Processus" type="unique">
+            <Graph name="PROC2" Title="Processes" type="unique">
                 <Plot Title="Proc">
                     <cols>proc/s</cols>
                 </Plot>
