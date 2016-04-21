@@ -228,6 +228,10 @@
                 <headerstr>kbmemfree kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact kbdirty</headerstr>
                 <graphname>KMEM2</graphname>
             </Stat>
+            <Stat name="hpage">
+                <headerstr>kbhugfree kbhugused %hugused</headerstr>
+                <graphname>IGNORE</graphname>
+            </Stat>
 
             <!-- GRAPHS -->
             <Graph name="PROC" Title="Proc" type="unique">
