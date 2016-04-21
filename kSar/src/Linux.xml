@@ -230,7 +230,7 @@
             </Stat>
             <Stat name="hpage">
                 <headerstr>kbhugfree kbhugused %hugused</headerstr>
-                <graphname>IGNORE</graphname>
+                <graphname>HPAGE</graphname>
             </Stat>
 
             <!-- GRAPHS -->
@@ -421,6 +421,15 @@
                 </Plot>
                 <Plot Title="%">
                     <cols>%memused %commit</cols>
+                </Plot>
+            </Graph>
+            <Graph name="HPAGE" Title="Hugepages" type="unique">
+                <Plot Title="Hugepages">
+                    <cols>kbhugfree kbhugused</cols>
+                    <format base="1024" factor="1024"></format>
+                </Plot>
+                <Plot Title="%">
+                    <cols>%hugused</cols>
                 </Plot>
             </Graph>
         </OSType>
