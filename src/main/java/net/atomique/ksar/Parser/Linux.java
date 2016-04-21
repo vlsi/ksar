@@ -84,16 +84,7 @@ public class Linux extends OSParser {
             return 0;
         }
 
-        if (line.indexOf("unix restarts") >= 0 || line.indexOf(" unix restarted") >= 0) {
-            return 0;
-        }
-
-        // match the System [C|c]onfiguration line on AIX
-        if (line.indexOf("System Configuration") >= 0 || line.indexOf("System configuration") >= 0) {
-            return 0;
-        }
-
-        if (line.indexOf("State change") >= 0) {
+        if (line.contains("LINUX RESTART")) {
             return 0;
         }
 
