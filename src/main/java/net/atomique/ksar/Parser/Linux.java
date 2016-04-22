@@ -6,8 +6,6 @@ package net.atomique.ksar.Parser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import net.atomique.ksar.Config;
@@ -19,10 +17,6 @@ import net.atomique.ksar.UI.LinuxDateFormat;
 import net.atomique.ksar.XML.GraphConfig;
 import org.jfree.data.time.Second;
 
-/**
- *
- * @author Max
- */
 public class Linux extends OSParser {
 
     public void parse_header(String s) {
