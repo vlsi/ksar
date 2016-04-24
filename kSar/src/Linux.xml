@@ -228,6 +228,10 @@
                 <headerstr>kbmemfree kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact kbdirty</headerstr>
                 <graphname>KMEM2</graphname>
             </Stat>
+            <Stat name="hpage">
+                <headerstr>kbhugfree kbhugused %hugused</headerstr>
+                <graphname>HPAGE</graphname>
+            </Stat>
 
             <!-- GRAPHS -->
             <Graph name="PROC" Title="Proc" type="unique">
@@ -417,6 +421,15 @@
                 </Plot>
                 <Plot Title="%">
                     <cols>%memused %commit</cols>
+                </Plot>
+            </Graph>
+            <Graph name="HPAGE" Title="Hugepages" type="unique">
+                <Plot Title="Hugepages">
+                    <cols>kbhugfree kbhugused</cols>
+                    <format base="1024" factor="1024"></format>
+                </Plot>
+                <Plot Title="%">
+                    <cols>%hugused</cols>
                 </Plot>
             </Graph>
         </OSType>
