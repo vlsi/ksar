@@ -1,3 +1,13 @@
 /kSar/build/
 /kSar/dist/
 /kSar/distrib/
+
+# NetBeans
+# Based on github/gitignore/Global/NetBeans.gitignore
+/kSar/nbproject/private/
+/kSar/build/
+/kSar/nbbuild/
+/kSar/dist/
+/kSar/nbdist/
+/kSar/nbactions.xml
+/kSar/.nb-gradle/
