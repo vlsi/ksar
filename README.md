@@ -1,6 +1,8 @@
 kSar
 ====
 
+[![Build Status](https://travis-ci.org/vlsi/ksar.svg?branch=master)](https://travis-ci.org/vlsi/ksar)
+
 Quick Start
 -----------
 
