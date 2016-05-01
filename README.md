@@ -8,7 +8,7 @@ Quick Start
 
 Prerequisite:
 
-- JDK 6 or later
+- JDK 8 or later
 
 ```
 $ ./gradlew shadowJar
