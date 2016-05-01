@@ -12,7 +12,7 @@ Prerequisite:
 
 ```
 $ ./gradlew shadowJar
-$ java -jar build/libs/ksar-5.1.0-SNAPSHOT-all.jar
+$ java -jar build/libs/ksar-5.2.0-SNAPSHOT-all.jar
 ```
 
 Changelog
