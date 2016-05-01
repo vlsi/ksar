@@ -1,13 +1,18 @@
-/kSar/build/
-/kSar/dist/
-/kSar/distrib/
+.gradle
+build/
 
-# NetBeans
-# Based on github/gitignore/Global/NetBeans.gitignore
-/kSar/nbproject/private/
-/kSar/build/
-/kSar/nbbuild/
-/kSar/dist/
-/kSar/nbdist/
-/kSar/nbactions.xml
-/kSar/.nb-gradle/
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
+# gradle/wrapper/gradle-wrapper.properties
+
+# IDEA project
+
+.idea/

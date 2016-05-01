@@ -1,0 +1,9 @@
+* text=auto
+gradlew text eol=lf
+sarl text eol=lf
+*.bat text eol=crlf
+*.java text
+*.sql text
+*.sh text eol=lf
+*.yaml text
+*.yml text
