@@ -1,0 +1,33 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+group = 'com.github.vlsi'
+archivesBaseName = 'ksar'
+version = '5.1.0-SNAPSHOT'
+
+sourceCompatibility = '1.6'
+targetCompatibility = '1.6'
+
+mainClassName = 'net.atomique.ksar.Main'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile('com.itextpdf:itextpdf:5.0.6') {
+        transitive = false
+    }
+    compile 'com.jcraft:jsch:0.1.42'
+    compile 'jfree:jfreechart:1.0.13'
+}
