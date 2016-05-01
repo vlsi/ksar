@@ -13,7 +13,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 group = 'com.github.vlsi.ksar'
 archivesBaseName = 'ksar'
-version = '5.1.0-SNAPSHOT'
+version = '5.2.0'
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'

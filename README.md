@@ -14,3 +14,9 @@ Prerequisite:
 $ ./gradlew shadowJar
 $ java -jar build/libs/ksar-5.1.0-SNAPSHOT-all.jar
 ```
+
+Changelog
+---------
+
+v5.2.0 -- 1 May 2016
+* Migrated build to Gradle
