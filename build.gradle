@@ -11,7 +11,7 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'com.github.johnrengelman.shadow'
 
-group = 'com.github.vlsi'
+group = 'com.github.vlsi.ksar'
 archivesBaseName = 'ksar'
 version = '5.1.0-SNAPSHOT'
 
