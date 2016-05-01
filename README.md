@@ -8,6 +8,19 @@ Quick Start
 
 Prerequisite:
 
+- Java 8 or later
+
+Download a pre-built jar from [GitHub releases page](https://github.com/vlsi/ksar/releases).
+
+```
+$ java -jar ksar-5.2.0-all.jar
+```
+
+Building from source
+--------------------
+
+Prerequisite:
+
 - JDK 8 or later
 
 ```
