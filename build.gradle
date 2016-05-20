@@ -30,4 +30,5 @@ dependencies {
     }
     compile 'com.jcraft:jsch:0.1.42'
     compile 'jfree:jfreechart:1.0.13'
+    testCompile 'junit:junit:4.12'
 }

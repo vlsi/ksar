@@ -6,6 +6,7 @@
 package net.atomique.ksar.UI;
 
 import java.util.Collections;
+import java.util.Comparator;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 
@@ -17,6 +18,7 @@ public class SortedTreeNode extends DefaultMutableTreeNode implements Comparable
 
     public static final long serialVersionUID = 15071L;
 
+    private static final Comparator<String> comparator = new SimpleNaturalComparator();
 
     public SortedTreeNode(String name) {
         super(name);
@@ -64,8 +66,31 @@ public class SortedTreeNode extends DefaultMutableTreeNode implements Comparable
         Collections.sort(this.children);
     }
     public int compareTo(final Object o) {
-        return this.toString().compareToIgnoreCase(o.toString());
+        return comparator.compare(this.toString(), o.toString());
     }
 
     private int leaf_num=0;
+
+    public static class SimpleNaturalComparator implements Comparator<String> {
+        @Override
+        public int compare(String s1, String s2) {
+            boolean isInt = true;
+
+            int i1 = 0;
+            try {
+                i1 = Integer.parseInt(s1);
+            } catch (NumberFormatException e) {
+                isInt = false;
+            }
+
+            int i2 = 0;
+            try {
+                i2 = Integer.parseInt(s2);
+            } catch (NumberFormatException e) {
+                isInt = false;
+            }
+
+            return isInt ? Integer.compare(i1, i2) : s1.compareToIgnoreCase(s2);
+        }
+    }
 }
