@@ -31,5 +31,8 @@ $ java -jar build/libs/ksar-5.2.0-SNAPSHOT-all.jar
 Changelog
 ---------
 
+HEAD
+* Sort elements in human-friendly order: cpu1 -> cpu2 -> ... -> cpu10 -> ...
+
 v5.2.0 -- 1 May 2016
 * Migrated build to Gradle

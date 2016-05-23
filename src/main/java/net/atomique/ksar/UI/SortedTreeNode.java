@@ -6,17 +6,21 @@
 package net.atomique.ksar.UI;
 
 import java.util.Collections;
+import java.util.Comparator;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 
 /**
- *
  * @author Max
  */
 public class SortedTreeNode extends DefaultMutableTreeNode implements Comparable {
 
     public static final long serialVersionUID = 15071L;
 
+    private static final Comparator<String> comparator =
+            Comparator.nullsFirst(
+                    Comparator.<String, Boolean>comparing("all"::equals).reversed()
+                            .thenComparing(NaturalComparator.INSTANCE));
 
     public SortedTreeNode(String name) {
         super(name);
@@ -49,22 +53,22 @@ public class SortedTreeNode extends DefaultMutableTreeNode implements Comparable
                 leaf_num++;
             }
         }
-        
+
     }
-    
-    public int  LeafCount() {
-        leaf_num=0;
+
+    public int LeafCount() {
+        leaf_num = 0;
         count_graph(this);
         return leaf_num;
     }
-    
+
     @Override
     public void insert(final MutableTreeNode newChild, final int childIndex) {
         super.insert(newChild, childIndex);
         Collections.sort(this.children);
     }
     public int compareTo(final Object o) {
-        return this.toString().compareToIgnoreCase(o.toString());
+        return comparator.compare(this.toString(), o.toString());
     }
 
     private int leaf_num=0;

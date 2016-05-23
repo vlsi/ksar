@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import javax.swing.JCheckBox;
 import net.atomique.ksar.Config;
 import net.atomique.ksar.GlobalOptions;
@@ -81,14 +79,11 @@ public class Graph {
             Stats.add(new TimeSeries(HeaderStr[i]));
         }
         // create stack
-        SortedSet<String> sortedset = new TreeSet<String>(graphconfig.getStacklist().keySet());
-        Iterator<String> it = sortedset.iterator();
-        while (it.hasNext()) {
-            StackConfig tmp = (StackConfig) graphconfig.getStacklist().get(it.next());
+        for (StackConfig tmp : graphconfig.getStacklist().values()) {
             TimeTableXYDataset tmp2 = new TimeTableXYDataset();
             String[] s = tmp.getHeaderStr().split("\\s+");
-            for (int i = 0; i < s.length; i++) {
-                StackListbyCol.put(s[i], tmp2);
+            for (String value : s) {
+                StackListbyCol.put(value, tmp2);
             }
             StackListbyName.put(tmp.getTitle(), tmp2);
         }
@@ -357,10 +352,7 @@ public class Graph {
 
         CombinedDomainXYPlot plot = new CombinedDomainXYPlot(axisofdate);
         // do the stacked stuff
-        SortedSet<String> sortedset = new TreeSet<String>(graphconfig.getStacklist().keySet());
-        Iterator<String> it = sortedset.iterator();
-        while (it.hasNext()) {
-            StackConfig tmp = (StackConfig) graphconfig.getStacklist().get(it.next());
+        for (StackConfig tmp : graphconfig.getStacklist().values()) {
             if (tmp == null) {
                 continue;
             }
@@ -381,10 +373,7 @@ public class Graph {
             }
         }
         // do the line stuff
-        sortedset = new TreeSet<String>(graphconfig.getPlotlist().keySet());
-        it = sortedset.iterator();
-        while (it.hasNext()) {
-            PlotConfig tmp = (PlotConfig) graphconfig.getPlotlist().get(it.next());
+        for (PlotConfig tmp : graphconfig.getPlotlist().values()) {
             XYItemRenderer renderer = new StandardXYItemRenderer();
             ArrayList<String> t = new ArrayList<String>();
             String[] s = tmp.getHeaderStr().split("\\s+");

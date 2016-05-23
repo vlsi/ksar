@@ -5,7 +5,10 @@
 
 package net.atomique.ksar.XML;
 
-import java.util.HashMap;
+import net.atomique.ksar.UI.NaturalComparator;
+
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  *
@@ -31,24 +34,24 @@ public class GraphConfig {
     }
     
     public void addPlot(PlotConfig s) {
-        Plotlist.put(s.getTitle(), s);
+        plotlist.put(s.getTitle(), s);
     }
 
-    public HashMap<String, PlotConfig> getPlotlist() {
-        return Plotlist;
+    public SortedMap<String, PlotConfig> getPlotlist() {
+        return plotlist;
     }
 
     public void addStack(StackConfig s) {
-        Stacklist.put(s.getTitle(), s);
+        stacklist.put(s.getTitle(), s);
     }
 
-    public HashMap<String, StackConfig> getStacklist() {
-        return Stacklist;
+    public SortedMap<String, StackConfig> getStacklist() {
+        return stacklist;
     }
 
     private String name =null;
     private String Title = null;
     private String type = null;
-    HashMap<String,PlotConfig> Plotlist = new HashMap<String,PlotConfig>();
-    HashMap<String,StackConfig> Stacklist = new HashMap<String,StackConfig>();
+    private SortedMap<String,PlotConfig> plotlist = new TreeMap<>(NaturalComparator.NULLS_FIRST);
+    private SortedMap<String,StackConfig> stacklist = new TreeMap<>(NaturalComparator.NULLS_FIRST);
 }

@@ -6,13 +6,12 @@
 package net.atomique.ksar.Graph;
 
 import java.awt.LayoutManager;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+import net.atomique.ksar.UI.NaturalComparator;
 import net.atomique.ksar.UI.ParentNodeInfo;
 import net.atomique.ksar.UI.SortedTreeNode;
 import net.atomique.ksar.UI.TreeNodeInfo;
@@ -66,13 +65,8 @@ public class List {
         tmppanel.setLayout(tmplayout);
 
 
-        SortedSet<String> sortedset = new TreeSet<String>(nodeHashList.keySet());
-
-        Iterator<String> it = sortedset.iterator();
-
-        while (it.hasNext()) {
-            Graph tmpgraph = (Graph) nodeHashList.get(it.next());
-            tmppanel.add(tmpgraph.get_ChartPanel());
+        for (Graph graph : nodeHashList.values()) {
+            tmppanel.add(graph.get_ChartPanel());
         }
 
         return tmppanel;
@@ -80,22 +74,13 @@ public class List {
 
     public boolean isPrintSelected() {
         boolean leaftoprint = false;
-        SortedSet<String> sortedset = new TreeSet<String>(nodeHashList.keySet());
-
-        Iterator<String> it = sortedset.iterator();
-
-        while (it.hasNext()) {
-            Graph tmpgraph = (Graph) nodeHashList.get(it.next());
-            if (tmpgraph.printSelected) {
+        for (Graph graph : nodeHashList.values()) {
+            if (graph.printSelected) {
                 leaftoprint = true;
                 break;
             }
         }
-        if (leaftoprint) {
-            return true;
-        } else {
-            return false;
-        }
+        return leaftoprint;
     }
 
     public String getTitle() {
@@ -114,7 +99,7 @@ public class List {
     protected SortedTreeNode parentTreeNode = null;
     protected kSar mysar = null;
     protected String HeaderStr = null;
-    protected Map<String, Graph> nodeHashList = new HashMap<String, Graph>();
+    protected SortedMap<String, Graph> nodeHashList = new TreeMap<>(NaturalComparator.NULLS_FIRST);
     protected int skipColumn = 0;
     protected String Title = null;
     
