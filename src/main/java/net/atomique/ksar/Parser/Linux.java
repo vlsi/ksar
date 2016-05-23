@@ -68,10 +68,10 @@ public class Linux extends OSParser {
     
     @Override
     public int parse(String line, String[] columns) {
-        int heure = 0;
-        int minute = 0;
-        int seconde = 0;
-        Second now = null;
+        int hour;
+        int minute;
+        int second;
+        Second now;
 
         if ("Average:".equals(columns[0])) {
             currentStat = "NONE";
@@ -89,10 +89,10 @@ public class Linux extends OSParser {
                 parsedate = new SimpleDateFormat(timeFormat).parse(columns[0]);
             }
             cal.setTime(parsedate);
-            heure = cal.get(cal.HOUR_OF_DAY);
+            hour = cal.get(cal.HOUR_OF_DAY);
             minute = cal.get(cal.MINUTE);
-            seconde = cal.get(cal.SECOND);
-            now = new Second(seconde, minute, heure, day, month, year);
+            second = cal.get(cal.SECOND);
+            now = new Second(second, minute, hour, day, month, year);
             if (startofstat == null) {
                 startofstat = now;
                 startofgraph = now;
