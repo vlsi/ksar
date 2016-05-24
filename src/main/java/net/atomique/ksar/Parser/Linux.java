@@ -6,6 +6,7 @@ package net.atomique.ksar.Parser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 import net.atomique.ksar.Config;
@@ -89,9 +90,9 @@ public class Linux extends OSParser {
                 parsedate = new SimpleDateFormat(timeFormat).parse(columns[0]);
             }
             cal.setTime(parsedate);
-            hour = cal.get(cal.HOUR_OF_DAY);
-            minute = cal.get(cal.MINUTE);
-            second = cal.get(cal.SECOND);
+            hour = cal.get(Calendar.HOUR_OF_DAY);
+            minute = cal.get(Calendar.MINUTE);
+            second = cal.get(Calendar.SECOND);
             now = new Second(second, minute, hour, day, month, year);
             if (startofstat == null) {
                 startofstat = now;
