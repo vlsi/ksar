@@ -21,7 +21,7 @@ import org.jfree.data.time.Second;
 public class Linux extends OSParser {
 
     public void parse_header(String s) {
-        boolean retdate = false;
+
         LinuxDateFormat = Config.getLinuxDateFormat();
         String[] columns = s.split("\\s+");
         String tmpstr;
@@ -30,8 +30,8 @@ public class Linux extends OSParser {
         tmpstr = columns[2];
         setHostname(tmpstr.substring(1, tmpstr.length() - 1));
         checkDateFormat();
-        retdate=setDate(columns[3]);
-        
+        setDate(columns[3])
+
     }
 
     private void checkDateFormat() {
