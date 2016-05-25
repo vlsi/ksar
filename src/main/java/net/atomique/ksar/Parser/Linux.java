@@ -30,7 +30,7 @@ public class Linux extends OSParser {
         tmpstr = columns[2];
         setHostname(tmpstr.substring(1, tmpstr.length() - 1));
         checkDateFormat();
-        setDate(columns[3])
+        setDate(columns[3]);
 
     }
 
