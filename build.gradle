@@ -32,3 +32,12 @@ dependencies {
     compile 'jfree:jfreechart:1.0.13'
     testCompile 'junit:junit:4.12'
 }
+
+task writeVersion << {
+    def s = version.find(/^\d.\d.\d/)
+    if (s == null) {
+        throw new InvalidUserDataException('Invalid version format')
+    }
+    new File("src/main/resources/kSar.version").text = s
+}
+classes.dependsOn(writeVersion)
