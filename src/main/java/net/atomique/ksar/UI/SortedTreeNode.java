@@ -19,7 +19,7 @@ public class SortedTreeNode extends DefaultMutableTreeNode implements Comparable
 
     private static final Comparator<String> comparator =
             Comparator.nullsFirst(
-                    Comparator.<String, Boolean>comparing("all"::equals).reversed()
+                    Comparator.<String, Boolean>comparing("all"::equals).thenComparing("sum"::equals).reversed()
                             .thenComparing(NaturalComparator.INSTANCE));
 
     public SortedTreeNode(String name) {
