@@ -116,6 +116,10 @@
                 <headerstr>IFACE rxpck/s txpck/s rxkB/s txkB/s rxcmp/s txcmp/s rxmcst/s</headerstr>
                 <graphname>INET1</graphname>
             </Stat>
+            <Stat name="inet12">
+                <headerstr>IFACE rxpck/s txpck/s rxkB/s txkB/s rxcmp/s txcmp/s rxmcst/s %ifutil</headerstr>
+                <graphname>INET1</graphname>
+            </Stat>
             <Stat name="cpu5">
                 <headerstr>CPU %usr %nice %sys %iowait %steal %irq %soft %guest %idle</headerstr>
                 <graphname>CPU</graphname>
@@ -264,6 +268,9 @@
                 </Plot>
                 <Plot Title="cast">
                     <cols>rxcmp/s txcmp/s rxmcst/s</cols>
+                </Plot>
+                <Plot Title="util">
+                    <cols>%ifutil</cols>
                 </Plot>
             </Graph>
             <Graph name="INET2" Title="Interfaces error" type="multiple">
