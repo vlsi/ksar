@@ -76,6 +76,10 @@
                 <headerstr>runq-sz plist-sz ldavg-1 ldavg-5 ldavg-15</headerstr>
                 <graphname>LOAD</graphname>
             </Stat>
+            <Stat name="load_9.1.7">
+                <headerstr>runq-sz plist-sz ldavg-1 ldavg-5 ldavg-15 blocked</headerstr>
+                <graphname>LOAD_9.1.7</graphname>
+            </Stat>
             <Stat name="kswap">
                 <headerstr>kbswpfree kbswpused %swpused kbswpcad %swpcad</headerstr>
                 <graphname>KSWAP</graphname>
@@ -365,6 +369,20 @@
                 </Plot>
                 <Plot Title="LA">
                     <cols>ldavg-1 ldavg-5 ldavg-15</cols>
+                </Plot>
+            </Graph>
+            <Graph name="LOAD_9.1.7" Title="Load" type="unique">
+                <Plot Title="RunQ">
+                    <cols>runq-sz</cols>
+                </Plot>
+                <Plot Title="Plist">
+                    <cols>plist-sz</cols>
+                </Plot>
+                <Plot Title="Load Average">
+                    <cols>ldavg-1 ldavg-5 ldavg-15</cols>
+                </Plot>
+                <Plot Title="Tasks blocked">
+                    <cols>blocked</cols>
                 </Plot>
             </Graph>
             <Graph name="SOCKET" Title="Socket" type="unique">
