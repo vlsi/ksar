@@ -329,7 +329,7 @@
                 <Plot Title="tps">
                     <cols>tps rtps wtps</cols>
                 </Plot>
-                <Plot Title="byte">
+                <Plot Title="blocks/s">
                     <cols>bread/s bwrtn/s</cols>
                 </Plot>
             </Graph>
