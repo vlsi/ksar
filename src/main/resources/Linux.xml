@@ -34,7 +34,7 @@
             </Stat>
             <Stat name="dev2">
                 <headerstr>DEV tps blks/s</headerstr>
-                <graphname>DEV</graphname>
+                <graphname>DEV_OLD</graphname>
             </Stat>
             <Stat name="page1">
                 <headerstr>frmpg/s bufpg/s campg/s</headerstr>
@@ -305,12 +305,17 @@
                     <cols>vmeff</cols>
                 </Plot>
             </Graph>
-            <Graph name="DEV" Title="Devices" type="multiple">
+            <Graph name="DEV_OLD" Title="Devices" type="multiple">
                 <Plot Title="tps">
                     <cols>tps</cols>
                 </Plot>
                 <Plot Title="blks/s">
                     <cols>blks/s</cols>
+                </Plot>
+            </Graph>
+            <Graph name="DEV" Title="Devices" type="multiple">
+                <Plot Title="tps">
+                    <cols>tps</cols>
                 </Plot>
                 <Plot Title="sector">
                     <cols>rd_sec/s wr_sec/s</cols>
