@@ -25,9 +25,8 @@ repositories {
 }
 
 dependencies {
-    compile('com.itextpdf:itextpdf:5.0.6') {
-        transitive = false
-    }
+    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.9'
+
     compile group: 'com.jcraft', name: 'jsch', version: '0.1.53'
     compile group: 'org.jfree', name: 'jfreechart', version: '1.0.19'
     testCompile 'junit:junit:4.12'
