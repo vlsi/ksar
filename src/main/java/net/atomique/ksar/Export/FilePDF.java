@@ -4,6 +4,7 @@
  */
 package net.atomique.ksar.Export;
 
+import com.itextpdf.awt.PdfGraphics2D;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -172,7 +173,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
     public int addchart(PdfWriter writer, Graph graph) {
         JFreeChart chart = graph.getgraph(mysar.myparser.get_startofgraph(),mysar.myparser.get_endofgraph());
         PdfTemplate pdftpl = pdfcb.createTemplate(pagewidth,pageheight);
-        Graphics2D g2d = pdftpl.createGraphics(pagewidth,pageheight , mapper);
+        Graphics2D g2d = new PdfGraphics2D(pdftpl,pagewidth,pageheight);
         Double r2d = new Rectangle2D.Double(0, 0, pagewidth,pageheight );
         chart.draw(g2d, r2d, chartinfo);
         g2d.dispose();
