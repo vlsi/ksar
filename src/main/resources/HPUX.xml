@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ConfiG PUBLIC "-//NET/ATOMIQUE/KSAR/CONFIG.DTD" "Config.dtd">
 <!--
-    Document   : Config.xml
-    Created on : 10 août 2010, 16:31
-    Author     : Max
     Description:
-        Configure color of graphs
-
+        Configure statistics and their corresponding graphs (plots+stacks)
 -->
 
 <ConfiG>
