@@ -326,9 +326,6 @@
                 <Plot Title="Response [ms]">
                     <cols>await</cols>
                 </Plot>
-                <Plot Title="util">
-                    <cols>%util</cols>
-                </Plot>
             </Graph>
             <Graph name="IO" Title="I/O" type="unique">
                 <Plot Title="tps">
