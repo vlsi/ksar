@@ -73,7 +73,7 @@
   >
 
 <!--- Put your DTDDoc comment here. -->
-<!ELEMENT Stack (range|cols)*>
+<!ELEMENT Stack (range|cols|format)*>
 <!ATTLIST Stack
     size CDATA #IMPLIED
     Title CDATA #IMPLIED
@@ -86,7 +86,14 @@
 <!ELEMENT range (#PCDATA)>
 
 <!--- Put your DTDDoc comment here. -->
-<!ELEMENT Plot (range|cols)*>
+<!ELEMENT format EMPTY>
+<!ATTLIST format
+   base CDATA #IMPLIED
+   factor CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT Plot (range|cols|format)*>
 <!ATTLIST Plot
     size CDATA #IMPLIED
     Title CDATA #IMPLIED

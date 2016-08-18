@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ConfiG PUBLIC "-//NET/ATOMIQUE/KSAR/CONFIG.DTD" "Config.dtd">
 <!--
-    Document   : Config.xml
-    Created on : 10 août 2010, 16:31
-    Author     : Max
     Description:
-        Configure color of graphs
+        Configure statistics and their corresponding graphs (plots+stacks)
 
+     Esar is a replacement for the sar utility on Solaris.
+     In addition to all the standard reporting features of sar, esar can also report network usage (UDP, TCP, NFS, and RPC traffic)
+     and the processor load average.
 -->
 
 
