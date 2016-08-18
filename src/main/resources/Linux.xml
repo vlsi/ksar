@@ -339,11 +339,11 @@
             <Graph name="KMEM" Title="KMem" type="unique">
                 <Plot Title="KMem">
                     <cols>kbmemfree kbmemused kbmemshrd kbbuffers kbcached kbcommit</cols>
-                    <format base="1024" factor="1024"></format>
+                    <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="Swap">
                     <cols>kbswpfree kbswpused kbswpcad</cols>
-                    <format base="1024" factor="1024"></format>
+                    <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="%">
                     <cols>%memused %swpused %commit</cols>
@@ -352,7 +352,7 @@
             <Graph name="KSWAP" Title="KSwap" type="unique">
                 <Plot Title="Swap">
                     <cols>kbswpfree kbswpused kbswpcad</cols>
-                    <format base="1024" factor="1024"></format>
+                    <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="%">
                     <cols>%swpused %swpcad</cols>
@@ -440,7 +440,7 @@
             <Graph name="KMEM2" Title="KMem" type="unique">
                 <Plot Title="KMem">
                     <cols>kbmemfree kbmemused kbbuffers kbcached kbcommit kbactive kbinact kbdirty</cols>
-                    <format base="1024" factor="1024"></format>
+                    <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="%">
                     <cols>%memused %commit</cols>
@@ -449,7 +449,7 @@
             <Graph name="HPAGE" Title="Hugepages" type="unique">
                 <Plot Title="Hugepages">
                     <cols>kbhugfree kbhugused</cols>
-                    <format base="1024" factor="1024"></format>
+                    <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="%">
                     <cols>%hugused</cols>
