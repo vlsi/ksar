@@ -30,7 +30,7 @@
             </Stat>
             <Stat name="dev2">
                 <headerstr>DEV tps blks/s</headerstr>
-                <graphname>DEV</graphname>
+                <graphname>DEV_OLD</graphname>
             </Stat>
             <Stat name="page1">
                 <headerstr>frmpg/s bufpg/s campg/s</headerstr>
@@ -301,12 +301,17 @@
                     <cols>vmeff</cols>
                 </Plot>
             </Graph>
-            <Graph name="DEV" Title="Devices" type="multiple">
+            <Graph name="DEV_OLD" Title="Devices" type="multiple">
                 <Plot Title="tps">
                     <cols>tps</cols>
                 </Plot>
                 <Plot Title="blks/s">
                     <cols>blks/s</cols>
+                </Plot>
+            </Graph>
+            <Graph name="DEV" Title="Devices" type="multiple">
+                <Plot Title="tps">
+                    <cols>tps</cols>
                 </Plot>
                 <Plot Title="sector">
                     <cols>rd_sec/s wr_sec/s</cols>
@@ -314,18 +319,15 @@
                 <Plot Title="queue">
                     <cols>avgrq-sz avgqu-sz</cols>
                 </Plot>
-                <Plot Title="service">
-                    <cols>await svctm</cols>
-                </Plot>
-                <Plot Title="util">
-                    <cols>%util</cols>
+                <Plot Title="Response [ms]">
+                    <cols>await</cols>
                 </Plot>
             </Graph>
             <Graph name="IO" Title="I/O" type="unique">
                 <Plot Title="tps">
                     <cols>tps rtps wtps</cols>
                 </Plot>
-                <Plot Title="byte">
+                <Plot Title="blocks/s">
                     <cols>bread/s bwrtn/s</cols>
                 </Plot>
             </Graph>
