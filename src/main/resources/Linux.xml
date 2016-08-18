@@ -271,6 +271,7 @@
                 </Plot>
                 <Plot Title="util">
                     <cols>%ifutil</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
             <Graph name="INET2" Title="Interfaces error" type="multiple">
@@ -347,6 +348,7 @@
                 </Plot>
                 <Plot Title="%">
                     <cols>%memused %swpused %commit</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
             <Graph name="KSWAP" Title="KSwap" type="unique">
@@ -356,6 +358,7 @@
                 </Plot>
                 <Plot Title="%">
                     <cols>%swpused %swpcad</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
             <Graph name="LOAD" Title="Load" type="unique">
@@ -427,6 +430,7 @@
             <Graph name="CPU" Title="CPU" type="multiple">
                 <Stack Title="Used" size="3">
                     <cols>%usr %user %nice %sys %iowait %steal %irq %soft %guest</cols>
+                    <range>0,100</range>
                 </Stack>
                 <!--
                 <Plot Title="other" size="3">
@@ -435,6 +439,7 @@
                 -->
                 <Plot Title="Idle" size="1">
                     <cols>%idle</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
             <Graph name="KMEM2" Title="KMem" type="unique">
@@ -444,6 +449,7 @@
                 </Plot>
                 <Plot Title="%">
                     <cols>%memused %commit</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
             <Graph name="HPAGE" Title="Hugepages" type="unique">
@@ -453,6 +459,7 @@
                 </Plot>
                 <Plot Title="%">
                     <cols>%hugused</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
         </OSType>
