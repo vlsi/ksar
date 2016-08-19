@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package net.atomique.ksar.XML;
 
 import net.atomique.ksar.UI.NaturalComparator;
@@ -10,10 +5,6 @@ import net.atomique.ksar.UI.NaturalComparator;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-/**
- *
- * @author Max
- */
 public class GraphConfig {
 
     public GraphConfig(String s1, String s2, String s3) {
