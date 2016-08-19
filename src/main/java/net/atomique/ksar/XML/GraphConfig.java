@@ -1,9 +1,6 @@
 package net.atomique.ksar.XML;
 
-import net.atomique.ksar.UI.NaturalComparator;
-
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
 
 public class GraphConfig {
 
@@ -11,6 +8,8 @@ public class GraphConfig {
         name = s1;
         Title = s2;
         type= s3;
+        plotlist = new LinkedHashMap<>();
+        stacklist = new LinkedHashMap<>();
     }
     public String getTitle() {
         return Title;
@@ -28,7 +27,7 @@ public class GraphConfig {
         plotlist.put(s.getTitle(), s);
     }
 
-    public SortedMap<String, PlotConfig> getPlotlist() {
+    public LinkedHashMap<String, PlotConfig> getPlotlist() {
         return plotlist;
     }
 
@@ -36,13 +35,13 @@ public class GraphConfig {
         stacklist.put(s.getTitle(), s);
     }
 
-    public SortedMap<String, StackConfig> getStacklist() {
+    public LinkedHashMap<String, StackConfig> getStacklist() {
         return stacklist;
     }
 
     private String name =null;
     private String Title = null;
     private String type = null;
-    private SortedMap<String,PlotConfig> plotlist = new TreeMap<>(NaturalComparator.NULLS_FIRST);
-    private SortedMap<String,StackConfig> stacklist = new TreeMap<>(NaturalComparator.NULLS_FIRST);
+    private LinkedHashMap<String,PlotConfig> plotlist;
+    private LinkedHashMap<String,StackConfig> stacklist;
 }
