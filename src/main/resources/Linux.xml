@@ -404,11 +404,14 @@
                 </Plot>
             </Graph>
             <Graph name="SOCKET" Title="Socket" type="unique">
-                <Plot Title="Socket">
+                <Plot Title="Socket" size="3">
                     <cols>totsck tcpsck udpsck rawsck</cols>
                 </Plot>
-                <Plot Title="Frag">
-                    <cols>ip-frag tcp-tw</cols>
+                <Plot Title="TIME_WAIT">
+                    <cols>tcp-tw</cols>
+                </Plot>
+                <Plot Title="IP Frag">
+                    <cols>ip-frag</cols>
                 </Plot>
             </Graph>
             <Graph name="NFSC" Title="NFS Client" type="unique">
