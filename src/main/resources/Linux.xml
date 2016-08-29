@@ -379,13 +379,13 @@
                 </Plot>
             </Graph>
             <Graph name="LOAD" Title="Load" type="unique">
-                <Plot Title="RunQ">
+                <Plot Title="RunQueue">
                     <cols>runq-sz</cols>
                 </Plot>
                 <Plot Title="Plist">
                     <cols>plist-sz</cols>
                 </Plot>
-                <Plot Title="Load Average">
+                <Plot Title="System Load Average">
                     <cols>ldavg-1 ldavg-5 ldavg-15</cols>
                 </Plot>
             </Graph>
