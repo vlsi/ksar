@@ -271,6 +271,7 @@
                 </Plot>
                 <Plot Title="util">
                     <cols>%ifutil</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
             <Graph name="INET2" Title="Interfaces error" type="multiple">
@@ -280,7 +281,7 @@
                 <Plot Title="Tx">
                     <cols>txerr/s txdrop/s txcarr/s txfifo/s</cols>
                 </Plot>
-                <Plot Title="Collision">
+                <Plot Title="collision">
                     <cols>coll/s</cols>
                 </Plot>
             </Graph>
@@ -313,10 +314,15 @@
                 <Plot Title="tps">
                     <cols>tps</cols>
                 </Plot>
+            </Graph>
+            <Graph name="DEV" Title="Devices (Block)" type="multiple">
+                <Plot Title="TPS">
+                    <cols>tps</cols>
+                </Plot>
                 <Plot Title="sector">
                     <cols>rd_sec/s wr_sec/s</cols>
                 </Plot>
-                <Plot Title="queue">
+                <Plot Title="queue / request size [sec/IO]">
                     <cols>avgrq-sz avgqu-sz</cols>
                 </Plot>
                 <Plot Title="Response [ms]">
@@ -324,7 +330,7 @@
                 </Plot>
             </Graph>
             <Graph name="IO" Title="I/O" type="unique">
-                <Plot Title="tps">
+                <Plot Title="TPS">
                     <cols>tps rtps wtps</cols>
                 </Plot>
                 <Plot Title="blocks/s">
@@ -337,25 +343,27 @@
                 </Plot>
             </Graph>
             <Graph name="KMEM" Title="KMem" type="unique">
-                <Plot Title="KMem">
+                <Plot Title="Memory">
                     <cols>kbmemfree kbmemused kbmemshrd kbbuffers kbcached kbcommit</cols>
-                    <format base="1024" factor="1024"></format>
+                    <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="Swap">
                     <cols>kbswpfree kbswpused kbswpcad</cols>
-                    <format base="1024" factor="1024"></format>
+                    <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="%">
                     <cols>%memused %swpused %commit</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
             <Graph name="KSWAP" Title="KSwap" type="unique">
                 <Plot Title="Swap">
                     <cols>kbswpfree kbswpused kbswpcad</cols>
-                    <format base="1024" factor="1024"></format>
+                    <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="%">
                     <cols>%swpused %swpcad</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
             <Graph name="LOAD" Title="Load" type="unique">
@@ -365,7 +373,7 @@
                 <Plot Title="Plist">
                     <cols>plist-sz</cols>
                 </Plot>
-                <Plot Title="LA">
+                <Plot Title="Load Average">
                     <cols>ldavg-1 ldavg-5 ldavg-15</cols>
                 </Plot>
             </Graph>
@@ -425,34 +433,33 @@
                 </Plot>
             </Graph>
             <Graph name="CPU" Title="CPU" type="multiple">
-                <Stack Title="Used" size="3">
+                <Stack Title="Used [%]" size="3">
                     <cols>%usr %user %nice %sys %iowait %steal %irq %soft %guest</cols>
+                    <range>0,100</range>
                 </Stack>
-                <!--
-                <Plot Title="other" size="3">
-                    <cols>%usr %user %nice %sys %iowait %steal %irq %soft %guest</cols>
-                </Plot>
-                -->
-                <Plot Title="Idle" size="1">
+                <Plot Title="Idle [%]" size="1">
                     <cols>%idle</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
             <Graph name="KMEM2" Title="KMem" type="unique">
-                <Plot Title="KMem">
+                <Plot Title="Memory">
                     <cols>kbmemfree kbmemused kbbuffers kbcached kbcommit kbactive kbinact kbdirty</cols>
-                    <format base="1024" factor="1024"></format>
+                    <format base="1024" factor="1024" />
                 </Plot>
-                <Plot Title="%">
+                <Plot Title="Memory [%]">
                     <cols>%memused %commit</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
             <Graph name="HPAGE" Title="Hugepages" type="unique">
                 <Plot Title="Hugepages">
                     <cols>kbhugfree kbhugused</cols>
-                    <format base="1024" factor="1024"></format>
+                    <format base="1024" factor="1024" />
                 </Plot>
-                <Plot Title="%">
+                <Plot Title="used [%]">
                     <cols>%hugused</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
         </OSType>
