@@ -112,13 +112,13 @@
                 <headerstr>IFACE rxpck/s txpck/s rxbyt/s txbyt/s rxcmp/s txcmp/s rxmcst/s</headerstr>
                 <graphname>INET1</graphname>
             </Stat>
-            <Stat name="inet11">
+            <Stat name="INET_7.1.2+">
                 <headerstr>IFACE rxpck/s txpck/s rxkB/s txkB/s rxcmp/s txcmp/s rxmcst/s</headerstr>
-                <graphname>INET1</graphname>
+                <graphname>INET_7.1.2+</graphname>
             </Stat>
-            <Stat name="inet12">
+            <Stat name="INET_10.1.7+">
                 <headerstr>IFACE rxpck/s txpck/s rxkB/s txkB/s rxcmp/s txcmp/s rxmcst/s %ifutil</headerstr>
-                <graphname>INET1</graphname>
+                <graphname>INET_7.1.2+</graphname>
             </Stat>
             <Stat name="cpu5">
                 <headerstr>CPU %usr %nice %sys %iowait %steal %irq %soft %guest %idle</headerstr>
@@ -264,9 +264,21 @@
                     <cols>rxpck/s txpck/s</cols>
                 </Plot>
                 <Plot Title="bytes">
-                    <cols>rxbyt/s txbyt/s rxkB/s txkB/s</cols>
+                    <cols>rxbyt/s txbyt/s</cols>
                 </Plot>
-                <Plot Title="cast">
+                <Plot Title="compressed/cast">
+                    <cols>rxcmp/s txcmp/s rxmcst/s</cols>
+                </Plot>
+            </Graph>
+            <Graph name="INET_7.1.2+" Title="Interfaces traffic" type="multiple">
+                <Plot Title="packet">
+                    <cols>rxpck/s txpck/s</cols>
+                </Plot>
+                <Plot Title="bandwidth">
+                    <cols>rxkB/s txkB/s</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="compressed/cast">
                     <cols>rxcmp/s txcmp/s rxmcst/s</cols>
                 </Plot>
                 <Plot Title="util">
@@ -367,13 +379,13 @@
                 </Plot>
             </Graph>
             <Graph name="LOAD" Title="Load" type="unique">
-                <Plot Title="RunQ">
+                <Plot Title="RunQueue">
                     <cols>runq-sz</cols>
                 </Plot>
                 <Plot Title="Plist">
                     <cols>plist-sz</cols>
                 </Plot>
-                <Plot Title="Load Average">
+                <Plot Title="System Load Average">
                     <cols>ldavg-1 ldavg-5 ldavg-15</cols>
                 </Plot>
             </Graph>
@@ -392,11 +404,14 @@
                 </Plot>
             </Graph>
             <Graph name="SOCKET" Title="Socket" type="unique">
-                <Plot Title="Socket">
+                <Plot Title="Socket" size="3">
                     <cols>totsck tcpsck udpsck rawsck</cols>
                 </Plot>
-                <Plot Title="Frag">
-                    <cols>ip-frag tcp-tw</cols>
+                <Plot Title="TIME_WAIT">
+                    <cols>tcp-tw</cols>
+                </Plot>
+                <Plot Title="IP Frag">
+                    <cols>ip-frag</cols>
                 </Plot>
             </Graph>
             <Graph name="NFSC" Title="NFS Client" type="unique">
