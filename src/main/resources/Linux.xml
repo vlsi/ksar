@@ -322,13 +322,8 @@
                     <cols>blks/s</cols>
                 </Plot>
             </Graph>
-            <Graph name="DEV" Title="Devices" type="multiple">
-                <Plot Title="tps">
-                    <cols>tps</cols>
-                </Plot>
-            </Graph>
             <Graph name="DEV" Title="Devices (Block)" type="multiple">
-                <Plot Title="TPS">
+                <Plot Title="tps">
                     <cols>tps</cols>
                 </Plot>
                 <Plot Title="sector">
