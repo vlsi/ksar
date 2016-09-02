@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar.Parser;
 
 import java.text.ParseException;
@@ -118,7 +114,7 @@ public class Linux extends OSParser {
             currentStat = "IGNORE";
             return 1;
         }
-        /** XML COLUMN PARSER **/
+        // XML COLUMN PARSER
         String checkStat = myosconfig.getStat(columns, firstdatacolumn);
         if (checkStat != null) {
             Object obj = ListofGraph.get(checkStat);

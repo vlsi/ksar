@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package net.atomique.ksar;
 
 import java.text.ParseException;
@@ -14,10 +9,6 @@ import net.atomique.ksar.Parser.Linux;
 import net.atomique.ksar.XML.OSConfig;
 import org.jfree.data.time.Second;
 
-/**
- *
- * @author alex
- */
 public abstract class AllParser {
 
      
