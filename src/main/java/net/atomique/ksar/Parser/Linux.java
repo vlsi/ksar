@@ -1,8 +1,8 @@
 package net.atomique.ksar.Parser;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
 import net.atomique.ksar.Config;
@@ -81,15 +81,16 @@ public class Linux extends OSParser {
 
         try {
             if ( timeColumn == 2 ) {
-                parsedate = new SimpleDateFormat(timeFormat, Locale.US).parse(columns[0]+" "+columns[1]);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat,Locale.US);
+                parsetime = LocalTime.parse(columns[0]+" "+columns[1], formatter);
             } else {
-                parsedate = new SimpleDateFormat(timeFormat).parse(columns[0]);
+                parsetime = LocalTime.parse(columns[0]);
             }
-            cal.setTime(parsedate);
-            hour = cal.get(Calendar.HOUR_OF_DAY);
-            minute = cal.get(Calendar.MINUTE);
-            second = cal.get(Calendar.SECOND);
+            hour = parsetime.getHour();
+            minute = parsetime.getMinute();
+            second = parsetime.getSecond();
             now = new Second(second, minute, hour, day, month, year);
+
             if (startofstat == null) {
                 startofstat = now;
                 startofgraph = now;
@@ -103,7 +104,7 @@ public class Linux extends OSParser {
                 endofgraph = now;
             }
             firstdatacolumn = timeColumn;
-        } catch (ParseException ex) {
+        } catch (DateTimeParseException ex) {
             System.out.println("unable to parse time " + columns[0]);
             return -1;
         }

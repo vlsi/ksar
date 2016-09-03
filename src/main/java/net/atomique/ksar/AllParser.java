@@ -1,6 +1,7 @@
 package net.atomique.ksar;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Calendar;
@@ -117,6 +118,7 @@ public abstract class AllParser {
 
     protected Calendar cal=Calendar.getInstance();
     protected Date parsedate = null;
+    protected LocalTime parsetime = null;
     protected int day = 0;
     protected int month = 0;
     protected int year = 0;
