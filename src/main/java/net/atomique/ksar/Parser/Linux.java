@@ -45,7 +45,7 @@ public class Linux extends OSParser {
         } else if ("DD/MM/YYYY 23:59:59".equals(LinuxDateFormat)) {
             dateFormat = "dd/MM/yy";
         } else if ("YYYY-MM-DD 23:59:59".equals(LinuxDateFormat)) {
-            dateFormat = "yy-MM-dd";
+            dateFormat = "yyyy-MM-dd";
         }  
     }
 

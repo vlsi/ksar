@@ -1,11 +1,11 @@
 package net.atomique.ksar;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeSet;
-import net.atomique.ksar.Parser.Linux;
 import net.atomique.ksar.XML.OSConfig;
 import org.jfree.data.time.Second;
 
@@ -45,9 +45,9 @@ public abstract class AllParser {
     }
 
      public boolean setDate(String s) {
-        Date dateSimple1;
-        Date dateSimple2;
-        Date dateSimple3;
+         LocalDate currentDate;
+         LocalDate startDate;
+         LocalDate endDate;
         
         if (sarStartDate == null) {
             sarStartDate = s;
@@ -57,20 +57,24 @@ public abstract class AllParser {
         }
         
         try {
-            dateSimple1 = new SimpleDateFormat(dateFormat).parse(s);            
-            cal.setTime(dateSimple1);
-            day=cal.get(cal.DAY_OF_MONTH);
-            month=cal.get(cal.MONTH)+1;
-            year=cal.get(cal.YEAR);
-            dateSimple2 = new SimpleDateFormat(dateFormat).parse(sarStartDate);
-            dateSimple3 = new SimpleDateFormat(dateFormat).parse(sarEndDate);
-        } catch (ParseException e) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
+            currentDate = LocalDate.parse(s, formatter);
+
+            day=currentDate.getDayOfMonth();
+            month=currentDate.getMonthValue();
+            year=currentDate.getYear();
+
+            startDate = LocalDate.parse(sarStartDate, formatter);
+            endDate = LocalDate.parse(sarEndDate, formatter);
+
+        } catch (DateTimeParseException ex) {
             return false;
         }
-        if (dateSimple1.compareTo(dateSimple2) < 0) {
+
+        if (currentDate.compareTo(startDate) < 0) {
             sarStartDate = s;
         }
-        if (dateSimple1.compareTo(dateSimple3) > 0) {
+        if (currentDate.compareTo(endDate) > 0) {
             sarEndDate = s;
         }
         return true;
