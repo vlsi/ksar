@@ -91,16 +91,13 @@ public class Linux extends OSParser {
             second = parsetime.getSecond();
             now = new Second(second, minute, hour, day, month, year);
 
-            if (startofstat == null) {
-                startofstat = now;
+            if (startofgraph == null) {
                 startofgraph = now;
             }
-            if (endofstat == null) {
-                endofstat = now;
+            if (endofgraph == null) {
                 endofgraph = now;
             }
-            if (now.compareTo(endofstat) > 0) {
-                endofstat = now;
+            if (now.compareTo(endofgraph) > 0) {
                 endofgraph = now;
             }
             firstdatacolumn = timeColumn;

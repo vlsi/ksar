@@ -98,8 +98,6 @@ public abstract class AllParser {
     }
 
 
-    protected Second startofstat = null;
-    protected Second endofstat = null;
     protected String sarStartDate = null;
     protected String sarEndDate = null;
 

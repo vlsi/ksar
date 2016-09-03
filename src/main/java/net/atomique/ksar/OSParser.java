@@ -141,7 +141,7 @@ public abstract class OSParser extends AllParser {
 
      public void updateUITitle() {
         if ( mysar.getDataView() != null) {
-            mysar.getDataView().setTitle(Hostname + " from "+ startofgraph + " to " + endofgraph);
+            mysar.getDataView().setTitle(String.format("%s from %s to %s", Hostname, get_startofgraph(), get_endofgraph()));
         }
     }
     

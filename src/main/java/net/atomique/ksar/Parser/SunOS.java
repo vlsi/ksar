@@ -76,16 +76,13 @@ public class SunOS extends OSParser {
             minute = cal.get(cal.MINUTE);
             seconde = cal.get(cal.SECOND);
             now = new Second(seconde, minute, heure, day, month, year);
-            if (startofstat == null) {
-                startofstat = now;
+            if (startofgraph == null) {
                 startofgraph = now;
             }
-            if (endofstat == null) {
-                endofstat = now;
+            if (endofgraph == null) {
                 endofgraph = now;
             }
-            if (now.compareTo(endofstat) > 0) {
-                endofstat = now;
+            if (now.compareTo(endofgraph) > 0) {
                 endofgraph = now;
             }
             firstdatacolumn = 1;
