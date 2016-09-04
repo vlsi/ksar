@@ -8,6 +8,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -88,6 +89,19 @@ public class Graph {
             StackListbyName.put(tmp.getTitle(), tmp2);
         }
     }
+    public int parse_line(LocalDateTime ldt, String s) {
+
+        Second now = new Second(ldt.getSecond(),
+                ldt.getMinute(),
+                ldt.getHour(),
+                ldt.getDayOfMonth(),
+                ldt.getMonthValue(),
+                ldt.getYear());
+
+        parse_line(now, s);
+        return  0;
+    }
+
 
     public int parse_line(Second now, String s) {
         String[] cols = s.split("\\s+");
