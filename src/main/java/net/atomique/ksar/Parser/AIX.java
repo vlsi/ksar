@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar.Parser;
 
 import java.text.ParseException;
@@ -13,10 +9,6 @@ import net.atomique.ksar.Graph.List;
 import net.atomique.ksar.XML.GraphConfig;
 import org.jfree.data.time.Second;
 
-/**
- *
- * @author Max
- */
 public class AIX extends OSParser {
 
 

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar.Parser;
 
 import java.text.ParseException;
@@ -15,10 +11,6 @@ import net.atomique.ksar.XML.HostInfo;
 import net.atomique.ksar.XML.GraphConfig;
 import org.jfree.data.time.Second;
 
-/**
- *
- * @author Max
- */
 public class SunOS extends OSParser {
 
     public void parse_header(String s) {
