@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.TreeSet;
 import net.atomique.ksar.XML.OSConfig;
 import org.jfree.data.time.Second;
@@ -114,8 +112,6 @@ public abstract class AllParser {
     protected OSConfig myosconfig = null;
     protected String ParserName = null;
 
-    protected Calendar cal=Calendar.getInstance();
-    protected Date parsedate = null;
     protected LocalTime parsetime = null;
     protected int day = 0;
     protected int month = 0;

@@ -1,7 +1,5 @@
 package net.atomique.ksar.Parser;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -157,7 +155,5 @@ public class HPUX extends OSParser {
     }
     Second now = null;
     boolean under_average = false;
-    Calendar cal = Calendar.getInstance();
-    Date parsedate = null;
 
 }
