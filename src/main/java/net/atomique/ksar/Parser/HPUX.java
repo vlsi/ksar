@@ -1,9 +1,10 @@
 package net.atomique.ksar.Parser;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.atomique.ksar.OSParser;
@@ -54,12 +55,15 @@ public class HPUX extends OSParser {
 
 
         try {
-            parsedate = new SimpleDateFormat("HH:mm:SS").parse(columns[0]);
-            cal.setTime(parsedate);
-            heure = cal.get(cal.HOUR_OF_DAY);
-            minute = cal.get(cal.MINUTE);
-            seconde = cal.get(cal.SECOND);
+            timeFormat = "HH:mm:SS";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat);
+            parsetime = LocalTime.parse(columns[0], formatter);
+
+            heure = parsetime.getHour();
+            minute = parsetime.getMinute();
+            seconde = parsetime.getSecond();
             now = new Second(seconde, minute, heure, day, month, year);
+
             if (startofgraph == null) {
                 startofgraph =now;
             }
@@ -70,7 +74,7 @@ public class HPUX extends OSParser {
                 endofgraph = now;
             }
             firstdatacolumn = 1;
-        } catch (ParseException ex) {
+        } catch (DateTimeParseException ex) {
             if ( ! "DEVICE".equals(currentStat) && ! "CPU".equals(currentStat)) {
                 System.out.println("unable to parse time " + columns[0]);
                 return -1;

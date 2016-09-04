@@ -84,7 +84,8 @@ public class Linux extends OSParser {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat,Locale.US);
                 parsetime = LocalTime.parse(columns[0]+" "+columns[1], formatter);
             } else {
-                parsetime = LocalTime.parse(columns[0]);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat);
+                parsetime = LocalTime.parse(columns[0],formatter);
             }
             hour = parsetime.getHour();
             minute = parsetime.getMinute();
