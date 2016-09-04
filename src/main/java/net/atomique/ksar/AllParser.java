@@ -1,6 +1,7 @@
 package net.atomique.ksar;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -33,10 +34,30 @@ public abstract class AllParser {
     }
 
     public Second get_startofgraph() {
-        return startofgraph;
+        Second _startofgraph;
+
+        int day=startofgraph.getDayOfMonth();
+        int month=startofgraph.getMonthValue();
+        int year=startofgraph.getYear();
+        int hour = startofgraph.getHour();
+        int minute = startofgraph.getMinute();
+        int second = startofgraph.getSecond();
+
+        _startofgraph = new Second(second, minute, hour, day, month, year);
+        return _startofgraph;
     }
     public Second get_endofgraph() {
-        return endofgraph;
+        Second _endofgraph;
+
+        int day=endofgraph.getDayOfMonth();
+        int month=endofgraph.getMonthValue();
+        int year=endofgraph.getYear();
+        int hour = endofgraph.getHour();
+        int minute = endofgraph.getMinute();
+        int second = endofgraph.getSecond();
+
+        _endofgraph = new Second(second, minute, hour, day, month, year);
+        return _endofgraph;
     }
 
     public String getParserName() {
@@ -59,9 +80,7 @@ public abstract class AllParser {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
             currentDate = LocalDate.parse(s, formatter);
 
-            day=currentDate.getDayOfMonth();
-            month=currentDate.getMonthValue();
-            year=currentDate.getYear();
+            parsedate = currentDate;
 
             startDate = LocalDate.parse(sarStartDate, formatter);
             endDate = LocalDate.parse(sarEndDate, formatter);
@@ -99,8 +118,8 @@ public abstract class AllParser {
     protected String sarStartDate = null;
     protected String sarEndDate = null;
 
-    protected Second startofgraph = null;
-    protected Second endofgraph =null;
+    protected LocalDateTime startofgraph = null;
+    protected LocalDateTime endofgraph =null;
     protected TreeSet<Second> DateSamples = new TreeSet<Second>();
     protected int firstdatacolumn =0;
 
@@ -113,9 +132,8 @@ public abstract class AllParser {
     protected String ParserName = null;
 
     protected LocalTime parsetime = null;
-    protected int day = 0;
-    protected int month = 0;
-    protected int year = 0;
+    protected LocalDate parsedate = null;
+
     protected String currentStat = "NONE";
     protected String dateFormat = "MM/dd/yy";
     protected String timeFormat = "HH:mm:ss";

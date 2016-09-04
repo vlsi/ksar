@@ -1,5 +1,6 @@
 package net.atomique.ksar.Parser;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -27,10 +28,6 @@ public class AIX extends OSParser {
 
     @Override
     public int parse(String line, String[] columns) {
-        int heure = 0;
-        int minute = 0;
-        int seconde = 0;
-
 
         if ("Average".equals(columns[0])) {
             under_average = true;
@@ -55,19 +52,17 @@ public class AIX extends OSParser {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat);
             parsetime = LocalTime.parse(columns[0],formatter);
 
-            heure = parsetime.getHour();
-            minute = parsetime.getMinute();
-            seconde = parsetime.getSecond();
-            now = new Second(seconde, minute, heure, day, month, year);
+            LocalDateTime nowStat;
+            nowStat = LocalDateTime.of(parsedate, parsetime);
 
             if (startofgraph == null) {
-                startofgraph =now;
+                startofgraph =nowStat;
             }
             if ( endofgraph == null) {
-                endofgraph = now;
+                endofgraph = nowStat;
             }
-            if (now.compareTo(endofgraph) > 0) {
-                endofgraph = now;
+            if (nowStat.compareTo(endofgraph) > 0) {
+                endofgraph = nowStat;
             }
             firstdatacolumn = 1;
         } catch (DateTimeParseException ex) {
@@ -140,7 +135,16 @@ public class AIX extends OSParser {
         if (currentStatObj == null) {
             return -1;
         } else {
+
+            Second now = new Second(parsetime.getSecond(),
+                    parsetime.getMinute(),
+                    parsetime.getHour(),
+                    parsedate.getDayOfMonth(),
+                    parsedate.getMonthValue(),
+                    parsedate.getYear());
+
             DateSamples.add(now);
+
             if (currentStatObj instanceof Graph) {
                 Graph ag = (Graph) currentStatObj;
                 return ag.parse_line(now, line);
@@ -159,6 +163,5 @@ public class AIX extends OSParser {
         }
     }
 
-    Second now = null;
     boolean under_average = false;
 }
