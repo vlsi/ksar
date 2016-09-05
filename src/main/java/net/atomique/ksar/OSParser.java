@@ -1,18 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar;
 
-import java.util.Date;
+import java.time.DateTimeException;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.HashMap;
 import java.util.Map;
 import net.atomique.ksar.XML.OSConfig;
 
-/**
- *
- * @author Max
- */
 public abstract class OSParser extends AllParser {
 
     public OSParser () {
@@ -141,7 +135,31 @@ public abstract class OSParser extends AllParser {
 
      public void updateUITitle() {
         if ( mysar.getDataView() != null) {
-            mysar.getDataView().setTitle(String.format("%s from %s to %s", Hostname, get_startofgraph(), get_endofgraph()));
+
+            String asFormattedDateTimeStart = null;
+            String asFormattedDateTimeEnd = null;
+
+            try{
+
+                //Locale test = new Locale(System.getProperty("user.language"), System.getProperty("user.country"));
+                DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT); //.withLocale(test);
+
+                if (startofgraph != null) {
+                    asFormattedDateTimeStart = startofgraph.format(formatter);
+                }
+                if (endofgraph != null)
+                {
+                    //asFormattedDateTimeEnd = endofgraph.format(DateTimeFormatter.ISO_DATE_TIME);
+                    asFormattedDateTimeEnd = endofgraph.format(formatter);
+                }
+
+            } catch (DateTimeException ex) {
+                System.out.println("unable to format time");
+            }
+
+            if (asFormattedDateTimeStart != null && asFormattedDateTimeEnd != null ) {
+                mysar.getDataView().setTitle(String.format("%s from %s to %s", Hostname, asFormattedDateTimeStart, asFormattedDateTimeEnd));
+            }
         }
     }
     
