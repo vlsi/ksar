@@ -310,8 +310,8 @@
                 <Plot Title="free">
                     <cols>pgfree/s pgscank/s pgscand/s pgsteal/s</cols>
                 </Plot>
-                <Plot Title="vmeff">
-                    <cols>vmeff</cols>
+                <Plot Title="%vmeff">
+                    <cols>%vmeff</cols>
                 </Plot>
             </Graph>
             <Graph name="DEV_OLD" Title="Devices" type="multiple">
