@@ -422,7 +422,7 @@
             </Graph>
             <Graph name="NFSM" Title="NFS Server" type="unique">
                 <Plot Title="call">
-                    <cols>call/s badcalls/s</cols>
+                    <cols>scall/s badcall/s</cols>
                 </Plot>
                 <Plot Title="I/O">
                     <cols>packet/s udp/s tcp/s</cols>
