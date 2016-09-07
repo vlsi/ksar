@@ -220,8 +220,16 @@
                 <headerstr>ierr6/s idtunr6/s odtunr6/s  itmex6/s  otmex6/s iprmpb6/s oprmpb6/s iredir6/s oredir6/s ipck2b6/s opck2b6/s</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
-            <Stat name="miscip16">
-                <headerstr> CPU MHz</headerstr>
+            <Stat name="misci_temp">
+                <headerstr>TEMP degC %temp DEVICE</headerstr>
+                <graphname>IGNORE</graphname>
+            </Stat>
+            <Stat name="misci_usb">
+                <headerstr>BUS idvendor idprod maxpower manufact</headerstr>
+                <graphname>IGNORE</graphname>
+            </Stat>
+            <Stat name="misci_mountedfs">
+                <headerstr>MBfsfree MBfsused %fsused %ufsused Ifree Iused %Iused FILESYSTEM</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
             <Stat name="cpu7">
