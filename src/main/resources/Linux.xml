@@ -232,6 +232,10 @@
                 <headerstr>MBfsfree MBfsused %fsused %ufsused Ifree Iused %Iused FILESYSTEM</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
+            <Stat name="cpu_mhz">
+                <headerstr>CPU MHz</headerstr>
+                <graphname>CPU_MHZ</graphname>
+            </Stat>
             <Stat name="cpu7">
                 <headerstr>CPU %usr %nice %sys %iowait %steal %irq %soft %guest %gnice %idle</headerstr>
                 <graphname>CPU</graphname>
@@ -478,6 +482,11 @@
                 <Plot Title="used [%]">
                     <cols>%hugused</cols>
                     <range>0,100</range>
+                </Plot>
+            </Graph>
+            <Graph name="CPU_MHZ" Title="CPU Frequency" type="multiple">
+                <Plot Title="frequency [MHz]">
+                    <cols>MHz</cols>
                 </Plot>
             </Graph>
         </OSType>
