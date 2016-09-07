@@ -133,7 +133,7 @@ public abstract class OSParser extends AllParser {
         this.ostype = ostype;
     }
 
-     public void updateUITitle() {
+     final public void updateUITitle() {
         if ( mysar.getDataView() != null) {
 
             String asFormattedDateTimeStart = null;

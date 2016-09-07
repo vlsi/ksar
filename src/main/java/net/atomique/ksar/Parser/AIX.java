@@ -152,10 +152,5 @@ public class AIX extends OSParser {
         return -1;
     }
 
-    public void updateUITitle() {
-        if ( mysar.getDataView() != null) {
-            mysar.getDataView().setTitle(Hostname + " from "+ startofgraph + " to " + endofgraph);
-        }
-    }
 
 }
