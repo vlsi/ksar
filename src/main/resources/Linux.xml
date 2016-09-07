@@ -220,9 +220,21 @@
                 <headerstr>ierr6/s idtunr6/s odtunr6/s  itmex6/s  otmex6/s iprmpb6/s oprmpb6/s iredir6/s oredir6/s ipck2b6/s opck2b6/s</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
-            <Stat name="miscip16">
-                <headerstr> CPU MHz</headerstr>
+            <Stat name="misci_temp">
+                <headerstr>TEMP degC %temp DEVICE</headerstr>
                 <graphname>IGNORE</graphname>
+            </Stat>
+            <Stat name="misci_usb">
+                <headerstr>BUS idvendor idprod maxpower manufact</headerstr>
+                <graphname>IGNORE</graphname>
+            </Stat>
+            <Stat name="misci_mountedfs">
+                <headerstr>MBfsfree MBfsused %fsused %ufsused Ifree Iused %Iused FILESYSTEM</headerstr>
+                <graphname>IGNORE</graphname>
+            </Stat>
+            <Stat name="cpu_mhz">
+                <headerstr>CPU MHz</headerstr>
+                <graphname>CPU_MHZ</graphname>
             </Stat>
             <Stat name="cpu7">
                 <headerstr>CPU %usr %nice %sys %iowait %steal %irq %soft %guest %gnice %idle</headerstr>
@@ -310,8 +322,8 @@
                 <Plot Title="free">
                     <cols>pgfree/s pgscank/s pgscand/s pgsteal/s</cols>
                 </Plot>
-                <Plot Title="vmeff">
-                    <cols>vmeff</cols>
+                <Plot Title="%vmeff">
+                    <cols>%vmeff</cols>
                 </Plot>
             </Graph>
             <Graph name="DEV_OLD" Title="Devices" type="multiple">
@@ -322,13 +334,8 @@
                     <cols>blks/s</cols>
                 </Plot>
             </Graph>
-            <Graph name="DEV" Title="Devices" type="multiple">
-                <Plot Title="tps">
-                    <cols>tps</cols>
-                </Plot>
-            </Graph>
             <Graph name="DEV" Title="Devices (Block)" type="multiple">
-                <Plot Title="TPS">
+                <Plot Title="tps">
                     <cols>tps</cols>
                 </Plot>
                 <Plot Title="sector">
@@ -427,7 +434,7 @@
             </Graph>
             <Graph name="NFSM" Title="NFS Server" type="unique">
                 <Plot Title="call">
-                    <cols>call/s badcalls/s</cols>
+                    <cols>scall/s badcall/s</cols>
                 </Plot>
                 <Plot Title="I/O">
                     <cols>packet/s udp/s tcp/s</cols>
@@ -475,6 +482,11 @@
                 <Plot Title="used [%]">
                     <cols>%hugused</cols>
                     <range>0,100</range>
+                </Plot>
+            </Graph>
+            <Graph name="CPU_MHZ" Title="CPU Frequency" type="multiple">
+                <Plot Title="frequency [MHz]">
+                    <cols>MHz</cols>
                 </Plot>
             </Graph>
         </OSType>
