@@ -1,22 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * LinuxDateFormat.java
- *
- * Created on 1 sept. 2010, 13:50:29
- */
-
 package net.atomique.ksar.UI;
 
 import javax.swing.DefaultComboBoxModel;
 
-/**
- *
- * @author alex
- */
 public class LinuxDateFormat extends javax.swing.JDialog {
 
     /** Creates new form LinuxDateFormat */

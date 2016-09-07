@@ -1,27 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar.Parser;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import net.atomique.ksar.OSParser;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.Graph.List;
 import net.atomique.ksar.XML.GraphConfig;
-import org.jfree.data.time.Second;
 
-/**
- *
- * @author Max
- */
 public class HPUX extends OSParser {
+
+    boolean under_average = false;
 
     public void parse_header(String s) {
         String[] columns = s.split("\\s+");
@@ -37,10 +28,6 @@ public class HPUX extends OSParser {
     
     @Override
     public int parse(String line, String[] columns) {
-        int heure = 0;
-        int minute = 0;
-        int seconde = 0;
-
 
         if ("Average".equals(columns[0])) {
             under_average = true;
@@ -62,26 +49,24 @@ public class HPUX extends OSParser {
 
 
         try {
-            parsedate = new SimpleDateFormat("HH:mm:SS").parse(columns[0]);
-            cal.setTime(parsedate);
-            heure = cal.get(cal.HOUR_OF_DAY);
-            minute = cal.get(cal.MINUTE);
-            seconde = cal.get(cal.SECOND);
-            now = new Second(seconde, minute, heure, day, month, year);
-            if (startofstat == null) {
-                startofstat = now;
-                startofgraph =now;
+            timeFormat = "HH:mm:SS";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat);
+            parsetime = LocalTime.parse(columns[0], formatter);
+
+            LocalDateTime nowStat;
+            nowStat = LocalDateTime.of(parsedate, parsetime);
+
+            if (startofgraph == null) {
+                startofgraph =nowStat;
             }
-            if ( endofstat == null) {
-                endofstat = now;
-                endofgraph = now;
+            if ( endofgraph == null) {
+                endofgraph = nowStat;
             }
-            if (now.compareTo(endofstat) > 0) {
-                endofstat = now;
-                endofgraph = now;
+            if (nowStat.compareTo(endofgraph) > 0) {
+                endofgraph = nowStat;
             }
             firstdatacolumn = 1;
-        } catch (ParseException ex) {
+        } catch (DateTimeParseException ex) {
             if ( ! "DEVICE".equals(currentStat) && ! "CPU".equals(currentStat)) {
                 System.out.println("unable to parse time " + columns[0]);
                 return -1;
@@ -151,20 +136,20 @@ public class HPUX extends OSParser {
         if (currentStatObj == null) {
             return -1;
         } else {
+
+            LocalDateTime nowStat = LocalDateTime.of(parsedate, parsetime);
+
+            DateSamples.add(nowStat);
+
             if (currentStatObj instanceof Graph) {
                 Graph ag = (Graph) currentStatObj;
-                return ag.parse_line(now, line);
+                return ag.parse_line(nowStat, line);
             }
             if (currentStatObj instanceof List) {
                 List ag = (List) currentStatObj;
-                return ag.parse_line(now, line);
+                return ag.parse_line(nowStat, line);
             }
         }
         return -1;
     }
-    Second now = null;
-    boolean under_average = false;
-    Calendar cal = Calendar.getInstance();
-    Date parsedate = null;
-
 }

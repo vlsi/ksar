@@ -1,12 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar.Export;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,10 +18,6 @@ import net.atomique.ksar.kSar;
 import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.Second;
 
-/**
- *
- * @author Max
- */
 public class FileCSV implements Runnable {
 
     public FileCSV(String filename, kSar hissar) {
@@ -54,9 +47,17 @@ public class FileCSV implements Runnable {
         
         export_treenode_header(mysar.graphtree);
         tmpcsv.append("\n");
-        Iterator<Second> ite = mysar.myparser.getDateSamples().iterator();
+        Iterator<LocalDateTime> ite = mysar.myparser.getDateSamples().iterator();
         while (ite.hasNext()) {
-            Second tmp = ite.next();
+            LocalDateTime tmpLDT = ite.next();
+
+            Second tmp = new Second(tmpLDT.getSecond(),
+                    tmpLDT.getMinute(),
+                    tmpLDT.getHour(),
+                    tmpLDT.getDayOfMonth(),
+                    tmpLDT.getMonthValue(),
+                    tmpLDT.getYear());
+
             export_treenode_data(mysar.graphtree, tmp);
             tmpcsv.append("\n");
         }

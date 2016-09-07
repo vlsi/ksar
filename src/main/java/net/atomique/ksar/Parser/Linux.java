@@ -1,12 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar.Parser;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
 import net.atomique.ksar.Config;
@@ -16,9 +13,11 @@ import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.Graph.List;
 import net.atomique.ksar.UI.LinuxDateFormat;
 import net.atomique.ksar.XML.GraphConfig;
-import org.jfree.data.time.Second;
 
 public class Linux extends OSParser {
+
+    private String LinuxDateFormat;
+    private LocalTime prevParseTime;
 
     public void parse_header(String s) {
 
@@ -49,7 +48,7 @@ public class Linux extends OSParser {
         } else if ("DD/MM/YYYY 23:59:59".equals(LinuxDateFormat)) {
             dateFormat = "dd/MM/yy";
         } else if ("YYYY-MM-DD 23:59:59".equals(LinuxDateFormat)) {
-            dateFormat = "yy-MM-dd";
+            dateFormat = "yyyy-MM-dd";
         }  
     }
 
@@ -69,10 +68,6 @@ public class Linux extends OSParser {
     
     @Override
     public int parse(String line, String[] columns) {
-        int hour;
-        int minute;
-        int second;
-        Second now;
 
         if ("Average:".equals(columns[0])) {
             currentStat = "NONE";
@@ -85,29 +80,27 @@ public class Linux extends OSParser {
 
         try {
             if ( timeColumn == 2 ) {
-                parsedate = new SimpleDateFormat(timeFormat, Locale.US).parse(columns[0]+" "+columns[1]);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat,Locale.US);
+                parsetime = LocalTime.parse(columns[0]+" "+columns[1], formatter);
             } else {
-                parsedate = new SimpleDateFormat(timeFormat).parse(columns[0]);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat);
+                parsetime = LocalTime.parse(columns[0],formatter);
             }
-            cal.setTime(parsedate);
-            hour = cal.get(Calendar.HOUR_OF_DAY);
-            minute = cal.get(Calendar.MINUTE);
-            second = cal.get(Calendar.SECOND);
-            now = new Second(second, minute, hour, day, month, year);
-            if (startofstat == null) {
-                startofstat = now;
-                startofgraph = now;
+
+            LocalDateTime nowStat;
+            nowStat = LocalDateTime.of(parsedate, parsetime);
+
+            if (startofgraph == null) {
+                startofgraph = nowStat;
             }
-            if (endofstat == null) {
-                endofstat = now;
-                endofgraph = now;
+            if (endofgraph == null) {
+                endofgraph = nowStat;
             }
-            if (now.compareTo(endofstat) > 0) {
-                endofstat = now;
-                endofgraph = now;
+            if (nowStat.compareTo(endofgraph) > 0) {
+                endofgraph = nowStat;
             }
             firstdatacolumn = timeColumn;
-        } catch (ParseException ex) {
+        } catch (DateTimeParseException ex) {
             System.out.println("unable to parse time " + columns[0]);
             return -1;
         }
@@ -118,7 +111,7 @@ public class Linux extends OSParser {
             currentStat = "IGNORE";
             return 1;
         }
-        /** XML COLUMN PARSER **/
+        // XML COLUMN PARSER
         String checkStat = myosconfig.getStat(columns, firstdatacolumn);
         if (checkStat != null) {
             Object obj = ListofGraph.get(checkStat);
@@ -176,20 +169,21 @@ public class Linux extends OSParser {
         if (currentStatObj == null) {
             return -1;
         } else {
-            DateSamples.add(now);
+
+            LocalDateTime nowStat = LocalDateTime.of(parsedate, parsetime);
+
+            DateSamples.add(nowStat);
+
             if (currentStatObj instanceof Graph) {
                 Graph ag = (Graph) currentStatObj;
-                return ag.parse_line(now, line);
+                return ag.parse_line(nowStat, line);
             }
             if (currentStatObj instanceof List) {
                 List ag = (List) currentStatObj;
-                return ag.parse_line(now, line);
+                return ag.parse_line(nowStat, line);
             }
         }
         return -1;
     }
 
-
-    private String LinuxDateFormat;
-    
 }

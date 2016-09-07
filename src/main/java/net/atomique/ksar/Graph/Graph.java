@@ -8,6 +8,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -88,6 +89,19 @@ public class Graph {
             StackListbyName.put(tmp.getTitle(), tmp2);
         }
     }
+    public int parse_line(LocalDateTime ldt, String s) {
+
+        Second now = new Second(ldt.getSecond(),
+                ldt.getMinute(),
+                ldt.getHour(),
+                ldt.getDayOfMonth(),
+                ldt.getMonthValue(),
+                ldt.getYear());
+
+        parse_line(now, s);
+        return  0;
+    }
+
 
     public int parse_line(Second now, String s) {
         String[] cols = s.split("\\s+");
@@ -279,15 +293,20 @@ public class Graph {
         return printSelected;
     }
 
-    public JFreeChart getgraph(Second g_start, Second g_end) {
+    public JFreeChart getgraph(LocalDateTime start, LocalDateTime end) {
+
         if (mygraph == null) {
-            mygraph = makegraph(g_start, g_end);
+            mygraph = makegraph(start, end);
         } else {
-            if (!axisofdate.getMaximumDate().equals(mysar.myparser.get_endofgraph().getEnd())) {
-                axisofdate.setMaximumDate(mysar.myparser.get_endofgraph().getEnd());
+            //TODO - get rid of Second, convert from LocalDateTime directly to java.util.Date - How to deal with required timezone in that case?
+            java.util.Date getStartofGraphStart = convertLocalDateTimeToSecond(mysar.myparser.get_startofgraph()).getStart();
+            java.util.Date GetEndofGraphEnd = convertLocalDateTimeToSecond(mysar.myparser.get_endofgraph()).getEnd();
+
+            if (!axisofdate.getMinimumDate().equals(getStartofGraphStart)) {
+                axisofdate.setMinimumDate(getStartofGraphStart);
             }
-            if (!axisofdate.getMinimumDate().equals(mysar.myparser.get_startofgraph().getStart())) {
-                axisofdate.setMinimumDate(mysar.myparser.get_startofgraph().getStart());
+            if (!axisofdate.getMaximumDate().equals(GetEndofGraphEnd)) {
+                axisofdate.setMaximumDate(GetEndofGraphEnd);
             }
         }
         return mygraph;
@@ -336,18 +355,23 @@ public class Graph {
             }
         } else {
             if (!mysar.isParsing()) {
-                if (!axisofdate.getMaximumDate().equals(mysar.myparser.get_endofgraph().getEnd())) {
-                    axisofdate.setMaximumDate(mysar.myparser.get_endofgraph().getEnd());
+                //TODO - get rid of Second, convert from LocalDateTime directly to java.util.Date - How to deal with required timezone in that case?
+                java.util.Date getStartofGraphStart = convertLocalDateTimeToSecond(mysar.myparser.get_startofgraph()).getStart();
+                java.util.Date GetEndofGraphEnd = convertLocalDateTimeToSecond(mysar.myparser.get_endofgraph()).getEnd();
+
+                if (!axisofdate.getMinimumDate().equals(getStartofGraphStart)) {
+                    axisofdate.setMinimumDate(getStartofGraphStart);
                 }
-                if (!axisofdate.getMinimumDate().equals(mysar.myparser.get_startofgraph().getStart())) {
-                    axisofdate.setMinimumDate(mysar.myparser.get_startofgraph().getStart());
+                if (!axisofdate.getMaximumDate().equals(GetEndofGraphEnd)) {
+                    axisofdate.setMaximumDate(GetEndofGraphEnd);
                 }
             }
         }
         return chartpanel;
     }
 
-    private JFreeChart makegraph(Second g_start, Second g_end) {
+    private JFreeChart makegraph(LocalDateTime start, LocalDateTime end) {
+
         long begingenerate = System.currentTimeMillis();
 
         CombinedDomainXYPlot plot = new CombinedDomainXYPlot(axisofdate);
@@ -399,7 +423,9 @@ public class Graph {
         if (plot.getSubplots().isEmpty()) {
             return null;
         }
-        if (g_start != null && g_end != null) {
+        if (start != null && end != null) {
+            Second g_start = convertLocalDateTimeToSecond(start);
+            Second g_end = convertLocalDateTimeToSecond(end);
             axisofdate.setRange(g_start.getStart(), g_end.getEnd());
         }
 
@@ -412,6 +438,21 @@ public class Graph {
         }
         return mychart;
     }
+
+    private Second convertLocalDateTimeToSecond(LocalDateTime ldt){
+
+        int day=ldt.getDayOfMonth();
+        int month=ldt.getMonthValue();
+        int year=ldt.getYear();
+        int hour = ldt.getHour();
+        int minute = ldt.getMinute();
+        int second = ldt.getSecond();
+
+        return new Second(second, minute, hour, day, month, year);
+    }
+
+
+
     private DateAxis axisofdate = new DateAxis("");
     private kSar mysar = null;
     private JFreeChart mygraph = null;
