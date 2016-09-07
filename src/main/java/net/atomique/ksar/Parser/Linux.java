@@ -13,9 +13,11 @@ import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.Graph.List;
 import net.atomique.ksar.UI.LinuxDateFormat;
 import net.atomique.ksar.XML.GraphConfig;
-import org.jfree.data.time.Second;
 
 public class Linux extends OSParser {
+
+    private String LinuxDateFormat;
+    private LocalTime prevParseTime;
 
     public void parse_header(String s) {
 
@@ -168,28 +170,20 @@ public class Linux extends OSParser {
             return -1;
         } else {
 
-            Second now = new Second(parsetime.getSecond(),
-                                    parsetime.getMinute(),
-                                    parsetime.getHour(),
-                                    parsedate.getDayOfMonth(),
-                                    parsedate.getMonthValue(),
-                                    parsedate.getYear());
+            LocalDateTime nowStat = LocalDateTime.of(parsedate, parsetime);
 
-            DateSamples.add(now);
+            DateSamples.add(nowStat);
 
             if (currentStatObj instanceof Graph) {
                 Graph ag = (Graph) currentStatObj;
-                return ag.parse_line(now, line);
+                return ag.parse_line(nowStat, line);
             }
             if (currentStatObj instanceof List) {
                 List ag = (List) currentStatObj;
-                return ag.parse_line(now, line);
+                return ag.parse_line(nowStat, line);
             }
         }
         return -1;
     }
 
-
-    private String LinuxDateFormat;
-    
 }

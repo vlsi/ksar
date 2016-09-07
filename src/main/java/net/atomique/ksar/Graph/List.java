@@ -1,11 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package net.atomique.ksar.Graph;
 
 import java.awt.LayoutManager;
+import java.time.LocalDateTime;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import javax.swing.JPanel;
@@ -19,10 +15,6 @@ import net.atomique.ksar.XML.GraphConfig;
 import net.atomique.ksar.kSar;
 import org.jfree.data.time.Second;
 
-/**
- *
- * @author alex
- */
 public class List {
 
     public List(kSar hissar,  GraphConfig g,String stitle, String sheader, int i) {
@@ -34,6 +26,18 @@ public class List {
         ParentNodeInfo tmp = new ParentNodeInfo(Title, this);
         parentTreeNode = new SortedTreeNode(tmp);
         mysar.add2tree(mysar.graphtree, parentTreeNode);
+    }
+
+    public int parse_line(LocalDateTime ldt, String s) {
+
+        Second now = new Second(ldt.getSecond(),
+                ldt.getMinute(),
+                ldt.getHour(),
+                ldt.getDayOfMonth(),
+                ldt.getMonthValue(),
+                ldt.getYear());
+
+        return parse_line(now, s);
     }
 
     public int parse_line(Second now,String s) {

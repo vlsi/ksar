@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.TreeSet;
 import net.atomique.ksar.XML.OSConfig;
-import org.jfree.data.time.Second;
 
 public abstract class AllParser {
 
@@ -33,31 +32,12 @@ public abstract class AllParser {
         return -1;
     }
 
-    public Second get_startofgraph() {
-        Second _startofgraph;
-
-        int day=startofgraph.getDayOfMonth();
-        int month=startofgraph.getMonthValue();
-        int year=startofgraph.getYear();
-        int hour = startofgraph.getHour();
-        int minute = startofgraph.getMinute();
-        int second = startofgraph.getSecond();
-
-        _startofgraph = new Second(second, minute, hour, day, month, year);
-        return _startofgraph;
+    public LocalDateTime get_startofgraph() {
+        return startofgraph;
     }
-    public Second get_endofgraph() {
-        Second _endofgraph;
 
-        int day=endofgraph.getDayOfMonth();
-        int month=endofgraph.getMonthValue();
-        int year=endofgraph.getYear();
-        int hour = endofgraph.getHour();
-        int minute = endofgraph.getMinute();
-        int second = endofgraph.getSecond();
-
-        _endofgraph = new Second(second, minute, hour, day, month, year);
-        return _endofgraph;
+    public LocalDateTime get_endofgraph() {
+        return endofgraph;
     }
 
     public String getParserName() {
@@ -106,7 +86,7 @@ public abstract class AllParser {
         }
     }
 
-    public TreeSet<Second> getDateSamples() {
+    public TreeSet<LocalDateTime> getDateSamples() {
         return DateSamples;
     }
 
@@ -120,7 +100,7 @@ public abstract class AllParser {
 
     protected LocalDateTime startofgraph = null;
     protected LocalDateTime endofgraph =null;
-    protected TreeSet<Second> DateSamples = new TreeSet<Second>();
+    protected TreeSet<LocalDateTime> DateSamples = new TreeSet<LocalDateTime>();
     protected int firstdatacolumn =0;
 
     abstract public String getInfo();

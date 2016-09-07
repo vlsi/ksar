@@ -12,9 +12,10 @@ import net.atomique.ksar.Graph.List;
 import net.atomique.ksar.UI.HostInfoView;
 import net.atomique.ksar.XML.HostInfo;
 import net.atomique.ksar.XML.GraphConfig;
-import org.jfree.data.time.Second;
 
 public class SunOS extends OSParser {
+
+    boolean under_average = false;
 
     public void parse_header(String s) {
         String[] columns = s.split("\\s+");
@@ -147,25 +148,20 @@ public class SunOS extends OSParser {
             return -1;
         } else {
 
-            Second now = new Second(parsetime.getSecond(),
-                    parsetime.getMinute(),
-                    parsetime.getHour(),
-                    parsedate.getDayOfMonth(),
-                    parsedate.getMonthValue(),
-                    parsedate.getYear());
+            LocalDateTime nowStat = LocalDateTime.of(parsedate, parsetime);
 
-            DateSamples.add(now);
+            DateSamples.add(nowStat);
 
             if (currentStatObj instanceof Graph) {
                 Graph ag = (Graph) currentStatObj;
-                return ag.parse_line(now, line);
+                return ag.parse_line(nowStat, line);
             }
             if (currentStatObj instanceof List) {
                 List ag = (List) currentStatObj;
-                return ag.parse_line(now, line);
+                return ag.parse_line(nowStat, line);
             }
         }
         return -1;
     }
-    boolean under_average = false;
+
 }
