@@ -104,10 +104,6 @@
                 <headerstr>TTY rcvin/s xmtin/s framerr/s prtyerr/s brk/s ovrun/s</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
-            <Stat name="kmem2">
-                <headerstr>kbmemfree kbmemused %memused kbbuffers kbcached kbcommit %commit</headerstr>
-                <graphname>KMEM</graphname>
-            </Stat>
             <Stat name="inet10">
                 <headerstr>IFACE rxpck/s txpck/s rxbyt/s txbyt/s rxcmp/s txcmp/s rxmcst/s</headerstr>
                 <graphname>INET1</graphname>
@@ -126,11 +122,11 @@
             </Stat>
             <Stat name="kmem3">
                 <headerstr>kbmemfree kbmemused %memused kbmemshrd kbbuffers kbcached kbswpfree kbswpused %swpused</headerstr>
-                <graphname>KMEM</graphname>
+                <graphname>KMEM_OLD</graphname>
             </Stat>
             <Stat name="kmem4">
                 <headerstr>kbmemfree kbmemused %memused kbbuffers kbcached kbswpfree kbswpused %swpused kbswpcad</headerstr>
-                <graphname>KMEM</graphname>
+                <graphname>KMEM_OLD</graphname>
             </Stat>
             <Stat name="dev4">
                 <headerstr>DEV tps rd_sec/s wr_sec/s avgrq-sz avgqu-sz await svctm %util</headerstr>
@@ -240,9 +236,17 @@
                 <headerstr>CPU %usr %nice %sys %iowait %steal %irq %soft %guest %gnice %idle</headerstr>
                 <graphname>CPU</graphname>
             </Stat>
-            <Stat name="kmem5">
+            <Stat name="kmem_8.1.5">
+                <headerstr>kbmemfree kbmemused %memused kbbuffers kbcached kbcommit %commit</headerstr>
+                <graphname>KMEM_8.1.5</graphname>
+            </Stat>
+            <Stat name="kmem_9.1.7">
+                <headerstr>kbmemfree kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact</headerstr>
+                <graphname>KMEM_9.1.7</graphname>
+            </Stat>
+            <Stat name="kmem_10.1.2">
                 <headerstr>kbmemfree kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact kbdirty</headerstr>
-                <graphname>KMEM2</graphname>
+                <graphname>KMEM_9.1.7</graphname>
             </Stat>
             <Stat name="hpage">
                 <headerstr>kbhugfree kbhugused %hugused</headerstr>
@@ -361,8 +365,8 @@
                     <cols>frmpg/s shmpg/s bufpg/s campg/s</cols>
                 </Plot>
             </Graph>
-            <Graph name="KMEM" Title="KMem" type="unique">
-                <Plot Title="Memory">
+            <Graph name="KMEM_OLD" Title="KMem" type="unique">
+                <Plot Title="Memory" size="2">
                     <cols>kbmemfree kbmemused kbmemshrd kbbuffers kbcached kbcommit</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
@@ -371,7 +375,35 @@
                     <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="%">
-                    <cols>%memused %swpused %commit</cols>
+                    <cols>%memused %swpused</cols>
+                    <range>0,100</range>
+                </Plot>
+            </Graph>
+            <Graph name="KMEM_8.1.5" Title="KMem" type="unique">
+                <Plot Title="Memory" size="2">
+                    <cols>kbmemfree kbmemused kbbuffers kbcached kbcommit</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Memory [%]">
+                    <cols>%memused %commit</cols>
+                    <range>0,100</range>
+                </Plot>
+            </Graph>
+            <Graph name="KMEM_9.1.7" Title="KMem" type="unique">
+                <Plot Title="Memory" size="2">
+                    <cols>kbmemfree kbmemused kbbuffers kbcached kbcommit</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Active">
+                    <cols>kbactive kbinact</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Dirty">
+                    <cols>kbdirty</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Memory [%]">
+                    <cols>%memused %commit</cols>
                     <range>0,100</range>
                 </Plot>
             </Graph>
@@ -461,16 +493,6 @@
                 </Stack>
                 <Plot Title="Idle [%]" size="1">
                     <cols>%idle</cols>
-                    <range>0,100</range>
-                </Plot>
-            </Graph>
-            <Graph name="KMEM2" Title="KMem" type="unique">
-                <Plot Title="Memory">
-                    <cols>kbmemfree kbmemused kbbuffers kbcached kbcommit kbactive kbinact kbdirty</cols>
-                    <format base="1024" factor="1024" />
-                </Plot>
-                <Plot Title="Memory [%]">
-                    <cols>%memused %commit</cols>
                     <range>0,100</range>
                 </Plot>
             </Graph>
