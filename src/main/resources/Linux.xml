@@ -279,8 +279,9 @@
                 <Plot Title="packet">
                     <cols>rxpck/s txpck/s</cols>
                 </Plot>
-                <Plot Title="bytes">
+                <Plot Title="bandwidth">
                     <cols>rxbyt/s txbyt/s</cols>
+                    <format base="1024" factor="1" />
                 </Plot>
                 <Plot Title="compressed/cast">
                     <cols>rxcmp/s txcmp/s rxmcst/s</cols>
