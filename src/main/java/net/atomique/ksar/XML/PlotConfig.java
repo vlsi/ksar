@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar.XML;
 
 import java.text.NumberFormat;
@@ -9,10 +5,6 @@ import net.atomique.ksar.Graph.IEEE1541Number;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.Range;
 
-/**
- *
- * @author Max
- */
 public class PlotConfig {
 
     public PlotConfig(String s) {
@@ -55,7 +47,8 @@ public class PlotConfig {
 
     public NumberAxis getAxis() {
         NumberAxis tmp = new NumberAxis(Title);
-        if ("1024".equals(base)) {
+
+        if (base == 1024) {
             NumberFormat decimalformat1 = new IEEE1541Number(factor.intValue());
             tmp.setNumberFormatOverride(decimalformat1);
         }
@@ -70,7 +63,7 @@ public class PlotConfig {
         if (s == null) {
             return;
         }
-        base = s;
+        base = Integer.parseUnsignedInt(s);
     }
 
     public void setFactor(String s) {
@@ -88,7 +81,7 @@ public class PlotConfig {
     
 
     private Double factor = null;
-    private String base = null;
+    private int base = 0;
     private Range range = null;
     private int size = 1;
     private String Title = null;
