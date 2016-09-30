@@ -34,11 +34,11 @@
             </Stat>
             <Stat name="page1">
                 <headerstr>frmpg/s bufpg/s campg/s</headerstr>
-                <graphname>PAGE</graphname>
+                <graphname>PAGE_NEW</graphname>
             </Stat>
             <Stat name="page2">
                 <headerstr>frmpg/s shmpg/s bufpg/s campg/s</headerstr>
-                <graphname>PAGE</graphname>
+                <graphname>PAGE_OLD</graphname>
             </Stat>
             <Stat name="load1">
                 <headerstr>runq-sz plist-sz ldavg-1 ldavg-5</headerstr>
@@ -361,7 +361,18 @@
                     <cols>bread/s bwrtn/s</cols>
                 </Plot>
             </Graph>
-            <Graph name="PAGE" Title="Page" type="unique">
+            <Graph name="PAGE_NEW" Title="Memory Pages" type="unique">
+                <Plot Title="freed">
+                    <cols>frmpg/s</cols>
+                </Plot>
+                <Plot Title="buffered">
+                    <cols>bufpg/s</cols>
+                </Plot>
+                <Plot Title="cached">
+                    <cols>campg/s</cols>
+                </Plot>
+            </Graph>
+            <Graph name="PAGE_OLD" Title="Pages" type="unique">
                 <Plot Title="Page">
                     <cols>frmpg/s shmpg/s bufpg/s campg/s</cols>
                 </Plot>
