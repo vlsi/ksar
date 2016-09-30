@@ -50,7 +50,7 @@
             </Stat>
             <Stat name="paging1">
                 <headerstr>pgpgin/s pgpgout/s fault/s majflt/s</headerstr>
-                <graphname>PAGING</graphname>
+                <graphname>PAGING_lt_4.1.7-</graphname>
             </Stat>
             <Stat name="dentunusd1">
                 <headerstr>dentunusd file-nr inode-nr pty-nr</headerstr>
@@ -86,7 +86,7 @@
             </Stat>
             <Stat name="paging2">
                 <headerstr>pgpgin/s pgpgout/s activepg inadtypg inaclnpg inatarpg</headerstr>
-                <graphname>PAGING</graphname>
+                <graphname>PAGING_lt_4.1.7-</graphname>
             </Stat>
             <Stat name="nfsc">
                 <headerstr>call/s retrans/s read/s write/s access/s getatt/s</headerstr>
@@ -314,7 +314,7 @@
                     <cols>coll/s</cols>
                 </Plot>
             </Graph>
-            <Graph name="PAGING" Title="Paging" type="unique">
+            <Graph name="PAGING_lt_4.1.7-" Title="Paging" type="unique">
                 <Plot Title="pgp">
                     <cols>pgpgin/s pgpgout/s</cols>
                 </Plot>
@@ -324,11 +324,20 @@
                 <Plot Title="fault">
                     <cols>fault/s majflt/s</cols>
                 </Plot>
-                <Plot Title="free">
+            </Graph>
+            <Graph name="PAGING" Title="Paging" type="unique">
+                <Plot Title="pgp [KB/s]">
+                    <cols>pgpgin/s pgpgout/s</cols>
+                </Plot>
+                <Plot Title="fault">
+                    <cols>fault/s majflt/s</cols>
+                </Plot>
+                <Plot Title="free/scan/steal">
                     <cols>pgfree/s pgscank/s pgscand/s pgsteal/s</cols>
                 </Plot>
                 <Plot Title="%vmeff">
                     <cols>%vmeff</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
             <Graph name="DEV_OLD" Title="Devices" type="multiple">
