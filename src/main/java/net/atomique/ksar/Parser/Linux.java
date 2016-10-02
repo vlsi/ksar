@@ -41,8 +41,12 @@ public class Linux extends OSParser {
         
         if ("MM/DD/YYYY 23:59:59".equals(LinuxDateFormat)) {
             dateFormat = "MM/dd/yy";
-        } else if ("MM/DD/YYYY 12:59:59 AM|PM".equals(LinuxDateFormat)) {
+        } else if ("MM/DD/YY 12:59:59 AM|PM".equals(LinuxDateFormat)) {
             dateFormat = "MM/dd/yy";
+            timeFormat = "hh:mm:ss a";
+            timeColumn=2;
+        } else if ("YYYY-MM-DD 12:59:59 AM|PM".equals(LinuxDateFormat)) {
+            dateFormat = "yyyy-MM-dd";
             timeFormat = "hh:mm:ss a";
             timeColumn=2;
         } else if ("DD/MM/YYYY 23:59:59".equals(LinuxDateFormat)) {

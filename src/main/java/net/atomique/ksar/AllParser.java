@@ -66,6 +66,7 @@ public abstract class AllParser {
             endDate = LocalDate.parse(sarEndDate, formatter);
 
         } catch (DateTimeParseException ex) {
+            System.out.println("unable to parse date " + s);
             return false;
         }
 
