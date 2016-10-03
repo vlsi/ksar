@@ -34,11 +34,11 @@
             </Stat>
             <Stat name="page1">
                 <headerstr>frmpg/s bufpg/s campg/s</headerstr>
-                <graphname>PAGE</graphname>
+                <graphname>PAGE_NEW</graphname>
             </Stat>
             <Stat name="page2">
                 <headerstr>frmpg/s shmpg/s bufpg/s campg/s</headerstr>
-                <graphname>PAGE</graphname>
+                <graphname>PAGE_OLD</graphname>
             </Stat>
             <Stat name="load1">
                 <headerstr>runq-sz plist-sz ldavg-1 ldavg-5</headerstr>
@@ -50,7 +50,7 @@
             </Stat>
             <Stat name="paging1">
                 <headerstr>pgpgin/s pgpgout/s fault/s majflt/s</headerstr>
-                <graphname>PAGING</graphname>
+                <graphname>PAGING_lt_4.1.7-</graphname>
             </Stat>
             <Stat name="dentunusd1">
                 <headerstr>dentunusd file-nr inode-nr pty-nr</headerstr>
@@ -86,7 +86,7 @@
             </Stat>
             <Stat name="paging2">
                 <headerstr>pgpgin/s pgpgout/s activepg inadtypg inaclnpg inatarpg</headerstr>
-                <graphname>PAGING</graphname>
+                <graphname>PAGING_lt_4.1.7-</graphname>
             </Stat>
             <Stat name="nfsc">
                 <headerstr>call/s retrans/s read/s write/s access/s getatt/s</headerstr>
@@ -314,7 +314,7 @@
                     <cols>coll/s</cols>
                 </Plot>
             </Graph>
-            <Graph name="PAGING" Title="Paging" type="unique">
+            <Graph name="PAGING_lt_4.1.7-" Title="Paging" type="unique">
                 <Plot Title="pgp">
                     <cols>pgpgin/s pgpgout/s</cols>
                 </Plot>
@@ -324,11 +324,21 @@
                 <Plot Title="fault">
                     <cols>fault/s majflt/s</cols>
                 </Plot>
-                <Plot Title="free">
+            </Graph>
+            <Graph name="PAGING" Title="Paging" type="unique">
+                <Plot Title="pgp">
+                    <cols>pgpgin/s pgpgout/s</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="fault">
+                    <cols>fault/s majflt/s</cols>
+                </Plot>
+                <Plot Title="free/scan/steal">
                     <cols>pgfree/s pgscank/s pgscand/s pgsteal/s</cols>
                 </Plot>
                 <Plot Title="%vmeff">
                     <cols>%vmeff</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
             <Graph name="DEV_OLD" Title="Devices" type="multiple">
@@ -361,14 +371,33 @@
                     <cols>bread/s bwrtn/s</cols>
                 </Plot>
             </Graph>
-            <Graph name="PAGE" Title="Page" type="unique">
+            <Graph name="PAGE_NEW" Title="Memory Pages" type="unique">
+                <Plot Title="freed">
+                    <cols>frmpg/s</cols>
+                </Plot>
+                <Plot Title="buffered">
+                    <cols>bufpg/s</cols>
+                </Plot>
+                <Plot Title="cached">
+                    <cols>campg/s</cols>
+                </Plot>
+            </Graph>
+            <Graph name="PAGE_OLD" Title="Pages" type="unique">
                 <Plot Title="Page">
                     <cols>frmpg/s shmpg/s bufpg/s campg/s</cols>
                 </Plot>
             </Graph>
             <Graph name="KMEM_OLD" Title="KMem" type="unique">
                 <Plot Title="Memory" size="2">
-                    <cols>kbmemfree kbmemused kbmemshrd kbbuffers kbcached kbcommit</cols>
+                    <cols>kbmemfree kbmemused kbmemshrd kbcommit</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Cached">
+                    <cols>kbcached</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Buffers">
+                    <cols>kbbuffers</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="Swap">
@@ -382,17 +411,37 @@
             </Graph>
             <Graph name="KMEM_8.1.5" Title="KMem" type="unique">
                 <Plot Title="Memory" size="2">
-                    <cols>kbmemfree kbmemused kbbuffers kbcached kbcommit</cols>
+                    <cols>kbmemfree kbmemused kbcommit</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="Memory [%]">
                     <cols>%memused %commit</cols>
                     <range>0,100</range>
                 </Plot>
+                <Plot Title="Cached">
+                    <cols>kbcached</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Buffers">
+                    <cols>kbbuffers</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
             </Graph>
             <Graph name="KMEM_9.1.7" Title="KMem" type="unique">
                 <Plot Title="Memory" size="2">
-                    <cols>kbmemfree kbmemused kbbuffers kbcached kbcommit</cols>
+                    <cols>kbmemfree kbmemused kbcommit</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Memory [%]">
+                    <cols>%memused %commit</cols>
+                    <range>0,100</range>
+                </Plot>
+                <Plot Title="Cached">
+                    <cols>kbcached</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Buffers">
+                    <cols>kbbuffers</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="Active">
@@ -403,17 +452,13 @@
                     <cols>kbdirty</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
-                <Plot Title="Memory [%]">
-                    <cols>%memused %commit</cols>
-                    <range>0,100</range>
-                </Plot>
             </Graph>
             <Graph name="KSWAP" Title="KSwap" type="unique">
-                <Plot Title="Swap">
+                <Plot Title="Swap" size="2">
                     <cols>kbswpfree kbswpused kbswpcad</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
-                <Plot Title="%">
+                <Plot Title="%" size="1">
                     <cols>%swpused %swpcad</cols>
                     <range>0,100</range>
                 </Plot>
