@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import net.atomique.ksar.Config;
 import net.atomique.ksar.OSParser;
@@ -18,6 +21,10 @@ public class Linux extends OSParser {
 
     private String LinuxDateFormat;
     private LocalTime prevParseTime;
+
+    private final Set<String> IgnoreLinesBeginningWith = new HashSet<String>(Arrays.asList(
+            new String[] {"Average:","##","Summary"}
+    ));
 
     public void parse_header(String s) {
 
@@ -73,7 +80,7 @@ public class Linux extends OSParser {
     @Override
     public int parse(String line, String[] columns) {
 
-        if ("Average:".equals(columns[0])) {
+        if (IgnoreLinesBeginningWith.contains(columns[0])) {
             currentStat = "NONE";
             return 0;
         }
