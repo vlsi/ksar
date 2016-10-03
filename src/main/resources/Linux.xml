@@ -388,7 +388,15 @@
             </Graph>
             <Graph name="KMEM_OLD" Title="KMem" type="unique">
                 <Plot Title="Memory" size="2">
-                    <cols>kbmemfree kbmemused kbmemshrd kbbuffers kbcached kbcommit</cols>
+                    <cols>kbmemfree kbmemused kbmemshrd kbcommit</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Cached">
+                    <cols>kbcached</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Buffers">
+                    <cols>kbbuffers</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="Swap">
@@ -402,17 +410,37 @@
             </Graph>
             <Graph name="KMEM_8.1.5" Title="KMem" type="unique">
                 <Plot Title="Memory" size="2">
-                    <cols>kbmemfree kbmemused kbbuffers kbcached kbcommit</cols>
+                    <cols>kbmemfree kbmemused kbcommit</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="Memory [%]">
                     <cols>%memused %commit</cols>
                     <range>0,100</range>
                 </Plot>
+                <Plot Title="Cached">
+                    <cols>kbcached</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Buffers">
+                    <cols>kbbuffers</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
             </Graph>
             <Graph name="KMEM_9.1.7" Title="KMem" type="unique">
                 <Plot Title="Memory" size="2">
-                    <cols>kbmemfree kbmemused kbbuffers kbcached kbcommit</cols>
+                    <cols>kbmemfree kbmemused kbcommit</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Memory [%]">
+                    <cols>%memused %commit</cols>
+                    <range>0,100</range>
+                </Plot>
+                <Plot Title="Cached">
+                    <cols>kbcached</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Buffers">
+                    <cols>kbbuffers</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="Active">
@@ -422,10 +450,6 @@
                 <Plot Title="Dirty">
                     <cols>kbdirty</cols>
                     <format base="1024" factor="1024" />
-                </Plot>
-                <Plot Title="Memory [%]">
-                    <cols>%memused %commit</cols>
-                    <range>0,100</range>
                 </Plot>
             </Graph>
             <Graph name="KSWAP" Title="KSwap" type="unique">
