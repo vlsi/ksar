@@ -429,11 +429,11 @@
                 </Plot>
             </Graph>
             <Graph name="KSWAP" Title="KSwap" type="unique">
-                <Plot Title="Swap">
+                <Plot Title="Swap" size="2">
                     <cols>kbswpfree kbswpused kbswpcad</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
-                <Plot Title="%">
+                <Plot Title="%" size="1">
                     <cols>%swpused %swpcad</cols>
                     <range>0,100</range>
                 </Plot>
