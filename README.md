@@ -13,7 +13,7 @@ Prerequisite:
 Download a pre-built jar from [GitHub releases page](https://github.com/vlsi/ksar/releases).
 
 ```
-$ java -jar ksar-5.2.1-all.jar
+$ java -jar ksar-5.2.2-all.jar
 ```
 
 Building from source
@@ -25,13 +25,19 @@ Prerequisite:
 
 ```
 $ ./gradlew shadowJar
-$ java -jar build/libs/ksar-5.2.2-SNAPSHOT-all.jar
+$ java -jar build/libs/ksar-5.2.3-SNAPSHOT-all.jar
 ```
 
 Changelog
 ---------
 
 HEAD
+
+v5.2.2 -- 3 November 2016
+* Update IO charts: byte->blocks/s, remove util, remove svctm
+* Linux: add new DateTime format "YYYY-MM-DD 12:59:59 AM" (#52)
+* Linux: charts memory - PAGE / PAGING / SWAP / KMEM (#53)
+* Linux: KMem stat/graph definition (#48)
 
 v5.2.1 -- 6 August 2016
 * Sort elements in human-friendly order: cpu1 -> cpu2 -> ... -> cpu10 -> ...
