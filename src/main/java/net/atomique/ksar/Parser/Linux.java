@@ -45,22 +45,20 @@ public class Linux extends OSParser {
         if ("Always ask".equals(LinuxDateFormat)) {
             askDateFormat("Provide date Format");
         }
-        
-        if ("MM/DD/YYYY 23:59:59".equals(LinuxDateFormat)) {
-            dateFormat = "MM/dd/yy";
-        } else if ("MM/DD/YY 12:59:59 AM|PM".equals(LinuxDateFormat)) {
-            dateFormat = "MM/dd/yy";
+
+        // day and year format specifiers must be lower case, month upper case
+        String[] parts= LinuxDateFormat.split(" ",3);
+
+        dateFormat = parts[0];
+        dateFormat = dateFormat.replaceAll("D{2}","dd");
+        dateFormat = dateFormat.replaceAll("Y{2}","yy");
+
+        //12hour
+        if (parts.length == 3 && parts[2].contains("AM|PM")) {
             timeFormat = "hh:mm:ss a";
             timeColumn=2;
-        } else if ("YYYY-MM-DD 12:59:59 AM|PM".equals(LinuxDateFormat)) {
-            dateFormat = "yyyy-MM-dd";
-            timeFormat = "hh:mm:ss a";
-            timeColumn=2;
-        } else if ("DD/MM/YYYY 23:59:59".equals(LinuxDateFormat)) {
-            dateFormat = "dd/MM/yy";
-        } else if ("YYYY-MM-DD 23:59:59".equals(LinuxDateFormat)) {
-            dateFormat = "yyyy-MM-dd";
-        }  
+        }
+
     }
 
     private void askDateFormat(String s) {
@@ -99,7 +97,11 @@ public class Linux extends OSParser {
             }
 
             LocalDateTime nowStat;
-            nowStat = LocalDateTime.of(parsedate, parsetime);
+            if ( parsedate != null  &&  parsetime != null ){
+                nowStat = LocalDateTime.of(parsedate, parsetime);
+            } else {
+                throw new IllegalArgumentException("date/time is missing");
+            }
 
             if (startofgraph == null) {
                 startofgraph = nowStat;
@@ -111,7 +113,7 @@ public class Linux extends OSParser {
                 endofgraph = nowStat;
             }
             firstdatacolumn = timeColumn;
-        } catch (DateTimeParseException ex) {
+        } catch (DateTimeParseException|IllegalArgumentException ex) {
             System.out.println("unable to parse time " + columns[0]);
             return -1;
         }
