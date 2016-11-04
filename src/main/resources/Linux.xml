@@ -542,8 +542,8 @@
                     <range>0,100</range>
                 </Plot>
             </Graph>
-            <Graph name="HPAGE" Title="Hugepages" type="unique">
-                <Plot Title="Hugepages">
+            <Graph name="HPAGE" Title="HugePages" type="unique">
+                <Plot Title="HugePages">
                     <cols>kbhugfree kbhugused</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
