@@ -65,7 +65,7 @@ public class GraphView extends javax.swing.JPanel {
         graphPanel.setLayout(new java.awt.BorderLayout());
         add(graphPanel, java.awt.BorderLayout.CENTER);
 
-        csvButton.setText("export CSV");
+        csvButton.setText("Export CSV");
         csvButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 csvButtonActionPerformed(evt);
@@ -73,7 +73,7 @@ public class GraphView extends javax.swing.JPanel {
         });
         buttonPanel.add(csvButton);
 
-        jpgBuitton.setText("export JPG");
+        jpgBuitton.setText("Export JPG");
         jpgBuitton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jpgBuittonActionPerformed(evt);
@@ -81,7 +81,7 @@ public class GraphView extends javax.swing.JPanel {
         });
         buttonPanel.add(jpgBuitton);
 
-        pngButton.setText("Expprt PNG");
+        pngButton.setText("Export PNG");
         pngButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pngButtonActionPerformed(evt);
