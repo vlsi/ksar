@@ -163,7 +163,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
             pdfcb.beginText();
             pdfcb.setFontAndSize(bf, 10);
             pdfcb.setColorFill(new BaseColor(0x00, 0x00, 0x00));
-            pdfcb.showTextAligned(PdfContentByte.ALIGN_RIGHT, text, ((pdfheight - pdfmargins) - 10), 10 + pdfmargins, 0);
+            pdfcb.showTextAligned(PdfContentByte.ALIGN_RIGHT, text, ((pdfwidth - pdfmargins) - 10), 10 + pdfmargins, 0);
             pdfcb.endText();
         } catch (Exception e) {
             throw new ExceptionConverter(e);
@@ -194,9 +194,9 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
             pdfcb.beginText();
             pdfcb.setFontAndSize(bf, 48);
             pdfcb.setColorFill(new BaseColor(0x00, 0x00, 0x00));
-            pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, title, ((pdfheight - pdfmargins) / 2), 500, 0);
+            pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, title, ((pdfwidth - pdfmargins) / 2), 500, 0);
             pdfcb.setFontAndSize(bf, 36);
-            pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, t_date, ((pdfheight - pdfmargins) / 2), 300, 0);
+            pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, t_date, ((pdfwidth - pdfmargins) / 2), 300, 0);
             pdfcb.endText();
             document.newPage();
             
