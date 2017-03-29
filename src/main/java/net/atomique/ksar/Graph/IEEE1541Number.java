@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package net.atomique.ksar.Graph;
 
@@ -10,41 +6,39 @@ import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 
-/**
- *
- * @author alex
- */
 public class IEEE1541Number extends NumberFormat {
 
-    private static final long serialVersionUID = 5L;
+    private final static double IEC_kibi = 1024.0;
+    private final static double IEC_mebi = 1048576.0;
+    private final static double IEC_gibi = 1073741824.0;
 
-    public IEEE1541Number() {
-    }
+/*    public IEEE1541Number() {
+    }*/
 
     public IEEE1541Number(int value) {
         kilo = value;
     }
 
     public StringBuffer format(double number, StringBuffer toAppendTo, FieldPosition pos) {
+        DecimalFormat formatter = new DecimalFormat("#,##0.0");
+
         if (kilo == 0) {
-            return toAppendTo.append(number);
+            return toAppendTo.append(formatter.format( number));
         }
-        if ((number * kilo) < 1024) {
-            return toAppendTo.append(number);
+        if ((number * kilo) < IEC_kibi) {
+            return toAppendTo.append(formatter.format( number));
         }
-        if ((number * kilo) < (1024 * 1024)) {
-            DecimalFormat formatter = new DecimalFormat("#,##0.0");
-            toAppendTo.append(formatter.format((double) number / 1024.0)).append(" KB");
+        if ((number * kilo) < IEC_mebi) {
+
+            toAppendTo.append(formatter.format( (number * kilo)/ IEC_kibi)).append(" Ki");
             return toAppendTo;
         }
-        if ((number * kilo) < (1024 * 1024 * 1024)) {
-            DecimalFormat formatter = new DecimalFormat("#,##0.0");
-            toAppendTo.append(formatter.format((double) (number * kilo) / (1024.0 * 1024.0))).append(" MB");
+        if ((number * kilo) < (IEC_gibi)) {
+            toAppendTo.append(formatter.format((number * kilo) / (IEC_mebi))).append(" Mi");
             return toAppendTo;
         }
 
-        DecimalFormat formatter = new DecimalFormat("#,##0.0");
-        toAppendTo.append(formatter.format((double) (number * kilo) / (1024.0 * 1024.0 * 1024.0))).append(" GB");
+        toAppendTo.append(formatter.format((number * kilo) / (IEC_gibi))).append(" Gi");
         return toAppendTo;
     }
 
@@ -56,5 +50,5 @@ public class IEEE1541Number extends NumberFormat {
         return null;
     }
     
-    int kilo = 0;
+    private int kilo = 0;
 }

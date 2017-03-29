@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar.Graph;
 
 import java.awt.BasicStroke;
@@ -45,10 +41,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.TimeTableXYDataset;
 import org.jfree.data.xy.XYDataset;
 
-/**
- *
- * @author alex
- */
+
 public class Graph {
 
     public Graph(kSar hissar, GraphConfig g, String Title, String hdrs, int skipcol, SortedTreeNode pp) {
