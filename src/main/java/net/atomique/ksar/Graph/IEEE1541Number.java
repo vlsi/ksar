@@ -9,8 +9,8 @@ import java.text.ParsePosition;
 public class IEEE1541Number extends NumberFormat {
 
 
-    public IEEE1541Number() {
-    }
+/*    public IEEE1541Number() {
+    }*/
 
     public IEEE1541Number(int value) {
         kilo = value;
@@ -47,5 +47,5 @@ public class IEEE1541Number extends NumberFormat {
         return null;
     }
     
-    int kilo = 0;
+    private int kilo = 0;
 }
