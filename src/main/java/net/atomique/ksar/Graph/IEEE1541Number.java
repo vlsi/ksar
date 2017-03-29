@@ -28,8 +28,9 @@ public class IEEE1541Number extends NumberFormat {
         if ((number * kilo) < IEC_kibi) {
             return toAppendTo.append(formatter.format( number));
         }
-            toAppendTo.append(formatter.format((double) number / 1024.0)).append(" KB");
         if ((number * kilo) < IEC_mebi) {
+
+            toAppendTo.append(formatter.format( (number * kilo)/ IEC_kibi)).append(" Ki");
             return toAppendTo;
         }
         if ((number * kilo) < (IEC_gibi)) {
