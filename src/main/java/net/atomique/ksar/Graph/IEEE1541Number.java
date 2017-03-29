@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package net.atomique.ksar.Graph;
 
@@ -10,13 +6,8 @@ import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 
-/**
- *
- * @author alex
- */
 public class IEEE1541Number extends NumberFormat {
 
-    private static final long serialVersionUID = 5L;
 
     public IEEE1541Number() {
     }
