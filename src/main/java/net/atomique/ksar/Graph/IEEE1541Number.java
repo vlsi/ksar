@@ -17,24 +17,23 @@ public class IEEE1541Number extends NumberFormat {
     }
 
     public StringBuffer format(double number, StringBuffer toAppendTo, FieldPosition pos) {
+        DecimalFormat formatter = new DecimalFormat("#,##0.0");
+
         if (kilo == 0) {
-            return toAppendTo.append(number);
+            return toAppendTo.append(formatter.format( number));
         }
         if ((number * kilo) < 1024) {
-            return toAppendTo.append(number);
+            return toAppendTo.append(formatter.format( number));
         }
         if ((number * kilo) < (1024 * 1024)) {
-            DecimalFormat formatter = new DecimalFormat("#,##0.0");
             toAppendTo.append(formatter.format((double) number / 1024.0)).append(" KB");
             return toAppendTo;
         }
         if ((number * kilo) < (1024 * 1024 * 1024)) {
-            DecimalFormat formatter = new DecimalFormat("#,##0.0");
             toAppendTo.append(formatter.format((double) (number * kilo) / (1024.0 * 1024.0))).append(" MB");
             return toAppendTo;
         }
 
-        DecimalFormat formatter = new DecimalFormat("#,##0.0");
         toAppendTo.append(formatter.format((double) (number * kilo) / (1024.0 * 1024.0 * 1024.0))).append(" GB");
         return toAppendTo;
     }
