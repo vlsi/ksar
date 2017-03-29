@@ -8,6 +8,9 @@ import java.text.ParsePosition;
 
 public class IEEE1541Number extends NumberFormat {
 
+    private final static double IEC_kibi = 1024.0;
+    private final static double IEC_mebi = 1048576.0;
+    private final static double IEC_gibi = 1073741824.0;
 
 /*    public IEEE1541Number() {
     }*/
@@ -22,19 +25,19 @@ public class IEEE1541Number extends NumberFormat {
         if (kilo == 0) {
             return toAppendTo.append(formatter.format( number));
         }
-        if ((number * kilo) < 1024) {
+        if ((number * kilo) < IEC_kibi) {
             return toAppendTo.append(formatter.format( number));
         }
-        if ((number * kilo) < (1024 * 1024)) {
             toAppendTo.append(formatter.format((double) number / 1024.0)).append(" KB");
+        if ((number * kilo) < IEC_mebi) {
             return toAppendTo;
         }
-        if ((number * kilo) < (1024 * 1024 * 1024)) {
-            toAppendTo.append(formatter.format((double) (number * kilo) / (1024.0 * 1024.0))).append(" MB");
+        if ((number * kilo) < (IEC_gibi)) {
+            toAppendTo.append(formatter.format((number * kilo) / (IEC_mebi))).append(" Mi");
             return toAppendTo;
         }
 
-        toAppendTo.append(formatter.format((double) (number * kilo) / (1024.0 * 1024.0 * 1024.0))).append(" GB");
+        toAppendTo.append(formatter.format((number * kilo) / (IEC_gibi))).append(" Gi");
         return toAppendTo;
     }
 
