@@ -45,7 +45,6 @@ public class PlotConfig {
         this.size = tmp.intValue();
     }
 
-
     public NumberAxis getAxis() {
         NumberAxis tmp = new NumberAxis(Title);
 
@@ -89,7 +88,6 @@ public class PlotConfig {
         }
     }
     
-
     private Double factor = null;
     private int base = 0;
     private Range range = null;
