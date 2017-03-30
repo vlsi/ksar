@@ -2,6 +2,7 @@ package net.atomique.ksar.XML;
 
 import java.text.NumberFormat;
 import net.atomique.ksar.Graph.IEEE1541Number;
+import net.atomique.ksar.Graph.ISNumber;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.Range;
 
@@ -53,9 +54,19 @@ public class StackConfig {
 
     public NumberAxis getAxis() {
         NumberAxis tmp = new NumberAxis(Title);
-        if ("1024".equals(base)) {
+
+        if (base == 1024) {
+
             NumberFormat decimalformat1 = new IEEE1541Number(factor.intValue());
             tmp.setNumberFormatOverride(decimalformat1);
+
+        } else if ( base == 1000 ) {
+
+            NumberFormat decimalformat1 = new ISNumber(factor.intValue());
+            tmp.setNumberFormatOverride(decimalformat1);
+
+        }else if ( base != 0) {
+            System.out.println("ERROR: base value is not handled");
         }
 
         if (range != null) {
@@ -68,7 +79,7 @@ public class StackConfig {
         if (s == null) {
             return;
         }
-        base = s;
+        base = Integer.parseUnsignedInt(s);
     }
 
     public void setFactor(String s) {
@@ -84,8 +95,8 @@ public class StackConfig {
         }
     }
 
-    private Double factor = new Double(1);
-    private String base = null;
+    private Double factor = null;
+    private int base = 0;
     private Range range = null;
     private int size = 1;
     private String Title = null;
