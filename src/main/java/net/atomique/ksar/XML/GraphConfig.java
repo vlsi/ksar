@@ -23,25 +23,25 @@ public class GraphConfig {
         return type;
     }
     
-    public void addPlot(PlotConfig s) {
+    public void addPlot(PlotStackConfig s) {
         plotlist.put(s.getTitle(), s);
     }
 
-    public LinkedHashMap<String, PlotConfig> getPlotlist() {
+    public LinkedHashMap<String, PlotStackConfig> getPlotlist() {
         return plotlist;
     }
 
-    public void addStack(StackConfig s) {
+    public void addStack(PlotStackConfig s) {
         stacklist.put(s.getTitle(), s);
     }
 
-    public LinkedHashMap<String, StackConfig> getStacklist() {
+    public LinkedHashMap<String, PlotStackConfig> getStacklist() {
         return stacklist;
     }
 
     private String name =null;
     private String Title = null;
     private String type = null;
-    private LinkedHashMap<String,PlotConfig> plotlist;
-    private LinkedHashMap<String,StackConfig> stacklist;
+    private LinkedHashMap<String,PlotStackConfig> plotlist;
+    private LinkedHashMap<String,PlotStackConfig> stacklist;
 }
