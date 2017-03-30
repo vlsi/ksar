@@ -13,7 +13,7 @@ Prerequisite:
 Download a pre-built jar from [GitHub releases page](https://github.com/vlsi/ksar/releases).
 
 ```
-$ java -jar ksar-5.2.2-all.jar
+$ java -jar ksar-5.2.3-all.jar
 ```
 
 Building from source
@@ -25,13 +25,21 @@ Prerequisite:
 
 ```
 $ ./gradlew shadowJar
-$ java -jar build/libs/ksar-5.2.3-SNAPSHOT-all.jar
+$ java -jar build/libs/ksar-5.2.4-SNAPSHOT-all.jar
 ```
 
 Changelog
 ---------
 
-HEAD
+v5.2.3 -- 30 March 2017
+* support more date/time formats 
+    * "MM/DD/YY 23:59:59"
+    * "MM/DD/YYYY 12:59:59 AM|PM"
+    * "DD/MM/YYYY 12:59:59 AM|PM"
+
+* fix align the page (#61)
+* fix issue (#64) - returning wrong unit for small values
+
 
 v5.2.2 -- 3 November 2016
 * Update IO charts: byte->blocks/s, remove util, remove svctm
