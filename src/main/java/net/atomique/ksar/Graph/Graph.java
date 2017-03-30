@@ -17,8 +17,7 @@ import net.atomique.ksar.UI.SortedTreeNode;
 import net.atomique.ksar.UI.TreeNodeInfo;
 import net.atomique.ksar.XML.ColumnConfig;
 import net.atomique.ksar.XML.GraphConfig;
-import net.atomique.ksar.XML.PlotConfig;
-import net.atomique.ksar.XML.StackConfig;
+import net.atomique.ksar.XML.PlotStackConfig;
 import net.atomique.ksar.XML.StatConfig;
 import net.atomique.ksar.kSar;
 import org.jfree.chart.ChartPanel;
@@ -73,7 +72,7 @@ public class Graph {
             Stats.add(new TimeSeries(HeaderStr[i]));
         }
         // create stack
-        for (StackConfig tmp : graphconfig.getStacklist().values()) {
+        for (PlotStackConfig tmp : graphconfig.getStacklist().values()) {
             TimeTableXYDataset tmp2 = new TimeTableXYDataset();
             String[] s = tmp.getHeaderStr().split("\\s+");
             for (String value : s) {
@@ -369,7 +368,7 @@ public class Graph {
 
         CombinedDomainXYPlot plot = new CombinedDomainXYPlot(axisofdate);
         // do the stacked stuff
-        for (StackConfig tmp : graphconfig.getStacklist().values()) {
+        for (PlotStackConfig tmp : graphconfig.getStacklist().values()) {
             if (tmp == null) {
                 continue;
             }
@@ -390,7 +389,7 @@ public class Graph {
             }
         }
         // do the line stuff
-        for (PlotConfig tmp : graphconfig.getPlotlist().values()) {
+        for (PlotStackConfig tmp : graphconfig.getPlotlist().values()) {
             XYItemRenderer renderer = new StandardXYItemRenderer();
             ArrayList<String> t = new ArrayList<String>();
             String[] s = tmp.getHeaderStr().split("\\s+");

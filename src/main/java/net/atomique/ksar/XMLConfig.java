@@ -19,8 +19,7 @@ import net.atomique.ksar.XML.ColumnConfig;
 import net.atomique.ksar.XML.GraphConfig;
 import net.atomique.ksar.XML.HostInfo;
 import net.atomique.ksar.XML.OSConfig;
-import net.atomique.ksar.XML.PlotConfig;
-import net.atomique.ksar.XML.StackConfig;
+import net.atomique.ksar.XML.PlotStackConfig;
 import net.atomique.ksar.XML.StatConfig;
 import org.xml.sax.Attributes;
 import org.xml.sax.EntityResolver;
@@ -127,7 +126,7 @@ public class XMLConfig extends DefaultHandler {
                 SortedSet<String> sortedset4 = new TreeSet<String>(tmp3.getPlotlist().keySet());
                 Iterator<String> it4 = sortedset4.iterator();
                 while (it4.hasNext()) {
-                    PlotConfig tmp4 = (PlotConfig) tmp3.getPlotlist().get(it4.next());
+                    PlotStackConfig tmp4 = (PlotStackConfig) tmp3.getPlotlist().get(it4.next());
                     System.out.println("----PLOT---- "
                             + tmp4.getTitle() + "=> "
                             + tmp4.getHeaderStr());
@@ -205,7 +204,7 @@ public class XMLConfig extends DefaultHandler {
                 }
                 if (currentGraph != null) {
                     if ("Plot".equals(qName)) {
-                        currentPlot = new PlotConfig(attributes.getValue("Title"));
+                        currentPlot = new PlotStackConfig(attributes.getValue("Title"));
                         String size_tmp = attributes.getValue("size");
                         if (size_tmp != null) {
                             currentPlot.setSize(size_tmp);
@@ -213,7 +212,7 @@ public class XMLConfig extends DefaultHandler {
                         currentGraph.addPlot(currentPlot);
                     }
                     if ("Stack".equals(qName)) {
-                        currentStack = new StackConfig(attributes.getValue("Title"));
+                        currentStack = new PlotStackConfig(attributes.getValue("Title"));
                         String size_tmp = attributes.getValue("size");
                         if (size_tmp != null) {
                             currentStack.setSize(size_tmp);
@@ -365,8 +364,8 @@ public class XMLConfig extends DefaultHandler {
     private OSConfig currentOS = null;
     private StatConfig currentStat = null;
     private GraphConfig currentGraph = null;
-    private PlotConfig currentPlot = null;
-    private StackConfig currentStack = null;
+    private PlotStackConfig currentPlot = null;
+    private PlotStackConfig currentStack = null;
     private CnxHistory currentCnx = null;
     private HostInfo currentHost = null;
 

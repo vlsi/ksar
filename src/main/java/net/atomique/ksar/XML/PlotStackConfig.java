@@ -6,9 +6,9 @@ import net.atomique.ksar.Graph.ISNumber;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.Range;
 
-public class PlotConfig {
+public class PlotStackConfig {
 
-    public PlotConfig(String s) {
+    public PlotStackConfig(String s) {
         Title = s;
     }
 
