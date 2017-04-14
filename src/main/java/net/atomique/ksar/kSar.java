@@ -129,9 +129,7 @@ public class kSar {
                             }
                         }
                     }
-                } catch (InstantiationException ex) {
-                    Logger.getLogger(kSar.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IllegalAccessException ex) {
+                } catch (InstantiationException | IllegalAccessException ex) {
                     Logger.getLogger(kSar.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
