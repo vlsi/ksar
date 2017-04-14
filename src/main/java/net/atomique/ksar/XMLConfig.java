@@ -106,7 +106,7 @@ public class XMLConfig extends DefaultHandler {
         Iterator<String> it = sortedset.iterator();
         while (it.hasNext()) {
             OSConfig tmp = (OSConfig) GlobalOptions.getOSlist().get(it.next());
-            System.out.println("-OS-" + tmp.getOSname());
+            System.out.println("-OS-" + tmp.getOsName());
             SortedSet<String> sortedset2 = new TreeSet<String>(tmp.getStatHash().keySet());
             Iterator<String> it2 = sortedset2.iterator();
             while (it2.hasNext()) {
@@ -190,7 +190,7 @@ public class XMLConfig extends DefaultHandler {
                 currentOS = GlobalOptions.getOSlist().get(attributes.getValue("name"));
                 if (currentOS == null) {
                     currentOS = new OSConfig(attributes.getValue("name"));
-                    GlobalOptions.getOSlist().put(currentOS.getOSname(), currentOS);
+                    GlobalOptions.getOSlist().put(currentOS.getOsName(), currentOS);
                 }
             }
             if (currentOS != null) {
