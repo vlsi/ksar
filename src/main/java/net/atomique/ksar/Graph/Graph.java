@@ -198,9 +198,9 @@ public class Graph {
                         return false;
                     }
                     if (colconfig.getType() == 1) {
-                        tempval = new Double((oldval.doubleValue() + value) / 2);
+                        tempval = ((oldval.doubleValue() + value) / 2);
                     } else if (colconfig.getType() == 2) {
-                        tempval = new Double(oldval.doubleValue() + value);
+                        tempval = (oldval.doubleValue() + value);
                     } else {
                         return false;
                     }

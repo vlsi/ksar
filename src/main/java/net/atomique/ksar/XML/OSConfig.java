@@ -1,20 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar.XML;
 
 import java.util.HashMap;
 import java.util.Iterator;
 
-/**
- *
- * @author alex
- */
 public class OSConfig {
 
     public OSConfig(String s) {
-        OSname = s;
+        OsName = s;
     }
 
     public void addStat(StatConfig s) {
@@ -25,8 +17,8 @@ public class OSConfig {
         GraphHash.put(s.getName(), s);
     }
 
-    public String getOSname() {
-        return OSname;
+    public String getOsName() {
+        return OsName;
     }
 
     public String getStat(String[] columns, int firstdatacolumn) {
@@ -81,7 +73,7 @@ public class OSConfig {
     public HashMap<String, GraphConfig> getGraphHash() {
         return GraphHash;
     }
-    private String OSname = null;
-    HashMap<String, StatConfig> StatHash = new HashMap<String, StatConfig>();
-    HashMap<String, GraphConfig> GraphHash = new HashMap<String, GraphConfig>();
+    private String OsName = null;
+    private HashMap<String, StatConfig> StatHash = new HashMap<>();
+    private HashMap<String, GraphConfig> GraphHash = new HashMap<>();
 }

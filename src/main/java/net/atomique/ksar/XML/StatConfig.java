@@ -1,13 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar.XML;
 
-/**
- *
- * @author alex
- */
 public class StatConfig {
 
     public StatConfig(String s) {
@@ -51,7 +43,7 @@ public class StatConfig {
         return false;
     }
 
-    public boolean compare_Header(int i) {
+    private boolean compare_Header(int i) {
         if (i == HeaderNum) {
             return true;
         }
@@ -68,7 +60,6 @@ public class StatConfig {
         }
     }
 
-    
 
     private int HeaderNum = 0;
     private String StatName = null;
