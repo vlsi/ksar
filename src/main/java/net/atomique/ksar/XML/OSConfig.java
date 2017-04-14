@@ -1,16 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar.XML;
 
 import java.util.HashMap;
 import java.util.Iterator;
 
-/**
- *
- * @author alex
- */
 public class OSConfig {
 
     public OSConfig(String s) {
