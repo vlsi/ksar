@@ -5,10 +5,7 @@ import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import javax.swing.JCheckBox;
 import net.atomique.ksar.Config;
 import net.atomique.ksar.GlobalOptions;
@@ -393,9 +390,8 @@ public class Graph {
             XYItemRenderer renderer = new StandardXYItemRenderer();
             ArrayList<String> t = new ArrayList<String>();
             String[] s = tmp.getHeaderStr().split("\\s+");
-            for (int i = 0; i < s.length; i++) {
-                t.add(s[i]);
-            }
+            Collections.addAll(t, s);
+
             XYDataset c = create_collection(t);
             NumberAxis graphaxistitle = tmp.getAxis();
             XYPlot tmpplot = new XYPlot(c, axisofdate, graphaxistitle, renderer);
