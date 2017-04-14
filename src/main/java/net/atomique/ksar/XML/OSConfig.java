@@ -1,5 +1,6 @@
 package net.atomique.ksar.XML;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -23,25 +24,17 @@ public class OSConfig {
 
     public String getStat(String[] columns, int firstdatacolumn) {
 
-        StringBuffer tmpbuf = new StringBuffer();
-        int num = 0;
-        for (int i = firstdatacolumn; i < columns.length; i++) {
-            if (tmpbuf.length() != 0) {
-                tmpbuf.append(" ");
-            }
-            tmpbuf.append(columns[i]);
-            num++;
-        }
+        final String[] result = {null};
 
-        Iterator<String> ite = StatHash.keySet().iterator();
-        while (ite.hasNext()) {
-            String tmptitle = ite.next();
-            StatConfig tmp = (StatConfig) StatHash.get(tmptitle);
-            if (tmp.check_Header(tmpbuf.toString(), num)) {
-                return tmp.getGraphName();
-            }
-        }
-        return null;
+        String[] s1 = Arrays.copyOfRange(columns, firstdatacolumn, columns.length);
+        String header = String.join(" ", s1);
+
+        StatHash.keySet().forEach((String item) -> {
+            StatConfig tmp = StatHash.get(item);
+            if (tmp.check_Header(header, s1.length)) result[0] = tmp.getGraphName();
+        });
+        return result[0];
+
     }
 
     public StatConfig getStat(String statName) {
