@@ -43,7 +43,7 @@ public class StatConfig {
         return false;
     }
 
-    public boolean compare_Header(int i) {
+    private boolean compare_Header(int i) {
         if (i == HeaderNum) {
             return true;
         }

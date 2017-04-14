@@ -73,7 +73,7 @@ public class OSConfig {
     public HashMap<String, GraphConfig> getGraphHash() {
         return GraphHash;
     }
-    HashMap<String, StatConfig> StatHash = new HashMap<String, StatConfig>();
-    HashMap<String, GraphConfig> GraphHash = new HashMap<String, GraphConfig>();
     private String OsName = null;
+    private HashMap<String, StatConfig> StatHash = new HashMap<>();
+    private HashMap<String, GraphConfig> GraphHash = new HashMap<>();
 }
