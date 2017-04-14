@@ -2,7 +2,6 @@ package net.atomique.ksar.XML;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class OSConfig {
 
@@ -41,15 +40,13 @@ public class OSConfig {
         if (StatHash.isEmpty()) {
             return null;
         }
-        Iterator<String> ite = StatHash.keySet().iterator();
-        while (ite.hasNext()) {
-            String tmptitle = ite.next();
-            StatConfig tmp = (StatConfig) StatHash.get(tmptitle);
-            if ( tmp.getGraphName().equals(statName)) {
-                return tmp;
-            }
-        }
-        return null;
+
+        StatConfig[] result = {null};
+        StatHash.keySet().forEach((String item) -> {
+            StatConfig tmp = StatHash.get(item);
+            if ( tmp.getGraphName().equals(statName)) result[0] = tmp;
+        });
+        return result[0];
     }
 
     public GraphConfig getGraphConfig(String s) {
