@@ -22,18 +22,36 @@ public class OSConfig {
     }
 
     public String getStat(String[] columns, int firstdatacolumn) {
-
-        final String[] result = {null};
+        //this is called for each line of source file
 
         String[] s1 = Arrays.copyOfRange(columns, firstdatacolumn, columns.length);
         String header = String.join(" ", s1);
 
-        StatHash.keySet().forEach((String item) -> {
-            StatConfig tmp = StatHash.get(item);
-            if (tmp.check_Header(header, s1.length)) result[0] = tmp.getGraphName();
-        });
-        return result[0];
+        //cache Mapping of HeaderStr to StatName - get StatHash more efficiently
+        createCacheForMappingOfHeaderStr2StatName();
+        String statName = MappingStatHeaderName.get(header);
 
+        if (statName !=null)
+            return StatHash.get(statName).getGraphName();
+        else
+            return null;
+
+    }
+
+    private void createCacheForMappingOfHeaderStr2StatName() {
+        //do this only once - all Stats are known - create reverse maaping
+        if (MappingStatHeaderName == null) {
+
+            MappingStatHeaderName = new HashMap<>();
+
+            StatHash.keySet().forEach((String item) -> {
+                StatConfig tmp = StatHash.get(item);
+                String statName = tmp.getStatName();
+                String graphHeader = tmp.getHeaderStr();
+
+                MappingStatHeaderName.put(graphHeader, statName);
+            });
+        }
     }
 
     public StatConfig getStat(String statName) {
@@ -63,7 +81,12 @@ public class OSConfig {
     public HashMap<String, GraphConfig> getGraphHash() {
         return GraphHash;
     }
+
+
     private String OsName = null;
     private HashMap<String, StatConfig> StatHash = new HashMap<>();
     private HashMap<String, GraphConfig> GraphHash = new HashMap<>();
+
+    private HashMap<String, String> MappingStatHeaderName;
+
 }
