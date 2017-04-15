@@ -148,10 +148,6 @@
                 <headerstr>dentunusd file-sz %file-sz inode-sz super-sz %super-sz dquot-sz %dquot-sz rtsig-sz %rtsig-sz</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
-            <Stat name="cpu6">
-                <headerstr>CPU %usr %nice %sys %iowait %steal %irq %soft %guest %idle</headerstr>
-                <graphname>CPU</graphname>
-            </Stat>
             <Stat name="nsfm">
                 <headerstr>scall/s badcall/s packet/s udp/s tcp/s hit/s miss/s sread/s swrite/s saccess/s sgetatt/s</headerstr>
                 <graphname>NFSM</graphname>
@@ -188,24 +184,12 @@
                 <headerstr>idgm/s odgm/s noport/s idgmerr/s</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
-            <Stat name="miscip9">
-                <headerstr>active/s passive/s iseg/s oseg/s</headerstr>
-                <graphname>IGNORE</graphname>
-            </Stat>
             <Stat name="miscip10">
                 <headerstr>imsg6/s omsg6/s iech6/s iechr6/s oechr6/s igmbq6/s  igmbr6/s ogmbr6/s igmbrd6/s ogmbrd6/s irtsol6/s ortsol6/s irtad6/s inbsol6/s onbsol6/s inbad6/s onbad6/s</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
-            <Stat name="miscip11">
-                <headerstr>atmptf/s estres/s retrans/s isegerr/s orsts/s</headerstr>
-                <graphname>IGNORE</graphname>
-            </Stat>
             <Stat name="miscip12">
                 <headerstr>tcp6sck udp6sck raw6sck ip6-frag</headerstr>
-                <graphname>IGNORE</graphname>
-            </Stat>
-            <Stat name="miscip13">
-                <headerstr>irec6/s fwddgm6/s idel6/s orq6/s asmrq6/s asmok6/s imcpck6/s omcpck6/s fragok6/s fragcr6/s</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
             <Stat name="miscip14">
