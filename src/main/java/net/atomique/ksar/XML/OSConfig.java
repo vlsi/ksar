@@ -44,10 +44,9 @@ public class OSConfig {
 
             MappingStatHeaderName = new HashMap<>();
 
-            StatHash.keySet().forEach((String item) -> {
-                StatConfig tmp = StatHash.get(item);
-                String statName = tmp.getStatName();
-                String graphHeader = tmp.getHeaderStr();
+            StatHash.forEach((k,v) -> {
+                String statName = v.getStatName();
+                String graphHeader = v.getHeaderStr();
 
                 MappingStatHeaderName.put(graphHeader, statName);
             });
