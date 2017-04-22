@@ -16,9 +16,12 @@ import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.Graph.List;
 import net.atomique.ksar.UI.LinuxDateFormat;
 import net.atomique.ksar.XML.GraphConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Linux extends OSParser {
 
+    private static final Logger log = LoggerFactory.getLogger(Linux.class);
     private String LinuxDateFormat;
     private LocalTime prevParseTime;
 
@@ -114,7 +117,7 @@ public class Linux extends OSParser {
             }
             firstdatacolumn = timeColumn;
         } catch (DateTimeParseException|IllegalArgumentException ex) {
-            System.out.println("unable to parse time " + columns[0]);
+            log.error("unable to parse time {}" ,columns[0], ex);
             return -1;
         }
 
@@ -156,14 +159,12 @@ public class Linux extends OSParser {
             }
         }
 
-        //System.out.println( currentStat +" " + line);
-
-
+        //log.trace("{} {}", currentStat, line);
 
         if (lastStat != null) {
             if (!lastStat.equals(currentStat) ) {
                 if (  GlobalOptions.isDodebug())  {
-                System.out.println("Stat change from " + lastStat + " to " + currentStat);
+                    log.debug("Stat change from {} to {}", lastStat, currentStat);
                 }
                 lastStat = currentStat;
             }

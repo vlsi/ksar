@@ -5,6 +5,9 @@
 
 package net.atomique.ksar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +18,8 @@ import java.io.InputStreamReader;
  * @author Max
  */
 public class VersionNumber {
+
+    private static final Logger log = LoggerFactory.getLogger(VersionNumber.class);
 
     private static VersionNumber instance = new VersionNumber();
 
@@ -34,8 +39,8 @@ public class VersionNumber {
                 tmpstr.append(line);
             }
             reader.close();
-        } catch (IOException e) {
-            System.err.println("Unable to read Current version");
+        } catch (IOException ex) {
+            log.error("Unable to read Current version",ex);
             return;
         }
         setVersionNumber(tmpstr.toString());

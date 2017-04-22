@@ -9,8 +9,6 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -27,12 +25,16 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Max
  */
 public class XMLConfig extends DefaultHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(XMLConfig.class);
 
     public XMLConfig(String filename) {
         load_config(filename);
@@ -79,7 +81,7 @@ public class XMLConfig extends DefaultHandler {
         try {
             is.close();
         } catch (IOException ex) {
-            Logger.getLogger(XMLConfig.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("IO Exception",ex);
         }
     }
 
@@ -93,10 +95,8 @@ public class XMLConfig extends DefaultHandler {
 
         } catch (ParserConfigurationException ex) {
             ex.printStackTrace();
-        } catch (SAXException ex) {
+        } catch (SAXException |IOException ex) {
             ex.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
         }
 
     }
@@ -106,12 +106,12 @@ public class XMLConfig extends DefaultHandler {
         Iterator<String> it = sortedset.iterator();
         while (it.hasNext()) {
             OSConfig tmp = (OSConfig) GlobalOptions.getOSlist().get(it.next());
-            System.out.println("-OS-" + tmp.getOsName());
+            log.trace("-OS-{}" , tmp.getOsName());
             SortedSet<String> sortedset2 = new TreeSet<String>(tmp.getStatHash().keySet());
             Iterator<String> it2 = sortedset2.iterator();
             while (it2.hasNext()) {
                 StatConfig tmp2 = (StatConfig) tmp.getStatHash().get(it2.next());
-                System.out.println("--STAT-- "
+                log.trace("--STAT-- "
                         + tmp2.getStatName() + "=> "
                         + tmp2.getGraphName() + " "
                         + tmp2.getHeaderStr());
@@ -120,14 +120,14 @@ public class XMLConfig extends DefaultHandler {
             Iterator<String> it3 = sortedset3.iterator();
             while (it3.hasNext()) {
                 GraphConfig tmp3 = (GraphConfig) tmp.getGraphHash().get(it3.next());
-                System.out.println("---GRAPH--- "
+                log.trace("---GRAPH--- "
                         + tmp3.getName() + "=> "
                         + tmp3.getTitle());
                 SortedSet<String> sortedset4 = new TreeSet<String>(tmp3.getPlotlist().keySet());
                 Iterator<String> it4 = sortedset4.iterator();
                 while (it4.hasNext()) {
                     PlotStackConfig tmp4 = (PlotStackConfig) tmp3.getPlotlist().get(it4.next());
-                    System.out.println("----PLOT---- "
+                    log.trace("----PLOT---- "
                             + tmp4.getTitle() + "=> "
                             + tmp4.getHeaderStr());
 
@@ -308,7 +308,7 @@ public class XMLConfig extends DefaultHandler {
             if (currentColor.is_valid()) {
                 GlobalOptions.getColorlist().put(currentColor.getData_title(), currentColor);
             } else {
-                System.err.println("Err: " + currentColor.getError_message());
+                log.error("Err: {}", currentColor.getError_message());
                 currentColor = null;
             }
             in_color = false;
@@ -329,7 +329,7 @@ public class XMLConfig extends DefaultHandler {
             if (currentCnx.isValid()) {
                 GlobalOptions.getHistoryList().put(currentCnx.getLink(), currentCnx);
             } else {
-                System.err.println("Err cnx is not valid");
+                log.error("Err cnx is not valid");
                 currentCnx = null;
             }
         }
@@ -369,6 +369,5 @@ public class XMLConfig extends DefaultHandler {
     private CnxHistory currentCnx = null;
     private HostInfo currentHost = null;
 
-    
 }
 

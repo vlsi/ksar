@@ -6,8 +6,12 @@ import java.time.format.FormatStyle;
 import java.util.HashMap;
 import java.util.Map;
 import net.atomique.ksar.XML.OSConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class OSParser extends AllParser {
+
+    private static final Logger log = LoggerFactory.getLogger(OSParser.class);
 
     public OSParser () {
         
@@ -154,7 +158,7 @@ public abstract class OSParser extends AllParser {
                 }
 
             } catch (DateTimeException ex) {
-                System.out.println("unable to format time");
+                log.error("unable to format time", ex);
             }
 
             if (asFormattedDateTimeStart != null && asFormattedDateTimeEnd != null ) {

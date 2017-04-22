@@ -4,6 +4,9 @@
  */
 package net.atomique.ksar.XML;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Iterator;
 import java.util.TreeSet;
 
@@ -12,6 +15,8 @@ import java.util.TreeSet;
  * @author alex
  */
 public class CnxHistory {
+
+    private static final Logger log = LoggerFactory.getLogger(CnxHistory.class);
 
     public CnxHistory(String link) {
         this.link=link;
@@ -86,7 +91,7 @@ public class CnxHistory {
     }
 
     public void dump() {
-        System.out.println(username + "@" + hostname + ":" + commandList);
+        log.debug(username + "@" + hostname + ":" + commandList);
     }
 
     public String save() {

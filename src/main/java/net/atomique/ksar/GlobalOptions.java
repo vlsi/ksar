@@ -17,19 +17,21 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.atomique.ksar.UI.Desktop;
 import net.atomique.ksar.XML.CnxHistory;
 import net.atomique.ksar.XML.ColumnConfig;
 import net.atomique.ksar.XML.HostInfo;
 import net.atomique.ksar.XML.OSConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Max
  */
 public class GlobalOptions {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalOptions.class);
 
     private static GlobalOptions instance = new GlobalOptions();
 
@@ -122,7 +124,7 @@ public class GlobalOptions {
         if (tmp != null) {
             return tmp.getData_color();
         } else {
-            System.err.println("WARN: color not found for tag " + s);
+            log.warn("color not found for tag {}", s);
         }
         return null;
     }
@@ -206,7 +208,7 @@ public class GlobalOptions {
         BufferedWriter tmpfile_out = null;
 
         if (HistoryList.isEmpty() && HostInfoList.isEmpty()) {
-            System.out.println("list is null");
+            log.info("list is null");
             return;
         }
 
@@ -245,7 +247,7 @@ public class GlobalOptions {
             tmpfile.renameTo(oldfile);
 
         } catch (IOException ex) {
-            Logger.getLogger(GlobalOptions.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("IO exception", ex);
         }
 
     }

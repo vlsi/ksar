@@ -5,13 +5,13 @@
 package net.atomique.ksar;
 
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import net.atomique.ksar.UI.Desktop;
 import net.atomique.ksar.UI.SplashScreen;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -19,18 +19,18 @@ import net.atomique.ksar.UI.SplashScreen;
  */
 public class Main {
 
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(Main.class);
+
     static Config config = null;
     static GlobalOptions globaloptions = null;
     static ResourceBundle resource = ResourceBundle.getBundle("net/atomique/ksar/Language/Message");
-
-    ;
 
     public static void usage() {
         show_version();
     }
 
     public static void show_version() {
-        System.err.println("ksar Version : " + VersionNumber.getVersionNumber());
+        log.info("ksar Version : {}", VersionNumber.getVersionNumber());
     }
 
     private static void set_lookandfeel() {
@@ -38,14 +38,8 @@ public class Main {
             if (Config.getLandf().equals(laf.getName())) {
                 try {
                     UIManager.setLookAndFeel(laf.getClassName());
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Desktop.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InstantiationException ex) {
-                    Logger.getLogger(Desktop.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IllegalAccessException ex) {
-                    Logger.getLogger(Desktop.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (UnsupportedLookAndFeelException ex) {
-                    Logger.getLogger(Desktop.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                    log.error("Parser Exception",ex);
                 }
             }
         }
@@ -119,13 +113,11 @@ public class Main {
 
         make_ui();
 
-
-
-        System.out.println("exit");
+        log.trace("Start");
     }
 
     public static void exit_error(final String message) {
-        System.err.println(message);
+        log.error(message);
         System.exit(1);
 
     }

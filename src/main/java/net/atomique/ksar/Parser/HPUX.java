@@ -9,8 +9,12 @@ import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.Graph.List;
 import net.atomique.ksar.XML.GraphConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HPUX extends OSParser {
+
+    private static final Logger log = LoggerFactory.getLogger(HPUX.class);
 
     boolean under_average = false;
 
@@ -68,7 +72,7 @@ public class HPUX extends OSParser {
             firstdatacolumn = 1;
         } catch (DateTimeParseException ex) {
             if ( ! "DEVICE".equals(currentStat) && ! "CPU".equals(currentStat)) {
-                System.out.println("unable to parse time " + columns[0]);
+                log.error("unable to parse time {}", columns[0], ex);
                 return -1;
             }
             firstdatacolumn = 0;
@@ -106,14 +110,14 @@ public class HPUX extends OSParser {
             }
         }
 
-        //System.out.println(currentStat + " " + line);
+        //log.trace("{} {}", currentStat, line);
 
 
 
         if (lastStat != null) {
             if (!lastStat.equals(currentStat) ) {
                 if (  GlobalOptions.isDodebug())  {
-                System.out.println("Stat change from " + lastStat + " to " + currentStat);
+                log.debug("Stat change from {} to {}", lastStat, currentStat);
                 }
                 lastStat = currentStat;
                 under_average = false;

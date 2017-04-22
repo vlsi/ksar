@@ -26,8 +26,6 @@ import java.awt.geom.Rectangle2D.Double;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;
 import net.atomique.ksar.Config;
@@ -40,12 +38,16 @@ import net.atomique.ksar.VersionNumber;
 import net.atomique.ksar.kSar;
 import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.JFreeChart;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Max
  */
 public class FilePDF extends PdfPageEventHelper implements Runnable {
+
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(FilePDF.class);
 
     public FilePDF(String filename, kSar hissar) {
         pdffilename = filename;
@@ -79,10 +81,8 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
         pagewidth = pdfwidth - (2 * pdfmargins);
         try {
             writer = PdfWriter.getInstance(document, new FileOutputStream(pdffilename));
-        } catch (DocumentException ex) {
-            Logger.getLogger(FilePDF.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FilePDF.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException|FileNotFoundException ex) {
+            log.error("Parser Exception",ex);
         }
         writer.setPageEvent(this);
         writer.setCompressionLevel(0);
@@ -181,7 +181,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
         try {
             writer.releaseTemplate(pdftpl);
         } catch (IOException ioe) {
-            System.err.println("Unable to write to : " + pdffilename);
+            log.error("Unable to write to : {}", pdffilename);
         }
         return 0;
     }
@@ -201,7 +201,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
             document.newPage();
             
         } catch (Exception de) {
-            return;
+            log.error("IndexPage Exception", de);
         }
     }
 

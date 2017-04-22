@@ -20,12 +20,16 @@ import net.atomique.ksar.Config;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.Graph.Graph;
 import org.jfree.chart.ChartPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Max
  */
 public class GraphView extends javax.swing.JPanel {
+
+    private static final Logger log = LoggerFactory.getLogger(GraphView .class);
 
     /** Creates new form GraphView */
     public GraphView() {        
@@ -126,7 +130,7 @@ public class GraphView extends javax.swing.JPanel {
         buffer = thegraph.make_csv();
 
         if ( GlobalOptions.isDodebug() ) {
-            System.out.println(buffer);
+            log.debug(buffer);
         }
         BufferedWriter out = null;
         try {

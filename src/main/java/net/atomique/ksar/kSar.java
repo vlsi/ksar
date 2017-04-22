@@ -7,19 +7,21 @@ package net.atomique.ksar;
 import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.UI.DataView;
 import net.atomique.ksar.UI.SortedTreeNode;
 import net.atomique.ksar.UI.TreeNodeInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Max
  */
 public class kSar {
+
+    private static final Logger log = LoggerFactory.getLogger(kSar.class);
 
     public kSar(JDesktopPane DesktopPane) {
         dataview = new DataView(this);
@@ -36,6 +38,7 @@ public class kSar {
             }
             dataview.setSelected(true);
         } catch (PropertyVetoException vetoe) {
+            log.error("PropertyVetoException",vetoe);
         }
         if (GlobalOptions.getCLfilename() != null) {
             do_fileread(GlobalOptions.getCLfilename());
@@ -79,7 +82,7 @@ public class kSar {
 
     private void do_action() {
         if (reload_action == null ) {
-            System.out.println("action is null");
+            log.info("action is null");
             return;
         }
         if (launched_action != null) {
@@ -130,28 +133,28 @@ public class kSar {
                         }
                     }
                 } catch (InstantiationException | IllegalAccessException ex) {
-                    Logger.getLogger(kSar.class.getName()).log(Level.SEVERE, null, ex);
+                    log.error("Parser Exception",ex);
                 }
 
 
                 if (myparser == null) {
-                    System.out.println("unknown parser");
+                    log.error("unknown parser");
                     Parsing = false;
                     return -1;
                 }
 
                 parser_return = myparser.parse(current_line, columns);
                 if (parser_return == 1 && GlobalOptions.isDodebug()) {
-                    System.out.println("### " + current_line);
+                    log.trace("### {}", current_line);
                 }
                 if (parser_return < 0 && GlobalOptions.isDodebug()) {
-                    System.out.println("ERR " + current_line);
+                    log.trace("ERR {}", current_line);
                 }
 
                 myparser.updateUITitle();
             }
         } catch (IOException ex) {
-            Logger.getLogger(kSar.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("IO Exception",ex);
             Parsing = false;
         }
 
@@ -163,9 +166,9 @@ public class kSar {
 
         parsing_end = System.currentTimeMillis();
         if (GlobalOptions.isDodebug()) {
-            System.out.println("time to parse: " + (parsing_end - parsing_start) + "ms ");
+            log.debug("time to parse: {} ms",(parsing_end - parsing_start));
             if (myparser != null) {
-                System.out.println("number of datesamples: " + myparser.DateSamples.size());
+                log.debug("number of datesamples: {}", myparser.DateSamples.size());
             }
         }
         Parsing = false;
@@ -178,7 +181,7 @@ public class kSar {
 
     public void aborted() {
         if (dataview != null) {
-            System.out.println("reset menu");
+            log.trace("reset menu");
             dataview.notifyrun(false);
         }
     }

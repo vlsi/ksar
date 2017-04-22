@@ -36,9 +36,12 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.TimeTableXYDataset;
 import org.jfree.data.xy.XYDataset;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Graph {
+
+    private static final Logger log = LoggerFactory.getLogger(Graph.class);
 
     public Graph(kSar hissar, GraphConfig g, String Title, String hdrs, int skipcol, SortedTreeNode pp) {
         mysar = hissar;
@@ -95,15 +98,15 @@ public class Graph {
     public int parse_line(Second now, String s) {
         String[] cols = s.split("\\s+");
         Double colvalue = null;
-        //System.out.println("graph parsing:" + s);
+        //log.debug("graph parsing: {}", s);
         for (int i = skipColumn; i < HeaderStr.length; i++) {
             try {
                 colvalue = new Double(cols[i]);
             } catch (NumberFormatException ne) {
-                System.out.println(graphtitle + " " + cols[i] + " is NaN");
+                log.error("{} {} is NaN", graphtitle, cols[i]);
                 return 0;
             } catch (Exception ae) {
-                System.out.println(graphtitle + " " + cols[i] + "  is undef " + s);
+                log.error("{} {} is undef {}", graphtitle, cols[i],s );
                 ae.printStackTrace();
                 return 0;
             }
@@ -139,7 +142,7 @@ public class Graph {
                     indexcol = i;
                     break;
                 }
-                System.out.println(dataset.indexOf(name) + ": " + name);
+                log.debug("{}: {}" , dataset.indexOf(name), name);
             }
             if (indexcol == -1) {
                 return false;
@@ -258,7 +261,7 @@ public class Graph {
         try {
             ChartUtilities.saveChartAsPNG(new File(filename), this.getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()), width, height);
         } catch (IOException e) {
-            System.err.println("Unable to write to : " + filename);
+            log.error("Unable to write to : {}", filename);
             return -1;
         }
         return 0;
@@ -268,7 +271,7 @@ public class Graph {
         try {
             ChartUtilities.saveChartAsJPEG(new File(filename), this.getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()), width, height);
         } catch (IOException e) {
-            System.err.println("Unable to write to : " + filename);
+            log.error("Unable to write to : {}", filename);
             return -1;
         }
         return 0;
@@ -422,7 +425,7 @@ public class Graph {
         long endgenerate = System.currentTimeMillis();
         mychart.setBackgroundPaint(Color.white);
         if (GlobalOptions.isDodebug()) {
-            System.out.println("graph generation: " + (endgenerate - begingenerate) + " ms");
+            log.debug("graph generation: {} ms",(endgenerate - begingenerate));
         }
         return mychart;
     }

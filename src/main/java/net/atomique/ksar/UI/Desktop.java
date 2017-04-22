@@ -14,19 +14,21 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.kSar;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Max
  */
 public class Desktop extends javax.swing.JFrame {
+
+    private static final Logger log = LoggerFactory.getLogger(Desktop.class);
 
     /** Creates new form Desktop */
     public Desktop() {
@@ -69,7 +71,7 @@ public class Desktop extends javax.swing.JFrame {
                 try {
                     frames[i].setIcon(true);
                 } catch (PropertyVetoException ex) {
-                    Logger.getLogger(Desktop.class.getName()).log(Level.SEVERE, null, ex);
+                    log.error("PropertyVetoException",ex);
                 }
             }
         }
@@ -89,7 +91,7 @@ public class Desktop extends javax.swing.JFrame {
                 try {
                     frames[i].setMaximum(true);
                 } catch (PropertyVetoException ex) {
-                    Logger.getLogger(Desktop.class.getName()).log(Level.SEVERE, null, ex);
+                    log.error("PropertyVetoException",ex);
                 }
             }
         }

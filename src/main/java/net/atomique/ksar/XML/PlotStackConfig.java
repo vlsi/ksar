@@ -5,8 +5,12 @@ import net.atomique.ksar.Graph.IEEE1541Number;
 import net.atomique.ksar.Graph.ISNumber;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.Range;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PlotStackConfig {
+    private static final Logger log = LoggerFactory.getLogger(PlotStackConfig.class);
+
 
     public PlotStackConfig(String s) {
         Title = s;
@@ -59,7 +63,7 @@ public class PlotStackConfig {
             tmp.setNumberFormatOverride(decimalformat1);
 
         }else if ( base != 0) {
-            System.out.println("ERROR: base value is not handled");
+            log.error("base value is not handled");
         }
 
         if (range != null) {

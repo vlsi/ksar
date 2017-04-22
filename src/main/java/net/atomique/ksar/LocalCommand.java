@@ -4,6 +4,9 @@
  */
 package net.atomique.ksar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,8 +14,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +21,8 @@ import javax.swing.JOptionPane;
  * @author Max
  */
 public class LocalCommand extends Thread {
+
+    private static final Logger log = LoggerFactory.getLogger(LocalCommand.class);
 
     public LocalCommand(kSar hissar) {
         mysar = hissar;
@@ -57,7 +60,7 @@ public class LocalCommand extends Thread {
             if (GlobalOptions.hasUI() ) {
                 JOptionPane.showMessageDialog(GlobalOptions.getUI(), "There was a problem while running the command " + command, "Local error", JOptionPane.ERROR_MESSAGE);
             } else {
-                System.err.println("There was a problem while running the command " + command);
+                log.error("There was a problem while running the command {}", command);
             }
             in = null;
         }
@@ -75,7 +78,7 @@ public class LocalCommand extends Thread {
                 myfilereader.close();
             }
         } catch (IOException ex) {
-            Logger.getLogger(LocalCommand.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("IO Exception",ex);
         }
     }
 

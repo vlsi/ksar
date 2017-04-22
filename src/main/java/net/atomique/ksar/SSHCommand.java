@@ -21,8 +21,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -32,12 +30,16 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import net.atomique.ksar.XML.CnxHistory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author alex
  */
 public class SSHCommand extends Thread {
+
+    private static final Logger log = LoggerFactory.getLogger(SSHCommand.class);
 
     public SSHCommand(kSar hissar, String cmd) {
         mysar = hissar;
@@ -206,7 +208,7 @@ public class SSHCommand extends Thread {
         try {
             session = jsch.getSession(tmp.getUsername(), tmp.getHostname(), tmp.getPortInt());
         } catch (JSchException ex) {
-            Logger.getLogger(SSHCommand.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("JSchException ",ex);
         }
         java.util.Properties config = new java.util.Properties();
         config.put("StrictHostKeyChecking", "no");
@@ -230,7 +232,7 @@ public class SSHCommand extends Thread {
                 JOptionPane.showMessageDialog(GlobalOptions.getUI(), "Unable to connect", "SSH error", JOptionPane.ERROR_MESSAGE);
                 mysar.cleared();
             } else {
-                System.err.println("Err: unable to connect");
+                log.error("Err: unable to connect");
             }
             return;
         }
@@ -241,7 +243,7 @@ public class SSHCommand extends Thread {
                 JOptionPane.showMessageDialog(GlobalOptions.getUI(), "Unable to open Channel", "SSH error", JOptionPane.ERROR_MESSAGE);
                  mysar.cleared();
             } else {
-                System.err.println("Err: unable to open Channel");
+                log.error("Err: unable to open Channel");
             }
             return;
         }
@@ -258,7 +260,7 @@ public class SSHCommand extends Thread {
                 JOptionPane.showMessageDialog(GlobalOptions.getUI(), "Unable to open pipe", "SSH error", JOptionPane.ERROR_MESSAGE);
                  mysar.cleared();
             } else {
-                System.err.println("Err: unable to open pipe");
+                log.error("Err: unable to open pipe");
             }
             return;
         }
@@ -269,18 +271,18 @@ public class SSHCommand extends Thread {
                 JOptionPane.showMessageDialog(GlobalOptions.getUI(), "Unable to connect Channel", "SSH error", JOptionPane.ERROR_MESSAGE);
                  mysar.cleared();
             } else {
-                System.err.println("Err: unable to connect Channel");
+                log.error("Err: unable to connect Channel");
             }
             return;
         }
         if (channel.isClosed()) {
-            System.out.println("exit" + channel.getExitStatus() );
+            log.info("exit {}", channel.getExitStatus() );
             if (channel.getExitStatus() != 0) {
                 if (GlobalOptions.hasUI()) {
                     JOptionPane.showMessageDialog(GlobalOptions.getUI(), "There was a problem while retrieving stat", "SSH error", JOptionPane.ERROR_MESSAGE);
                      mysar.cleared();
                 } else {
-                    System.err.println("Err: Problem during ssh connection");
+                    log.error("Err: Problem during ssh connection");
                 }
                 return;
             }
@@ -335,8 +337,9 @@ public class SSHCommand extends Thread {
             session.disconnect();
             channel=null;
             session=null;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            log.error("Exception",ex);
         }
         return;
     }
@@ -483,8 +486,8 @@ public class SSHCommand extends Thread {
         }
 
         public void log(int level, String message) {
-            System.err.print(name.get(new Integer(level)));
-            System.err.println(message);
+            log.debug(name.get(new Integer(level)));
+            log.debug(message);
         }
     }
     // Variables declaration - do not modify
