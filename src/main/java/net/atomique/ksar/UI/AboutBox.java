@@ -1,14 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * AboutBox.java
- *
- * Created on 29 juil. 2010, 17:31:33
- */
-
 package net.atomique.ksar.UI;
 
 import java.awt.Cursor;
@@ -22,10 +11,6 @@ import java.net.URISyntaxException;
 import javax.swing.JLabel;
 import net.atomique.ksar.VersionNumber;
 
-/**
- *
- * @author Max
- */
 public class AboutBox extends javax.swing.JDialog {
 
     /** Creates new form AboutBox */
