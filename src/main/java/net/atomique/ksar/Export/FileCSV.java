@@ -5,8 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;
 import net.atomique.ksar.Graph.Graph;
@@ -17,8 +15,12 @@ import net.atomique.ksar.UI.TreeNodeInfo;
 import net.atomique.ksar.kSar;
 import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.Second;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FileCSV implements Runnable {
+
+    private static final Logger log = LoggerFactory.getLogger(FileCSV.class);
 
     public FileCSV(String filename, kSar hissar) {
         csvfilename = filename;
@@ -38,7 +40,8 @@ public class FileCSV implements Runnable {
         BufferedWriter out = null;
         try {
             out = new BufferedWriter(new FileWriter(csvfilename));
-        } catch (IOException e) {
+        } catch (IOException ex) {
+            log.error("IO Exception",ex);
             out = null;
         }
 
@@ -65,15 +68,13 @@ public class FileCSV implements Runnable {
             out.write(tmpcsv.toString());
             out.close();
         } catch (IOException ex) {
-            Logger.getLogger(FileCSV.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("IO Exception",ex);
         }
         
         
         if (dialog != null) {
             dialog.dispose();
         }
-
-
 
     }
 

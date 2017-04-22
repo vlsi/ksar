@@ -4,12 +4,11 @@
  */
 package net.atomique.ksar;
 
+import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
 /**
@@ -17,6 +16,8 @@ import javax.swing.JFileChooser;
  * @author Max
  */
 public class FileRead extends Thread {
+
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(FileRead.class);
 
     public FileRead(kSar hissar) {
         mysar = hissar;
@@ -58,7 +59,7 @@ public class FileRead extends Thread {
                 tmpfile.close();
             }
         } catch (IOException ex) {
-            Logger.getLogger(FileRead.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("IO Exception",ex);
         }
     }
 
@@ -70,7 +71,7 @@ public class FileRead extends Thread {
         try {
             tmpfile = new FileReader(sarfilename);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileRead.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("IO Exception",ex);
         }
 
         myfilereader = new BufferedReader(tmpfile);

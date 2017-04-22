@@ -28,12 +28,16 @@ import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.Graph.List;
 import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.kSar;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Max
  */
 public class DataView extends javax.swing.JInternalFrame {
+
+    private static final Logger log = LoggerFactory.getLogger(DataView.class);
 
     /** Creates new form DataView */
     public DataView(kSar sar) {
@@ -206,8 +210,8 @@ public class DataView extends javax.swing.JInternalFrame {
         Object obj = treepath.getLastPathComponent();
         if (obj != null) {
             if ( GlobalOptions.isDodebug()) {
-                System.out.print("mem:" + Runtime.getRuntime().totalMemory());
-                System.out.println(" free:" + Runtime.getRuntime().freeMemory());
+                log.debug("mem: {}", Runtime.getRuntime().totalMemory());
+                log.debug("free: {}", Runtime.getRuntime().freeMemory());
             }
 
             SortedTreeNode treenode = (SortedTreeNode) obj;
@@ -471,7 +475,7 @@ public class DataView extends javax.swing.JInternalFrame {
     
     private void save_data() {
         if (has_fresh_data) {
-            System.out.println("need backup");
+            log.info("need backup");
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
