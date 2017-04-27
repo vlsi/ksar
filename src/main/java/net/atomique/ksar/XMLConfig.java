@@ -121,6 +121,7 @@ public class XMLConfig extends DefaultHandler {
 
                 });
             });
+        });
 
     }
 
