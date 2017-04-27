@@ -4,6 +4,9 @@
  */
 package net.atomique.ksar.UI;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,10 +25,15 @@ import javax.swing.SwingUtilities;
  */
 public class  SplashScreen extends JWindow {
 
+    private static final Logger log = LoggerFactory.getLogger(SplashScreen.class);
+
     private static final long serialVersionUID = 8L;
 
     public SplashScreen( Frame f, int waitTime) {
         super(f);
+
+        log.trace("draw SplashScreen");
+
         JPanel p = new JPanel();
         p.setLayout(new BorderLayout());
         p.add(new SplashPicture());
@@ -56,8 +64,8 @@ public class  SplashScreen extends JWindow {
                 try {
                     Thread.sleep(pause);
                     SwingUtilities.invokeAndWait(closerRunner);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ex) {
+                    log.error("SplashScreen run exception",ex);
                 }
             }
         };

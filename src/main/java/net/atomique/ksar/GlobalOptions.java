@@ -32,6 +32,9 @@ public class GlobalOptions {
     }
 
     private GlobalOptions() {
+
+        log.trace("load GlobalOptions");
+
         String [] OSParserNames = {"AIX", "HPUX",  "Linux", "SunOS"};
         String filename;
         InputStream is;
@@ -52,7 +55,7 @@ public class GlobalOptions {
                 Class tmpclass = Class.forName("net.atomique.ksar.Parser."+OSName);
                 ParserMap.put(OSName, tmpclass);
             } catch (ClassNotFoundException ex) {
-                ex.printStackTrace();
+                log.error("Parser class not found",ex);
             }
             
         }

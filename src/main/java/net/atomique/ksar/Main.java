@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class Main {
 
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(Main.class);
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
 
     static Config config = null;
     static GlobalOptions globaloptions = null;
@@ -31,7 +31,7 @@ public class Main {
                 try {
                     UIManager.setLookAndFeel(laf.getClassName());
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-                    log.error("Parser Exception",ex);
+                    log.error("lookandfeel Exception",ex);
                 }
             }
         }
@@ -43,12 +43,13 @@ public class Main {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ie) {
-                ie.printStackTrace();
+                log.error("SplashScreen Exception",ie);
             }
         }
 
 
         set_lookandfeel();
+        log.trace("MainScreen");
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
@@ -65,6 +66,10 @@ public class Main {
         int i = 0;
         String arg;
         /// load default
+
+        log.trace("main - Start");
+        log.trace("ksar Version : {}", VersionNumber.getVersionNumber());
+
         String mrjVersion = System.getProperty("mrj.version");
         if (mrjVersion != null) {
             System.setProperty("com.apple.mrj.application.growbox.intrudes", "false");
@@ -105,7 +110,7 @@ public class Main {
 
         make_ui();
 
-        log.trace("Start");
+
     }
 
     public static void exit_error(final String message) {
