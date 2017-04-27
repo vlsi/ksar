@@ -32,6 +32,9 @@ public class GlobalOptions {
     }
 
     private GlobalOptions() {
+
+        log.trace("load GlobalOptions");
+
         String [] OSParserNames = {"AIX", "HPUX",  "Linux", "SunOS"};
         String filename;
         InputStream is;

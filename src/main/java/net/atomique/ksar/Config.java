@@ -1,5 +1,8 @@
 package net.atomique.ksar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.Font;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,6 +16,8 @@ import javax.swing.UIManager;
 
 public class Config {
 
+    private static final Logger log = LoggerFactory.getLogger(GlobalOptions.class);
+
     private static Preferences myPref;
     private static Config instance = new Config();
 
@@ -21,6 +26,9 @@ public class Config {
     }
 
     private Config() {
+
+        log.trace("load Config");
+
         myPref = Preferences.userNodeForPackage(Config.class);
         if (myPref.getInt("local_configfile", -1) == -1) {
             // new
@@ -28,6 +36,7 @@ public class Config {
                 myPref.clear();
                 myPref.flush();
             } catch (BackingStoreException e) {
+                log.error("BackingStoreException", e);
             }
             local_configfile = store_configdir();
             myPref.putInt("local_configfile", local_configfile);
