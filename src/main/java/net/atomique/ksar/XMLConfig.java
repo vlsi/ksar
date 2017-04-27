@@ -57,12 +57,10 @@ public class XMLConfig extends DefaultHandler {
             parser = fabric.newSAXParser();
             parser.parse(is, this);
 
-        } catch (ParserConfigurationException ex) {
-            ex.printStackTrace();
-        } catch (SAXException ex) {
-            ex.printStackTrace();
+        } catch (ParserConfigurationException|SAXException ex) {
+            log.error("SAX Parser Exception",ex);
         } catch (IOException ioe) {
-            ioe.printStackTrace();
+            log.error("SAX Parser IO Exception",ioe);
             System.exit(1);
         }
         //dump_XML();
@@ -81,10 +79,11 @@ public class XMLConfig extends DefaultHandler {
             parser = fabric.newSAXParser();
             parser.parse(xmlfile, this);
 
-        } catch (ParserConfigurationException ex) {
-            ex.printStackTrace();
-        } catch (SAXException |IOException ex) {
-            ex.printStackTrace();
+        } catch (ParserConfigurationException|SAXException ex) {
+            log.error("SAX Parser Exception",ex);
+        } catch (IOException ioe) {
+            log.error("SAX Parser IO Exception",ioe);
+            System.exit(1);
         }
 
     }

@@ -43,7 +43,7 @@ public class Main {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ie) {
-                ie.printStackTrace();
+                log.error("SplashScreen Exception",ie);
             }
         }
 
