@@ -36,12 +36,12 @@ public class XMLConfig extends DefaultHandler {
 
     private static final Logger log = LoggerFactory.getLogger(XMLConfig.class);
 
-    public XMLConfig(String filename) {
+    XMLConfig(String filename) {
         load_config(filename);
         
     }
 
-    public XMLConfig(InputStream is) {
+    XMLConfig(InputStream is) {
         load_config(is);
     }
 
@@ -60,10 +60,10 @@ public class XMLConfig extends DefaultHandler {
             return inputSource;
         }
     
-    public void load_config(InputStream is) {
         SAXParserFactory fabric = null;
         SAXParser parser = null;
         XMLReader reader = null;
+    void load_config(InputStream is) {
         try {
             fabric = SAXParserFactory.newInstance();
             parser = fabric.newSAXParser();
@@ -85,9 +85,9 @@ public class XMLConfig extends DefaultHandler {
         }
     }
 
-    public void load_config(String xmlfile) {
         SAXParserFactory fabric = null;
         SAXParser parser = null;
+    void load_config(String xmlfile) {
         try {
             fabric = SAXParserFactory.newInstance();
             parser = fabric.newSAXParser();
@@ -101,11 +101,11 @@ public class XMLConfig extends DefaultHandler {
 
     }
 
-    public void dump_XML() {
         SortedSet<String> sortedset = new TreeSet<String>(GlobalOptions.getOSlist().keySet());
         Iterator<String> it = sortedset.iterator();
         while (it.hasNext()) {
             OSConfig tmp = (OSConfig) GlobalOptions.getOSlist().get(it.next());
+    void dump_XML() {
             log.trace("-OS-{}" , tmp.getOsName());
             SortedSet<String> sortedset2 = new TreeSet<String>(tmp.getStatHash().keySet());
             Iterator<String> it2 = sortedset2.iterator();
@@ -351,7 +351,7 @@ public class XMLConfig extends DefaultHandler {
     }
 
     
-    public boolean beenparse = false;
+    private boolean beenparse = false;
     private String tempval;
     private boolean in_color = false;
     private boolean in_colors = false;

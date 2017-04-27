@@ -35,7 +35,7 @@ public class GlobalOptions {
 
     private static GlobalOptions instance = new GlobalOptions();
 
-    public static GlobalOptions getInstance() {
+    static GlobalOptions getInstance() {
         return instance;
     }
 
@@ -46,7 +46,7 @@ public class GlobalOptions {
         return false;
     }
 
-    GlobalOptions() {
+    private GlobalOptions() {
         String [] OSParserNames = {"AIX", "HPUX",  "Linux", "SunOS"};
         String filename = null;
         InputStream is = null;
@@ -105,11 +105,11 @@ public class GlobalOptions {
         return username;
     }
 
-    public static HashMap<String, ColumnConfig> getColorlist() {
+    static HashMap<String, ColumnConfig> getColorlist() {
         return columnlist;
     }
 
-    public static HashMap<String, OSConfig> getOSlist() {
+    static HashMap<String, OSConfig> getOSlist() {
         return OSlist;
     }
 
@@ -129,7 +129,7 @@ public class GlobalOptions {
         return null;
     }
 
-    public static OSConfig getOSinfo(String s) {
+    static OSConfig getOSinfo(String s) {
         return OSlist.get(s);
     }
 
@@ -137,15 +137,15 @@ public class GlobalOptions {
         return dodebug;
     }
 
-    public static void setDodebug(boolean do_debug) {
+    static void setDodebug(boolean do_debug) {
         GlobalOptions.dodebug = do_debug;
     }
 
-    public static String getCLfilename() {
+    static String getCLfilename() {
         return CLfilename;
     }
 
-    public static void setCLfilename(String CL_filename) {
+    static void setCLfilename(String CL_filename) {
         GlobalOptions.CLfilename = CL_filename;
     }
 
@@ -153,7 +153,7 @@ public class GlobalOptions {
         return fileseparator;
     }
 
-    public static Class getParser(String s) {
+    static Class getParser(String s) {
         String tmp = s.replaceAll("-", "");
         if (ParserMap.isEmpty()) {
             return null;
@@ -161,7 +161,7 @@ public class GlobalOptions {
         return ParserMap.get(tmp);
     }
 
-    public static HashMap<String, HostInfo> getHostInfoList() {
+    static HashMap<String, HostInfo> getHostInfoList() {
         return HostInfoList;
     }
 
@@ -177,18 +177,18 @@ public class GlobalOptions {
         saveHistory();
     }
 
-    public static HashMap<String, CnxHistory> getHistoryList() {
+    static HashMap<String, CnxHistory> getHistoryList() {
         return HistoryList;
     }
 
-    public static CnxHistory getHistory(String s) {
+    static CnxHistory getHistory(String s) {
         if (HistoryList.isEmpty()) {
             return null;
         }
         return HistoryList.get(s);
     }
 
-    public static void addHistory(CnxHistory s) {
+    static void addHistory(CnxHistory s) {
         CnxHistory tmp = HistoryList.get(s.getLink());
         if ( tmp != null) {
             Iterator<String> ite = s.getCommandList().iterator();
@@ -203,7 +203,7 @@ public class GlobalOptions {
 
     
 
-    public static void saveHistory() {
+    static void saveHistory() {
         File tmpfile = null;
         BufferedWriter tmpfile_out = null;
 
