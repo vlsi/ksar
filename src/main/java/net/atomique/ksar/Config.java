@@ -229,8 +229,8 @@ public class Config {
     private static String lastCommand;
     private static int number_host_history;
     private static int local_configfile;
-    private static ArrayList<String> host_history = new ArrayList<String>();
-    public static final Font DEFAULT_FONT = new Font("SansSerif", Font.BOLD, 18);
+    private static ArrayList<String> host_history = new ArrayList<>();
+    private static final Font DEFAULT_FONT = new Font("SansSerif", Font.BOLD, 18);
 
     private static String LinuxDateFormat;
     private static String PDFPageFormat;

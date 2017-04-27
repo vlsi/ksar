@@ -55,11 +55,11 @@ public class GlobalOptions {
         username = (String) systemprops.get("user.name");
         userhome = (String) systemprops.get("user.home") + systemprops.get("file.separator");
         fileseparator = (String) systemprops.get("file.separator");
-        columnlist = new HashMap<String, ColumnConfig>();
-        OSlist = new HashMap<String, OSConfig>();
-        ParserMap = new HashMap<String, Class>();
-        HistoryList = new HashMap<String, CnxHistory>();
-        HostInfoList = new HashMap<String, HostInfo>();
+        columnlist = new HashMap<>();
+        OSlist = new HashMap<>();
+        ParserMap = new HashMap<>();
+        HistoryList = new HashMap<>();
+        HostInfoList = new HashMap<>();
         is = this.getClass().getResourceAsStream("/Config.xml");
         tmp = new XMLConfig(is);
         for ( String  OSName : OSParserNames ) {

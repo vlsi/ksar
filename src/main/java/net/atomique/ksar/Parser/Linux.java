@@ -25,7 +25,7 @@ public class Linux extends OSParser {
     private String LinuxDateFormat;
     private LocalTime prevParseTime;
 
-    private final Set<String> IgnoreLinesBeginningWith = new HashSet<String>(Arrays.asList(
+    private final Set<String> IgnoreLinesBeginningWith = new HashSet<>(Arrays.asList(
             new String[] {"Average:","##","Summary"}
     ));
 
