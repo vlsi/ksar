@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar;
 
 import java.util.ResourceBundle;
@@ -13,10 +9,6 @@ import net.atomique.ksar.UI.SplashScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author Max
- */
 public class Main {
 
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(Main.class);

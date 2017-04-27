@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar;
 
 import java.io.IOException;
@@ -28,10 +24,6 @@ import org.xml.sax.helpers.DefaultHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author Max
- */
 public class XMLConfig extends DefaultHandler {
 
     private static final Logger log = LoggerFactory.getLogger(XMLConfig.class);

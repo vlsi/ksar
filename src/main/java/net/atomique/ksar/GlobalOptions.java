@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar;
 
 import java.awt.Color;
@@ -25,10 +21,6 @@ import net.atomique.ksar.XML.OSConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author Max
- */
 public class GlobalOptions {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalOptions.class);
