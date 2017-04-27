@@ -2,9 +2,6 @@ package net.atomique.ksar;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -92,39 +89,38 @@ public class XMLConfig extends DefaultHandler {
 
     }
 
-        SortedSet<String> sortedset = new TreeSet<String>(GlobalOptions.getOSlist().keySet());
-        Iterator<String> it = sortedset.iterator();
-        while (it.hasNext()) {
-            OSConfig tmp = (OSConfig) GlobalOptions.getOSlist().get(it.next());
     void dump_XML() {
+
+        GlobalOptions.getOSlist().keySet().forEach((String item) -> {
+
+            OSConfig tmp = GlobalOptions.getOSlist().get(item);
             log.trace("-OS-{}" , tmp.getOsName());
-            SortedSet<String> sortedset2 = new TreeSet<String>(tmp.getStatHash().keySet());
-            Iterator<String> it2 = sortedset2.iterator();
-            while (it2.hasNext()) {
-                StatConfig tmp2 = (StatConfig) tmp.getStatHash().get(it2.next());
+
+            tmp.getStatHash().keySet().forEach((String stat) -> {
+
+                StatConfig tmp2 = tmp.getStatHash().get(stat);
                 log.trace("--STAT-- "
                         + tmp2.getStatName() + "=> "
                         + tmp2.getGraphName() + " "
                         + tmp2.getHeaderStr());
-            }
-            SortedSet<String> sortedset3 = new TreeSet<String>(tmp.getGraphHash().keySet());
-            Iterator<String> it3 = sortedset3.iterator();
-            while (it3.hasNext()) {
-                GraphConfig tmp3 = (GraphConfig) tmp.getGraphHash().get(it3.next());
+            });
+
+            tmp.getGraphHash().keySet().forEach((String graph) -> {
+
+                GraphConfig tmp3 = tmp.getGraphHash().get(graph);
                 log.trace("---GRAPH--- "
                         + tmp3.getName() + "=> "
                         + tmp3.getTitle());
-                SortedSet<String> sortedset4 = new TreeSet<String>(tmp3.getPlotlist().keySet());
-                Iterator<String> it4 = sortedset4.iterator();
-                while (it4.hasNext()) {
-                    PlotStackConfig tmp4 = (PlotStackConfig) tmp3.getPlotlist().get(it4.next());
+
+                tmp3.getPlotlist().keySet().forEach((String plot) -> {
+
+                    PlotStackConfig tmp4 = tmp3.getPlotlist().get(plot);
                     log.trace("----PLOT---- "
                             + tmp4.getTitle() + "=> "
                             + tmp4.getHeaderStr());
 
-                }
-            }
-        }
+                });
+            });
 
     }
 
