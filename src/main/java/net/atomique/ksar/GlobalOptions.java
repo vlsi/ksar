@@ -32,15 +32,12 @@ public class GlobalOptions {
     }
 
     public static boolean hasUI() {
-        if (UI != null) {
-            return true;
-        }
-        return false;
+        return (UI != null);
     }
 
     private GlobalOptions() {
         String [] OSParserNames = {"AIX", "HPUX",  "Linux", "SunOS"};
-        String filename ;
+        String filename;
         InputStream is;
         XMLConfig tmp;
         systemprops = System.getProperties();

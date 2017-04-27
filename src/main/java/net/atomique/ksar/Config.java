@@ -16,7 +16,7 @@ public class Config {
     private static Preferences myPref;
     private static Config instance = new Config();
 
-    public static Config getInstance() {
+    static Config getInstance() {
         return instance;
     }
 

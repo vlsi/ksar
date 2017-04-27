@@ -21,8 +21,8 @@ public class AIX extends OSParser {
 
     public void parse_header(String s) {
         String [] columns = s.split("\\s+");
-        setOstype(columns[0]);
 
+        setOstype(columns[0]);
         setHostname(columns[1]);
         setOSversion(columns[2]+ "." + columns[3]);
         setMacAddress(columns[4]);
