@@ -130,9 +130,9 @@ public class XMLConfig extends DefaultHandler {
 
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 
-        if ("ConfiG".equals(qName)) {
+/*        if ("ConfiG".equals(qName)) {
             // config found
-        }
+        }*/
         if ("colors".equals(qName)) {
             in_colors = true;
         }
