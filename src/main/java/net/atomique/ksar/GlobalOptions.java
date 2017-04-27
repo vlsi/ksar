@@ -40,9 +40,9 @@ public class GlobalOptions {
 
     private GlobalOptions() {
         String [] OSParserNames = {"AIX", "HPUX",  "Linux", "SunOS"};
-        String filename = null;
-        InputStream is = null;
-        XMLConfig tmp = null;
+        String filename ;
+        InputStream is;
+        XMLConfig tmp;
         systemprops = System.getProperties();
         username = (String) systemprops.get("user.name");
         userhome = (String) systemprops.get("user.home") + systemprops.get("file.separator");

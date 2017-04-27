@@ -184,7 +184,7 @@ public class Config {
             return 0;
         }
 
-        BufferedWriter out = null;
+        BufferedWriter out;
         try {
             out = new BufferedWriter(new FileWriter(userhome + ".ksarcfg" + fileseparator + "Config.xml"));
             out.write(buffer);

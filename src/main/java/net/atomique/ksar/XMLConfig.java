@@ -52,10 +52,9 @@ public class XMLConfig extends DefaultHandler {
             return inputSource;
         }
     
-        SAXParserFactory fabric = null;
-        SAXParser parser = null;
-        XMLReader reader = null;
     void load_config(InputStream is) {
+        SAXParserFactory fabric;
+        SAXParser parser;
         try {
             fabric = SAXParserFactory.newInstance();
             parser = fabric.newSAXParser();
@@ -77,9 +76,9 @@ public class XMLConfig extends DefaultHandler {
         }
     }
 
-        SAXParserFactory fabric = null;
-        SAXParser parser = null;
     void load_config(String xmlfile) {
+        SAXParserFactory fabric;
+        SAXParser parser;
         try {
             fabric = SAXParserFactory.newInstance();
             parser = fabric.newSAXParser();
