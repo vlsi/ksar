@@ -117,13 +117,6 @@ public abstract class OSParser extends AllParser {
         return tmpstr.toString();
     }
 
-    public String getOriginal_line() {
-        return original_line;
-    }
-
-    public void setOriginal_line(String original_line) {
-        this.original_line = original_line;
-    }
 
     public String gethostName() {
         return Hostname;
@@ -171,8 +164,7 @@ public abstract class OSParser extends AllParser {
     
     protected String lastStat = null;
     protected Object currentStatObj = null;
-    //List graphlist = new ArrayList();
-    
+
     protected String ostype = null;
     protected String Hostname = null;
     protected String OSversion = null;
@@ -183,9 +175,5 @@ public abstract class OSParser extends AllParser {
     protected String NBDisk = null;
     protected String NBCpu = null;
     protected String ENT = null;
-    protected String Detect = null;
-    protected String original_line=null;
-    // for graph
-    
-    
+
 }
