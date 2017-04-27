@@ -28,8 +28,8 @@ public class Linux extends OSParser {
 
     public void parse_header(String s) {
 
-        LinuxDateFormat = Config.getLinuxDateFormat();
         String[] columns = s.split("\\s+");
+
         String tmpstr;
         setOstype(columns[0]);
         setKernel(columns[1]);
@@ -42,8 +42,9 @@ public class Linux extends OSParser {
 
     private void checkDateFormat() {
 
+        LinuxDateFormat = Config.getLinuxDateFormat();
         if ("Always ask".equals(LinuxDateFormat)) {
-            askDateFormat("Provide date Format");
+            askDateFormat();
         }
 
         // day and year format specifiers must be lower case, month upper case
@@ -61,10 +62,12 @@ public class Linux extends OSParser {
 
     }
 
-    private void askDateFormat(String s) {
+    private void askDateFormat() {
+
+        log.debug("askDateFormat - provide date format");
         if ( GlobalOptions.hasUI() ) {
             LinuxDateFormat tmp = new LinuxDateFormat(GlobalOptions.getUI(),true);
-            tmp.setTitle(s);
+            tmp.setTitle("Provide date format");
             if ( tmp.isOk()) {
                 LinuxDateFormat=tmp.getDateFormat();
                 if ( tmp.hasToRemenber() ) {
@@ -113,6 +116,7 @@ public class Linux extends OSParser {
                 endofgraph = nowStat;
             }
             firstdatacolumn = timeColumn;
+
         } catch (DateTimeParseException|IllegalArgumentException ex) {
             log.error("unable to parse time {}" ,columns[0], ex);
             return -1;

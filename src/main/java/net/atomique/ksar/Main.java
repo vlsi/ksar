@@ -38,18 +38,22 @@ public class Main {
     }
 
     public static void make_ui() {
-        SplashScreen mysplash = new SplashScreen(null, 3000);
+
+
+        SplashScreen mysplash = new SplashScreen(null, 1500);
+
+        set_lookandfeel();
+
         while (mysplash.isVisible()) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(200);
             } catch (InterruptedException ie) {
                 log.error("SplashScreen Exception",ie);
             }
         }
 
-
-        set_lookandfeel();
         log.trace("MainScreen");
+        //set_lookandfeel();
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
@@ -65,11 +69,11 @@ public class Main {
     public static void main(String[] args) {
         int i = 0;
         String arg;
-        /// load default
 
         log.trace("main - Start");
         log.trace("ksar Version : {}", VersionNumber.getVersionNumber());
 
+        /// load default - Mac OS X Application Properties
         String mrjVersion = System.getProperty("mrj.version");
         if (mrjVersion != null) {
             System.setProperty("com.apple.mrj.application.growbox.intrudes", "false");

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar.UI;
 
 import org.slf4j.Logger;
@@ -19,10 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
-/**
- *
- * @author Max
- */
 public class  SplashScreen extends JWindow {
 
     private static final Logger log = LoggerFactory.getLogger(SplashScreen.class);
@@ -51,24 +43,20 @@ public class  SplashScreen extends JWindow {
             }
         });
         final int pause = waitTime;
-        final Runnable closerRunner = new Runnable() {
 
-            public void run() {
-                setVisible(false);
-                dispose();
-            }
+        Runnable closerRunner = () -> {
+            setVisible(false);
+            dispose();
         };
-        Runnable waitRunner = new Runnable() {
-
-            public void run() {
+        Runnable waitRunner = () -> {
                 try {
                     Thread.sleep(pause);
                     SwingUtilities.invokeAndWait(closerRunner);
                 } catch (Exception ex) {
                     log.error("SplashScreen run exception",ex);
                 }
-            }
         };
+
         setVisible(true);
         Thread splashThread = new Thread(waitRunner, "SplashThread");
         splashThread.start();
