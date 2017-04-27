@@ -43,24 +43,20 @@ public class  SplashScreen extends JWindow {
             }
         });
         final int pause = waitTime;
-        final Runnable closerRunner = new Runnable() {
 
-            public void run() {
-                setVisible(false);
-                dispose();
-            }
+        Runnable closerRunner = () -> {
+            setVisible(false);
+            dispose();
         };
-        Runnable waitRunner = new Runnable() {
-
-            public void run() {
+        Runnable waitRunner = () -> {
                 try {
                     Thread.sleep(pause);
                     SwingUtilities.invokeAndWait(closerRunner);
                 } catch (Exception ex) {
                     log.error("SplashScreen run exception",ex);
                 }
-            }
         };
+
         setVisible(true);
         Thread splashThread = new Thread(waitRunner, "SplashThread");
         splashThread.start();
