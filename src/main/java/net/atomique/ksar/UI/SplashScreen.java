@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar.UI;
 
 import org.slf4j.Logger;
@@ -19,10 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
-/**
- *
- * @author Max
- */
 public class  SplashScreen extends JWindow {
 
     private static final Logger log = LoggerFactory.getLogger(SplashScreen.class);
