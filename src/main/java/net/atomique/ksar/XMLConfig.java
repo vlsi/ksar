@@ -1,14 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -28,20 +21,16 @@ import org.xml.sax.helpers.DefaultHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author Max
- */
 public class XMLConfig extends DefaultHandler {
 
     private static final Logger log = LoggerFactory.getLogger(XMLConfig.class);
 
-    public XMLConfig(String filename) {
+    XMLConfig(String filename) {
         load_config(filename);
         
     }
 
-    public XMLConfig(InputStream is) {
+    XMLConfig(InputStream is) {
         load_config(is);
     }
 
@@ -60,10 +49,9 @@ public class XMLConfig extends DefaultHandler {
             return inputSource;
         }
     
-    public void load_config(InputStream is) {
-        SAXParserFactory fabric = null;
-        SAXParser parser = null;
-        XMLReader reader = null;
+    void load_config(InputStream is) {
+        SAXParserFactory fabric;
+        SAXParser parser;
         try {
             fabric = SAXParserFactory.newInstance();
             parser = fabric.newSAXParser();
@@ -85,9 +73,9 @@ public class XMLConfig extends DefaultHandler {
         }
     }
 
-    public void load_config(String xmlfile) {
-        SAXParserFactory fabric = null;
-        SAXParser parser = null;
+    void load_config(String xmlfile) {
+        SAXParserFactory fabric;
+        SAXParser parser;
         try {
             fabric = SAXParserFactory.newInstance();
             parser = fabric.newSAXParser();
@@ -101,39 +89,39 @@ public class XMLConfig extends DefaultHandler {
 
     }
 
-    public void dump_XML() {
-        SortedSet<String> sortedset = new TreeSet<String>(GlobalOptions.getOSlist().keySet());
-        Iterator<String> it = sortedset.iterator();
-        while (it.hasNext()) {
-            OSConfig tmp = (OSConfig) GlobalOptions.getOSlist().get(it.next());
+    void dump_XML() {
+
+        GlobalOptions.getOSlist().keySet().forEach((String item) -> {
+
+            OSConfig tmp = GlobalOptions.getOSlist().get(item);
             log.trace("-OS-{}" , tmp.getOsName());
-            SortedSet<String> sortedset2 = new TreeSet<String>(tmp.getStatHash().keySet());
-            Iterator<String> it2 = sortedset2.iterator();
-            while (it2.hasNext()) {
-                StatConfig tmp2 = (StatConfig) tmp.getStatHash().get(it2.next());
+
+            tmp.getStatHash().keySet().forEach((String stat) -> {
+
+                StatConfig tmp2 = tmp.getStatHash().get(stat);
                 log.trace("--STAT-- "
                         + tmp2.getStatName() + "=> "
                         + tmp2.getGraphName() + " "
                         + tmp2.getHeaderStr());
-            }
-            SortedSet<String> sortedset3 = new TreeSet<String>(tmp.getGraphHash().keySet());
-            Iterator<String> it3 = sortedset3.iterator();
-            while (it3.hasNext()) {
-                GraphConfig tmp3 = (GraphConfig) tmp.getGraphHash().get(it3.next());
+            });
+
+            tmp.getGraphHash().keySet().forEach((String graph) -> {
+
+                GraphConfig tmp3 = tmp.getGraphHash().get(graph);
                 log.trace("---GRAPH--- "
                         + tmp3.getName() + "=> "
                         + tmp3.getTitle());
-                SortedSet<String> sortedset4 = new TreeSet<String>(tmp3.getPlotlist().keySet());
-                Iterator<String> it4 = sortedset4.iterator();
-                while (it4.hasNext()) {
-                    PlotStackConfig tmp4 = (PlotStackConfig) tmp3.getPlotlist().get(it4.next());
+
+                tmp3.getPlotlist().keySet().forEach((String plot) -> {
+
+                    PlotStackConfig tmp4 = tmp3.getPlotlist().get(plot);
                     log.trace("----PLOT---- "
                             + tmp4.getTitle() + "=> "
                             + tmp4.getHeaderStr());
 
-                }
-            }
-        }
+                });
+            });
+        });
 
     }
 
@@ -143,9 +131,9 @@ public class XMLConfig extends DefaultHandler {
 
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 
-        if ("ConfiG".equals(qName)) {
+/*        if ("ConfiG".equals(qName)) {
             // config found
-        }
+        }*/
         if ("colors".equals(qName)) {
             in_colors = true;
         }
@@ -351,7 +339,7 @@ public class XMLConfig extends DefaultHandler {
     }
 
     
-    public boolean beenparse = false;
+    private boolean beenparse = false;
     private String tempval;
     private boolean in_color = false;
     private boolean in_colors = false;

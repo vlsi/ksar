@@ -22,7 +22,9 @@ public class SunOS extends OSParser {
     boolean under_average = false;
 
     public void parse_header(String s) {
+
         String[] columns = s.split("\\s+");
+
         setOstype(columns[0]);
         setHostname(columns[1]);
         setOSversion(columns[2]);
@@ -39,8 +41,7 @@ public class SunOS extends OSParser {
             tmpview.setVisible(true);
            
         }
-         
-         
+
     }
 
     @Override

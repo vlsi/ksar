@@ -7,7 +7,6 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 import net.atomique.ksar.Config;
 import net.atomique.ksar.OSParser;
@@ -23,11 +22,9 @@ public class Linux extends OSParser {
 
     private static final Logger log = LoggerFactory.getLogger(Linux.class);
     private String LinuxDateFormat;
-    private LocalTime prevParseTime;
 
-    private final Set<String> IgnoreLinesBeginningWith = new HashSet<String>(Arrays.asList(
-            new String[] {"Average:","##","Summary"}
-    ));
+    private final HashSet<String> IgnoreLinesBeginningWith = new HashSet<>(Arrays.asList(
+            "Average:","##","Summary"));
 
     public void parse_header(String s) {
 

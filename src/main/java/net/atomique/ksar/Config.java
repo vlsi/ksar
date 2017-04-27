@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.atomique.ksar;
 
 import java.awt.Font;
@@ -15,20 +11,16 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.swing.UIManager;
 
-/**
- *
- * @author Max
- */
 public class Config {
 
     private static Preferences myPref;
     private static Config instance = new Config();
 
-    public static Config getInstance() {
+    static Config getInstance() {
         return instance;
     }
 
-    Config() {
+    private Config() {
         myPref = Preferences.userNodeForPackage(Config.class);
         if (myPref.getInt("local_configfile", -1) == -1) {
             // new
@@ -98,17 +90,17 @@ public class Config {
         Config.landf = landf;
     }
 
-    public static File getLastReadDirectory() {
+    static File getLastReadDirectory() {
         return lastReadDirectory;
     }
 
-    public static void setLastReadDirectory(String lastReadDirectory) {
+    private static void setLastReadDirectory(String lastReadDirectory) {
         if (lastReadDirectory != null) {
             Config.lastReadDirectory = new File(lastReadDirectory);
         }
     }
 
-    public static void setLastReadDirectory(File lastReadDirectory) {
+    static void setLastReadDirectory(File lastReadDirectory) {
         Config.lastReadDirectory = lastReadDirectory;
     }
 
@@ -142,11 +134,11 @@ public class Config {
         host_history.add(e);
     }
 
-    public static int getNumber_host_history() {
+    private static int getNumber_host_history() {
         return number_host_history;
     }
 
-    public static void setNumber_host_history(int number_host_history) {
+    private static void setNumber_host_history(int number_host_history) {
         Config.number_host_history = number_host_history;
     }
 
@@ -178,9 +170,9 @@ public class Config {
         Config.PDFPageFormat = PDFPageFormat;
     }
 
-    
 
-    public static int store_configdir() {
+
+    private static int store_configdir() {
         Properties systemprops = System.getProperties();
         String userhome = (String) systemprops.get("user.home") + systemprops.get("file.separator");
         String username = (String) systemprops.get("user.name");
@@ -192,7 +184,7 @@ public class Config {
             return 0;
         }
 
-        BufferedWriter out = null;
+        BufferedWriter out;
         try {
             out = new BufferedWriter(new FileWriter(userhome + ".ksarcfg" + fileseparator + "Config.xml"));
             out.write(buffer);
@@ -209,7 +201,7 @@ public class Config {
         return local_configfile;
     }
 
-    public static void setLocal_configfile(int local_configfile) {
+    private static void setLocal_configfile(int local_configfile) {
         Config.local_configfile = local_configfile;
     }
 
@@ -229,8 +221,8 @@ public class Config {
     private static String lastCommand;
     private static int number_host_history;
     private static int local_configfile;
-    private static ArrayList<String> host_history = new ArrayList<String>();
-    public static final Font DEFAULT_FONT = new Font("SansSerif", Font.BOLD, 18);
+    private static ArrayList<String> host_history = new ArrayList<>();
+    private static final Font DEFAULT_FONT = new Font("SansSerif", Font.BOLD, 18);
 
     private static String LinuxDateFormat;
     private static String PDFPageFormat;
