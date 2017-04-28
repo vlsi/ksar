@@ -1,23 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * AboutBox.java
- *
- * Created on 29 juil. 2010, 17:31:33
- */
-
 package net.atomique.ksar.UI;
 
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.Dimension;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import javax.swing.JLabel;
 import net.atomique.ksar.VersionNumber;
 
-/**
- *
- * @author Max
- */
 public class AboutBox extends javax.swing.JDialog {
 
     /** Creates new form AboutBox */
@@ -84,17 +77,28 @@ public class AboutBox extends javax.swing.JDialog {
 
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
 
-        urllabel.setText("website: http://sourceforge.net/projects/ksar/");
+        String url;
+
+        url ="https://github.com/vlsi/ksar";
+        urllabel.setText(String.format("<html> Website :   <a href=\"\">%s</a></html>", url ));
+        urllabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         jPanel2.add(urllabel);
+        goWebsite(urllabel, url);
 
-        authorlabel.setText("Author: xavier cherif");
+        url ="https://github.com/vlsi/ksar/CONTRIBUTORS.md";
+        authorlabel.setText(String.format("<html> Authors    :   <a href=\"\">%s</a></html>", url ));
+        authorlabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         jPanel2.add(authorlabel);
+        goWebsite(authorlabel, url);
 
-        licencelabel.setText("License: BSD (see LICENCE file)");
+        licencelabel.setText("License :  BSD (see LICENCE file)");
         jPanel2.add(licencelabel);
 
-        tipslabel.setText("ARS LONGA, VITA BREVIS");
+        url ="http://sourceforge.net/projects/ksar/";
+        tipslabel.setText(String.format("<html> Fork of       :   <a href=\"\">%s</a></html>", url ));
+        tipslabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         jPanel2.add(tipslabel);
+        goWebsite(tipslabel, url);
 
         getContentPane().add(jPanel2);
 
@@ -116,7 +120,18 @@ public class AboutBox extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_OkButtonActionPerformed
 
-   
+    private void goWebsite(JLabel website, String url) {
+        website.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    Desktop.getDesktop().browse(new URI(url));
+                } catch (URISyntaxException | IOException ex) {
+                    //It looks like there's a problem
+                }
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton OkButton;
