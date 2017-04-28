@@ -85,7 +85,7 @@ public class AboutBox extends javax.swing.JDialog {
         jPanel2.add(urllabel);
         goWebsite(urllabel, url);
 
-        url ="https://github.com/vlsi/ksar/CONTRIBUTION.md";
+        url ="https://github.com/vlsi/ksar/CONTRIBUTORS.md";
         authorlabel.setText(String.format("<html> Authors    :   <a href=\"\">%s</a></html>", url ));
         authorlabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         jPanel2.add(authorlabel);
