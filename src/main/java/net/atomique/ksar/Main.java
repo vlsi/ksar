@@ -5,7 +5,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import net.atomique.ksar.UI.Desktop;
-import net.atomique.ksar.UI.SplashScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,21 +38,9 @@ public class Main {
 
     public static void make_ui() {
 
-
-        SplashScreen mysplash = new SplashScreen(null, 1500);
-
+        log.trace("MainScreen");
         set_lookandfeel();
 
-        while (mysplash.isVisible()) {
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException ie) {
-                log.error("SplashScreen Exception",ie);
-            }
-        }
-
-        log.trace("MainScreen");
-        //set_lookandfeel();
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
@@ -113,7 +100,6 @@ public class Main {
         }
 
         make_ui();
-
 
     }
 
