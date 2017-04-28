@@ -44,3 +44,11 @@ task writeVersion << {
     new File("build/resources/main/kSar.version").text = s
 }
 classes.dependsOn(writeVersion)
+
+jar {
+    manifest {
+        attributes("Implementation-Title": "Gradle",
+                "Implementation-Version": version,
+                "SplashScreen-Image": "logo_ksar.jpg")
+    }
+}
