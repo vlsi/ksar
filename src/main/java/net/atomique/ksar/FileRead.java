@@ -5,83 +5,85 @@
 package net.atomique.ksar;
 
 import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
 import javax.swing.JFileChooser;
 
 /**
- *
  * @author Max
  */
 public class FileRead extends Thread {
 
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(FileRead.class);
+  private static final org.slf4j.Logger log = LoggerFactory.getLogger(FileRead.class);
 
-    public FileRead(kSar hissar) {
-        mysar = hissar;
-        JFileChooser fc = new JFileChooser();
-        if (Config.getLastReadDirectory() != null) {
-            fc.setCurrentDirectory(Config.getLastReadDirectory());
-        }
-        int returnVal = fc.showDialog(null, "Open");
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            sarfilename = fc.getSelectedFile().getAbsolutePath();
-            if (fc.getSelectedFile().isDirectory()) {
-                Config.setLastReadDirectory(fc.getSelectedFile());
-            } else {
-                Config.setLastReadDirectory(fc.getSelectedFile().getParentFile());
-            }
-            Config.save();
-        }
+  public FileRead(kSar hissar) {
+    mysar = hissar;
+    JFileChooser fc = new JFileChooser();
+    if (Config.getLastReadDirectory() != null) {
+      fc.setCurrentDirectory(Config.getLastReadDirectory());
+    }
+    int returnVal = fc.showDialog(null, "Open");
+    if (returnVal == JFileChooser.APPROVE_OPTION) {
+      sarfilename = fc.getSelectedFile().getAbsolutePath();
+      if (fc.getSelectedFile().isDirectory()) {
+        Config.setLastReadDirectory(fc.getSelectedFile());
+      } else {
+        Config.setLastReadDirectory(fc.getSelectedFile().getParentFile());
+      }
+      Config.save();
+    }
+  }
+
+  public FileRead(kSar hissar, String filename) {
+    mysar = hissar;
+    sarfilename = filename;
+  }
+
+  public String get_action() {
+    if (sarfilename != null) {
+      return "file://" + sarfilename;
+    } else {
+      return null;
+    }
+  }
+
+  private void close() {
+    try {
+      if (myfilereader != null) {
+        myfilereader.close();
+      }
+      if (tmpfile != null) {
+        tmpfile.close();
+      }
+    } catch (IOException ex) {
+      log.error("IO Exception", ex);
+    }
+  }
+
+  public void run() {
+    if (sarfilename == null) {
+      return;
     }
 
-    public FileRead(kSar hissar, String filename) {
-        mysar = hissar;
-        sarfilename = filename;
+    try {
+      tmpfile = new FileReader(sarfilename);
+    } catch (FileNotFoundException ex) {
+      log.error("IO Exception", ex);
     }
 
-    public String get_action() {
-        if ( sarfilename != null ) {
-            return "file://" + sarfilename;
-        } else {
-            return null;
-        }
-    }
+    myfilereader = new BufferedReader(tmpfile);
 
-    private void close() {
-        try {
-            if (myfilereader != null) {
-                myfilereader.close();
-            }
-            if (tmpfile != null) {
-                tmpfile.close();
-            }
-        } catch (IOException ex) {
-            log.error("IO Exception",ex);
-        }
-    }
+    mysar.parse(myfilereader);
 
-    public void run() {
-        if (sarfilename == null) {
-            return;
-        }
+    close();
+  }
 
-        try {
-            tmpfile = new FileReader(sarfilename);
-        } catch (FileNotFoundException ex) {
-            log.error("IO Exception",ex);
-        }
-
-        myfilereader = new BufferedReader(tmpfile);
-
-        mysar.parse(myfilereader);
-
-        close();
-    }
-    private kSar mysar = null;
-    private String sarfilename = null;
-    private FileReader tmpfile = null;
-    private BufferedReader myfilereader = null;
+  private kSar mysar = null;
+  private String sarfilename = null;
+  private FileReader tmpfile = null;
+  private BufferedReader myfilereader = null;
 }

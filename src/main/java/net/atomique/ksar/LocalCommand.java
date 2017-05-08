@@ -14,100 +14,104 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.swing.JOptionPane;
 
 /**
- *
  * @author Max
  */
 public class LocalCommand extends Thread {
 
-    private static final Logger log = LoggerFactory.getLogger(LocalCommand.class);
+  private static final Logger log = LoggerFactory.getLogger(LocalCommand.class);
 
-    public LocalCommand(kSar hissar) {
-        mysar = hissar;
-        try {
-            command = JOptionPane.showInputDialog("Enter local command ", "sar -A");
-            if (command == null) {
-                return;
-            }
-            String[] cmdArray = command.split(" +");
-            List<String> cmdList = new ArrayList<String>();
-            cmdList.addAll(Arrays.asList(cmdArray));
-            ProcessBuilder pb = new ProcessBuilder(cmdList);
-            pb.environment().put("LC_ALL", "C");
-            p = pb.start();
-            in = p.getInputStream();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "There was a problem while running the command ", "Local error", JOptionPane.ERROR_MESSAGE);
-            in = null;
-        }
-
+  public LocalCommand(kSar hissar) {
+    mysar = hissar;
+    try {
+      command = JOptionPane.showInputDialog("Enter local command ", "sar -A");
+      if (command == null) {
         return;
+      }
+      String[] cmdArray = command.split(" +");
+      List<String> cmdList = new ArrayList<String>();
+      cmdList.addAll(Arrays.asList(cmdArray));
+      ProcessBuilder pb = new ProcessBuilder(cmdList);
+      pb.environment().put("LC_ALL", "C");
+      p = pb.start();
+      in = p.getInputStream();
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null, "There was a problem while running the command ",
+          "Local error", JOptionPane.ERROR_MESSAGE);
+      in = null;
     }
 
-    public LocalCommand(kSar hissar, String hiscommand) {
-        mysar = hissar;
-        command = hiscommand;
-        try {
-            String[] envvar;
-            envvar = new String[1];
-            envvar[0] = "LC_ALL=C";
+    return;
+  }
 
-            p = Runtime.getRuntime().exec(command, envvar);
-            in = p.getInputStream();
-        } catch (Exception e) {
-            if (GlobalOptions.hasUI() ) {
-                JOptionPane.showMessageDialog(GlobalOptions.getUI(), "There was a problem while running the command " + command, "Local error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                log.error("There was a problem while running the command {}", command);
-            }
-            in = null;
-        }
+  public LocalCommand(kSar hissar, String hiscommand) {
+    mysar = hissar;
+    command = hiscommand;
+    try {
+      String[] envvar;
+      envvar = new String[1];
+      envvar[0] = "LC_ALL=C";
 
-        return;
+      p = Runtime.getRuntime().exec(command, envvar);
+      in = p.getInputStream();
+    } catch (Exception e) {
+      if (GlobalOptions.hasUI()) {
+        JOptionPane.showMessageDialog(GlobalOptions.getUI(),
+            "There was a problem while running the command " + command, "Local error",
+            JOptionPane.ERROR_MESSAGE);
+      } else {
+        log.error("There was a problem while running the command {}", command);
+      }
+      in = null;
     }
 
-    private void close() {
-        if ( p != null ) {
-            p.destroy();
-        }
+    return;
+  }
 
-        try {
-            if (myfilereader != null) {
-                myfilereader.close();
-            }
-        } catch (IOException ex) {
-            log.error("IO Exception",ex);
-        }
+  private void close() {
+    if (p != null) {
+      p.destroy();
     }
 
-    public void run() {
-        String current_line;
+    try {
+      if (myfilereader != null) {
+        myfilereader.close();
+      }
+    } catch (IOException ex) {
+      log.error("IO Exception", ex);
+    }
+  }
 
-        if (in == null) {
-            return;
-        }
-        myfilereader = new BufferedReader(new InputStreamReader(in));
-        if (myfilereader == null) {
-            return;
-        }
+  public void run() {
+    String current_line;
 
-        mysar.parse(myfilereader);
-
-        close();
+    if (in == null) {
+      return;
+    }
+    myfilereader = new BufferedReader(new InputStreamReader(in));
+    if (myfilereader == null) {
+      return;
     }
 
-    public String get_action() {
-        if ( command != null ) {
-        return "cmd://" + command;
-        } else {
-            return null;
-        }
+    mysar.parse(myfilereader);
+
+    close();
+  }
+
+  public String get_action() {
+    if (command != null) {
+      return "cmd://" + command;
+    } else {
+      return null;
     }
-    private kSar mysar = null;
-    private InputStream in = null;
-    private String command = null;
-    private BufferedReader myfilereader = null;
-    private Process p = null;
+  }
+
+  private kSar mysar = null;
+  private InputStream in = null;
+  private String command = null;
+  private BufferedReader myfilereader = null;
+  private Process p = null;
 }
