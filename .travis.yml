@@ -10,7 +10,7 @@ cache:
   - $HOME/.gradle/native
   - $HOME/.gradle/wrapper
 
-script: ./gradlew shadowJar
+script: ./gradlew check shadowJar
 
 deploy:
   provider: releases
