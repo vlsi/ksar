@@ -1,3 +1,8 @@
+/*
+* Copyright 2008 The kSAR Project. All rights reserved.
+* See the LICENSE file in the project root for more information.
+*/
+
 package net.atomique.ksar;
 
 import org.slf4j.Logger;
@@ -47,9 +52,9 @@ public class Config {
   }
 
   private static void load() {
-        /*
-         * load default value or stored value
-         */
+    /*
+    * load default value or stored value
+    */
     setLandf(myPref.get("landf", UIManager.getLookAndFeel().getName()));
     setLastReadDirectory(myPref.get("lastReadDirectory", null));
     setLastExportDirectory(myPref.get("lastExportDirectory", null));

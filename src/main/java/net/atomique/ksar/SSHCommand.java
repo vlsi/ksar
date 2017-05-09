@@ -1,7 +1,8 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* Copyright 2008 The kSAR Project. All rights reserved.
+* See the LICENSE file in the project root for more information.
+*/
+
 package net.atomique.ksar;
 
 import com.jcraft.jsch.Channel;
@@ -11,6 +12,9 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UIKeyboardInteractive;
 import com.jcraft.jsch.UserInfo;
+import net.atomique.ksar.XML.CnxHistory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.Container;
 import java.awt.GridBagConstraints;
@@ -32,13 +36,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import net.atomique.ksar.XML.CnxHistory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-/**
- * @author alex
- */
 public class SSHCommand extends Thread {
 
   private static final Logger log = LoggerFactory.getLogger(SSHCommand.class);
@@ -176,7 +173,7 @@ public class SSHCommand extends Thread {
     dialog.getContentPane().add(buttonpanel, java.awt.BorderLayout.SOUTH);
 
     dialog.pack();
-  }// </editor-fold>
+  }
 
   private void CancelbuttonActionPerformed(java.awt.event.ActionEvent evt) {
     dialog.dispose();

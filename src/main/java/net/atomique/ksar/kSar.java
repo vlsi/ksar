@@ -1,14 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* Copyright 2008 The kSAR Project. All rights reserved.
+* See the LICENSE file in the project root for more information.
+*/
+
 package net.atomique.ksar;
-
-import java.beans.PropertyVetoException;
-import java.io.BufferedReader;
-import java.io.IOException;
-
-import javax.swing.JDesktopPane;
 
 import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.UI.DataView;
@@ -17,9 +12,12 @@ import net.atomique.ksar.UI.TreeNodeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author Max
- */
+import java.beans.PropertyVetoException;
+import java.io.BufferedReader;
+import java.io.IOException;
+
+import javax.swing.JDesktopPane;
+
 public class kSar {
 
   private static final Logger log = LoggerFactory.getLogger(kSar.class);

@@ -1,7 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* Copyright 2008 The kSAR Project. All rights reserved.
+* See the LICENSE file in the project root for more information.
+*/
 
 package net.atomique.ksar;
 
@@ -13,9 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/**
- * @author Max
- */
 public class VersionNumber {
 
   private static final Logger log = LoggerFactory.getLogger(VersionNumber.class);

@@ -1,14 +1,19 @@
+/*
+* Copyright 2008 The kSAR Project. All rights reserved.
+* See the LICENSE file in the project root for more information.
+*/
+
 package net.atomique.ksar;
+
+import net.atomique.ksar.XML.OSConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.DateTimeException;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.HashMap;
 import java.util.Map;
-
-import net.atomique.ksar.XML.OSConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class OSParser extends AllParser {
 

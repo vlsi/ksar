@@ -1,4 +1,13 @@
+/*
+* Copyright 2008 The kSAR Project. All rights reserved.
+* See the LICENSE file in the project root for more information.
+*/
+
 package net.atomique.ksar;
+
+import net.atomique.ksar.XML.OSConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -6,10 +15,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.TreeSet;
-
-import net.atomique.ksar.XML.OSConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class AllParser {
 

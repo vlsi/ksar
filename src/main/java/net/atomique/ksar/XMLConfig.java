@@ -1,11 +1,9 @@
+/*
+* Copyright 2008 The kSAR Project. All rights reserved.
+* See the LICENSE file in the project root for more information.
+*/
+
 package net.atomique.ksar;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 import net.atomique.ksar.XML.CnxHistory;
 import net.atomique.ksar.XML.ColumnConfig;
@@ -14,13 +12,20 @@ import net.atomique.ksar.XML.HostInfo;
 import net.atomique.ksar.XML.OSConfig;
 import net.atomique.ksar.XML.PlotStackConfig;
 import net.atomique.ksar.XML.StatConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 public class XMLConfig extends DefaultHandler {
 
@@ -133,9 +138,11 @@ public class XMLConfig extends DefaultHandler {
   public void startElement(String uri, String localName, String qName, Attributes attributes)
       throws SAXException {
 
-/*        if ("ConfiG".equals(qName)) {
-            // config found
-        }*/
+    /*
+    if ("ConfiG".equals(qName)) {
+      // config found
+    }
+    */
     if ("colors".equals(qName)) {
       in_colors = true;
     }
