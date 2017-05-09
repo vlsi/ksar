@@ -10,6 +10,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'checkstyle'
 
 group = 'com.github.vlsi.ksar'
 archivesBaseName = 'ksar'
@@ -44,6 +45,10 @@ task writeVersion << {
     new File("build/resources/main/kSar.version").text = s
 }
 classes.dependsOn(writeVersion)
+
+checkstyle {
+    configFile = new File(rootDir, "/src/main/checkstyle/postgressql-checks.xml")
+}
 
 jar {
     manifest {
