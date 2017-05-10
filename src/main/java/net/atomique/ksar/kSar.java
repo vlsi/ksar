@@ -5,10 +5,10 @@
 
 package net.atomique.ksar;
 
+import net.atomique.ksar.graph.Graph;
 import net.atomique.ksar.ui.DataView;
 import net.atomique.ksar.ui.SortedTreeNode;
 import net.atomique.ksar.ui.TreeNodeInfo;
-import net.atomique.ksar.graph.Graph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

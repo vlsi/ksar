@@ -5,12 +5,12 @@
 
 package net.atomique.ksar.graph;
 
+import net.atomique.ksar.kSar;
 import net.atomique.ksar.ui.NaturalComparator;
 import net.atomique.ksar.ui.ParentNodeInfo;
 import net.atomique.ksar.ui.SortedTreeNode;
 import net.atomique.ksar.ui.TreeNodeInfo;
 import net.atomique.ksar.xml.GraphConfig;
-import net.atomique.ksar.kSar;
 import org.jfree.data.time.Second;
 
 import java.awt.LayoutManager;

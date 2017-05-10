@@ -7,9 +7,9 @@ package net.atomique.ksar.parser;
 
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.OSParser;
-import net.atomique.ksar.xml.GraphConfig;
 import net.atomique.ksar.graph.Graph;
 import net.atomique.ksar.graph.List;
+import net.atomique.ksar.xml.GraphConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

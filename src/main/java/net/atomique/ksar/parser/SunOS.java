@@ -7,11 +7,11 @@ package net.atomique.ksar.parser;
 
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.OSParser;
+import net.atomique.ksar.graph.Graph;
+import net.atomique.ksar.graph.List;
 import net.atomique.ksar.ui.HostInfoView;
 import net.atomique.ksar.xml.GraphConfig;
 import net.atomique.ksar.xml.HostInfo;
-import net.atomique.ksar.graph.Graph;
-import net.atomique.ksar.graph.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
