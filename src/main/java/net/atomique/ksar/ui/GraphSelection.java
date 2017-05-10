@@ -1,25 +1,15 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * GraphSelection.java
- *
- * Created on 16 août 2010, 18:48:32
+ * Copyright 2018 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
  */
 
 package net.atomique.ksar.ui;
 
 import java.awt.Component;
+
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
-
-/**
- *
- * @author alex
- */
 public class GraphSelection extends javax.swing.JDialog {
 
     /** Creates new form GraphSelection */

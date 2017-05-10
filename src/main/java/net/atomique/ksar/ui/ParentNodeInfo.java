@@ -1,16 +1,12 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2018 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
  */
 
 package net.atomique.ksar.ui;
 
 import net.atomique.ksar.graph.List;
 
-/**
- *
- * @author Max
- */
 public class ParentNodeInfo {
 
     public ParentNodeInfo(String t, List list) {

@@ -1,28 +1,21 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2018 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
  */
 
-/*
- * Preferences.java
- *
- * Created on 30 juil. 2010, 13:55:43
- */
 package net.atomique.ksar.ui;
 
+import net.atomique.ksar.Config;
+import net.atomique.ksar.GlobalOptions;
+
 import java.awt.Dimension;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import net.atomique.ksar.Config;
-import net.atomique.ksar.GlobalOptions;
 
-/**
- *
- * @author Max
- */
 public class Preferences extends javax.swing.JDialog {
 
     /** Creates new form Preferences */

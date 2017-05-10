@@ -1,23 +1,14 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * AboutBox.java
- *
- * Created on 29 juil. 2010, 17:31:33
+ * Copyright 2018 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
  */
 
 package net.atomique.ksar.ui;
 
-import java.awt.Dimension;
 import net.atomique.ksar.VersionNumber;
 
-/**
- *
- * @author Max
- */
+import java.awt.Dimension;
+
 public class AboutBox extends javax.swing.JDialog {
 
     /** Creates new form AboutBox */

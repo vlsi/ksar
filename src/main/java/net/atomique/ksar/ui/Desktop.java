@@ -1,31 +1,23 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2018 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
  */
 
-/*
- * Desktop.java
- *
- * Created on 29 juil. 2010, 16:54:23
- */
 package net.atomique.ksar.ui;
+
+import net.atomique.ksar.kSar;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
+
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
-import net.atomique.ksar.GlobalOptions;
-import net.atomique.ksar.kSar;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author Max
- */
 public class Desktop extends javax.swing.JFrame {
 
     private static final Logger log = LoggerFactory.getLogger(Desktop.class);

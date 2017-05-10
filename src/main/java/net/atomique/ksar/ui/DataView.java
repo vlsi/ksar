@@ -1,16 +1,22 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2018 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
  */
 
-/*
- * DataView.java
- *
- * Created on 30 juil. 2010, 15:38:01
- */
 package net.atomique.ksar.ui;
 
+import net.atomique.ksar.Config;
+import net.atomique.ksar.GlobalOptions;
+import net.atomique.ksar.export.FileCSV;
+import net.atomique.ksar.export.FilePDF;
+import net.atomique.ksar.graph.Graph;
+import net.atomique.ksar.graph.List;
+import net.atomique.ksar.kSar;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
+
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -21,20 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
-import net.atomique.ksar.Config;
-import net.atomique.ksar.export.FileCSV;
-import net.atomique.ksar.export.FilePDF;
-import net.atomique.ksar.GlobalOptions;
-import net.atomique.ksar.graph.List;
-import net.atomique.ksar.graph.Graph;
-import net.atomique.ksar.kSar;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author Max
- */
 public class DataView extends javax.swing.JInternalFrame {
 
     private static final Logger log = LoggerFactory.getLogger(DataView.class);

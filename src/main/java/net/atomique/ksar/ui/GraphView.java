@@ -1,21 +1,10 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2018 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
  */
 
-/*
- * GraphView.java
- *
- * Created on 12 août 2010, 11:26:02
- */
 package net.atomique.ksar.ui;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import net.atomique.ksar.Config;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.graph.Graph;
@@ -23,10 +12,14 @@ import org.jfree.chart.ChartPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author Max
- */
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 public class GraphView extends javax.swing.JPanel {
 
     private static final Logger log = LoggerFactory.getLogger(GraphView .class);

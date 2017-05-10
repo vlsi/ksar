@@ -1,18 +1,16 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2018 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
  */
 
 package net.atomique.ksar.ui;
 
 import java.util.Collections;
 import java.util.Comparator;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 
-/**
- * @author Max
- */
 public class SortedTreeNode extends DefaultMutableTreeNode implements Comparable {
 
     public static final long serialVersionUID = 15071L;

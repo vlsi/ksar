@@ -1,12 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * HostInfoView.java
- *
- * Created on 25 oct. 2010, 16:08:27
+ * Copyright 2018 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
  */
 
 package net.atomique.ksar.ui;
@@ -14,10 +8,6 @@ package net.atomique.ksar.ui;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.XML.HostInfo;
 
-/**
- *
- * @author u098006
- */
 public class HostInfoView extends javax.swing.JDialog {
 
     /** Creates new form HostInfoView */
