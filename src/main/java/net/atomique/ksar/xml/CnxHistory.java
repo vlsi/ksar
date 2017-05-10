@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2018 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
  */
 
 package net.atomique.ksar.xml;
@@ -11,10 +11,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-/**
- *
- * @author alex
- */
 public class CnxHistory {
 
     private static final Logger log = LoggerFactory.getLogger(CnxHistory.class);

@@ -1,12 +1,18 @@
+/*
+ * Copyright 2018 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
+ */
+
 package net.atomique.ksar.xml;
 
-import java.text.NumberFormat;
 import net.atomique.ksar.graph.IEEE1541Number;
 import net.atomique.ksar.graph.ISNumber;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.Range;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.text.NumberFormat;
 
 public class PlotStackConfig {
     private static final Logger log = LoggerFactory.getLogger(PlotStackConfig.class);
