@@ -5,7 +5,7 @@
 
 package net.atomique.ksar;
 
-import net.atomique.ksar.UI.Desktop;
+import net.atomique.ksar.ui.Desktop;
 import net.atomique.ksar.XML.CnxHistory;
 import net.atomique.ksar.XML.ColumnConfig;
 import net.atomique.ksar.XML.HostInfo;

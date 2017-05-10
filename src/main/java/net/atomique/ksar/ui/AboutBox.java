@@ -9,7 +9,7 @@
  * Created on 29 juil. 2010, 17:31:33
  */
 
-package net.atomique.ksar.UI;
+package net.atomique.ksar.ui;
 
 import java.awt.Dimension;
 import net.atomique.ksar.VersionNumber;

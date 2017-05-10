@@ -7,7 +7,7 @@ package net.atomique.ksar.parser;
 
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.OSParser;
-import net.atomique.ksar.UI.HostInfoView;
+import net.atomique.ksar.ui.HostInfoView;
 import net.atomique.ksar.XML.GraphConfig;
 import net.atomique.ksar.XML.HostInfo;
 import net.atomique.ksar.graph.Graph;

@@ -8,7 +8,7 @@
  *
  * Created on 29 juil. 2010, 16:54:23
  */
-package net.atomique.ksar.UI;
+package net.atomique.ksar.ui;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;

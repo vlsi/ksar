@@ -1,4 +1,4 @@
-package net.atomique.ksar.UI;
+package net.atomique.ksar.ui;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

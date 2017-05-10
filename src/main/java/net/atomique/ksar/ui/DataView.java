@@ -8,7 +8,7 @@
  *
  * Created on 30 juil. 2010, 15:38:01
  */
-package net.atomique.ksar.UI;
+package net.atomique.ksar.ui;
 
 import java.io.File;
 import javax.swing.JCheckBox;

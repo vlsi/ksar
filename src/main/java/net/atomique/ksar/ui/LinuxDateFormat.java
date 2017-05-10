@@ -1,4 +1,4 @@
-package net.atomique.ksar.UI;
+package net.atomique.ksar.ui;
 
 import javax.swing.DefaultComboBoxModel;
 

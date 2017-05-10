@@ -5,7 +5,7 @@
 
 package net.atomique.ksar;
 
-import net.atomique.ksar.UI.Desktop;
+import net.atomique.ksar.ui.Desktop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

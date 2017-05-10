@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package net.atomique.ksar.UI;
+package net.atomique.ksar.ui;
 
 import java.util.Collections;
 import java.util.Comparator;

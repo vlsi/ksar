@@ -9,7 +9,7 @@
  * Created on 25 oct. 2010, 16:08:27
  */
 
-package net.atomique.ksar.UI;
+package net.atomique.ksar.ui;
 
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.XML.HostInfo;

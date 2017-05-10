@@ -9,7 +9,7 @@
  * Created on 16 août 2010, 18:48:32
  */
 
-package net.atomique.ksar.UI;
+package net.atomique.ksar.ui;
 
 import java.awt.Component;
 import javax.swing.JCheckBox;

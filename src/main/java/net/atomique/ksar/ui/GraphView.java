@@ -8,7 +8,7 @@
  *
  * Created on 12 août 2010, 11:26:02
  */
-package net.atomique.ksar.UI;
+package net.atomique.ksar.ui;
 
 import java.io.BufferedWriter;
 import java.io.File;
