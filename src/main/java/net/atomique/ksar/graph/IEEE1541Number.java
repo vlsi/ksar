@@ -1,5 +1,9 @@
+/*
+ * Copyright 2017 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
+ */
 
-package net.atomique.ksar.Graph;
+package net.atomique.ksar.graph;
 
 import java.text.DecimalFormat;
 import java.text.FieldPosition;

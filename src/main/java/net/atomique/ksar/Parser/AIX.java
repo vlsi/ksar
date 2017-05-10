@@ -7,8 +7,8 @@ import java.time.format.DateTimeParseException;
 
 import net.atomique.ksar.OSParser;
 import net.atomique.ksar.GlobalOptions;
-import net.atomique.ksar.Graph.Graph;
-import net.atomique.ksar.Graph.List;
+import net.atomique.ksar.graph.Graph;
+import net.atomique.ksar.graph.List;
 import net.atomique.ksar.XML.GraphConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

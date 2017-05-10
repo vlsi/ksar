@@ -1,4 +1,9 @@
-package net.atomique.ksar.Export;
+/*
+ * Copyright 2017 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
+ */
+
+package net.atomique.ksar.export;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -7,11 +12,11 @@ import java.time.LocalDateTime;
 import java.util.Iterator;
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;
-import net.atomique.ksar.Graph.Graph;
-import net.atomique.ksar.Graph.List;
 import net.atomique.ksar.UI.ParentNodeInfo;
 import net.atomique.ksar.UI.SortedTreeNode;
 import net.atomique.ksar.UI.TreeNodeInfo;
+import net.atomique.ksar.graph.Graph;
+import net.atomique.ksar.graph.List;
 import net.atomique.ksar.kSar;
 import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.Second;

@@ -18,7 +18,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import net.atomique.ksar.Config;
 import net.atomique.ksar.GlobalOptions;
-import net.atomique.ksar.Graph.Graph;
+import net.atomique.ksar.graph.Graph;
 import org.jfree.chart.ChartPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

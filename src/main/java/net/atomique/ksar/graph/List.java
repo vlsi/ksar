@@ -1,4 +1,7 @@
-package net.atomique.ksar.Graph;
+/*
+ * Copyright 2017 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
+ */
 
 import java.awt.LayoutManager;
 import java.time.LocalDateTime;
@@ -6,6 +9,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+package net.atomique.ksar.graph;
 
 import net.atomique.ksar.UI.NaturalComparator;
 import net.atomique.ksar.UI.ParentNodeInfo;

@@ -1,4 +1,4 @@
-package net.atomique.ksar.Graph;
+package net.atomique.ksar.graph;
 
 //import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import java.util.Arrays;

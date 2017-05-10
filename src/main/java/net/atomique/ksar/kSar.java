@@ -1,14 +1,14 @@
 /*
-* Copyright 2008 The kSAR Project. All rights reserved.
-* See the LICENSE file in the project root for more information.
-*/
+ * Copyright 2008 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
+ */
 
 package net.atomique.ksar;
 
-import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.UI.DataView;
 import net.atomique.ksar.UI.SortedTreeNode;
 import net.atomique.ksar.UI.TreeNodeInfo;
+import net.atomique.ksar.graph.Graph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

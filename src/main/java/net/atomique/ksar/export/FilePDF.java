@@ -1,8 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2017 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
  */
-package net.atomique.ksar.Export;
+
+package net.atomique.ksar.export;
 
 import com.itextpdf.awt.PdfGraphics2D;
 import com.itextpdf.text.BaseColor;
@@ -29,12 +30,12 @@ import java.io.IOException;
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;
 import net.atomique.ksar.Config;
-import net.atomique.ksar.Graph.Graph;
-import net.atomique.ksar.Graph.List;
 import net.atomique.ksar.UI.ParentNodeInfo;
 import net.atomique.ksar.UI.SortedTreeNode;
 import net.atomique.ksar.UI.TreeNodeInfo;
 import net.atomique.ksar.VersionNumber;
+import net.atomique.ksar.graph.Graph;
+import net.atomique.ksar.graph.List;
 import net.atomique.ksar.kSar;
 import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.JFreeChart;

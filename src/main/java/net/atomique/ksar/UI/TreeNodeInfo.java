@@ -5,7 +5,7 @@
 
 package net.atomique.ksar.UI;
 
-import net.atomique.ksar.Graph.Graph;
+import net.atomique.ksar.graph.Graph;
 
 /**
  *

@@ -1,8 +1,8 @@
 package net.atomique.ksar.XML;
 
 import java.text.NumberFormat;
-import net.atomique.ksar.Graph.IEEE1541Number;
-import net.atomique.ksar.Graph.ISNumber;
+import net.atomique.ksar.graph.IEEE1541Number;
+import net.atomique.ksar.graph.ISNumber;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.Range;
 import org.slf4j.Logger;
