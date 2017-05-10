@@ -1,4 +1,4 @@
-package net.atomique.ksar.Parser;
+package net.atomique.ksar.parser;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -9,39 +9,25 @@ import net.atomique.ksar.OSParser;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.graph.Graph;
 import net.atomique.ksar.graph.List;
-import net.atomique.ksar.UI.HostInfoView;
-import net.atomique.ksar.XML.HostInfo;
 import net.atomique.ksar.XML.GraphConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SunOS extends OSParser {
+public class AIX extends OSParser {
 
-    private static final Logger log = LoggerFactory.getLogger(SunOS.class);
+    private static final Logger log = LoggerFactory.getLogger(AIX.class);
 
     boolean under_average = false;
 
     public void parse_header(String s) {
-
-        String[] columns = s.split("\\s+");
+        String [] columns = s.split("\\s+");
 
         setOstype(columns[0]);
         setHostname(columns[1]);
-        setOSversion(columns[2]);
-        setKernel(columns[3]);
-        setCpuType(columns[4]);
+        setOSversion(columns[2]+ "." + columns[3]);
+        setMacAddress(columns[4]);
         setDate(columns[5]);
         
-        if (GlobalOptions.hasUI()) {
-            HostInfo tmphostinfo = GlobalOptions.getHostInfo(this.gethostName());
-            if (tmphostinfo == null) {
-                tmphostinfo = new HostInfo(this.gethostName());
-            }
-            HostInfoView tmpview = new HostInfoView(GlobalOptions.getUI(), tmphostinfo);
-            tmpview.setVisible(true);
-           
-        }
-
     }
 
     @Override
@@ -74,9 +60,9 @@ public class SunOS extends OSParser {
             nowStat = LocalDateTime.of(parsedate, parsetime);
 
             if (startofgraph == null) {
-                startofgraph = nowStat;
+                startofgraph =nowStat;
             }
-            if (endofgraph == null) {
+            if ( endofgraph == null) {
                 endofgraph = nowStat;
             }
             if (nowStat.compareTo(endofgraph) > 0) {
@@ -84,7 +70,7 @@ public class SunOS extends OSParser {
             }
             firstdatacolumn = 1;
         } catch (DateTimeParseException ex) {
-            if (!"DEVICE".equals(currentStat)) {
+            if (! "DEVICE".equals(currentStat) || "CPUS".equals(currentStat)) {
                 log.error("unable to parse time {}", columns[0], ex);
                 return -1;
             }
@@ -128,8 +114,8 @@ public class SunOS extends OSParser {
 
 
         if (lastStat != null) {
-            if (!lastStat.equals(currentStat)) {
-                if (GlobalOptions.isDodebug()) {
+            if (!lastStat.equals(currentStat) ) {
+                if (  GlobalOptions.isDodebug())  {
                     log.debug("Stat change from {} to {}", lastStat, currentStat);
                 }
                 lastStat = currentStat;
@@ -138,6 +124,7 @@ public class SunOS extends OSParser {
         } else {
             lastStat = currentStat;
         }
+        
         if ("IGNORE".equals(currentStat)) {
             return 1;
         }
@@ -168,5 +155,6 @@ public class SunOS extends OSParser {
         }
         return -1;
     }
+
 
 }

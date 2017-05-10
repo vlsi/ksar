@@ -1,35 +1,49 @@
-package net.atomique.ksar.Parser;
+package net.atomique.ksar.parser;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
 import net.atomique.ksar.OSParser;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.graph.Graph;
 import net.atomique.ksar.graph.List;
+import net.atomique.ksar.UI.HostInfoView;
+import net.atomique.ksar.XML.HostInfo;
 import net.atomique.ksar.XML.GraphConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HPUX extends OSParser {
+public class SunOS extends OSParser {
 
-    private static final Logger log = LoggerFactory.getLogger(HPUX.class);
+    private static final Logger log = LoggerFactory.getLogger(SunOS.class);
 
     boolean under_average = false;
 
     public void parse_header(String s) {
+
         String[] columns = s.split("\\s+");
+
         setOstype(columns[0]);
         setHostname(columns[1]);
         setOSversion(columns[2]);
         setKernel(columns[3]);
         setCpuType(columns[4]);
         setDate(columns[5]);
+        
+        if (GlobalOptions.hasUI()) {
+            HostInfo tmphostinfo = GlobalOptions.getHostInfo(this.gethostName());
+            if (tmphostinfo == null) {
+                tmphostinfo = new HostInfo(this.gethostName());
+            }
+            HostInfoView tmpview = new HostInfoView(GlobalOptions.getUI(), tmphostinfo);
+            tmpview.setVisible(true);
+           
+        }
 
     }
 
-    
     @Override
     public int parse(String line, String[] columns) {
 
@@ -53,17 +67,16 @@ public class HPUX extends OSParser {
 
 
         try {
-            timeFormat = "HH:mm:SS";
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat);
-            parsetime = LocalTime.parse(columns[0], formatter);
+            parsetime = LocalTime.parse(columns[0],formatter);
 
             LocalDateTime nowStat;
             nowStat = LocalDateTime.of(parsedate, parsetime);
 
             if (startofgraph == null) {
-                startofgraph =nowStat;
+                startofgraph = nowStat;
             }
-            if ( endofgraph == null) {
+            if (endofgraph == null) {
                 endofgraph = nowStat;
             }
             if (nowStat.compareTo(endofgraph) > 0) {
@@ -71,7 +84,7 @@ public class HPUX extends OSParser {
             }
             firstdatacolumn = 1;
         } catch (DateTimeParseException ex) {
-            if ( ! "DEVICE".equals(currentStat) && ! "CPU".equals(currentStat)) {
+            if (!"DEVICE".equals(currentStat)) {
                 log.error("unable to parse time {}", columns[0], ex);
                 return -1;
             }
@@ -115,9 +128,9 @@ public class HPUX extends OSParser {
 
 
         if (lastStat != null) {
-            if (!lastStat.equals(currentStat) ) {
-                if (  GlobalOptions.isDodebug())  {
-                log.debug("Stat change from {} to {}", lastStat, currentStat);
+            if (!lastStat.equals(currentStat)) {
+                if (GlobalOptions.isDodebug()) {
+                    log.debug("Stat change from {} to {}", lastStat, currentStat);
                 }
                 lastStat = currentStat;
                 under_average = false;
@@ -125,7 +138,6 @@ public class HPUX extends OSParser {
         } else {
             lastStat = currentStat;
         }
-        
         if ("IGNORE".equals(currentStat)) {
             return 1;
         }
@@ -156,4 +168,5 @@ public class HPUX extends OSParser {
         }
         return -1;
     }
+
 }

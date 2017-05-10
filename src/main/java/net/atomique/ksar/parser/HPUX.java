@@ -1,10 +1,9 @@
-package net.atomique.ksar.Parser;
+package net.atomique.ksar.parser;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-
 import net.atomique.ksar.OSParser;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.graph.Graph;
@@ -13,23 +12,24 @@ import net.atomique.ksar.XML.GraphConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AIX extends OSParser {
+public class HPUX extends OSParser {
 
-    private static final Logger log = LoggerFactory.getLogger(AIX.class);
+    private static final Logger log = LoggerFactory.getLogger(HPUX.class);
 
     boolean under_average = false;
 
     public void parse_header(String s) {
-        String [] columns = s.split("\\s+");
-
+        String[] columns = s.split("\\s+");
         setOstype(columns[0]);
         setHostname(columns[1]);
-        setOSversion(columns[2]+ "." + columns[3]);
-        setMacAddress(columns[4]);
+        setOSversion(columns[2]);
+        setKernel(columns[3]);
+        setCpuType(columns[4]);
         setDate(columns[5]);
-        
+
     }
 
+    
     @Override
     public int parse(String line, String[] columns) {
 
@@ -53,8 +53,9 @@ public class AIX extends OSParser {
 
 
         try {
+            timeFormat = "HH:mm:SS";
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat);
-            parsetime = LocalTime.parse(columns[0],formatter);
+            parsetime = LocalTime.parse(columns[0], formatter);
 
             LocalDateTime nowStat;
             nowStat = LocalDateTime.of(parsedate, parsetime);
@@ -70,7 +71,7 @@ public class AIX extends OSParser {
             }
             firstdatacolumn = 1;
         } catch (DateTimeParseException ex) {
-            if (! "DEVICE".equals(currentStat) || "CPUS".equals(currentStat)) {
+            if ( ! "DEVICE".equals(currentStat) && ! "CPU".equals(currentStat)) {
                 log.error("unable to parse time {}", columns[0], ex);
                 return -1;
             }
@@ -116,7 +117,7 @@ public class AIX extends OSParser {
         if (lastStat != null) {
             if (!lastStat.equals(currentStat) ) {
                 if (  GlobalOptions.isDodebug())  {
-                    log.debug("Stat change from {} to {}", lastStat, currentStat);
+                log.debug("Stat change from {} to {}", lastStat, currentStat);
                 }
                 lastStat = currentStat;
                 under_average = false;
@@ -155,6 +156,4 @@ public class AIX extends OSParser {
         }
         return -1;
     }
-
-
 }

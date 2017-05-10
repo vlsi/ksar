@@ -58,7 +58,7 @@ public class GlobalOptions {
     tmp = new XMLConfig(is);
     for (String OSName : OSParserNames) {
       try {
-        Class tmpclass = Class.forName("net.atomique.ksar.Parser." + OSName);
+        Class tmpclass = Class.forName("net.atomique.ksar.parser." + OSName);
         ParserMap.put(OSName, tmpclass);
       } catch (ClassNotFoundException ex) {
         log.error("Parser class not found", ex);

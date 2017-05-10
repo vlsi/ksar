@@ -1,4 +1,4 @@
-package net.atomique.ksar.Parser;
+package net.atomique.ksar.parser;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
