@@ -1,4 +1,4 @@
-package net.atomique.ksar.XML;
+package net.atomique.ksar.xml;
 
 import java.util.Arrays;
 import java.util.HashMap;

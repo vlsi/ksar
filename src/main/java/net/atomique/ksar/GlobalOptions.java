@@ -6,10 +6,10 @@
 package net.atomique.ksar;
 
 import net.atomique.ksar.ui.Desktop;
-import net.atomique.ksar.XML.CnxHistory;
-import net.atomique.ksar.XML.ColumnConfig;
-import net.atomique.ksar.XML.HostInfo;
-import net.atomique.ksar.XML.OSConfig;
+import net.atomique.ksar.xml.CnxHistory;
+import net.atomique.ksar.xml.ColumnConfig;
+import net.atomique.ksar.xml.HostInfo;
+import net.atomique.ksar.xml.OSConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -5,7 +5,7 @@
 
 package net.atomique.ksar;
 
-import net.atomique.ksar.XML.OSConfig;
+import net.atomique.ksar.xml.OSConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

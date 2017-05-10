@@ -6,7 +6,7 @@
 package net.atomique.ksar.ui;
 
 import net.atomique.ksar.GlobalOptions;
-import net.atomique.ksar.XML.HostInfo;
+import net.atomique.ksar.xml.HostInfo;
 
 public class HostInfoView extends javax.swing.JDialog {
 

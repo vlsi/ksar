@@ -1,4 +1,4 @@
-package net.atomique.ksar.XML;
+package net.atomique.ksar.xml;
 
 import java.text.NumberFormat;
 import net.atomique.ksar.graph.IEEE1541Number;

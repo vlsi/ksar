@@ -5,13 +5,13 @@
 
 package net.atomique.ksar;
 
-import net.atomique.ksar.XML.CnxHistory;
-import net.atomique.ksar.XML.ColumnConfig;
-import net.atomique.ksar.XML.GraphConfig;
-import net.atomique.ksar.XML.HostInfo;
-import net.atomique.ksar.XML.OSConfig;
-import net.atomique.ksar.XML.PlotStackConfig;
-import net.atomique.ksar.XML.StatConfig;
+import net.atomique.ksar.xml.CnxHistory;
+import net.atomique.ksar.xml.ColumnConfig;
+import net.atomique.ksar.xml.GraphConfig;
+import net.atomique.ksar.xml.HostInfo;
+import net.atomique.ksar.xml.OSConfig;
+import net.atomique.ksar.xml.PlotStackConfig;
+import net.atomique.ksar.xml.StatConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;

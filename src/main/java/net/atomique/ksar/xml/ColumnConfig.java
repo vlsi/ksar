@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.atomique.ksar.XML;
+package net.atomique.ksar.xml;
 
 import java.awt.Color;
 

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package net.atomique.ksar.XML;
+package net.atomique.ksar.xml;
 
 /**
  *

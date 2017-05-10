@@ -12,7 +12,7 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UIKeyboardInteractive;
 import com.jcraft.jsch.UserInfo;
-import net.atomique.ksar.XML.CnxHistory;
+import net.atomique.ksar.xml.CnxHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
