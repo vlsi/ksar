@@ -5,15 +5,40 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeSet;
 import net.atomique.ksar.XML.OSConfig;
+
+import org.jfree.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AllParser {
 
     private static final Logger log = LoggerFactory.getLogger(AllParser.class);
-
+    
+    private static final Map<String, String> DATE_FORMAT_REGEXPS = new HashMap<String, String>() {{
+        put("^\\d{8}$", "yyyyMMdd");
+        put("^\\d{1,2}-\\d{1,2}-\\d{4}$", "dd-MM-yyyy");
+        put("^\\d{4}-\\d{1,2}-\\d{1,2}$", "yyyy-MM-dd");
+        put("^\\d{1,2}/\\d{1,2}/\\d{4}$", "MM/dd/yyyy");
+        put("^\\d{4}/\\d{1,2}/\\d{1,2}$", "yyyy/MM/dd");
+        put("^\\d{1,2}\\s[a-z]{3}\\s\\d{4}$", "dd MMM yyyy");
+        put("^\\d{1,2}\\s[a-z]{4,}\\s\\d{4}$", "dd MMMM yyyy");
+        put("^\\d{1,2}-\\d{1,2}-\\d{2}$", "dd-MM-yy");
+        put("^\\d{1,2}/\\d{1,2}/\\d{2}$", "MM/dd/yy");
+    }};
+    
+    public static String determineDateFormat(String dateString) {
+        for (String regexp : DATE_FORMAT_REGEXPS.keySet()) {
+            if (dateString.toLowerCase().matches(regexp)) {
+                return DATE_FORMAT_REGEXPS.get(regexp);
+            }
+        }
+        return null; // Unknown format.
+    }
+    
     public AllParser () {
 
     }
@@ -59,8 +84,8 @@ public abstract class AllParser {
         }
         
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
-            currentDate = LocalDate.parse(s, formatter);
+        	DateTimeFormatter formatter = DateTimeFormatter.ofPattern(determineDateFormat(s));
+        	currentDate = LocalDate.parse(s, formatter);
 
             parsedate = currentDate;
 
@@ -69,6 +94,7 @@ public abstract class AllParser {
 
         } catch (DateTimeParseException ex) {
             log.error("unable to parse date {}", s, ex);
+            System.exit(0);
             return false;
         }
 

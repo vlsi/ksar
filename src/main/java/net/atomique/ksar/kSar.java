@@ -8,6 +8,8 @@ import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import javax.swing.JDesktopPane;
+import javax.swing.tree.DefaultTreeModel;
+
 import net.atomique.ksar.Graph.Graph;
 import net.atomique.ksar.UI.DataView;
 import net.atomique.ksar.UI.SortedTreeNode;
@@ -101,7 +103,7 @@ public class kSar {
         int parser_return = 0;
 
         parsing_start = System.currentTimeMillis();
-
+        
         try {
             while ((current_line = br.readLine()) != null && !action_interrupted) {
                 Parsing = true;
@@ -199,6 +201,9 @@ public class kSar {
     public void add2tree(SortedTreeNode parent, SortedTreeNode newNode) {
         if (dataview != null) {
             dataview.add2tree(parent, newNode);
+        }else{
+            //This means nongui mode and we need to append graph without GUI representation
+            parent.insert(newNode, parent.getChildCount());
         }
     }
 
@@ -239,7 +244,7 @@ public class kSar {
     DataView dataview = null;
     private long lines_parsed = 0L;
     private String reload_action = "Empty";
-    private Thread launched_action = null;
+    public Thread launched_action = null;
     private boolean action_interrupted = false;
     public AllParser myparser = null;
     private boolean Parsing = false;

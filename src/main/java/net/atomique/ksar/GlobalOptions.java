@@ -239,17 +239,75 @@ public class GlobalOptions {
         }
 
     }
-    private static Desktop UI = null;
+    
+    public static String getOutCSV() {
+		return outCSV;
+	}
+
+	public static void setOutCSV(String outFile) {
+		GlobalOptions.outCSV = outFile;
+	}
+	
+	public static String getOutTags() {
+		return outTags;
+	}
+
+	public static void setOutTags(String outTags) {
+		GlobalOptions.outTags = outTags;
+	}
+    
+    public static String getOutPDF() {
+		return outPDF;
+	}
+
+	public static void setOutPDF(String outPDF) {
+		GlobalOptions.outPDF = outPDF;
+	}
+
+	public static String getOutIMG() {
+		return outIMG;
+	}
+
+	public static void setOutIMG(String outIMG) {
+		GlobalOptions.outIMG = outIMG;
+	}
+
+	public static int getWidth() {
+		return width;
+	}
+
+	public static void setWidth(int width) {
+		GlobalOptions.width = width;
+	}
+
+	public static int getHeigth() {
+		return heigth;
+	}
+
+	public static void setHeigth(int heigth) {
+		GlobalOptions.heigth = heigth;
+	}
+
+	private static Desktop UI = null;
     private static Properties systemprops;
     private static String userhome;
     private static String username;
     private static String fileseparator;
     private static HashMap<String, ColumnConfig> columnlist;
-    private static HashMap<String, OSConfig> OSlist;
+	private static HashMap<String, OSConfig> OSlist;
     private static HashMap<String, CnxHistory> HistoryList;
     private static HashMap<String, HostInfo> HostInfoList;
     private static boolean dodebug = false;
     private static String CLfilename = null;
     private static HashMap<String, Class> ParserMap;
     private static boolean firstrun = true;
+    private static String outCSV;	
+    private static String outPDF;
+    private static String outIMG;	
+    private static String outTags;
+    
+    private static int width = 600;
+    private static int heigth = 400;
+
+
 }

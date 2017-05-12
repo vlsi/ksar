@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;
@@ -60,7 +61,9 @@ public class FileCSV implements Runnable {
                     tmpLDT.getDayOfMonth(),
                     tmpLDT.getMonthValue(),
                     tmpLDT.getYear());
-
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
+            String text = tmpLDT.format(formatter);
+            tmpcsv.append(text+";");
             export_treenode_data(mysar.graphtree, tmp);
             tmpcsv.append("\n");
         }
@@ -81,7 +84,6 @@ public class FileCSV implements Runnable {
 
     public void export_treenode_header(SortedTreeNode node) {
         int num = node.getChildCount();
-
         if (num > 0) {
             Object obj1 = node.getUserObject();
             if (obj1 instanceof ParentNodeInfo) {
