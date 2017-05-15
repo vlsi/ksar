@@ -14,12 +14,26 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeSet;
 
 public abstract class AllParser {
 
   private static final Logger log = LoggerFactory.getLogger(AllParser.class);
-
+	private static final Map<String, String> DATE_FORMAT_REGEXPS = new HashMap<String, String>() {
+		{
+			put("^\\d{8}$", "yyyyMMdd");
+			put("^\\d{1,2}-\\d{1,2}-\\d{4}$", "dd-MM-yyyy");
+			put("^\\d{4}-\\d{1,2}-\\d{1,2}$", "yyyy-MM-dd");
+			put("^\\d{1,2}/\\d{1,2}/\\d{4}$", "MM/dd/yyyy");
+			put("^\\d{4}/\\d{1,2}/\\d{1,2}$", "yyyy/MM/dd");
+			put("^\\d{1,2}\\s[a-z]{3}\\s\\d{4}$", "dd MMM yyyy");
+			put("^\\d{1,2}\\s[a-z]{4,}\\s\\d{4}$", "dd MMMM yyyy");
+			put("^\\d{1,2}-\\d{1,2}-\\d{2}$", "dd-MM-yy");
+			put("^\\d{1,2}/\\d{1,2}/\\d{2}$", "MM/dd/yy");
+		}
+	};
   public AllParser() {
 
   }
@@ -64,14 +78,21 @@ public abstract class AllParser {
       sarEndDate = s;
     }
 
-    try {
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
-      currentDate = LocalDate.parse(s, formatter);
+		try {
+			DateTimeFormatter formatter;
+			if ("".equals(dateFormat)) {
+				formatter = DateTimeFormatter.ofPattern(determineDateFormat(s));
 
-      parsedate = currentDate;
+			} else {
+				formatter = DateTimeFormatter.ofPattern(dateFormat);
+			}
 
-      startDate = LocalDate.parse(sarStartDate, formatter);
-      endDate = LocalDate.parse(sarEndDate, formatter);
+			currentDate = LocalDate.parse(s, formatter);
+
+			parsedate = currentDate;
+
+			startDate = LocalDate.parse(sarStartDate, formatter);
+			endDate = LocalDate.parse(sarEndDate, formatter);
 
     } catch (DateTimeParseException ex) {
       log.error("unable to parse date {}", s, ex);
@@ -103,6 +124,14 @@ public abstract class AllParser {
     return currentStat;
   }
 
+	public static String determineDateFormat(String dateString) {
+		for (String regexp : DATE_FORMAT_REGEXPS.keySet()) {
+			if (dateString.toLowerCase().matches(regexp)) {
+				return DATE_FORMAT_REGEXPS.get(regexp);
+			}
+		}
+		return null; // Unknown format.
+	}
 
   protected String sarStartDate = null;
   protected String sarEndDate = null;

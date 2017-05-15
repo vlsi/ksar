@@ -51,6 +51,11 @@ public class Linux extends OSParser {
     if ("Always ask".equals(LinuxDateFormat)) {
       askDateFormat();
     }
+    
+    if("Automatic Detection".equals(LinuxDateFormat)){
+    	dateFormat="Automatic Detection";
+    	timeColumn=0;
+    }
 
     // day and year format specifiers must be lower case, month upper case
     String[] parts = LinuxDateFormat.split(" ", 3);
@@ -95,9 +100,18 @@ public class Linux extends OSParser {
       return 0;
     }
 
-    try {
-      if (timeColumn == 2) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat, Locale.US);
+		try {
+			if (timeColumn == 0) {
+				if ((columns[0] + " " + columns[1]).matches("^\\d\\d:\\d\\d:\\d\\d [AP]M$")) {
+					timeFormat = "hh:mm:ss a";
+					timeColumn = 2;
+				} else {
+					timeColumn = 1;
+				}
+			}
+			
+			if (timeColumn == 2) {
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat, Locale.US);
         parsetime = LocalTime.parse(columns[0] + " " + columns[1], formatter);
       } else {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat);
