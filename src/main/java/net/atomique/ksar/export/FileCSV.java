@@ -20,6 +20,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 
 import javax.swing.JDialog;
@@ -68,6 +69,10 @@ public class FileCSV implements Runnable {
           tmpLDT.getMonthValue(),
           tmpLDT.getYear());
 
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
+      String text = tmpLDT.format(formatter);
+      tmpcsv.append(text+";");
+      
       export_treenode_data(mysar.graphtree, tmp);
       tmpcsv.append("\n");
     }
