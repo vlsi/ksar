@@ -195,13 +195,13 @@ public class kSar {
     }
   }
 
-	public void add2tree(SortedTreeNode parent, SortedTreeNode newNode) {
-		if (dataview != null) {
-			dataview.add2tree(parent, newNode);
-		} else {
-			parent.insert(newNode, parent.getChildCount());
-		}
-	}
+  public void add2tree(SortedTreeNode parent, SortedTreeNode newNode) {
+    if (dataview != null) {
+      dataview.add2tree(parent, newNode);
+    } else {
+      parent.insert(newNode, parent.getChildCount());
+    }
+  }
 
   public int get_page_to_print() {
     page_to_print = 0;

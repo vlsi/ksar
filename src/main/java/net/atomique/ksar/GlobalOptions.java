@@ -246,55 +246,53 @@ public class GlobalOptions {
 
   }
 
-  
   public static String getOutCSV() {
-	return outCSV;
+    return outCSV;
   }
 
   public static void setOutCSV(String outCSV) {
-	GlobalOptions.outCSV = outCSV;
+    GlobalOptions.outCSV = outCSV;
   }
 
   public static String getOutPDF() {
-	return outPDF;
+    return outPDF;
   }
 
   public static void setOutPDF(String outPDF) {
-	GlobalOptions.outPDF = outPDF;
+    GlobalOptions.outPDF = outPDF;
   }
 
   public static String getOutIMG() {
-	return outIMG;
+    return outIMG;
   }
 
   public static void setOutIMG(String outIMG) {
-	GlobalOptions.outIMG = outIMG;
+    GlobalOptions.outIMG = outIMG;
   }
 
   public static String getOutTags() {
-	return outTags;
+    return outTags;
   }
 
   public static void setOutTags(String outTags) {
-	GlobalOptions.outTags = outTags;
+    GlobalOptions.outTags = outTags;
   }
 
   public static int getWidth() {
-	return width;
+    return width;
   }
 
   public static void setWidth(int width) {
-	GlobalOptions.width = width;
+    GlobalOptions.width = width;
   }
 
   public static int getHeigth() {
-	return heigth;
+    return heigth;
   }
 
-	public static void setHeigth(int heigth) {
-		GlobalOptions.heigth = heigth;
-	}
-
+  public static void setHeigth(int heigth) {
+    GlobalOptions.heigth = heigth;
+  }
 
   private static Desktop UI = null;
   private static Properties systemprops;
@@ -309,10 +307,10 @@ public class GlobalOptions {
   private static String CLfilename = null;
   private static HashMap<String, Class> ParserMap;
   private static boolean firstrun = true;
-  private static String outCSV;	
+  private static String outCSV;
   private static String outPDF;
-  private static String outIMG;	
-  private static String outTags; 
+  private static String outIMG;
+  private static String outTags;
   private static int width = 600;
   private static int heigth = 400;
 }
