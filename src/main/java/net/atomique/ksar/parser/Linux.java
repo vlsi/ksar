@@ -51,24 +51,20 @@ public class Linux extends OSParser {
     if ("Always ask".equals(LinuxDateFormat)) {
       askDateFormat();
     }
-    
-    if("Autodetect".equals(LinuxDateFormat)){
-    	timeColumn = 0;
-    	dateFormat = "Autodetect";
-    }else{
-	    // day and year format specifiers must be lower case, month upper case
-	    String[] parts = LinuxDateFormat.split(" ", 3);
-	
-	    dateFormat = parts[0];
-	    dateFormat = dateFormat.replaceAll("D{2}", "dd");
-	    dateFormat = dateFormat.replaceAll("Y{2}", "yy");
-	
-	    //12hour
-	    if (parts.length == 3 && parts[2].contains("AM|PM")) {
-	      timeFormat = "hh:mm:ss a";
-	      timeColumn = 2;
-	    }
+
+    // day and year format specifiers must be lower case, month upper case
+    String[] parts = LinuxDateFormat.split(" ", 3);
+
+    dateFormat = parts[0];
+    dateFormat = dateFormat.replaceAll("D{2}", "dd");
+    dateFormat = dateFormat.replaceAll("Y{2}", "yy");
+
+    //12hour
+    if (parts.length == 3 && parts[2].contains("AM|PM")) {
+      timeFormat = "hh:mm:ss a";
+      timeColumn = 2;
     }
+
   }
 
   private void askDateFormat() {
@@ -100,15 +96,6 @@ public class Linux extends OSParser {
     }
 
     try {
-   	 if ( timeColumn == 0 ) {
-         if ((columns[0]+" "+columns[1]).matches("^\\d\\d:\\d\\d:\\d\\d [AP]M$")) {
-        	 timeFormat = "hh:mm:ss a";
-             timeColumn=2;
-         }else{
-        	 timeColumn=1;
-         }
-	 }
-    	
       if (timeColumn == 2) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat, Locale.US);
         parsetime = LocalTime.parse(columns[0] + " " + columns[1], formatter);
