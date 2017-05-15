@@ -71,7 +71,7 @@ public class FileCSV implements Runnable {
 
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
       String text = tmpLDT.format(formatter);
-      tmpcsv.append(text + ";");   
+      tmpcsv.append(text + ";");
       export_treenode_data(mysar.graphtree, tmp);
       tmpcsv.append("\n");
     }
