@@ -1,7 +1,10 @@
+/*
+ * Copyright 2017 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
+ */
+
 package net.atomique.ksar.export;
 
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
 import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.kSar;
 import net.atomique.ksar.graph.Graph;
@@ -9,6 +12,8 @@ import net.atomique.ksar.graph.List;
 import net.atomique.ksar.ui.ParentNodeInfo;
 import net.atomique.ksar.ui.SortedTreeNode;
 import net.atomique.ksar.ui.TreeNodeInfo;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
 
 import java.io.File;
 import java.io.IOException;

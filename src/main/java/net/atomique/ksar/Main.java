@@ -12,8 +12,8 @@ import net.atomique.ksar.graph.Graph;
 import net.atomique.ksar.graph.List;
 import net.atomique.ksar.ui.ParentNodeInfo;
 import net.atomique.ksar.ui.SortedTreeNode;
-import net.atomique.ksar.ui.TreeNodeInfo;
 import net.atomique.ksar.ui.Desktop;
+import net.atomique.ksar.ui.TreeNodeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -188,19 +188,19 @@ public class Main {
       }
     }
 
-    if (gui)
+    if (gui) {
       make_ui();
-    else
+    } else {
       nongui();
+    }
 
   }
 
   public static void exit_error(final String message) {
     log.error(message);
     System.exit(1);
-
   }
-  
+
   public static void validateTags(SortedTreeNode node) {
     int num = node.getChildCount();
     if (num > 0) {
