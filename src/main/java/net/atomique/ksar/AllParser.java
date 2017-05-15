@@ -92,8 +92,8 @@ public abstract class AllParser {
 
       parsedate = currentDate;
 
-			startDate = LocalDate.parse(sarStartDate, formatter);
-			endDate = LocalDate.parse(sarEndDate, formatter);
+      startDate = LocalDate.parse(sarStartDate, formatter);
+      endDate = LocalDate.parse(sarEndDate, formatter);
 
     } catch (DateTimeParseException ex) {
       log.error("unable to parse date {}", s, ex);
@@ -125,14 +125,14 @@ public abstract class AllParser {
     return currentStat;
   }
 
-	public static String determineDateFormat(String dateString) {
-		for (String regexp : DATE_FORMAT_REGEXPS.keySet()) {
-			if (dateString.toLowerCase().matches(regexp)) {
-				return DATE_FORMAT_REGEXPS.get(regexp);
-			}
-		}
-		return null; // Unknown format.
-	}
+  public static String determineDateFormat(String dateString) {
+    for (String regexp : DATE_FORMAT_REGEXPS.keySet()) {
+      if (dateString.toLowerCase().matches(regexp)) {
+        return DATE_FORMAT_REGEXPS.get(regexp);
+      }
+    }
+    return null; // Unknown format.
+  }
 
   protected String sarStartDate = null;
   protected String sarEndDate = null;
