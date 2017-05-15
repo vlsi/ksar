@@ -198,7 +198,11 @@ public class kSar {
   public void add2tree(SortedTreeNode parent, SortedTreeNode newNode) {
     if (dataview != null) {
       dataview.add2tree(parent, newNode);
+    }else {
+    	//This means nongui mode and we need to append graph without GUI representation
+    	parent.insert(newNode, parent.getChildCount());
     }
+    
   }
 
   public int get_page_to_print() {
@@ -235,8 +239,14 @@ public class kSar {
   public boolean isParsing() {
     return Parsing;
   }
+  
+  public Thread getLaunched_action() {
+	return launched_action;
+}
 
-  DataView dataview = null;
+
+
+DataView dataview = null;
   private long lines_parsed = 0L;
   private String reload_action = "Empty";
   private Thread launched_action = null;
