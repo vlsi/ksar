@@ -21,19 +21,20 @@ import java.util.TreeSet;
 public abstract class AllParser {
 
   private static final Logger log = LoggerFactory.getLogger(AllParser.class);
-	private static final Map<String, String> DATE_FORMAT_REGEXPS = new HashMap<String, String>() {
-		{
-			put("^\\d{8}$", "yyyyMMdd");
-			put("^\\d{1,2}-\\d{1,2}-\\d{4}$", "dd-MM-yyyy");
-			put("^\\d{4}-\\d{1,2}-\\d{1,2}$", "yyyy-MM-dd");
-			put("^\\d{1,2}/\\d{1,2}/\\d{4}$", "MM/dd/yyyy");
-			put("^\\d{4}/\\d{1,2}/\\d{1,2}$", "yyyy/MM/dd");
-			put("^\\d{1,2}\\s[a-z]{3}\\s\\d{4}$", "dd MMM yyyy");
-			put("^\\d{1,2}\\s[a-z]{4,}\\s\\d{4}$", "dd MMMM yyyy");
-			put("^\\d{1,2}-\\d{1,2}-\\d{2}$", "dd-MM-yy");
-			put("^\\d{1,2}/\\d{1,2}/\\d{2}$", "MM/dd/yy");
-		}
-	};
+  private static final Map<String, String> DATE_FORMAT_REGEXPS = new HashMap<String, String>() {
+    {
+      put("^\\d{8}$", "yyyyMMdd");
+      put("^\\d{1,2}-\\d{1,2}-\\d{4}$", "dd-MM-yyyy");
+      put("^\\d{4}-\\d{1,2}-\\d{1,2}$", "yyyy-MM-dd");
+      put("^\\d{1,2}/\\d{1,2}/\\d{4}$", "MM/dd/yyyy");
+      put("^\\d{4}/\\d{1,2}/\\d{1,2}$", "yyyy/MM/dd");
+      put("^\\d{1,2}\\s[a-z]{3}\\s\\d{4}$", "dd MMM yyyy");
+      put("^\\d{1,2}\\s[a-z]{4,}\\s\\d{4}$", "dd MMMM yyyy");
+      put("^\\d{1,2}-\\d{1,2}-\\d{2}$", "dd-MM-yy");
+      put("^\\d{1,2}/\\d{1,2}/\\d{2}$", "MM/dd/yy");
+    }
+  };
+
   public AllParser() {
 
   }
@@ -78,18 +79,18 @@ public abstract class AllParser {
       sarEndDate = s;
     }
 
-		try {
-			DateTimeFormatter formatter;
-			if ("".equals(dateFormat)) {
-				formatter = DateTimeFormatter.ofPattern(determineDateFormat(s));
+    try {
+      DateTimeFormatter formatter;
+      if ("Automatic Detection".equals(dateFormat)) {
+        formatter = DateTimeFormatter.ofPattern(determineDateFormat(s));
 
-			} else {
-				formatter = DateTimeFormatter.ofPattern(dateFormat);
-			}
+      } else {
+        formatter = DateTimeFormatter.ofPattern(dateFormat);
+      }
 
-			currentDate = LocalDate.parse(s, formatter);
+      currentDate = LocalDate.parse(s, formatter);
 
-			parsedate = currentDate;
+      parsedate = currentDate;
 
 			startDate = LocalDate.parse(sarStartDate, formatter);
 			endDate = LocalDate.parse(sarEndDate, formatter);
