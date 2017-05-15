@@ -31,17 +31,17 @@ public class Main {
   static GlobalOptions globaloptions = null;
   static ResourceBundle resource = ResourceBundle.getBundle("net/atomique/ksar/Language/Message");
 
-  public static void usage() {
- 	 log.info("-input : input sar statistics file \n");
- 	 log.info( "-n : toggles nongui mode for exporting\n");
- 	 log.info( "-outputCSV : location of parsed CSV file\n");
- 	 log.info( "-outputPDF : location of output pdf file\n");
- 	 log.info( "-outputIMG : prefix for output images\n");
- 	 log.info( "-width : width for output png charts\n");
- 	 log.info( "-heigth : heigth for output png charts");
- 	 log.info( "-tags : comma separated list of nodes for export. ex: 'CPU all,Load'");
- 	 System.exit(0);
- }
+	public static void usage() {
+		log.info("-input : input sar statistics file \n");
+		log.info("-n : toggles nongui mode for exporting\n");
+		log.info("-outputCSV : location of parsed CSV file\n");
+		log.info("-outputPDF : location of output pdf file\n");
+		log.info("-outputIMG : prefix for output images\n");
+		log.info("-width : width for output png charts\n");
+		log.info("-heigth : heigth for output png charts");
+		log.info("-tags : comma separated list of nodes for export. ex: 'CPU all,Load'");
+		System.exit(0);
+	}
 
   public static void show_version() {
     log.info("ksar Version : {}", VersionNumber.getVersionNumber());
@@ -203,85 +203,85 @@ public class Main {
 
   }
   
-  public static void validateTags(SortedTreeNode node) {
-      int num = node.getChildCount();
-      if (num > 0) {
-          Object obj1 = node.getUserObject();
-          if (obj1 instanceof ParentNodeInfo) {
-              ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
-              List nodeobj = tmpnode.getNode_object();                
-          }
-          for (int i = 0; i < num; i++) {
-              SortedTreeNode l = (SortedTreeNode) node.getChildAt(i);
-              validateTags(l);
-          }
-      } else {
-          Object obj1 = node.getUserObject();
-          if (obj1 instanceof TreeNodeInfo) {
-              TreeNodeInfo tmpnode = (TreeNodeInfo) obj1;
-              Graph nodeobj = tmpnode.getNode_object();
-              nodeobj.printSelected=false;
-              for(String nodename : GlobalOptions.getOutTags().split(",")){
-              	if(nodeobj.getTitle().equals(nodename)){
-              		nodeobj.printSelected=true;
-              	}
-              }
-          }
-      }
-  }
-  
-  public static void nongui() {
-  	kSar ks = new kSar();
+	public static void validateTags(SortedTreeNode node) {
+		int num = node.getChildCount();
+		if (num > 0) {
+			Object obj1 = node.getUserObject();
+			if (obj1 instanceof ParentNodeInfo) {
+				ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
+				List nodeobj = tmpnode.getNode_object();
+			}
+			for (int i = 0; i < num; i++) {
+				SortedTreeNode l = (SortedTreeNode) node.getChildAt(i);
+				validateTags(l);
+			}
+		} else {
+			Object obj1 = node.getUserObject();
+			if (obj1 instanceof TreeNodeInfo) {
+				TreeNodeInfo tmpnode = (TreeNodeInfo) obj1;
+				Graph nodeobj = tmpnode.getNode_object();
+				nodeobj.printSelected = false;
+				for (String nodename : GlobalOptions.getOutTags().split(",")) {
+					if (nodeobj.getTitle().equals(nodename)) {
+						nodeobj.printSelected = true;
+					}
+				}
+			}
+		}
+	}
 
-      ks.do_fileread(GlobalOptions.getCLfilename());
-      while(ks.launched_action.isAlive()){
-      	try {
+	public static void nongui() {
+		kSar ks = new kSar();
+
+		ks.do_fileread(GlobalOptions.getCLfilename());
+		while (ks.launched_action.isAlive()) {
+			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-      }
-      
-      //filter out graph nodes for given tags
-      if(GlobalOptions.getOutTags() != null){
-      	validateTags(ks.graphtree);
-      }
-      
-      log.trace("File parsing completed. Starting export");
-      if(GlobalOptions.getOutCSV() != null){
-	        Runnable t = new FileCSV(GlobalOptions.getOutCSV(), ks);
-	        Thread th = new Thread(t);
-	        th.start();
-	        while(th.isAlive()){
-	       	 try {
+		}
+
+		// filter out graph nodes for given tags
+		if (GlobalOptions.getOutTags() != null) {
+			validateTags(ks.graphtree);
+		}
+
+		log.trace("File parsing completed. Starting export");
+		if (GlobalOptions.getOutCSV() != null) {
+			Runnable t = new FileCSV(GlobalOptions.getOutCSV(), ks);
+			Thread th = new Thread(t);
+			th.start();
+			while (th.isAlive()) {
+				try {
 					Thread.sleep(1);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-	        }
-	        log.trace("CSV Export completed");
-      }
-      
-      if(GlobalOptions.getOutPDF() != null){
-      	Runnable t = new FilePDF(GlobalOptions.getOutPDF(), ks);
-	        Thread th = new Thread(t);
-	        th.start();
-	        while(th.isAlive()){
-	       	 try {
+			}
+			log.trace("CSV Export completed");
+		}
+
+		if (GlobalOptions.getOutPDF() != null) {
+			Runnable t = new FilePDF(GlobalOptions.getOutPDF(), ks);
+			Thread th = new Thread(t);
+			th.start();
+			while (th.isAlive()) {
+				try {
 					Thread.sleep(1);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-	        }
-	        log.trace("PDF Export completed");
-      }
-    if(GlobalOptions.getOutIMG() != null){
-  	  FilePNG.drawCharts(ks.graphtree,ks);
-  	  log.trace("IMG Export completed");
-    }
-    
-  }
+			}
+			log.trace("PDF Export completed");
+		}
+		if (GlobalOptions.getOutIMG() != null) {
+			FilePNG.drawCharts(ks.graphtree, ks);
+			log.trace("IMG Export completed");
+		}
+
+	}
 }
