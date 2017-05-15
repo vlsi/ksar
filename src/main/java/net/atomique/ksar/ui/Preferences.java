@@ -57,6 +57,7 @@ public class Preferences extends javax.swing.JDialog {
     LinuxFormatComboModel.addElement("MM/DD/YYYY 12:59:59 AM|PM");
     LinuxFormatComboModel.addElement("DD/MM/YYYY 12:59:59 AM|PM");
     LinuxFormatComboModel.addElement("YYYY-MM-DD 12:59:59 AM|PM");
+    LinuxFormatComboModel.addElement("Autodetect");
     jComboBox3.setSelectedItem(Config.getLinuxDateFormat());
   }
 
