@@ -178,6 +178,17 @@ public class Main {
           }
           continue;
         }
+        
+        if ("-dateFormat".equals(arg)) {
+          // This will be CSV file to export by deafault
+          if (i < args.length) {
+            Config.setLinuxDateFormat(args[i++]);
+            Config.save();
+          } else {
+            exit_error(resource.getString("INPUT_REQUIRE_ARG"));
+          }
+          continue;
+        }
 
         if ("-n".equals(arg)) {
           // This means nongui mode (same as in jmeter)
