@@ -5,6 +5,9 @@
 
 package net.atomique.ksar.parser;
 
+
+import static org.junit.Assert.assertEquals;
+
 import net.atomique.ksar.Config;
 import net.atomique.ksar.kSar;
 import org.junit.Before;
@@ -17,8 +20,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class LinuxHeaderTest {
