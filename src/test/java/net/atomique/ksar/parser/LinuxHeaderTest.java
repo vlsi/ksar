@@ -1,6 +1,10 @@
+/*
+ * Copyright 2018 The kSAR Project. All rights reserved.
+ * See the LICENSE file in the project root for more information.
+ */
+
 package net.atomique.ksar.parser;
 
-import static org.junit.Assert.*;
 
 import net.atomique.ksar.Config;
 import net.atomique.ksar.kSar;
@@ -9,11 +13,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import static org.junit.Assert.assertEquals;
 
+
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @RunWith(Parameterized.class)
 public class LinuxHeaderTest {
