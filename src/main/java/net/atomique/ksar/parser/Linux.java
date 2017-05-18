@@ -55,19 +55,20 @@ public class Linux extends OSParser {
     if ("Automatic Detection".equals(LinuxDateFormat)) {
       dateFormat = "Automatic Detection";
       timeColumn = 0;
-    }
+    } else {
 
-    // day and year format specifiers must be lower case, month upper case
-    String[] parts = LinuxDateFormat.split(" ", 3);
+      // day and year format specifiers must be lower case, month upper case
+      String[] parts = LinuxDateFormat.split(" ", 3);
 
-    dateFormat = parts[0];
-    dateFormat = dateFormat.replaceAll("D{2}", "dd");
-    dateFormat = dateFormat.replaceAll("Y{2}", "yy");
+      dateFormat = parts[0];
+      dateFormat = dateFormat.replaceAll("D{2}", "dd");
+      dateFormat = dateFormat.replaceAll("Y{2}", "yy");
 
-    // 12hour
-    if (parts.length == 3 && parts[2].contains("AM|PM")) {
-      timeFormat = "hh:mm:ss a";
-      timeColumn = 2;
+      // 12hour
+      if (parts.length == 3 && parts[2].contains("AM|PM")) {
+        timeFormat = "hh:mm:ss a";
+        timeColumn = 2;
+      }
     }
 
   }
