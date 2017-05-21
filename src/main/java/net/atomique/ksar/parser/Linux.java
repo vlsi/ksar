@@ -86,6 +86,11 @@ public class Linux extends OSParser {
           Config.save();
         }
       }
+    } else {
+      Config.setLinuxDateFormat("MM/DD/YYYY 23:59:59");
+      log.error("Unable to ask format in nonGui mode. Switching to default value: {}", Config.getLinuxDateFormat());
+      // TODO replace it with autodetection after merge. This will be default to
+      // avoid crashes
     }
   }
 

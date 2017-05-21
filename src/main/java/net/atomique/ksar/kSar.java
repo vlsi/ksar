@@ -198,6 +198,8 @@ public class kSar {
   public void add2tree(SortedTreeNode parent, SortedTreeNode newNode) {
     if (dataview != null) {
       dataview.add2tree(parent, newNode);
+    } else {
+      parent.insert(newNode, parent.getChildCount());
     }
   }
 
@@ -239,7 +241,7 @@ public class kSar {
   DataView dataview = null;
   private long lines_parsed = 0L;
   private String reload_action = "Empty";
-  private Thread launched_action = null;
+  public Thread launched_action = null;
   private boolean action_interrupted = false;
   public AllParser myparser = null;
   private boolean Parsing = false;
