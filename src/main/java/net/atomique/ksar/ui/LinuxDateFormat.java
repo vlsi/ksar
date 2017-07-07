@@ -32,6 +32,7 @@ public class LinuxDateFormat extends javax.swing.JDialog {
     LinuxFormatComboModel.addElement("MM/DD/YYYY 12:59:59 AM|PM");
     LinuxFormatComboModel.addElement("DD/MM/YYYY 12:59:59 AM|PM");
     LinuxFormatComboModel.addElement("YYYY-MM-DD 12:59:59 AM|PM");
+    LinuxFormatComboModel.addElement("Automatic Detection");
   }
 
   /**

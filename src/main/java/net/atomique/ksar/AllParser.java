@@ -132,7 +132,6 @@ public abstract class AllParser {
     }
     return null; // Unknown format.
   }
-
   protected String sarStartDate = null;
   protected String sarEndDate = null;
 
