@@ -7,16 +7,16 @@ package net.atomique.ksar;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 @RunWith(Parameterized.class)
 public class ConsoleModeTest {
@@ -84,13 +84,8 @@ public class ConsoleModeTest {
     // current Byte, expected value, expected unit, test name
     return Arrays.asList(new Object[][] {
         { "src/test/resources/sar-10.1.5", "", "", "build/tmp/output_junit.csv", "build/tmp/output_junit.csv" },
-        { "src/test/resources/sar-10.1.5", "", "build/tmp/output_junit_IMG_", "",
-            "build/tmp/output_junit_IMG_CPU all.png" },
-        { "src/test/resources/sar-10.1.5", "build/tmp/output_junit.pdf", "", "", "build/tmp/output_junit.pdf" }// input
-                                                                                                               // file;
-                                                                                                               // outpdf;
-                                                                                                               // outimg;
-                                                                                                               // outcsv
+        { "src/test/resources/sar-10.1.5", "", "build/tmp/output_junit_IMG_", "","build/tmp/output_junit_IMG_CPU all.png" },
+        { "src/test/resources/sar-10.1.5", "build/tmp/output_junit.pdf", "", "", "build/tmp/output_junit.pdf" }// input                                                                                                       // outcsv
     });
   }
 }
