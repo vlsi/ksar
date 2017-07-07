@@ -53,7 +53,8 @@ public class Main {
       if (Config.getLandf().equals(laf.getName())) {
         try {
           UIManager.setLookAndFeel(laf.getClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+            | UnsupportedLookAndFeelException ex) {
           log.error("lookandfeel Exception", ex);
         }
       }
@@ -242,7 +243,10 @@ public class Main {
 
   public static void nongui() {
     kSar ks = new kSar();
-
+    if (GlobalOptions.getCLfilename() == null) {
+      exit_error("No any input file path specified");
+    }
+    System.out.println("running nongui with " + GlobalOptions.getCLfilename());
     ks.do_fileread(GlobalOptions.getCLfilename());
     while (ks.launched_action.isAlive()) {
       try {

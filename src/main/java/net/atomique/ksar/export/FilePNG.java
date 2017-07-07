@@ -51,7 +51,8 @@ public class FilePNG {
         TreeNodeInfo tmpnode = (TreeNodeInfo) obj1;
         Graph nodeobj = tmpnode.getNode_object();
         if (nodeobj.printSelected) {
-          addchart(GlobalOptions.getOutIMG() + nodeobj.getTitle() + ".png", nodeobj, mysar);
+          String name = nodeobj.getTitle().replace('/', '-');
+          addchart(GlobalOptions.getOutIMG() + name + ".png", nodeobj, mysar);
         }
 
       }

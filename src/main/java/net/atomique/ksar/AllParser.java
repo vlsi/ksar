@@ -65,6 +65,7 @@ public abstract class AllParser {
     }
 
     try {
+
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
       currentDate = LocalDate.parse(s, formatter);
 
@@ -102,7 +103,6 @@ public abstract class AllParser {
   public String getCurrentStat() {
     return currentStat;
   }
-
 
   protected String sarStartDate = null;
   protected String sarEndDate = null;
