@@ -70,6 +70,10 @@
                 <headerstr>cpu %usr %sys %wio %idle physc</headerstr>
                 <graphname>CPUS</graphname>
             </Stat>
+            <Stat name="cpu4">
+                <headerstr>%usr %sys %wio %idle physc %entc</headerstr>
+                <graphname>CPU</graphname>
+            </Stat>
             <Graph name="CPU" Title="CPU" type="unique">
                 <Stack Title="Used" size="3">
                     <cols>%usr %sys %wio</cols>
