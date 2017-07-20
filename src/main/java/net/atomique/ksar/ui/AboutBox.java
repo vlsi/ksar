@@ -7,7 +7,16 @@ package net.atomique.ksar.ui;
 
 import net.atomique.ksar.VersionNumber;
 
+import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import javax.swing.JLabel;
+
 
 public class AboutBox extends javax.swing.JDialog {
 
@@ -81,20 +90,26 @@ public class AboutBox extends javax.swing.JDialog {
 
     String url;
 
-    url ="https://github.com/vlsi/ksar";
+    url = "https://github.com/vlsi/ksar";
     urllabel.setText(String.format("<html> Website :   <a href=\"\">%s</a></html>", url ));
+    urllabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
     jPanel2.add(urllabel);
+    goWebsite(urllabel, url);
 
-    url ="https://github.com/vlsi/ksar/CONTRIBUTORS.md";
+    url = "https://github.com/vlsi/ksar/CONTRIBUTORS.md";
     authorlabel.setText(String.format("<html> Authors    :   <a href=\"\">%s</a></html>", url ));
+    authorlabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
     jPanel2.add(authorlabel);
+    goWebsite(authorlabel, url);
 
-    licencelabel.setText("License: BSD (see LICENCE file)");
+    licencelabel.setText("License :  BSD (see LICENCE file)");
     jPanel2.add(licencelabel);
 
-    url ="http://sourceforge.net/projects/ksar/";
+    url = "http://sourceforge.net/projects/ksar/";
     tipslabel.setText(String.format("<html> Fork of       :   <a href=\"\">%s</a></html>", url ));
+    tipslabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
     jPanel2.add(tipslabel);
+    goWebsite(tipslabel, url);
 
     getContentPane().add(jPanel2);
 
@@ -117,6 +132,18 @@ public class AboutBox extends javax.swing.JDialog {
     dispose();
   } //GEN-LAST:event_OkButtonActionPerformed
 
+  private void goWebsite(JLabel website, String url) {
+    website.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent e) {
+        try {
+            Desktop.getDesktop().browse(new URI(url));
+        } catch (URISyntaxException | IOException ex) {
+            //It looks like there's a problem
+        }
+          }
+      });
+  }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton OkButton;
