@@ -79,16 +79,21 @@ public class AboutBox extends javax.swing.JDialog {
 
     jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
 
-    urllabel.setText("website: http://sourceforge.net/projects/ksar/");
+    String url;
+
+    url ="https://github.com/vlsi/ksar";
+    urllabel.setText(String.format("<html> Website :   <a href=\"\">%s</a></html>", url ));
     jPanel2.add(urllabel);
 
-    authorlabel.setText("Author: xavier cherif");
+    url ="https://github.com/vlsi/ksar/CONTRIBUTORS.md";
+    authorlabel.setText(String.format("<html> Authors    :   <a href=\"\">%s</a></html>", url ));
     jPanel2.add(authorlabel);
 
     licencelabel.setText("License: BSD (see LICENCE file)");
     jPanel2.add(licencelabel);
 
-    tipslabel.setText("ARS LONGA, VITA BREVIS");
+    url ="http://sourceforge.net/projects/ksar/";
+    tipslabel.setText(String.format("<html> Fork of       :   <a href=\"\">%s</a></html>", url ));
     jPanel2.add(tipslabel);
 
     getContentPane().add(jPanel2);
