@@ -21,3 +21,4 @@ gradle-app.setting
 
 .idea/
 ksar_all.log
+out/
