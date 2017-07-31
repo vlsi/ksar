@@ -6,8 +6,21 @@
 package net.atomique.ksar.ui;
 
 import net.atomique.ksar.VersionNumber;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import javax.swing.JLabel;
 
 public class AboutBox extends javax.swing.JDialog {
+
+  private static final Logger log = LoggerFactory.getLogger(AboutBox.class);
 
   /**
    * Creates new form AboutBox
@@ -73,17 +86,32 @@ public class AboutBox extends javax.swing.JDialog {
 
     jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
 
-    urllabel.setText("website: http://sourceforge.net/projects/ksar/");
+    String url = "https://github.com/vlsi/ksar";
+    urllabel.setText(String.format("<html>Website: <a href=\"%s\">%s</a></html>", url, url));
+    urllabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
     jPanel2.add(urllabel);
+    openInBrowser(urllabel, url);
 
-    authorlabel.setText("Author: xavier cherif");
+    // Pin the contributors link to the running release so it keeps pointing at the file as it
+    // was for this version. Development (SNAPSHOT) builds have no matching tag, so fall back to
+    // the default branch.
+    String version = VersionNumber.getVersionString();
+    String ref = (version == null || version.endsWith("-SNAPSHOT")) ? "master" : "v" + version;
+    url = "https://github.com/vlsi/ksar/blob/" + ref + "/CONTRIBUTORS.md";
+    authorlabel.setText(
+        String.format("<html>Authors: <a href=\"%s\">CONTRIBUTORS.md</a></html>", url));
+    authorlabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
     jPanel2.add(authorlabel);
+    openInBrowser(authorlabel, url);
 
-    licencelabel.setText("License: BSD (see LICENCE file)");
+    licencelabel.setText("License: BSD-3-Clause (see LICENSE file)");
     jPanel2.add(licencelabel);
 
-    tipslabel.setText("ARS LONGA, VITA BREVIS");
+    url = "https://sourceforge.net/projects/ksar/";
+    tipslabel.setText(String.format("<html>Fork of: <a href=\"%s\">%s</a></html>", url, url));
+    tipslabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
     jPanel2.add(tipslabel);
+    openInBrowser(tipslabel, url);
 
     getContentPane().add(jPanel2);
 
@@ -106,6 +134,23 @@ public class AboutBox extends javax.swing.JDialog {
     dispose();
   } //GEN-LAST:event_OkButtonActionPerformed
 
+  private void openInBrowser(JLabel label, String url) {
+    label.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        if (!Desktop.isDesktopSupported()
+            || !Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+          log.warn("Desktop browsing is unavailable; cannot open {}", url);
+          return;
+        }
+        try {
+          Desktop.getDesktop().browse(new URI(url));
+        } catch (IOException | URISyntaxException ex) {
+          log.warn("Unable to open {} in a browser", url, ex);
+        }
+      }
+    });
+  }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton OkButton;
