@@ -159,7 +159,8 @@ public class Linux extends OSParser {
         GraphConfig mygraphinfo = myosconfig.getGraphConfig(checkStat);
         if (mygraphinfo != null) {
           if ("unique".equals(mygraphinfo.getType())) {
-            obj = new Graph(mysar, mygraphinfo, mygraphinfo.getTitle(), line, firstdatacolumn, mysar.graphtree);
+            obj = new Graph(mysar, mygraphinfo, mygraphinfo.getTitle(), line, firstdatacolumn,
+                mysar.graphtree);
 
             ListofGraph.put(checkStat, obj);
             currentStat = checkStat;
