@@ -32,6 +32,7 @@ public class Main {
   static ResourceBundle resource = ResourceBundle.getBundle("net/atomique/ksar/Language/Message");
 
   public static void usage() {
+    show_version();
     log.info("-input : input sar statistics file \n");
     log.info("-n : toggles nongui mode for exporting\n");
     log.info("-outputCSV : location of parsed CSV file\n");
