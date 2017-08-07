@@ -25,8 +25,8 @@ public abstract class AllParser {
     {
       put("^\\d{8}$", "yyyyMMdd");
       put("^\\d{1,2}-\\d{1,2}-\\d{4}$", "dd-MM-yyyy");
-      put("^\\d{4}-\\d{1,2}-\\d{1,2}$", "yyyy-MM-dd");  
       put("^\\d{4}/\\d{1,2}/\\d{1,2}$", "yyyy/MM/dd");
+      put("^\\d{4}-\\d{1,2}-\\d{1,2}$", "yyyy-MM-dd");
       put("^\\d{1,2}\\s[a-z]{3}\\s\\d{4}$", "dd MMM yyyy");
       put("^\\d{1,2}\\s[a-z]{4,}\\s\\d{4}$", "dd MMMM yyyy");
       put("^\\d{1,2}-\\d{1,2}-\\d{2}$", "dd-MM-yy");
