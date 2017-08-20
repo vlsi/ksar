@@ -220,6 +220,10 @@
                 <headerstr>CPU %usr %nice %sys %iowait %steal %irq %soft %guest %gnice %idle</headerstr>
                 <graphname>CPU</graphname>
             </Stat>
+            <Stat name="cpu_mpstat">
+                <headerstr>CPU %usr %nice %sys %iowait %irq %soft %steal %guest %gnice %idle</headerstr>
+                <graphname>CPU</graphname>
+            </Stat>
             <Stat name="kmem_8.1.5">
                 <headerstr>kbmemfree kbmemused %memused kbbuffers kbcached kbcommit %commit</headerstr>
                 <graphname>KMEM_8.1.5</graphname>
