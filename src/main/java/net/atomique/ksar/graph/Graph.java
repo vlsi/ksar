@@ -63,9 +63,9 @@ public class Graph {
     printCheckBox = new JCheckBox(graphtitle, printSelected);
     printCheckBox.addItemListener((ItemEvent evt) -> {
 
-        if (evt.getSource() == printCheckBox) {
-          printSelected = printCheckBox.isSelected();
-        }
+      if (evt.getSource() == printCheckBox) {
+        printSelected = printCheckBox.isSelected();
+      }
 
     });
     skipColumn = skipcol;
