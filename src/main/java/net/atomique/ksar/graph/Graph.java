@@ -471,7 +471,7 @@ public class Graph {
   private JFreeChart mygraph = null;
   private ChartPanel chartpanel = null;
   private String graphtitle = null;
-  public boolean printSelected = true;
+  private boolean printSelected = true;
   private JCheckBox printCheckBox = null;
   private GraphConfig graphconfig = null;
   private int skipColumn = 0;

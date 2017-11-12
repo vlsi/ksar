@@ -86,7 +86,7 @@ public class List {
   public boolean isPrintSelected() {
     boolean leaftoprint = false;
     for (Graph graph : nodeHashList.values()) {
-      if (graph.printSelected) {
+      if (graph.isPrintSelected()) {
         leaftoprint = true;
         break;
       }
