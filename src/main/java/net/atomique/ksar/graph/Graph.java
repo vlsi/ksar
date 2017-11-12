@@ -110,7 +110,7 @@ public class Graph {
 
   public int parse_line(Second now, String s) {
     String[] cols = s.split("\\s+");
-    Double colvalue = null;
+    Double colvalue;
     //log.debug("graph parsing: {}", s);
     for (int i = skipColumn; i < HeaderStr.length; i++) {
       try {
@@ -337,7 +337,7 @@ public class Graph {
 
   private XYDataset create_collection(ArrayList l) {
     TimeSeriesCollection graphcollection = new TimeSeriesCollection();
-    TimeSeries found = null;
+    TimeSeries found;
     boolean hasdata = false;
     for (int i = 0; i < l.size(); i++) {
       found = null;
