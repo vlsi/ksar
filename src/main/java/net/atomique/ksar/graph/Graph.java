@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -60,13 +61,12 @@ public class Graph {
     graphtitle = Title;
     graphconfig = g;
     printCheckBox = new JCheckBox(graphtitle, printSelected);
-    printCheckBox.addItemListener(new java.awt.event.ItemListener() {
+    printCheckBox.addItemListener((ItemEvent evt) -> {
 
-      public void itemStateChanged(java.awt.event.ItemEvent evt) {
         if (evt.getSource() == printCheckBox) {
           printSelected = printCheckBox.isSelected();
         }
-      }
+
     });
     skipColumn = skipcol;
     if (pp != null) {
