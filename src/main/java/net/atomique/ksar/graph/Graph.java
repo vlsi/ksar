@@ -425,11 +425,8 @@ public class Graph {
       NumberAxis graphaxistitle = tmp.getAxis();
       XYPlot tmpplot = new XYPlot(c, axisofdate, graphaxistitle, renderer);
 
-      if (tmpplot == null) {
-        continue;
-      }
       for (int i = 0; i < s.length; i++) {
-        Color color = GlobalOptions.getDataColor(s[i].toString());
+        Color color = GlobalOptions.getDataColor(s[i]);
         if (color != null) {
           renderer.setSeriesPaint(i, color);
           renderer.setBaseStroke(new BasicStroke(1.0F));
