@@ -63,7 +63,6 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
 
   public void run() {
     total_pages += mysar.get_page_to_print();
-    org.jfree.text.TextUtilities.setUseDrawRotatedStringWorkaround(true);
 
     switch (Config.getPDFPageFormat()) {
 
