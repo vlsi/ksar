@@ -33,7 +33,7 @@ dependencies {
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.9.1'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.9.1'
 
-    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.11'
+    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.12'
     compile group: 'com.jcraft', name: 'jsch', version: '0.1.54'
     compile group: 'org.jfree', name: 'jfreechart', version: '1.0.19'
     testCompile 'junit:junit:4.12'
