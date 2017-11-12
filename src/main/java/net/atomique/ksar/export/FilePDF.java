@@ -104,7 +104,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
     //document.addKeywords(mysar.myOS.sarStartDate);
     //document.addKeywords(mysar.myOS.sarEndDate);
     document.addCreator("kSar Version:" + VersionNumber.getVersionNumber());
-    document.addAuthor("Xavier cherif");
+    document.addAuthor("https://github.com/vlsi/ksar");
 
     // open the doc
     document.open();
