@@ -272,7 +272,7 @@ public class Graph {
     return tmp.toString();
   }
 
-  public int savePNG(final Second g_start, final Second g_end, final String filename,
+  public int savePNG(final String filename,
       final int width, final int height) {
     try {
       ChartUtilities.saveChartAsPNG(new File(filename),
@@ -285,7 +285,7 @@ public class Graph {
     return 0;
   }
 
-  public int saveJPG(final Second g_start, final Second g_end, final String filename,
+  public int saveJPG(final String filename,
       final int width, final int height) {
     try {
       ChartUtilities.saveChartAsJPEG(new File(filename),
