@@ -155,7 +155,7 @@ public class GraphView extends javax.swing.JPanel {
     if (filename == null) {
       return;
     }
-    thegraph.saveJPG(null, null, filename, Config.getImageWidth(), Config.getImageHeight());
+    thegraph.saveJPG(filename, Config.getImageWidth(), Config.getImageHeight());
   } //GEN-LAST:event_jpgBuittonActionPerformed
 
   private void ctrlcButtonActionPerformed(
@@ -174,7 +174,7 @@ public class GraphView extends javax.swing.JPanel {
     if (filename == null) {
       return;
     }
-    thegraph.savePNG(null, null, filename, Config.getImageWidth(), Config.getImageHeight());
+    thegraph.savePNG(filename, Config.getImageWidth(), Config.getImageHeight());
   } //GEN-LAST:event_pngButtonActionPerformed
 
 
