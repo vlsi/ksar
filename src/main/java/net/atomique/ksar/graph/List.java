@@ -57,7 +57,7 @@ public class List {
       SortedTreeNode nodetmp = new SortedTreeNode(infotmp);
       mysar.add2tree(parentTreeNode, nodetmp);
     } else {
-      tmp = (Graph) nodeHashList.get(cols[skipColumn]);
+      tmp = nodeHashList.get(cols[skipColumn]);
     }
 
     return tmp.parse_line(now, s);

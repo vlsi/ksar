@@ -194,7 +194,7 @@ public class Graph {
 
   private boolean add_datapoint_plot(Second now, int col, String colheader, Double value) {
     try {
-      ((TimeSeries) (Stats.get(col))).add(now, value);
+      ((Stats.get(col))).add(now, value);
       return true;
     } catch (SeriesException se) {
       // insert not possible
@@ -203,7 +203,7 @@ public class Graph {
           ((OSParser) mysar.myparser).get_OSConfig().getStat(mysar.myparser.getCurrentStat());
       if (statconfig != null) {
         if (statconfig.canDuplicateTime()) {
-          Number oldval = ((TimeSeries) (Stats.get(col))).getValue(now);
+          Number oldval = ((Stats.get(col))).getValue(now);
           Double tempval;
           if (oldval == null) {
             return false;
@@ -221,7 +221,7 @@ public class Graph {
           }
 
           try {
-            ((TimeSeries) (Stats.get(col))).update(now, tempval);
+            ( (Stats.get(col))).update(now, tempval);
             return true;
           } catch (SeriesException se2) {
             return false;
@@ -238,7 +238,7 @@ public class Graph {
     tmp.append("Date;");
     tmp.append(getCsvHeader());
     tmp.append("\n");
-    TimeSeries datelist = (TimeSeries) Stats.get(0);
+    TimeSeries datelist = Stats.get(0);
     Iterator ite = datelist.getTimePeriods().iterator();
     while (ite.hasNext()) {
       TimePeriod item = (TimePeriod) ite.next();
@@ -254,7 +254,7 @@ public class Graph {
   public String getCsvHeader() {
     StringBuilder tmp = new StringBuilder();
     for (int i = 1 + skipColumn; i < HeaderStr.length; i++) {
-      TimeSeries tmpseries = (TimeSeries) Stats.get(i - skipColumn);
+      TimeSeries tmpseries = Stats.get(i - skipColumn);
       tmp.append(graphtitle).append(" ").append(tmpseries.getKey());
       tmp.append(";");
     }
@@ -264,7 +264,7 @@ public class Graph {
   public String getCsvLine(RegularTimePeriod t) {
     StringBuilder tmp = new StringBuilder();
     for (int i = 1 + skipColumn; i < HeaderStr.length; i++) {
-      TimeSeries tmpseries = (TimeSeries) Stats.get(i - skipColumn);
+      TimeSeries tmpseries = Stats.get(i - skipColumn);
       tmp.append(tmpseries.getValue(t));
 
       tmp.append(";");
@@ -342,7 +342,7 @@ public class Graph {
     for (int i = 0; i < l.size(); i++) {
       found = null;
       for (int j = 0; j < Stats.size(); j++) {
-        found = (TimeSeries) Stats.get(j);
+        found = Stats.get(j);
         if (found.getKey().equals(l.get(i))) {
           break;
         } else {
@@ -417,7 +417,7 @@ public class Graph {
     // do the line stuff
     for (PlotStackConfig tmp : graphconfig.getPlotlist().values()) {
       XYItemRenderer renderer = new StandardXYItemRenderer();
-      ArrayList<String> t = new ArrayList<String>();
+      ArrayList<String> t = new ArrayList<>();
       String[] s = tmp.getHeaderStr().split("\\s+");
       Collections.addAll(t, s);
 
