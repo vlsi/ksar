@@ -12,7 +12,7 @@ public class CommandLineArgs {
   @Parameter(names = "-input", description = "sar file to be processed")
   private String filename;
 
-  @Parameter(names = "-help", description = "show usage", help=true)
+  @Parameter(names = "-help", description = "show usage", help = true)
   private boolean help;
 
   @Parameter(names = "-version", description = "print version information")

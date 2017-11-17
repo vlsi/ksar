@@ -8,6 +8,7 @@ package net.atomique.ksar;
 import net.atomique.ksar.ui.Desktop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.beust.jcommander.JCommander;
 
 import java.util.ResourceBundle;
 
@@ -15,7 +16,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.beust.jcommander.JCommander;
 
 public class Main {
 
@@ -105,8 +105,7 @@ public class Main {
     if (cmdl_args.getFilename() != null) {
       if (cmdl_args.getFilename().isEmpty()) {
         exit_error(resource.getString("INPUT_REQUIRE_ARG"));
-      }
-      else {
+      } else {
         GlobalOptions.setCLfilename(cmdl_args.getFilename());
       }
     }
