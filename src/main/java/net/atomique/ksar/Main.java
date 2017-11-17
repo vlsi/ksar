@@ -15,6 +15,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.beust.jcommander.JCommander;
+
 public class Main {
 
   private static final Logger log = LoggerFactory.getLogger(Main.class);
@@ -79,32 +81,37 @@ public class Main {
     globaloptions = GlobalOptions.getInstance();
 
 
-    if (args.length > 0) {
-      while (i < args.length && args[i].startsWith("-")) {
-        arg = args[i++];
-        if ("-version".equals(arg)) {
-          show_version();
-          System.exit(0);
-        }
-        if ("-help".equals(arg)) {
-          usage();
-          continue;
-        }
-        if ("-test".equals(arg)) {
-          GlobalOptions.setDodebug(true);
-          continue;
-        }
-        if ("-input".equals(arg)) {
-          if (i < args.length) {
-            GlobalOptions.setCLfilename(args[i++]);
-          } else {
-            exit_error(resource.getString("INPUT_REQUIRE_ARG"));
-          }
-          continue;
-        }
-      }
+    //Cmdline_parsing
+    CommandLineArgs cmdl_args = new CommandLineArgs();
+    JCommander .newBuilder()
+        .addObject(cmdl_args)
+        .build()
+        .parse(args);
+
+    if (cmdl_args.isVersion()) {
+      show_version();
+      System.exit(0);
     }
 
+    if (cmdl_args.isHelp()) {
+      usage();
+      System.exit(0);
+    }
+
+    if (cmdl_args.isDebug()) {
+      GlobalOptions.setDodebug(true);
+    }  else {
+      GlobalOptions.setDodebug(false);
+    }
+
+    if (cmdl_args.getFilename() != null) {
+      if (cmdl_args.getFilename().isEmpty()) {
+        exit_error(resource.getString("INPUT_REQUIRE_ARG"));
+      }
+      else {
+        GlobalOptions.setCLfilename(cmdl_args.getFilename());
+      }
+    }
     make_ui();
 
   }
