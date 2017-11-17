@@ -5,10 +5,10 @@
 
 package net.atomique.ksar;
 
+import com.beust.jcommander.JCommander;
 import net.atomique.ksar.ui.Desktop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.beust.jcommander.JCommander;
 
 import java.util.ResourceBundle;
 
