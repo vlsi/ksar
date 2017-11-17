@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 The kSAR Project. All rights reserved.
+ * Copyright 2017 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
 
@@ -63,8 +63,6 @@ public class Main {
   }
 
   public static void main(String[] args) {
-    int i = 0;
-    String arg;
 
     log.trace("main - Start");
     log.trace("ksar Version : {}", VersionNumber.getVersionNumber());
