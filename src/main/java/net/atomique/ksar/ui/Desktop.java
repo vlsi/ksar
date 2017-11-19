@@ -9,9 +9,10 @@ import net.atomique.ksar.kSar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.Dimension;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
 
 import javax.swing.JDesktopPane;
@@ -28,10 +29,33 @@ public class Desktop extends javax.swing.JFrame {
   public Desktop() {
     int wmargins = 90;
     int hmargins = 60;
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    Rectangle desktopBounds = new Rectangle();
+
+    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    GraphicsDevice[] gs = ge.getScreenDevices();
+
+    //get configuration from all screens for tracing
+    for (int j = 0; j < gs.length; j++) {
+      GraphicsDevice gd = gs[j];
+      GraphicsConfiguration gc = gd.getDefaultConfiguration();
+
+      Rectangle screenBounds = gc.getBounds();
+      log.trace("screen [{}] boundaries: {}", j, screenBounds.toString());
+
+      //use screen0 boundaries for Desktop placement
+      if ( j == 0 ) {
+        desktopBounds = screenBounds;
+        desktopBounds.x += wmargins;
+        desktopBounds.y += hmargins;
+        desktopBounds.width -= (wmargins * 2);
+        desktopBounds.height -= (hmargins * 2);
+      }
+    }
+
     initComponents();
-    setBounds(wmargins, hmargins, screenSize.width - (wmargins * 2),
-        screenSize.height - (hmargins * 2));
+
+    setBounds(desktopBounds);
+    log.trace("desktop window boundaries: {}", this.getBounds().toString());
 
     DesktopPane.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
     setVisible(true);
