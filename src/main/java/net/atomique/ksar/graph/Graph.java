@@ -16,7 +16,7 @@ import net.atomique.ksar.xml.GraphConfig;
 import net.atomique.ksar.xml.PlotStackConfig;
 import net.atomique.ksar.xml.StatConfig;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
@@ -275,7 +275,7 @@ public class Graph {
   public int savePNG(final String filename,
       final int width, final int height) {
     try {
-      ChartUtilities.saveChartAsPNG(new File(filename),
+      ChartUtils.saveChartAsPNG(new File(filename),
           this.getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()), width,
           height);
     } catch (IOException e) {
@@ -288,7 +288,7 @@ public class Graph {
   public int saveJPG(final String filename,
       final int width, final int height) {
     try {
-      ChartUtilities.saveChartAsJPEG(new File(filename),
+      ChartUtils.saveChartAsJPEG(new File(filename),
           this.getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()), width,
           height);
     } catch (IOException e) {
@@ -408,7 +408,7 @@ public class Graph {
           Color color = GlobalOptions.getDataColor(tmp2.getSeriesKey(i).toString());
           if (color != null) {
             renderer.setSeriesPaint(i, color);
-            renderer.setBaseStroke(new BasicStroke(1.0F));
+            renderer.setDefaultStroke(new BasicStroke(1.0F));
           }
         }
         plot.add(temp_plot, tmp.getSize());
@@ -429,7 +429,7 @@ public class Graph {
         Color color = GlobalOptions.getDataColor(s[i]);
         if (color != null) {
           renderer.setSeriesPaint(i, color);
-          renderer.setBaseStroke(new BasicStroke(1.0F));
+          renderer.setDefaultStroke(new BasicStroke(1.0F));
         }
       }
       plot.add(tmpplot, tmp.getSize());
