@@ -25,7 +25,7 @@ public class LocalCommand extends Thread {
   public LocalCommand(kSar hissar) {
     mysar = hissar;
     try {
-      command = JOptionPane.showInputDialog("Enter local command ", "sar -A");
+      command = JOptionPane.showInputDialog(GlobalOptions.getUI(), "Enter local command ", "sar -A");
       if (command == null) {
         return;
       }
@@ -37,7 +37,7 @@ public class LocalCommand extends Thread {
       p = pb.start();
       in = p.getInputStream();
     } catch (Exception e) {
-      JOptionPane.showMessageDialog(null, "There was a problem while running the command ",
+      JOptionPane.showMessageDialog(GlobalOptions.getUI(), "There was a problem while running the command ",
           "Local error", JOptionPane.ERROR_MESSAGE);
       in = null;
     }
