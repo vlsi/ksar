@@ -8,8 +8,6 @@ package net.atomique.ksar.ui;
 import net.atomique.ksar.Config;
 import net.atomique.ksar.GlobalOptions;
 
-import java.awt.Dimension;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.SpinnerNumberModel;
@@ -27,11 +25,7 @@ public class Preferences extends javax.swing.JDialog {
     load_landf();
     load_pageformat();
     load_linuxformat();
-    Dimension d1 = getSize();
-    Dimension d2 = parent.getSize();
-    int x = (d2.width - (d1.width / 2)) / 2;
-    int y = (d2.height - (d1.height / 2)) / 2;
-    setBounds(x, y, d1.width, d1.height);
+    setLocationRelativeTo(parent);
     setModal(true);
     setVisible(true);
   }

@@ -24,7 +24,7 @@ public class FileRead extends Thread {
     if (Config.getLastReadDirectory() != null) {
       fc.setCurrentDirectory(Config.getLastReadDirectory());
     }
-    int returnVal = fc.showDialog(null, "Open");
+    int returnVal = fc.showDialog(GlobalOptions.getUI(), "Open");
     if (returnVal == JFileChooser.APPROVE_OPTION) {
       sarfilename = fc.getSelectedFile().getAbsolutePath();
       if (fc.getSelectedFile().isDirectory()) {
