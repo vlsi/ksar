@@ -61,6 +61,10 @@ public class XMLConfig extends DefaultHandler {
     SAXParser parser;
     try {
       fabric = SAXParserFactory.newInstance();
+      fabric.setFeature("http://xml.org/sax/features/validation",false);
+      fabric.setFeature("http://apache.org/xml/features/validation/schema",false);
+      fabric.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd",false);
+      fabric.setValidating(false);
       parser = fabric.newSAXParser();
       parser.parse(is, this);
 
