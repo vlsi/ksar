@@ -46,7 +46,7 @@ public class XMLConfig extends DefaultHandler {
     InputSource inputSource = null;
     try {
       String dtdFile = systemId.substring(systemId.lastIndexOf("/"));
-      InputStream inputStream = EntityResolver.class.getResourceAsStream(dtdFile);
+      InputStream inputStream = this.getClass().getResourceAsStream(dtdFile);
       inputSource = new InputSource(inputStream);
     } catch (Exception e) {
       // No action; just let the null InputSource pass through
