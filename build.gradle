@@ -48,6 +48,12 @@ task writeVersion << {
 }
 classes.dependsOn(writeVersion)
 
+test {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
 checkstyle {
     configFile = new File(rootDir, "/src/main/checkstyle/postgressql-checks.xml")
 }
