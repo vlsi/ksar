@@ -55,7 +55,8 @@ public class GlobalOptions {
     HistoryList = new HashMap<>();
     HostInfoList = new HashMap<>();
     is = this.getClass().getResourceAsStream("/Config.xml");
-    tmp = new XMLConfig(is);
+    tmp = new XMLConfig();
+    tmp.loadConfig(is, "/Config.xml");
     for (String OSName : OSParserNames) {
       try {
         Class tmpclass = Class.forName("net.atomique.ksar.parser." + OSName);
@@ -68,17 +69,17 @@ public class GlobalOptions {
     for (String parsername : ParserMap.keySet()) {
       is = this.getClass().getResourceAsStream("/" + parsername + ".xml");
       if (is != null) {
-        tmp.load_config(is);
+        tmp.loadConfig(is, "/" + parsername + ".xml");
       }
     }
 
     filename = userhome + ".ksarcfg" + fileseparator + "Config.xml";
     if (new File(filename).canRead()) {
-      tmp.load_config(filename);
+      tmp.loadConfig(filename);
     }
     filename = userhome + ".ksarcfg" + fileseparator + "History.xml";
     if (new File(filename).canRead()) {
-      tmp.load_config(filename);
+      tmp.loadConfig(filename);
     }
 
   }

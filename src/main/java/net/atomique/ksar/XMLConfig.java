@@ -31,15 +31,6 @@ public class XMLConfig extends DefaultHandler {
 
   private static final Logger log = LoggerFactory.getLogger(XMLConfig.class);
 
-  XMLConfig(String filename) {
-    load_config(filename);
-
-  }
-
-  XMLConfig(InputStream is) {
-    load_config(is);
-  }
-
   public InputSource resolveEntity(String publicId, String systemId)
       throws SAXException, IOException {
 
@@ -56,43 +47,41 @@ public class XMLConfig extends DefaultHandler {
     return inputSource;
   }
 
-  void load_config(InputStream is) {
-    SAXParserFactory fabric;
-    SAXParser parser;
+  void loadConfig(InputStream is, String name) {
+    InputSource source = new InputSource(is);
+    source.setPublicId(name);
     try {
-      fabric = SAXParserFactory.newInstance();
-      parser = fabric.newSAXParser();
-      parser.parse(is, this);
-
-    } catch (ParserConfigurationException | SAXException ex) {
-      log.error("SAX Parser Exception", ex);
-    } catch (IOException ioe) {
-      log.error("SAX Parser IO Exception", ioe);
-      System.exit(1);
-    }
-    //dump_XML();
-    try {
-      is.close();
-    } catch (IOException ex) {
-      log.error("IO Exception", ex);
+      loadConfig(source);
+    } finally {
+      try {
+        is.close();
+      } catch (IOException ex) {
+        // do not care
+      }
     }
   }
 
-  void load_config(String xmlfile) {
+  void loadConfig(String xmlfile) {
+    InputSource source = new InputSource();
+    source.setPublicId(xmlfile);
+    loadConfig(source);
+  }
+
+  private void loadConfig(InputSource source) {
     SAXParserFactory fabric;
     SAXParser parser;
     try {
       fabric = SAXParserFactory.newInstance();
       parser = fabric.newSAXParser();
-      parser.parse(xmlfile, this);
+      parser.parse(source, this);
 
     } catch (ParserConfigurationException | SAXException ex) {
-      log.error("SAX Parser Exception", ex);
+      log.warn("XML error while parsing " + source.getPublicId(), ex);
     } catch (IOException ioe) {
-      log.error("SAX Parser IO Exception", ioe);
-      System.exit(1);
+      String msg = "IO exception while parsing " + source.getPublicId();
+      log.error(msg, ioe);
+      throw new IllegalArgumentException(msg, ioe);
     }
-
   }
 
   void dump_XML() {
