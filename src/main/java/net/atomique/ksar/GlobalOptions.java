@@ -43,7 +43,6 @@ public class GlobalOptions {
 
     String[] OSParserNames = {"AIX", "HPUX", "Linux", "SunOS"};
     String filename;
-    InputStream is;
     XMLConfig tmp;
     systemprops = System.getProperties();
     username = (String) systemprops.get("user.name");
@@ -54,9 +53,8 @@ public class GlobalOptions {
     ParserMap = new HashMap<>();
     HistoryList = new HashMap<>();
     HostInfoList = new HashMap<>();
-    is = this.getClass().getResourceAsStream("/Config.xml");
     tmp = new XMLConfig();
-    tmp.loadConfig(is, "/Config.xml");
+    tmp.loadFromResources("/Config.xml");
     for (String OSName : OSParserNames) {
       try {
         Class tmpclass = Class.forName("net.atomique.ksar.parser." + OSName);
@@ -67,19 +65,18 @@ public class GlobalOptions {
 
     }
     for (String parsername : ParserMap.keySet()) {
-      is = this.getClass().getResourceAsStream("/" + parsername + ".xml");
-      if (is != null) {
-        tmp.loadConfig(is, "/" + parsername + ".xml");
-      }
+      tmp.loadFromResources("/" + parsername + ".xml");
     }
 
     filename = userhome + ".ksarcfg" + fileseparator + "Config.xml";
-    if (new File(filename).canRead()) {
-      tmp.loadConfig(filename);
+    File file = new File(filename);
+    if (file.canRead()) {
+      tmp.loadConfig(file);
     }
     filename = userhome + ".ksarcfg" + fileseparator + "History.xml";
-    if (new File(filename).canRead()) {
-      tmp.loadConfig(filename);
+    file = new File(filename);
+    if (file.canRead()) {
+      tmp.loadConfig(file);
     }
 
   }
