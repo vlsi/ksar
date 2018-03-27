@@ -1,12 +1,12 @@
 /*
- * Copyright $year The kSAR Project. All rights reserved.
+ * Copyright 2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
 
 package net.atomique.ksar.parser;
 
+import static org.junit.Assert.assertEquals;
 
-import net.atomique.ksar.Config;
 import net.atomique.ksar.kSar;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,8 +18,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class HpuxHeaderTest {
