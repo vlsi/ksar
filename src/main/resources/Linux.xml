@@ -132,6 +132,11 @@
                 <headerstr>DEV tps rd_sec/s wr_sec/s avgrq-sz avgqu-sz await svctm %util</headerstr>
                 <graphname>DEV</graphname>
             </Stat>
+            <Stat name="dev_11.5.7">
+                <headerstr>DEV tps rkB/s wkB/s areq-sz aqu-sz await svctm %util</headerstr>
+                <graphname>DEV_11.5.7</graphname>
+            </Stat>
+
             <Stat name="dentunusd2">
                 <headerstr>dentunusd file-sz inode-sz super-sz %super-sz dquot-sz %dquot-sz rtsig-sz %rtsig-sz</headerstr>
                 <graphname>IGNORE</graphname>
@@ -345,6 +350,22 @@
                     <cols>rd_sec/s wr_sec/s</cols>
                 </Plot>
                 <Plot Title="queue / request size [sec/IO]">
+                    <cols>avgrq-sz avgqu-sz</cols>
+                </Plot>
+                <Plot Title="Response [ms]">
+                    <cols>await</cols>
+                </Plot>
+            </Graph>
+            <Graph name="DEV_11.5.7" Title="Devices (Block)" type="multiple">
+                <!-- DEV tps rkB/s wkB/s areq-sz aqu-sz await svctm %util -->
+                <Plot Title="tps">
+                    <cols>tps</cols>
+                </Plot>
+                <Plot Title="Bandwidth [B/s]">
+                    <cols>rkB/s wkB/s</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="areq-sz [KiB] / aqu-sz">
                     <cols>avgrq-sz avgqu-sz</cols>
                 </Plot>
                 <Plot Title="Response [ms]">
