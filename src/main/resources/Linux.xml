@@ -245,6 +245,10 @@
                 <headerstr>kbmemfree kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact kbdirty</headerstr>
                 <graphname>KMEM_9.1.7</graphname>
             </Stat>
+            <Stat name="kmem_11.5.3">
+                <headerstr>kbmemfree kbavail kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact kbdirty kbanonpg kbslab kbkstack kbpgtbl kbvmused</headerstr>
+                <graphname>KMEM_11.5.3</graphname>
+            </Stat>
             <Stat name="hpage">
                 <headerstr>kbhugfree kbhugused %hugused</headerstr>
                 <graphname>HPAGE</graphname>
@@ -443,6 +447,32 @@
             <Graph name="KMEM_9.1.7" Title="KMem" type="unique">
                 <Plot Title="Memory" size="2">
                     <cols>kbmemfree kbmemused kbcommit</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Memory [%]">
+                    <cols>%memused %commit</cols>
+                    <range>0,100</range>
+                </Plot>
+                <Plot Title="Cached">
+                    <cols>kbcached</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Buffers">
+                    <cols>kbbuffers</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Active">
+                    <cols>kbactive kbinact</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Dirty">
+                    <cols>kbdirty</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+            </Graph>
+            <Graph name="KMEM_11.5.3" Title="KMem" type="unique">
+                <Plot Title="Memory" size="2">
+                    <cols>kbmemfree kbavail kbmemused kbcommit</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="Memory [%]">
