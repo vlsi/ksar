@@ -213,6 +213,10 @@
                 <headerstr>BUS idvendor idprod maxpower manufact</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
+            <Stat name="misci_usb_11.5.1">
+                <headerstr>BUS idvendor idprod maxpower manufact product</headerstr>
+                <graphname>IGNORE</graphname>
+            </Stat>
             <Stat name="misci_mountedfs">
                 <headerstr>MBfsfree MBfsused %fsused %ufsused Ifree Iused %Iused FILESYSTEM</headerstr>
                 <graphname>IGNORE</graphname>
