@@ -54,7 +54,7 @@
             </Stat>
             <Stat name="dentunusd1">
                 <headerstr>dentunusd file-nr inode-nr pty-nr</headerstr>
-                <graphname>IGNORE</graphname>
+                <graphname>VFS</graphname>
             </Stat>
             <Stat name="cpu2">
                 <headerstr>CPU %user %nice %system %idle</headerstr>
@@ -545,6 +545,20 @@
                     <cols>MHz</cols>
                 </Plot>
             </Graph>
+            <Graph name="VFS" Title="Kernel VFS" type="unique">
+                <Plot Title="Unused Directory Cache entries">
+                    <cols>dentunusd</cols>
+                    <format base="1000" factor="1" />
+                </Plot>
+                <Plot Title="InUse Inode handles">
+                    <cols>inode-nr</cols>
+                    <format base="1000" factor="1" />
+                </Plot>
+                <Plot Title="InUse File handles">
+                    <cols>file-nr</cols>
+                </Plot>
+            </Graph>
+
         </OSType>
     </OS>
     <!--  END OS -->
