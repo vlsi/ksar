@@ -29,7 +29,7 @@ public class Linux extends OSParser {
   private String LinuxDateFormat;
 
   private final HashSet<String> IgnoreLinesBeginningWith = new HashSet<>(Arrays.asList(
-      "Average:", "##", "Summary"));
+      "Average:", "##", "Summary", "Summary:"));
 
   public void parse_header(String s) {
 
