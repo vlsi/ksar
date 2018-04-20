@@ -245,6 +245,10 @@
                 <headerstr>kbmemfree kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact kbdirty</headerstr>
                 <graphname>KMEM_9.1.7</graphname>
             </Stat>
+            <Stat name="kmem_11.1.5">
+                <headerstr>kbmemfree kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact kbdirty kbanonpg kbslab kbkstack kbpgtbl kbvmused</headerstr>
+                <graphname>KMEM_11.5.3</graphname>
+            </Stat>
             <Stat name="kmem_11.5.3">
                 <headerstr>kbmemfree kbavail kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact kbdirty kbanonpg kbslab kbkstack kbpgtbl kbvmused</headerstr>
                 <graphname>KMEM_11.5.3</graphname>
