@@ -122,7 +122,6 @@ public class Main {
           continue;
         }
         if ("-outputCSV".equals(arg)) {
-          // This will be CSV file to export by deafault
           if (i < args.length) {
             GlobalOptions.setOutCSV(args[i++]);
           } else {
@@ -132,7 +131,6 @@ public class Main {
         }
 
         if ("-outputPDF".equals(arg)) {
-          // This will be CSV file to export by deafault
           if (i < args.length) {
             GlobalOptions.setOutPDF(args[i++]);
           } else {
@@ -164,7 +162,6 @@ public class Main {
         }
 
         if ("-width".equals(arg)) {
-          // This will be CSV file to export by deafault
           if (i < args.length) {
             GlobalOptions.setWidth(Integer.parseInt(args[i++]));
           } else {
@@ -173,10 +170,9 @@ public class Main {
           continue;
         }
 
-        if ("-heigth".equals(arg)) {
-          // This will be CSV file to export by deafault
+        if ("-height".equals(arg)) {
           if (i < args.length) {
-            GlobalOptions.setWidth(Integer.parseInt(args[i++]));
+            GlobalOptions.setHeigth(Integer.parseInt(args[i++]));
           } else {
             exit_error(resource.getString("INPUT_REQUIRE_ARG"));
           }

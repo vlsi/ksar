@@ -158,4 +158,31 @@ public abstract class AllParser {
     }
     return null; // Unknown format.
   }
+
+  protected String sarStartDate = null;
+  protected String sarEndDate = null;
+
+  protected LocalDateTime startofgraph = null;
+  protected LocalDateTime endofgraph = null;
+  protected TreeSet<LocalDateTime> DateSamples = new TreeSet<LocalDateTime>();
+  protected int firstdatacolumn = 0;
+
+  abstract public String getInfo();
+
+  abstract public void parse_header(String s);
+
+  abstract public void updateUITitle();
+
+  protected kSar mysar = null;
+  protected OSConfig myosconfig = null;
+  protected String ParserName = null;
+
+  protected LocalTime parsetime = null;
+  protected LocalDate parsedate = null;
+
+  protected String currentStat = "NONE";
+  protected String dateFormat = "MM/dd/yy";
+  protected String timeFormat = "HH:mm:ss";
+  protected int timeColumn = 1;
+
 }
