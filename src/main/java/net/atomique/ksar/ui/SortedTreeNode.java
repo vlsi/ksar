@@ -5,7 +5,6 @@
 
 package net.atomique.ksar.ui;
 
-import java.util.Collections;
 import java.util.Comparator;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -65,7 +64,7 @@ public class SortedTreeNode extends DefaultMutableTreeNode implements Comparable
   @Override
   public void insert(final MutableTreeNode newChild, final int childIndex) {
     super.insert(newChild, childIndex);
-    Collections.sort(this.children);
+    this.children.sort(null);
   }
 
   public int compareTo(final Object o) {

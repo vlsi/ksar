@@ -83,6 +83,7 @@ public class Main {
     String arg;
 
     log.trace("main - Start");
+    log.trace("Java runtime Version : {}", System.getProperty("java.runtime.version"));
     log.trace("ksar Version : {}", VersionNumber.getVersionNumber());
 
     /// load default - Mac OS X Application Properties
@@ -231,10 +232,10 @@ public class Main {
       if (obj1 instanceof TreeNodeInfo) {
         TreeNodeInfo tmpnode = (TreeNodeInfo) obj1;
         Graph nodeobj = tmpnode.getNode_object();
-        nodeobj.printSelected = false;
+        nodeobj.setPrint(false);
         for (String nodename : GlobalOptions.getOutTags().split(",")) {
           if (nodeobj.getTitle().equals(nodename)) {
-            nodeobj.printSelected = true;
+            nodeobj.setPrint(true);
           }
         }
       }

@@ -24,15 +24,17 @@ public class LinuxDateFormat extends javax.swing.JDialog {
   }
 
   private void load_linuxformat() {
+    LinuxFormatComboModel.addElement("Automatic Detection");
     LinuxFormatComboModel.addElement("MM/DD/YY 23:59:59");
     LinuxFormatComboModel.addElement("MM/DD/YYYY 23:59:59");
+    LinuxFormatComboModel.addElement("DD/MM/YY 23:59:59");
     LinuxFormatComboModel.addElement("DD/MM/YYYY 23:59:59");
     LinuxFormatComboModel.addElement("YYYY-MM-DD 23:59:59");
     LinuxFormatComboModel.addElement("MM/DD/YY 12:59:59 AM|PM");
     LinuxFormatComboModel.addElement("MM/DD/YYYY 12:59:59 AM|PM");
+    LinuxFormatComboModel.addElement("DD/MM/YY 12:59:59 AM|PM");
     LinuxFormatComboModel.addElement("DD/MM/YYYY 12:59:59 AM|PM");
     LinuxFormatComboModel.addElement("YYYY-MM-DD 12:59:59 AM|PM");
-    LinuxFormatComboModel.addElement("Automatic Detection");
   }
 
   /**

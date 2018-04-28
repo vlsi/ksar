@@ -27,13 +27,10 @@ public class Linux extends OSParser {
 
   private static final Logger log = LoggerFactory.getLogger(Linux.class);
   private String LinuxDateFormat;
-
-  private final HashSet<String> IgnoreLinesBeginningWith = new HashSet<>(Arrays.asList("Average:", "##", "Summary"));
-
+  private final HashSet<String> IgnoreLinesBeginningWith = new HashSet<>(Arrays.asList(
+      "Average:", "##", "Summary", "Summary:"));
   public void parse_header(String s) {
-
     String[] columns = s.split("\\s+");
-
     String tmpstr;
     setOstype(columns[0]);
     setKernel(columns[1]);

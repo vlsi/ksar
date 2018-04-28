@@ -12,7 +12,7 @@
 
     <?xml version="1.0"?>
 
-    <!DOCTYPE ConfiG SYSTEM "Config.dtd">
+    <!DOCTYPE ConfiG SYSTEM "config.dtd">
 
     <ConfiG>
     ...

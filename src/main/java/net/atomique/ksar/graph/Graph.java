@@ -16,7 +16,7 @@ import net.atomique.ksar.xml.GraphConfig;
 import net.atomique.ksar.xml.PlotStackConfig;
 import net.atomique.ksar.xml.StatConfig;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -60,13 +61,12 @@ public class Graph {
     graphtitle = Title;
     graphconfig = g;
     printCheckBox = new JCheckBox(graphtitle, printSelected);
-    printCheckBox.addItemListener(new java.awt.event.ItemListener() {
+    printCheckBox.addItemListener((ItemEvent evt) -> {
 
-      public void itemStateChanged(java.awt.event.ItemEvent evt) {
-        if (evt.getSource() == printCheckBox) {
-          printSelected = printCheckBox.isSelected();
-        }
+      if (evt.getSource() == printCheckBox) {
+        printSelected = printCheckBox.isSelected();
       }
+
     });
     skipColumn = skipcol;
     if (pp != null) {
@@ -110,7 +110,7 @@ public class Graph {
 
   public int parse_line(Second now, String s) {
     String[] cols = s.split("\\s+");
-    Double colvalue = null;
+    Double colvalue;
     //log.debug("graph parsing: {}", s);
     for (int i = skipColumn; i < HeaderStr.length; i++) {
       try {
@@ -194,7 +194,7 @@ public class Graph {
 
   private boolean add_datapoint_plot(Second now, int col, String colheader, Double value) {
     try {
-      ((TimeSeries) (Stats.get(col))).add(now, value);
+      ((Stats.get(col))).add(now, value);
       return true;
     } catch (SeriesException se) {
       // insert not possible
@@ -203,7 +203,7 @@ public class Graph {
           ((OSParser) mysar.myparser).get_OSConfig().getStat(mysar.myparser.getCurrentStat());
       if (statconfig != null) {
         if (statconfig.canDuplicateTime()) {
-          Number oldval = ((TimeSeries) (Stats.get(col))).getValue(now);
+          Number oldval = ((Stats.get(col))).getValue(now);
           Double tempval;
           if (oldval == null) {
             return false;
@@ -221,7 +221,7 @@ public class Graph {
           }
 
           try {
-            ((TimeSeries) (Stats.get(col))).update(now, tempval);
+            ( (Stats.get(col))).update(now, tempval);
             return true;
           } catch (SeriesException se2) {
             return false;
@@ -238,7 +238,7 @@ public class Graph {
     tmp.append("Date;");
     tmp.append(getCsvHeader());
     tmp.append("\n");
-    TimeSeries datelist = (TimeSeries) Stats.get(0);
+    TimeSeries datelist = Stats.get(0);
     Iterator ite = datelist.getTimePeriods().iterator();
     while (ite.hasNext()) {
       TimePeriod item = (TimePeriod) ite.next();
@@ -254,7 +254,7 @@ public class Graph {
   public String getCsvHeader() {
     StringBuilder tmp = new StringBuilder();
     for (int i = 1 + skipColumn; i < HeaderStr.length; i++) {
-      TimeSeries tmpseries = (TimeSeries) Stats.get(i - skipColumn);
+      TimeSeries tmpseries = Stats.get(i - skipColumn);
       tmp.append(graphtitle).append(" ").append(tmpseries.getKey());
       tmp.append(";");
     }
@@ -264,7 +264,7 @@ public class Graph {
   public String getCsvLine(RegularTimePeriod t) {
     StringBuilder tmp = new StringBuilder();
     for (int i = 1 + skipColumn; i < HeaderStr.length; i++) {
-      TimeSeries tmpseries = (TimeSeries) Stats.get(i - skipColumn);
+      TimeSeries tmpseries = Stats.get(i - skipColumn);
       tmp.append(tmpseries.getValue(t));
 
       tmp.append(";");
@@ -272,10 +272,10 @@ public class Graph {
     return tmp.toString();
   }
 
-  public int savePNG(final Second g_start, final Second g_end, final String filename,
+  public int savePNG(final String filename,
       final int width, final int height) {
     try {
-      ChartUtilities.saveChartAsPNG(new File(filename),
+      ChartUtils.saveChartAsPNG(new File(filename),
           this.getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()), width,
           height);
     } catch (IOException e) {
@@ -285,10 +285,10 @@ public class Graph {
     return 0;
   }
 
-  public int saveJPG(final Second g_start, final Second g_end, final String filename,
+  public int saveJPG(final String filename,
       final int width, final int height) {
     try {
-      ChartUtilities.saveChartAsJPEG(new File(filename),
+      ChartUtils.saveChartAsJPEG(new File(filename),
           this.getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()), width,
           height);
     } catch (IOException e) {
@@ -304,6 +304,10 @@ public class Graph {
 
   public boolean doPrint() {
     return printSelected;
+  }
+  
+  public void setPrint(boolean print) {
+    printSelected = print;
   }
 
   public JFreeChart getgraph(LocalDateTime start, LocalDateTime end) {
@@ -337,12 +341,12 @@ public class Graph {
 
   private XYDataset create_collection(ArrayList l) {
     TimeSeriesCollection graphcollection = new TimeSeriesCollection();
-    TimeSeries found = null;
+    TimeSeries found;
     boolean hasdata = false;
     for (int i = 0; i < l.size(); i++) {
       found = null;
       for (int j = 0; j < Stats.size(); j++) {
-        found = (TimeSeries) Stats.get(j);
+        found = Stats.get(j);
         if (found.getKey().equals(l.get(i))) {
           break;
         } else {
@@ -408,7 +412,7 @@ public class Graph {
           Color color = GlobalOptions.getDataColor(tmp2.getSeriesKey(i).toString());
           if (color != null) {
             renderer.setSeriesPaint(i, color);
-            renderer.setBaseStroke(new BasicStroke(1.0F));
+            renderer.setDefaultStroke(new BasicStroke(1.0F));
           }
         }
         plot.add(temp_plot, tmp.getSize());
@@ -417,7 +421,7 @@ public class Graph {
     // do the line stuff
     for (PlotStackConfig tmp : graphconfig.getPlotlist().values()) {
       XYItemRenderer renderer = new StandardXYItemRenderer();
-      ArrayList<String> t = new ArrayList<String>();
+      ArrayList<String> t = new ArrayList<>();
       String[] s = tmp.getHeaderStr().split("\\s+");
       Collections.addAll(t, s);
 
@@ -425,14 +429,11 @@ public class Graph {
       NumberAxis graphaxistitle = tmp.getAxis();
       XYPlot tmpplot = new XYPlot(c, axisofdate, graphaxistitle, renderer);
 
-      if (tmpplot == null) {
-        continue;
-      }
       for (int i = 0; i < s.length; i++) {
-        Color color = GlobalOptions.getDataColor(s[i].toString());
+        Color color = GlobalOptions.getDataColor(s[i]);
         if (color != null) {
           renderer.setSeriesPaint(i, color);
-          renderer.setBaseStroke(new BasicStroke(1.0F));
+          renderer.setDefaultStroke(new BasicStroke(1.0F));
         }
       }
       plot.add(tmpplot, tmp.getSize());
@@ -474,7 +475,7 @@ public class Graph {
   private JFreeChart mygraph = null;
   private ChartPanel chartpanel = null;
   private String graphtitle = null;
-  public boolean printSelected = true;
+  private boolean printSelected = true;
   private JCheckBox printCheckBox = null;
   private GraphConfig graphconfig = null;
   private int skipColumn = 0;
