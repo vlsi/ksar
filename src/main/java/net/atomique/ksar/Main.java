@@ -32,13 +32,14 @@ public class Main {
   static ResourceBundle resource = ResourceBundle.getBundle("net/atomique/ksar/Language/Message");
 
   public static void usage() {
+    show_version();
     log.info("-input : input sar statistics file \n");
     log.info("-n : toggles nongui mode for exporting\n");
     log.info("-outputCSV : location of parsed CSV file\n");
     log.info("-outputPDF : location of output pdf file\n");
     log.info("-outputIMG : prefix for output images\n");
     log.info("-width : width for output png charts\n");
-    log.info("-heigth : heigth for output png charts");
+    log.info("-height : heigth for output png charts");
     log.info("-tags : comma separated list of nodes for export. ex: 'CPU all,Load'");
     log.info("-dateFormat : date time format. Example: MM/DD/YYYY 23:59:59");
     System.exit(0);
