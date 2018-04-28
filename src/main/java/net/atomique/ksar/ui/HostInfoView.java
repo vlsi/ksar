@@ -22,7 +22,7 @@ public class HostInfoView extends javax.swing.JDialog {
     AliasField.setText(hostinfo.getAlias());
     jTextArea1.setText(hostinfo.getDescription());
     memboxcombo.setSelectedItem(hostinfo.getMemBlockSize().toString());
-    setLocationRelativeTo(GlobalOptions.getUI());
+    setLocationRelativeTo(parent);
   }
 
   /**

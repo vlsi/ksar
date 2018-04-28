@@ -7,8 +7,6 @@ package net.atomique.ksar.ui;
 
 import net.atomique.ksar.VersionNumber;
 
-import java.awt.Dimension;
-
 public class AboutBox extends javax.swing.JDialog {
 
   /**
@@ -17,11 +15,7 @@ public class AboutBox extends javax.swing.JDialog {
   public AboutBox(java.awt.Frame parent) {
     super(parent);
     initComponents();
-    Dimension d1 = getSize();
-    Dimension d2 = parent.getSize();
-    int x = (d2.width - (d1.width / 2)) / 2;
-    int y = (d2.height - (d1.height / 2)) / 2;
-    setBounds(x, y, d1.width, d1.height);
+    setLocationRelativeTo(parent);
     setModal(true);
     setVisible(true);
   }

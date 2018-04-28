@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE ConfiG PUBLIC "-//NET/ATOMIQUE/KSAR/CONFIG.DTD" "Config.dtd">
+<!DOCTYPE ConfiG PUBLIC "-//NET/ATOMIQUE/KSAR/CONFIG.DTD" "config.dtd">
 <!--
     Description:
         Configure statistics and their corresponding graphs (plots+stacks)
@@ -54,7 +54,7 @@
             </Stat>
             <Stat name="dentunusd1">
                 <headerstr>dentunusd file-nr inode-nr pty-nr</headerstr>
-                <graphname>IGNORE</graphname>
+                <graphname>VFS</graphname>
             </Stat>
             <Stat name="cpu2">
                 <headerstr>CPU %user %nice %system %idle</headerstr>
@@ -132,6 +132,11 @@
                 <headerstr>DEV tps rd_sec/s wr_sec/s avgrq-sz avgqu-sz await svctm %util</headerstr>
                 <graphname>DEV</graphname>
             </Stat>
+            <Stat name="dev_11.5.7">
+                <headerstr>DEV tps rkB/s wkB/s areq-sz aqu-sz await svctm %util</headerstr>
+                <graphname>DEV_11.5.7</graphname>
+            </Stat>
+
             <Stat name="dentunusd2">
                 <headerstr>dentunusd file-sz inode-sz super-sz %super-sz dquot-sz %dquot-sz rtsig-sz %rtsig-sz</headerstr>
                 <graphname>IGNORE</graphname>
@@ -208,6 +213,10 @@
                 <headerstr>BUS idvendor idprod maxpower manufact</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
+            <Stat name="misci_usb_11.5.1">
+                <headerstr>BUS idvendor idprod maxpower manufact product</headerstr>
+                <graphname>IGNORE</graphname>
+            </Stat>
             <Stat name="misci_mountedfs">
                 <headerstr>MBfsfree MBfsused %fsused %ufsused Ifree Iused %Iused FILESYSTEM</headerstr>
                 <graphname>IGNORE</graphname>
@@ -218,6 +227,10 @@
             </Stat>
             <Stat name="cpu7">
                 <headerstr>CPU %usr %nice %sys %iowait %steal %irq %soft %guest %gnice %idle</headerstr>
+                <graphname>CPU</graphname>
+            </Stat>
+            <Stat name="cpu_mpstat">
+                <headerstr>CPU %usr %nice %sys %iowait %irq %soft %steal %guest %gnice %idle</headerstr>
                 <graphname>CPU</graphname>
             </Stat>
             <Stat name="kmem_8.1.5">
@@ -231,6 +244,14 @@
             <Stat name="kmem_10.1.2">
                 <headerstr>kbmemfree kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact kbdirty</headerstr>
                 <graphname>KMEM_9.1.7</graphname>
+            </Stat>
+            <Stat name="kmem_11.1.5">
+                <headerstr>kbmemfree kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact kbdirty kbanonpg kbslab kbkstack kbpgtbl kbvmused</headerstr>
+                <graphname>KMEM_11.5.3</graphname>
+            </Stat>
+            <Stat name="kmem_11.5.3">
+                <headerstr>kbmemfree kbavail kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact kbdirty kbanonpg kbslab kbkstack kbpgtbl kbvmused</headerstr>
+                <graphname>KMEM_11.5.3</graphname>
             </Stat>
             <Stat name="hpage">
                 <headerstr>kbhugfree kbhugused %hugused</headerstr>
@@ -347,6 +368,22 @@
                     <cols>await</cols>
                 </Plot>
             </Graph>
+            <Graph name="DEV_11.5.7" Title="Devices (Block)" type="multiple">
+                <!-- DEV tps rkB/s wkB/s areq-sz aqu-sz await svctm %util -->
+                <Plot Title="tps">
+                    <cols>tps</cols>
+                </Plot>
+                <Plot Title="Bandwidth [B/s]">
+                    <cols>rkB/s wkB/s</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="areq-sz [KiB] / aqu-sz">
+                    <cols>avgrq-sz avgqu-sz</cols>
+                </Plot>
+                <Plot Title="Response [ms]">
+                    <cols>await</cols>
+                </Plot>
+            </Graph>
             <Graph name="IO" Title="I/O" type="unique">
                 <Plot Title="TPS">
                     <cols>tps rtps wtps</cols>
@@ -414,6 +451,32 @@
             <Graph name="KMEM_9.1.7" Title="KMem" type="unique">
                 <Plot Title="Memory" size="2">
                     <cols>kbmemfree kbmemused kbcommit</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Memory [%]">
+                    <cols>%memused %commit</cols>
+                    <range>0,100</range>
+                </Plot>
+                <Plot Title="Cached">
+                    <cols>kbcached</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Buffers">
+                    <cols>kbbuffers</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Active">
+                    <cols>kbactive kbinact</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+                <Plot Title="Dirty">
+                    <cols>kbdirty</cols>
+                    <format base="1024" factor="1024" />
+                </Plot>
+            </Graph>
+            <Graph name="KMEM_11.5.3" Title="KMem" type="unique">
+                <Plot Title="Memory" size="2">
+                    <cols>kbmemfree kbavail kbmemused kbcommit</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="Memory [%]">
@@ -541,6 +604,20 @@
                     <cols>MHz</cols>
                 </Plot>
             </Graph>
+            <Graph name="VFS" Title="Kernel VFS" type="unique">
+                <Plot Title="Unused Directory Cache entries">
+                    <cols>dentunusd</cols>
+                    <format base="1000" factor="1" />
+                </Plot>
+                <Plot Title="InUse Inode handles">
+                    <cols>inode-nr</cols>
+                    <format base="1000" factor="1" />
+                </Plot>
+                <Plot Title="InUse File handles">
+                    <cols>file-nr</cols>
+                </Plot>
+            </Graph>
+
         </OSType>
     </OS>
     <!--  END OS -->

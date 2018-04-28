@@ -8,8 +8,6 @@ package net.atomique.ksar.ui;
 import net.atomique.ksar.Config;
 import net.atomique.ksar.GlobalOptions;
 
-import java.awt.Dimension;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.SpinnerNumberModel;
@@ -27,11 +25,7 @@ public class Preferences extends javax.swing.JDialog {
     load_landf();
     load_pageformat();
     load_linuxformat();
-    Dimension d1 = getSize();
-    Dimension d2 = parent.getSize();
-    int x = (d2.width - (d1.width / 2)) / 2;
-    int y = (d2.height - (d1.height / 2)) / 2;
-    setBounds(x, y, d1.width, d1.height);
+    setLocationRelativeTo(parent);
     setModal(true);
     setVisible(true);
   }
@@ -48,16 +42,19 @@ public class Preferences extends javax.swing.JDialog {
   }
 
   private void load_linuxformat() {
+    LinuxFormatComboModel.addElement("Automatic Detection");
     LinuxFormatComboModel.addElement("Always ask");
     LinuxFormatComboModel.addElement("MM/DD/YY 23:59:59");
     LinuxFormatComboModel.addElement("MM/DD/YYYY 23:59:59");
+    LinuxFormatComboModel.addElement("DD/MM/YY 23:59:59");
     LinuxFormatComboModel.addElement("DD/MM/YYYY 23:59:59");
     LinuxFormatComboModel.addElement("YYYY-MM-DD 23:59:59");
     LinuxFormatComboModel.addElement("MM/DD/YY 12:59:59 AM|PM");
     LinuxFormatComboModel.addElement("MM/DD/YYYY 12:59:59 AM|PM");
+    LinuxFormatComboModel.addElement("DD/MM/YY 12:59:59 AM|PM");
     LinuxFormatComboModel.addElement("DD/MM/YYYY 12:59:59 AM|PM");
     LinuxFormatComboModel.addElement("YYYY-MM-DD 12:59:59 AM|PM");
-    LinuxFormatComboModel.addElement("Automatic Detection");
+
     jComboBox3.setSelectedItem(Config.getLinuxDateFormat());
   }
 

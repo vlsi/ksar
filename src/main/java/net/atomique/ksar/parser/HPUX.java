@@ -59,7 +59,7 @@ public class HPUX extends OSParser {
 
 
     try {
-      timeFormat = "HH:mm:SS";
+      timeFormat = "HH:mm:ss";
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat);
       parsetime = LocalTime.parse(columns[0], formatter);
 

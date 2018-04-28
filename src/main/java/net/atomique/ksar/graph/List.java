@@ -48,7 +48,7 @@ public class List {
 
   public int parse_line(Second now, String s) {
     String cols[] = s.split("\\s+");
-    Graph tmp = null;
+    Graph tmp;
     if (!nodeHashList.containsKey(cols[skipColumn])) {
       tmp = new Graph(mysar, graphconfig, Title + " " + cols[skipColumn], HeaderStr, skipColumn + 1,
           null);
@@ -57,7 +57,7 @@ public class List {
       SortedTreeNode nodetmp = new SortedTreeNode(infotmp);
       mysar.add2tree(parentTreeNode, nodetmp);
     } else {
-      tmp = (Graph) nodeHashList.get(cols[skipColumn]);
+      tmp = nodeHashList.get(cols[skipColumn]);
     }
 
     return tmp.parse_line(now, s);
@@ -66,7 +66,7 @@ public class List {
 
   public JPanel run() {
     JPanel tmppanel = new JPanel();
-    LayoutManager tmplayout = null;
+    LayoutManager tmplayout;
     int graphnumber = nodeHashList.size();
     int linenum = (int) Math.floor(graphnumber / 2);
     if (graphnumber % 2 != 0) {
@@ -86,7 +86,7 @@ public class List {
   public boolean isPrintSelected() {
     boolean leaftoprint = false;
     for (Graph graph : nodeHashList.values()) {
-      if (graph.printSelected) {
+      if (graph.isPrintSelected()) {
         leaftoprint = true;
         break;
       }

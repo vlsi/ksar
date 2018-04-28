@@ -12,14 +12,16 @@ import net.atomique.ksar.xml.HostInfo;
 import net.atomique.ksar.xml.OSConfig;
 import net.atomique.ksar.xml.PlotStackConfig;
 import net.atomique.ksar.xml.StatConfig;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
-import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -28,71 +30,60 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 public class XMLConfig extends DefaultHandler {
+  private static final String KSAR_DTD_PREFIX = "-//NET/ATOMIQUE/KSAR/";
 
   private static final Logger log = LoggerFactory.getLogger(XMLConfig.class);
 
-  XMLConfig(String filename) {
-    load_config(filename);
-
-  }
-
-  XMLConfig(InputStream is) {
-    load_config(is);
-  }
-
   public InputSource resolveEntity(String publicId, String systemId)
-      throws SAXException, IOException {
+      throws IOException {
 
-    InputSource inputSource = null;
-    try {
-      String dtdFile = systemId.substring(systemId.lastIndexOf("/"));
-      InputStream inputStream = EntityResolver.class.getResourceAsStream(dtdFile);
-      inputSource = new InputSource(inputStream);
-    } catch (Exception e) {
-      // No action; just let the null InputSource pass through
+    if (publicId == null || !publicId.startsWith(KSAR_DTD_PREFIX)) {
+      return null;
     }
 
-    // If nothing found, null is returned, for normal processing
-    return inputSource;
+    String dtdFile = publicId.substring(KSAR_DTD_PREFIX.length() - 1);
+    dtdFile = dtdFile.toLowerCase();
+    InputStream inputStream = getClass().getResourceAsStream(dtdFile);
+    if (inputStream == null) {
+      throw new FileNotFoundException("File " + publicId + " is not found in kSar resources");
+    }
+    return new InputSource(inputStream);
   }
 
-  void load_config(InputStream is) {
-    SAXParserFactory fabric;
-    SAXParser parser;
-    try {
-      fabric = SAXParserFactory.newInstance();
-      parser = fabric.newSAXParser();
-      parser.parse(is, this);
-
-    } catch (ParserConfigurationException | SAXException ex) {
-      log.error("SAX Parser Exception", ex);
-    } catch (IOException ioe) {
-      log.error("SAX Parser IO Exception", ioe);
-      System.exit(1);
-    }
-    //dump_XML();
-    try {
-      is.close();
-    } catch (IOException ex) {
-      log.error("IO Exception", ex);
+  void loadFromResources(String fileName) {
+    try (InputStream is = getClass().getResourceAsStream(fileName)) {
+      if (is == null) {
+        throw new FileNotFoundException("File " + fileName + " is not found in kSar resources");
+      }
+      InputSource source = new InputSource(is);
+      source.setPublicId(KSAR_DTD_PREFIX + fileName);
+      loadConfig(source);
+    } catch (IOException e) {
+      log.warn("XML error while parsing " + fileName, e);
     }
   }
 
-  void load_config(String xmlfile) {
+  void loadConfig(File file) {
+    InputSource source = new InputSource(file.toURI().toASCIIString());
+    loadConfig(source);
+  }
+
+  private void loadConfig(InputSource source) {
     SAXParserFactory fabric;
     SAXParser parser;
+    String id = source.getSystemId() + " (" + source.getPublicId() + ")";
     try {
       fabric = SAXParserFactory.newInstance();
       parser = fabric.newSAXParser();
-      parser.parse(xmlfile, this);
+      parser.parse(source, this);
 
     } catch (ParserConfigurationException | SAXException ex) {
-      log.error("SAX Parser Exception", ex);
+      log.warn("XML error while parsing " + id, ex);
     } catch (IOException ioe) {
-      log.error("SAX Parser IO Exception", ioe);
-      System.exit(1);
+      String msg = "IO exception while parsing " + id;
+      log.error(msg, ioe);
+      throw new IllegalArgumentException(msg, ioe);
     }
-
   }
 
   void dump_XML() {

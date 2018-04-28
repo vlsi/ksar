@@ -18,7 +18,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
@@ -43,7 +42,6 @@ public class GlobalOptions {
 
     String[] OSParserNames = {"AIX", "HPUX", "Linux", "SunOS"};
     String filename;
-    InputStream is;
     XMLConfig tmp;
     systemprops = System.getProperties();
     username = (String) systemprops.get("user.name");
@@ -54,8 +52,8 @@ public class GlobalOptions {
     ParserMap = new HashMap<>();
     HistoryList = new HashMap<>();
     HostInfoList = new HashMap<>();
-    is = this.getClass().getResourceAsStream("/Config.xml");
-    tmp = new XMLConfig(is);
+    tmp = new XMLConfig();
+    tmp.loadFromResources("/Config.xml");
     for (String OSName : OSParserNames) {
       try {
         Class tmpclass = Class.forName("net.atomique.ksar.parser." + OSName);
@@ -66,19 +64,18 @@ public class GlobalOptions {
 
     }
     for (String parsername : ParserMap.keySet()) {
-      is = this.getClass().getResourceAsStream("/" + parsername + ".xml");
-      if (is != null) {
-        tmp.load_config(is);
-      }
+      tmp.loadFromResources("/" + parsername + ".xml");
     }
 
     filename = userhome + ".ksarcfg" + fileseparator + "Config.xml";
-    if (new File(filename).canRead()) {
-      tmp.load_config(filename);
+    File file = new File(filename);
+    if (file.canRead()) {
+      tmp.loadConfig(file);
     }
     filename = userhome + ".ksarcfg" + fileseparator + "History.xml";
-    if (new File(filename).canRead()) {
-      tmp.load_config(filename);
+    file = new File(filename);
+    if (file.canRead()) {
+      tmp.loadConfig(file);
     }
 
   }
