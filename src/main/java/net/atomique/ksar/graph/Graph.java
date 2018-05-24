@@ -118,7 +118,7 @@ public class Graph {
       } catch (NumberFormatException ne) {
         log.error("{} {} is NaN", graphtitle, cols[i]);
         return 0;
-      } catch (ArrayIndexOutOfBoundsException aie){
+      } catch (ArrayIndexOutOfBoundsException aie) {
         log.error("{} col {} is missing {}", graphtitle, i, s);
         return 0;
       } catch (Exception ae) {
