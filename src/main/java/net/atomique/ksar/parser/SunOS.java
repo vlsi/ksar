@@ -35,6 +35,8 @@ public class SunOS extends OSParser {
     setOSversion(columns[2]);
     setKernel(columns[3]);
     setCpuType(columns[4]);
+
+    dateFormat = "MM/dd/yyyy";
     setDate(columns[5]);
 
     if (GlobalOptions.hasUI()) {
