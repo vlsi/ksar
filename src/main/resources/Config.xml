@@ -167,6 +167,26 @@
             <color>255,0,255</color>
         </itemcolor>
 
+        <!--Sockets-->
+        <itemcolor name="totsck">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="tcpsck">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="udpsck">
+            <color>170,255,170</color>
+        </itemcolor>
+        <itemcolor name="rawsck">
+            <color>255,255,170</color>
+        </itemcolor>
+        <itemcolor name="tcp-tw">
+            <color>255,170,255</color>
+        </itemcolor>
+        <itemcolor name="ip-frag">
+            <color>170,255,255</color>
+        </itemcolor>
+
         <!--Swap-->
         <itemcolor name="pswpin/s">
             <color>255,170,170</color>
