@@ -394,6 +394,19 @@
             <color>170,170,255</color>
         </itemcolor>
 
+        <!--SunOS Device-->
+        <itemcolor name="%busy">
+            <color>255,255,0</color>
+            <type>gauge</type>
+        </itemcolor>
+        <itemcolor name="avque">
+            <color>255,0,255</color>
+            <type>gauge</type>
+        </itemcolor>
+        <itemcolor name="r+w/s">
+            <color>0,127,255</color>
+            <type>counter</type>
+        </itemcolor>
         <itemcolor name="blks/s">
             <color>255,0,255</color>
             <type>counter</type>
@@ -406,18 +419,7 @@
             <color>0,255,0</color>
             <type>gauge</type>
         </itemcolor>
-        <itemcolor name="avque">
-            <color>255,0,255</color>
-            <type>gauge</type>
-        </itemcolor>
-        <itemcolor name="r+w/s">
-            <color>0,127,255</color>
-            <type>counter</type>
-        </itemcolor>
-        <itemcolor name="%busy">
-            <color>255,255,0</color>
-            <type>gauge</type>
-        </itemcolor>
+
     </colors>
     
 </ConfiG>
