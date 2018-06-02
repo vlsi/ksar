@@ -130,6 +130,35 @@
             <color>255,0,0</color>
         </itemcolor>
 
+        <!--Paging-->
+        <itemcolor name="pgpgin/s">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="pgpgout/s">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="fault/s">
+            <color>170,255,170</color>
+        </itemcolor>
+        <itemcolor name="majflt/s">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="pgfree/s">
+            <color>255,170,255</color>
+        </itemcolor>
+        <itemcolor name="pgscank/s">
+            <color>170,255,255</color>
+        </itemcolor>
+        <itemcolor name="pgscand/s">
+            <color>255,215,215</color>
+        </itemcolor>
+        <itemcolor name="pgsteal/s">
+            <color>255,127,0</color>
+        </itemcolor>
+        <itemcolor name="%vmeff">
+            <color>223,127,127</color>
+        </itemcolor>
+
         <!--Processes-->
         <itemcolor name="proc/s">
             <color>255,0,0</color>
