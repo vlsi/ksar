@@ -179,6 +179,17 @@
             <color>255,170,255</color>
         </itemcolor>
 
+        <!--Kernel VFS-->
+        <itemcolor name="dentunusd">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="inode-nr">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="file-nr">
+            <color>170,255,170</color>
+        </itemcolor>
+
         <!--NFS Client-->
         <itemcolor name="call/s">
             <color>255,170,170</color>
