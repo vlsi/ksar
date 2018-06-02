@@ -87,6 +87,23 @@
             <color>170,255,170</color>
         </itemcolor>
 
+        <!--IO-->
+        <itemcolor name="tps">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="rtps">
+            <color>255,0,255</color>
+        </itemcolor>
+        <itemcolor name="wtps">
+            <color>0,0,255</color>
+        </itemcolor>
+        <itemcolor name="bread/s">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="bwrtn/s">
+            <color>255,255,0</color>
+        </itemcolor>
+
         <!--Interrupts-->
         <itemcolor name="intr/s">
             <color>255,130,130</color>
@@ -335,21 +352,6 @@
         <itemcolor name="blks/s">
             <color>255,0,255</color>
             <type>counter</type>
-        </itemcolor>
-        <itemcolor name="tps">
-            <color>255,0,0</color>
-        </itemcolor>
-        <itemcolor name="bread/s">
-            <color>255,0,0</color>
-        </itemcolor>
-        <itemcolor name="bwrtn/s">
-            <color>255,255,0</color>
-        </itemcolor>
-        <itemcolor name="rtps">
-            <color>255,0,255</color>
-        </itemcolor>
-        <itemcolor name="wtps">
-            <color>0,0,255</color>
         </itemcolor>
         <itemcolor name="avwait">
             <color>255,0,0</color>
