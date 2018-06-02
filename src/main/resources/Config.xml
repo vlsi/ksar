@@ -32,7 +32,12 @@
         <itemcolor name="mdmin/s">
             <color>255,0,255</color>
         </itemcolor>
+
+        <!--CPU-->
         <itemcolor name="%usr">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="%user">
             <color>0,255,0</color>
         </itemcolor>
         <itemcolor name="%sys">
@@ -40,9 +45,6 @@
         </itemcolor>
         <itemcolor name ="%system">
             <color>255,0,0</color>
-        </itemcolor>
-        <itemcolor name="%user">
-            <color>0,255,0</color>
         </itemcolor>
         <itemcolor name="%idle">
             <color>127,127,127</color>
