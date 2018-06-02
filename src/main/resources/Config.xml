@@ -104,10 +104,7 @@
             <color>255,130,130</color>
         </itemcolor>
 
-
-        <itemcolor name="coll/s">
-            <color>255,0,0</color>
-        </itemcolor>
+        <!--Network Interface Error-->
         <itemcolor name="rxerr/s">
             <color>255,255,0</color>
         </itemcolor>
@@ -132,6 +129,11 @@
         <itemcolor name="txfifo/s">
             <color>255,0,255</color>
         </itemcolor>
+        <itemcolor name="coll/s">
+            <color>255,0,0</color>
+        </itemcolor>
+
+
         <itemcolor name="cswch/s">
             <color>255,0,255</color>
         </itemcolor>
