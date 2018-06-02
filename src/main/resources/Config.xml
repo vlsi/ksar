@@ -76,6 +76,27 @@
             <color>255,130,130</color>
         </itemcolor>
 
+        <!--Devices (Block)-->
+        <itemcolor name="tps">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="rd_sec/s">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="wr_sec/s">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="avgrq-sz">
+            <color>170,255,170</color>
+        </itemcolor>
+        <itemcolor name="avgqu-sz">
+            <color>255,255,170</color>
+        </itemcolor>
+        <itemcolor name="await">
+            <color>255,170,255</color>
+        </itemcolor>
+
+
         <!--HugePages-->
         <itemcolor name="kbhugfree">
             <color>255,170,170</color>
@@ -88,9 +109,7 @@
         </itemcolor>
 
         <!--IO-->
-        <itemcolor name="tps">
-            <color>255,0,0</color>
-        </itemcolor>
+        <!--tps = Devices Block-->
         <itemcolor name="rtps">
             <color>255,0,255</color>
         </itemcolor>
