@@ -23,9 +23,6 @@
         <itemcolor name="xmtin/s">
             <color>255,0,0</color>
         </itemcolor>
-        <itemcolor name="proc/s">
-            <color>255,0,0</color>
-        </itemcolor>
         <itemcolor name="rcvin/s">
             <color>0,0,255</color>
         </itemcolor>
@@ -133,10 +130,14 @@
             <color>255,0,0</color>
         </itemcolor>
 
-
+        <!--Processes-->
+        <itemcolor name="proc/s">
+            <color>255,0,0</color>
+        </itemcolor>
         <itemcolor name="cswch/s">
             <color>255,0,255</color>
         </itemcolor>
+
         <itemcolor name="blks/s">
             <color>255,0,255</color>
             <type>counter</type>
