@@ -100,6 +100,8 @@
         <itemcolor name="ldavg-15">
             <color>0,255,0</color>
         </itemcolor>
+        <itemcolor name="blocked">
+            <color>255,130,130</color>
         </itemcolor>
 
 
