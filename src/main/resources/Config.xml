@@ -76,6 +76,17 @@
             <color>255,130,130</color>
         </itemcolor>
 
+        <!--HugePages-->
+        <itemcolor name="kbhugfree">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="kbhugused">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="%hugused">
+            <color>170,255,170</color>
+        </itemcolor>
+
         <!--Interrupts-->
         <itemcolor name="intr/s">
             <color>255,130,130</color>
