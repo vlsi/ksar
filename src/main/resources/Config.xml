@@ -84,6 +84,12 @@
             <color>255,130,130</color>
         </itemcolor>
 
+        <!--sar -q : task run queue, load average-->
+        <itemcolor name="runq-sz">
+            <color>0,0,0</color>
+        </itemcolor>
+        <itemcolor name="plist-sz">
+            <color>0,255,255</color>
         </itemcolor>
         <itemcolor name="ldavg-1">
             <color>255,0,0</color>
@@ -94,12 +100,9 @@
         <itemcolor name="ldavg-15">
             <color>0,255,0</color>
         </itemcolor>
-        <itemcolor name="plist-sz">
-            <color>0,255,255</color>
         </itemcolor>
-        <itemcolor name="runq-sz">
-            <color>255,255,0</color>
-        </itemcolor>
+
+
         <itemcolor name="coll/s">
             <color>255,0,0</color>
         </itemcolor>
