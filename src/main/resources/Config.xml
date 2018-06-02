@@ -162,6 +162,23 @@
             <color>127,127,223</color>
         </itemcolor>
 
+        <!--KSwap-->
+        <itemcolor name="kbswpfree">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="kbswpused">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="kbswpcad">
+            <color>170,255,170</color>
+        </itemcolor>
+        <itemcolor name="%swpused">
+            <color>255,255,170</color>
+        </itemcolor>
+        <itemcolor name="%swpcad">
+            <color>255,170,255</color>
+        </itemcolor>
+
         <!--NFS Client-->
         <itemcolor name="call/s">
             <color>255,170,170</color>
