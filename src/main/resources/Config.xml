@@ -32,7 +32,12 @@
         <itemcolor name="mdmin/s">
             <color>255,0,255</color>
         </itemcolor>
+
+        <!--CPU-->
         <itemcolor name="%usr">
+            <color>0,255,0</color>
+        </itemcolor>
+        <itemcolor name="%user">
             <color>0,255,0</color>
         </itemcolor>
         <itemcolor name="%sys">
@@ -41,14 +46,14 @@
         <itemcolor name ="%system">
             <color>255,0,0</color>
         </itemcolor>
-        <itemcolor name="%user">
-            <color>0,255,0</color>
-        </itemcolor>
         <itemcolor name="%idle">
             <color>127,127,127</color>
         </itemcolor>
         <itemcolor name="%nice">
             <color>255,255,0</color>
+        </itemcolor>
+        <itemcolor name="%gnice">
+            <color>204,204,0</color>
         </itemcolor>
         <itemcolor name="%steal">
             <color>255,127,0</color>
@@ -59,6 +64,16 @@
         <itemcolor name="%wio">
             <color>255,0,127</color>
         </itemcolor>
+        <itemcolor name="%irq">
+            <color>255,85,85</color>
+        </itemcolor>
+        <itemcolor name="%soft">
+            <color>85,85,255</color>
+        </itemcolor>
+        <itemcolor name="%guest">
+            <color>75,175,125</color>
+        </itemcolor>
+
         <itemcolor name="intr/s">
             <color>255,127,127</color>
         </itemcolor>
