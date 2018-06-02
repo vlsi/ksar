@@ -74,6 +74,11 @@
             <color>75,175,125</color>
         </itemcolor>
 
+        <!--CPU frequency-->
+        <itemcolor name="MHz">
+            <color>255,130,130</color>
+        </itemcolor>
+
         <itemcolor name="intr/s">
             <color>255,127,127</color>
         </itemcolor>
