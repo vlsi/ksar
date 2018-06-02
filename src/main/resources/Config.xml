@@ -130,6 +130,26 @@
             <color>255,0,0</color>
         </itemcolor>
 
+        <!--NFS Client-->
+        <itemcolor name="call/s">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="retrans/s">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="read/s">
+            <color>170,255,170</color>
+        </itemcolor>
+        <itemcolor name="write/s">
+            <color>255,255,170</color>
+        </itemcolor>
+        <itemcolor name="access/s">
+            <color>255,170,255</color>
+        </itemcolor>
+        <itemcolor name="getatt/s">
+            <color>170,255,255</color>
+        </itemcolor>
+
         <!--NFS Server-->
         <itemcolor name="scall/s">
             <color>255,170,170</color>
