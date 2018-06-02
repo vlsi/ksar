@@ -167,6 +167,14 @@
             <color>255,0,255</color>
         </itemcolor>
 
+        <!--Swap-->
+        <itemcolor name="pswpin/s">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="pswpout/s">
+            <color>170,170,255</color>
+        </itemcolor>
+
         <itemcolor name="blks/s">
             <color>255,0,255</color>
             <type>counter</type>
