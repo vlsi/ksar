@@ -177,6 +177,32 @@
             <color>255,0,0</color>
         </itemcolor>
 
+        <!--Network interfaces traffic-->
+        <itemcolor name="rxpck/s">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="txpck/s">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="rxkB/s">
+            <color>170,255,170</color>
+        </itemcolor>
+        <itemcolor name="txkB/s">
+            <color>255,255,170</color>
+        </itemcolor>
+        <itemcolor name="rxcmp/s">
+            <color>255,170,255</color>
+        </itemcolor>
+        <itemcolor name="txcmp/s">
+            <color>170,255,255</color>
+        </itemcolor>
+        <itemcolor name="rxmcst/s">
+            <color>255,215,215</color>
+        </itemcolor>
+        <itemcolor name="%ifutil">
+            <color>191,191,191</color>
+        </itemcolor>
+
         <!--KMem-->
         <itemcolor name="kbmemfree">
             <color>255,170,170</color>
