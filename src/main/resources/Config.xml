@@ -79,7 +79,13 @@
         <itemcolor name="rd_sec/s">
             <color>255,170,170</color>
         </itemcolor>
+        <itemcolor name="rkB/s">
+            <color>255,170,170</color>
+        </itemcolor>
         <itemcolor name="wr_sec/s">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="wkB/s">
             <color>170,170,255</color>
         </itemcolor>
         <itemcolor name="avgrq-sz">
