@@ -230,6 +230,9 @@
         <itemcolor name="kbdirty">
             <color>127,127,223</color>
         </itemcolor>
+        <itemcolor name="kbavail">
+            <color>127,223,127</color>
+        </itemcolor>
 
         <!--KSwap-->
         <itemcolor name="kbswpfree">
