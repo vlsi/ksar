@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ConfiG PUBLIC "-//NET/ATOMIQUE/KSAR/CONFIG.DTD" "config.dtd" >
 <!--
-    Document   : Config.xml
-    Created on : 10 août 2010, 16:31
-    Author     : Max
     Description:
         Configure color of graphs
-
 -->
 
 <ConfiG>
@@ -21,9 +17,6 @@
             <color>255,255,0</color>
         </itemcolor>
         <itemcolor name="xmtin/s">
-            <color>255,0,0</color>
-        </itemcolor>
-        <itemcolor name="proc/s">
             <color>255,0,0</color>
         </itemcolor>
         <itemcolor name="rcvin/s">
@@ -74,27 +67,90 @@
             <color>75,175,125</color>
         </itemcolor>
 
+        <!--CPU frequency-->
+        <itemcolor name="MHz">
+            <color>255,130,130</color>
+        </itemcolor>
+
+        <!--Devices (Block)-->
+        <itemcolor name="tps">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="rd_sec/s">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="rkB/s">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="wr_sec/s">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="wkB/s">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="avgrq-sz">
+            <color>170,255,170</color>
+        </itemcolor>
+        <itemcolor name="avgqu-sz">
+            <color>255,255,170</color>
+        </itemcolor>
+        <itemcolor name="await">
+            <color>255,170,255</color>
+        </itemcolor>
+
+
+        <!--HugePages-->
+        <itemcolor name="kbhugfree">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="kbhugused">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="%hugused">
+            <color>170,255,170</color>
+        </itemcolor>
+
+        <!--IO-->
+        <!--tps = Devices Block-->
+        <itemcolor name="rtps">
+            <color>255,0,255</color>
+        </itemcolor>
+        <itemcolor name="wtps">
+            <color>0,0,255</color>
+        </itemcolor>
+        <itemcolor name="bread/s">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="bwrtn/s">
+            <color>255,255,0</color>
+        </itemcolor>
+
+        <!--Interrupts-->
         <itemcolor name="intr/s">
-            <color>255,127,127</color>
+            <color>255,130,130</color>
+        </itemcolor>
+
+        <!--sar -q : task run queue, load average-->
+        <itemcolor name="runq-sz">
+            <color>0,0,0</color>
+        </itemcolor>
+        <itemcolor name="plist-sz">
+            <color>0,255,255</color>
         </itemcolor>
         <itemcolor name="ldavg-1">
             <color>255,0,0</color>
         </itemcolor>
         <itemcolor name="ldavg-5">
-            <color>0,255,0</color>
+            <color>255,255,0</color>
         </itemcolor>
         <itemcolor name="ldavg-15">
             <color>0,255,0</color>
         </itemcolor>
-        <itemcolor name="plist-sz">
-            <color>0,255,255</color>
+        <itemcolor name="blocked">
+            <color>255,130,130</color>
         </itemcolor>
-        <itemcolor name="runq-sz">
-            <color>255,255,0</color>
-        </itemcolor>
-        <itemcolor name="coll/s">
-            <color>255,0,0</color>
-        </itemcolor>
+
+        <!--Network Interface Error-->
         <itemcolor name="rxerr/s">
             <color>255,255,0</color>
         </itemcolor>
@@ -119,34 +175,233 @@
         <itemcolor name="txfifo/s">
             <color>255,0,255</color>
         </itemcolor>
+        <itemcolor name="coll/s">
+            <color>255,0,0</color>
+        </itemcolor>
+
+        <!--Network interfaces traffic-->
+        <itemcolor name="rxpck/s">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="txpck/s">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="rxkB/s">
+            <color>170,255,170</color>
+        </itemcolor>
+        <itemcolor name="txkB/s">
+            <color>255,255,170</color>
+        </itemcolor>
+        <itemcolor name="rxcmp/s">
+            <color>255,170,255</color>
+        </itemcolor>
+        <itemcolor name="txcmp/s">
+            <color>170,255,255</color>
+        </itemcolor>
+        <itemcolor name="rxmcst/s">
+            <color>255,215,215</color>
+        </itemcolor>
+        <itemcolor name="%ifutil">
+            <color>191,191,191</color>
+        </itemcolor>
+
+        <!--KMem-->
+        <itemcolor name="kbmemfree">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="kbmemused">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="kbcommit">
+            <color>170,255,170</color>
+        </itemcolor>
+        <itemcolor name="%memused">
+            <color>255,255,170</color>
+        </itemcolor>
+        <itemcolor name="%commit">
+            <color>255,170,255</color>
+        </itemcolor>
+        <itemcolor name="kbcached">
+            <color>170,255,255</color>
+        </itemcolor>
+        <itemcolor name="kbbuffers">
+            <color>255,215,215</color>
+        </itemcolor>
+        <itemcolor name="kbactive">
+            <color>191,191,191</color>
+        </itemcolor>
+        <itemcolor name="kbinact">
+            <color>223,127,127</color>
+        </itemcolor>
+        <itemcolor name="kbdirty">
+            <color>127,127,223</color>
+        </itemcolor>
+        <itemcolor name="kbavail">
+            <color>127,223,127</color>
+        </itemcolor>
+
+        <!--KSwap-->
+        <itemcolor name="kbswpfree">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="kbswpused">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="kbswpcad">
+            <color>170,255,170</color>
+        </itemcolor>
+        <itemcolor name="%swpused">
+            <color>255,255,170</color>
+        </itemcolor>
+        <itemcolor name="%swpcad">
+            <color>255,170,255</color>
+        </itemcolor>
+
+        <!--Kernel VFS-->
+        <itemcolor name="dentunusd">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="inode-nr">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="file-nr">
+            <color>170,255,170</color>
+        </itemcolor>
+
+        <!--Memory Pages-->
+        <itemcolor name="frmpg/s">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="bufpg/s">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="campg/s">
+            <color>170,255,170</color>
+        </itemcolor>
+
+        <!--NFS Client-->
+        <itemcolor name="call/s">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="retrans/s">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="read/s">
+            <color>170,255,170</color>
+        </itemcolor>
+        <itemcolor name="write/s">
+            <color>255,255,170</color>
+        </itemcolor>
+        <itemcolor name="access/s">
+            <color>255,170,255</color>
+        </itemcolor>
+        <itemcolor name="getatt/s">
+            <color>170,255,255</color>
+        </itemcolor>
+
+        <!--NFS Server-->
+        <itemcolor name="scall/s">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="badcall/s">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="packet/s">
+            <color>170,255,170</color>
+        </itemcolor>
+        <itemcolor name="udp/s">
+            <color>255,255,170</color>
+        </itemcolor>
+        <itemcolor name="tcp/s">
+            <color>255,170,255</color>
+        </itemcolor>
+        <itemcolor name="hit/s">
+            <color>170,255,255</color>
+        </itemcolor>
+        <itemcolor name="miss/s">
+            <color>255,215,215</color>
+        </itemcolor>
+        <itemcolor name="sread/s">
+            <color>191,191,191</color>
+        </itemcolor>
+        <itemcolor name="swrite/s">
+            <color>223,127,127</color>
+        </itemcolor>
+        <itemcolor name="saccess/s">
+            <color>127,127,223</color>
+        </itemcolor>
+        <itemcolor name="sgetatt/s">
+            <color>127,223,127</color>
+        </itemcolor>
+
+        <!--Paging-->
+        <itemcolor name="pgpgin/s">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="pgpgout/s">
+            <color>170,170,255</color>
+        </itemcolor>
+        <itemcolor name="fault/s">
+            <color>170,255,170</color>
+        </itemcolor>
+        <itemcolor name="majflt/s">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="pgfree/s">
+            <color>255,170,255</color>
+        </itemcolor>
+        <itemcolor name="pgscank/s">
+            <color>170,255,255</color>
+        </itemcolor>
+        <itemcolor name="pgscand/s">
+            <color>255,215,215</color>
+        </itemcolor>
+        <itemcolor name="pgsteal/s">
+            <color>255,127,0</color>
+        </itemcolor>
+        <itemcolor name="%vmeff">
+            <color>223,127,127</color>
+        </itemcolor>
+
+        <!--Processes-->
+        <itemcolor name="proc/s">
+            <color>255,0,0</color>
+        </itemcolor>
         <itemcolor name="cswch/s">
             <color>255,0,255</color>
         </itemcolor>
-        <itemcolor name="blks/s">
-            <color>255,0,255</color>
-            <type>counter</type>
+
+        <!--Sockets-->
+        <itemcolor name="totsck">
+            <color>255,170,170</color>
         </itemcolor>
-        <itemcolor name="tps">
-            <color>255,0,0</color>
+        <itemcolor name="tcpsck">
+            <color>170,170,255</color>
         </itemcolor>
-        <itemcolor name="bread/s">
-            <color>255,0,0</color>
+        <itemcolor name="udpsck">
+            <color>170,255,170</color>
         </itemcolor>
-        <itemcolor name="bwrtn/s">
+        <itemcolor name="rawsck">
+            <color>255,255,170</color>
+        </itemcolor>
+        <itemcolor name="tcp-tw">
+            <color>255,170,255</color>
+        </itemcolor>
+        <itemcolor name="ip-frag">
+            <color>170,255,255</color>
+        </itemcolor>
+
+        <!--Swap-->
+        <itemcolor name="pswpin/s">
+            <color>255,170,170</color>
+        </itemcolor>
+        <itemcolor name="pswpout/s">
+            <color>170,170,255</color>
+        </itemcolor>
+
+        <!--SunOS Device-->
+        <itemcolor name="%busy">
             <color>255,255,0</color>
-        </itemcolor>
-        <itemcolor name="rtps">
-            <color>255,0,255</color>
-        </itemcolor>
-        <itemcolor name="wtps">
-            <color>0,0,255</color>
-        </itemcolor>
-        <itemcolor name="avwait">
-            <color>255,0,0</color>
-            <type>gauge</type>
-        </itemcolor>
-        <itemcolor name="avserv">
-            <color>0,255,0</color>
             <type>gauge</type>
         </itemcolor>
         <itemcolor name="avque">
@@ -157,10 +412,19 @@
             <color>0,127,255</color>
             <type>counter</type>
         </itemcolor>
-        <itemcolor name="%busy">
-            <color>255,255,0</color>
+        <itemcolor name="blks/s">
+            <color>255,0,255</color>
+            <type>counter</type>
+        </itemcolor>
+        <itemcolor name="avwait">
+            <color>255,0,0</color>
             <type>gauge</type>
         </itemcolor>
+        <itemcolor name="avserv">
+            <color>0,255,0</color>
+            <type>gauge</type>
+        </itemcolor>
+
     </colors>
     
 </ConfiG>
