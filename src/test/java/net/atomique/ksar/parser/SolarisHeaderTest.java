@@ -43,7 +43,7 @@ public class SolarisHeaderTest {
     kSar ksar = new kSar();
     sut.init(ksar, header);
     sut.parse(sarString, columns);
-    assertEquals(expectedDate, sut.get_startofgraph());
+    assertEquals(expectedDate, sut.getStartOfGraph());
   }
 
   @Parameters

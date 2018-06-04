@@ -146,12 +146,12 @@ public abstract class OSParser extends AllParser {
         DateTimeFormatter formatter =
             DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT); //.withLocale(test);
 
-        if (startofgraph != null) {
-          asFormattedDateTimeStart = startofgraph.format(formatter);
+        if (this.getStartOfGraph() != null) {
+          asFormattedDateTimeStart = this.getStartOfGraph().format(formatter);
         }
-        if (endofgraph != null) {
+        if (this.getEndOfGraph() != null) {
           //asFormattedDateTimeEnd = endofgraph.format(DateTimeFormatter.ISO_DATE_TIME);
-          asFormattedDateTimeEnd = endofgraph.format(formatter);
+          asFormattedDateTimeEnd = this.getEndOfGraph().format(formatter);
         }
 
       } catch (DateTimeException ex) {
