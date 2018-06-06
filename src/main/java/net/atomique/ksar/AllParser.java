@@ -59,8 +59,8 @@ public abstract class AllParser {
    * Set {@link #startOfGraph} and {@link #endOfGraph} to the given value if none are available yet
    * or update either of both, depending on if the given value is earlier/later than the formerly
    * stored corresponding one.
-   * 
-   * @param nowStat
+   *
+   * @param nowStat Date/time of the currently parsed line.
    */
   protected void setStartAndEndOfGraph(LocalDateTime nowStat) {
     if (startOfGraph == null) {
@@ -78,7 +78,7 @@ public abstract class AllParser {
     }
   }
 
-public LocalDateTime getStartOfGraph() {
+  public LocalDateTime getStartOfGraph() {
     return startOfGraph;
   }
 
