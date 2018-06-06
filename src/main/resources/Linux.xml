@@ -535,8 +535,8 @@
                     <cols>blocked</cols>
                 </Plot>
             </Graph>
-            <Graph name="SOCKET" Title="Socket" type="unique">
-                <Plot Title="Socket" size="3">
+            <Graph name="SOCKET" Title="Sockets" type="unique">
+                <Plot Title="Sockets" size="3">
                     <cols>totsck tcpsck udpsck rawsck</cols>
                 </Plot>
                 <Plot Title="TIME_WAIT">
