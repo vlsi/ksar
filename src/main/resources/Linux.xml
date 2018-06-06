@@ -572,10 +572,10 @@
                 </Plot>
             </Graph>
             <Graph name="PROC2" Title="Processes" type="unique">
-                <Plot Title="Proc">
+                <Plot Title="Task creation">
                     <cols>proc/s</cols>
                 </Plot>
-                <Plot Title="context">
+                <Plot Title="Context switches">
                     <cols>cswch/s</cols>
                 </Plot>
             </Graph>
