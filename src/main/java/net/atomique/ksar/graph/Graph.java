@@ -279,7 +279,7 @@ public class Graph {
       final int width, final int height) {
     try {
       ChartUtils.saveChartAsPNG(new File(filename),
-          this.getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()), width,
+          this.getgraph(mysar.myparser.getStartOfGraph(), mysar.myparser.getEndOfGraph()), width,
           height);
     } catch (IOException e) {
       log.error("Unable to write to : {}", filename);
@@ -292,7 +292,7 @@ public class Graph {
       final int width, final int height) {
     try {
       ChartUtils.saveChartAsJPEG(new File(filename),
-          this.getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()), width,
+          this.getgraph(mysar.myparser.getStartOfGraph(), mysar.myparser.getEndOfGraph()), width,
           height);
     } catch (IOException e) {
       log.error("Unable to write to : {}", filename);
@@ -316,9 +316,9 @@ public class Graph {
     } else {
       //TODO - get rid of Second, convert from LocalDateTime directly to java.util.Date - How to deal with required timezone in that case?
       java.util.Date getStartofGraphStart =
-          convertLocalDateTimeToSecond(mysar.myparser.get_startofgraph()).getStart();
+          convertLocalDateTimeToSecond(mysar.myparser.getStartOfGraph()).getStart();
       java.util.Date GetEndofGraphEnd =
-          convertLocalDateTimeToSecond(mysar.myparser.get_endofgraph()).getEnd();
+          convertLocalDateTimeToSecond(mysar.myparser.getEndOfGraph()).getEnd();
 
       if (!axisofdate.getMinimumDate().equals(getStartofGraphStart)) {
         axisofdate.setMinimumDate(getStartofGraphStart);
@@ -370,15 +370,15 @@ public class Graph {
         chartpanel = new ChartPanel(getgraph(null, null));
       } else {
         chartpanel = new ChartPanel(
-            getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph()));
+            getgraph(mysar.myparser.getStartOfGraph(), mysar.myparser.getEndOfGraph()));
       }
     } else {
       if (!mysar.isParsing()) {
         //TODO - get rid of Second, convert from LocalDateTime directly to java.util.Date - How to deal with required timezone in that case?
         java.util.Date getStartofGraphStart =
-            convertLocalDateTimeToSecond(mysar.myparser.get_startofgraph()).getStart();
+            convertLocalDateTimeToSecond(mysar.myparser.getStartOfGraph()).getStart();
         java.util.Date GetEndofGraphEnd =
-            convertLocalDateTimeToSecond(mysar.myparser.get_endofgraph()).getEnd();
+            convertLocalDateTimeToSecond(mysar.myparser.getEndOfGraph()).getEnd();
 
         if (!axisofdate.getMinimumDate().equals(getStartofGraphStart)) {
           axisofdate.setMinimumDate(getStartofGraphStart);

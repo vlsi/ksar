@@ -64,15 +64,7 @@ public class AIX extends OSParser {
       LocalDateTime nowStat;
       nowStat = LocalDateTime.of(parsedate, parsetime);
 
-      if (startofgraph == null) {
-        startofgraph = nowStat;
-      }
-      if (endofgraph == null) {
-        endofgraph = nowStat;
-      }
-      if (nowStat.compareTo(endofgraph) > 0) {
-        endofgraph = nowStat;
-      }
+      this.setStartAndEndOfGraph(nowStat);
       firstdatacolumn = 1;
     } catch (DateTimeParseException ex) {
       if (!"DEVICE".equals(currentStat) || "CPUS".equals(currentStat)) {

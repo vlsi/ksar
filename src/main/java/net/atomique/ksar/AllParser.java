@@ -55,12 +55,35 @@ public abstract class AllParser {
     return -1;
   }
 
-  public LocalDateTime get_startofgraph() {
-    return startofgraph;
+  /**
+   * Set {@link #startOfGraph} and {@link #endOfGraph} to the given value if none are available yet
+   * or update either of both, depending on if the given value is earlier/later than the formerly
+   * stored corresponding one.
+   *
+   * @param nowStat Date/time of the currently parsed line.
+   */
+  protected void setStartAndEndOfGraph(LocalDateTime nowStat) {
+    if (startOfGraph == null) {
+      startOfGraph = nowStat;
+    }
+    if (endOfGraph == null) {
+      endOfGraph = nowStat;
+    }
+
+    if (nowStat.compareTo(startOfGraph) < 0) {
+      startOfGraph = nowStat;
+    }
+    if (nowStat.compareTo(endOfGraph) > 0) {
+      endOfGraph = nowStat;
+    }
   }
 
-  public LocalDateTime get_endofgraph() {
-    return endofgraph;
+  public LocalDateTime getStartOfGraph() {
+    return startOfGraph;
+  }
+
+  public LocalDateTime getEndOfGraph() {
+    return endOfGraph;
   }
 
   public String getParserName() {
@@ -137,8 +160,9 @@ public abstract class AllParser {
   protected String sarStartDate = null;
   protected String sarEndDate = null;
 
-  protected LocalDateTime startofgraph = null;
-  protected LocalDateTime endofgraph = null;
+  private LocalDateTime startOfGraph = null;
+  private LocalDateTime endOfGraph = null;
+
   protected TreeSet<LocalDateTime> DateSamples = new TreeSet<LocalDateTime>();
   protected int firstdatacolumn = 0;
 

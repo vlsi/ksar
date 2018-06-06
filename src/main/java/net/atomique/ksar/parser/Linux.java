@@ -126,17 +126,8 @@ public class Linux extends OSParser {
         throw new IllegalArgumentException("date/time is missing");
       }
 
-      if (startofgraph == null) {
-        startofgraph = nowStat;
-      }
-      if (endofgraph == null) {
-        endofgraph = nowStat;
-      }
-      if (nowStat.compareTo(endofgraph) > 0) {
-        endofgraph = nowStat;
-      }
+      this.setStartAndEndOfGraph(nowStat);
       firstdatacolumn = timeColumn;
-
     } catch (DateTimeParseException | IllegalArgumentException ex) {
       log.error("unable to parse time {}", columns[0], ex);
       return -1;

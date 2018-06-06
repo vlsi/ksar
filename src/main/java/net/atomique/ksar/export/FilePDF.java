@@ -180,7 +180,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
 
   public int addchart(PdfWriter writer, Graph graph) {
     JFreeChart chart =
-        graph.getgraph(mysar.myparser.get_startofgraph(), mysar.myparser.get_endofgraph());
+        graph.getgraph(mysar.myparser.getStartOfGraph(), mysar.myparser.getEndOfGraph());
     PdfTemplate pdftpl = pdfcb.createTemplate(pagewidth, pageheight);
     Graphics2D g2d = new PdfGraphics2D(pdftpl, pagewidth, pageheight);
     Double r2d = new Rectangle2D.Double(0, 0, pagewidth, pageheight);
