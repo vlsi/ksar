@@ -66,6 +66,7 @@ public class Main {
 
     log.trace("main - Start");
     log.trace("Java runtime Version : {}", System.getProperty("java.runtime.version"));
+    log.trace("Java runtime architecture : {}", System.getProperty("os.arch"));
     log.trace("ksar Version : {}", VersionNumber.getVersionNumber());
 
     /// load default - Mac OS X Application Properties
