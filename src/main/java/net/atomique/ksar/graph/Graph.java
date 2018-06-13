@@ -308,6 +308,10 @@ public class Graph {
   public boolean doPrint() {
     return printSelected;
   }
+  
+  public void setPrint(boolean print) {
+    printSelected = print;
+  }
 
   public JFreeChart getgraph(LocalDateTime start, LocalDateTime end) {
 

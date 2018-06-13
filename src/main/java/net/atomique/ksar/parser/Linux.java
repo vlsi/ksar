@@ -27,14 +27,10 @@ public class Linux extends OSParser {
 
   private static final Logger log = LoggerFactory.getLogger(Linux.class);
   private String LinuxDateFormat;
-
   private final HashSet<String> IgnoreLinesBeginningWith = new HashSet<>(Arrays.asList(
       "Average:", "##", "Summary", "Summary:"));
-
   public void parse_header(String s) {
-
     String[] columns = s.split("\\s+");
-
     String tmpstr;
     setOstype(columns[0]);
     setKernel(columns[1]);
@@ -63,8 +59,6 @@ public class Linux extends OSParser {
       dateFormat = parts[0];
       dateFormat = dateFormat.replaceAll("D{2}", "dd");
       dateFormat = dateFormat.replaceAll("Y{2}", "yy");
-
-      // 12hour
       if (parts.length == 3 && parts[2].contains("AM|PM")) {
         timeFormat = "hh:mm:ss a";
         timeColumn = 2;
@@ -86,6 +80,12 @@ public class Linux extends OSParser {
           Config.save();
         }
       }
+    } else {
+      Config.setLinuxDateFormat("MM/DD/YY 23:59:59");
+      LinuxDateFormat = "MM/DD/YY 23:59:59";
+      log.error("Unable to ask format in nonGui mode. Switching to default value: {}", Config.getLinuxDateFormat());
+      // TODO replace it with autodetection after merge. This will be default to
+      // avoid crashes
     }
   }
 
@@ -133,8 +133,8 @@ public class Linux extends OSParser {
       return -1;
     }
 
-
-    //00:20:01     CPU  i000/s  i001/s  i002/s  i008/s  i009/s  i010/s  i011/s  i012/s  i014/s
+    // 00:20:01 CPU i000/s i001/s i002/s i008/s i009/s i010/s i011/s i012/s
+    // i014/s
     if ("CPU".equals(columns[firstdatacolumn]) && line.matches(".*i([0-9]+)/s.*")) {
       currentStat = "IGNORE";
       return 1;
@@ -172,7 +172,7 @@ public class Linux extends OSParser {
       }
     }
 
-    //log.trace("{} {}", currentStat, line);
+    // log.trace("{} {}", currentStat, line);
 
     if (lastStat != null) {
       if (!lastStat.equals(currentStat)) {
