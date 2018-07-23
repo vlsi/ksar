@@ -6,6 +6,7 @@
 package net.atomique.ksar;
 
 import net.atomique.ksar.xml.OSConfig;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,26 +15,49 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Locale;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class AllParser {
 
   private static final Logger log = LoggerFactory.getLogger(AllParser.class);
-  private static final Map<String, String> DATE_FORMAT_REGEXPS = new HashMap<String, String>() {
-    {
-      put("^\\d{8}$", "yyyyMMdd");
-      put("^\\d{1,2}-\\d{1,2}-\\d{4}$", "dd-MM-yyyy");
-      put("^\\d{4}-\\d{1,2}-\\d{1,2}$", "yyyy-MM-dd");
-      put("^\\d{1,2}/\\d{1,2}/\\d{4}$", "MM/dd/yyyy");
-      put("^\\d{4}/\\d{1,2}/\\d{1,2}$", "yyyy/MM/dd");
-      put("^\\d{1,2}\\s[a-z]{3}\\s\\d{4}$", "dd MMM yyyy");
-      put("^\\d{1,2}\\s[a-z]{4,}\\s\\d{4}$", "dd MMMM yyyy");
-      put("^\\d{1,2}-\\d{1,2}-\\d{2}$", "dd-MM-yy");
-      put("^\\d{1,2}/\\d{1,2}/\\d{2}$", "MM/dd/yy");
-    }
-  };
+
+  private static final List<DateTimeFormatter> DATE_FORMATS = Stream.of(
+      "MM dd, yy",
+      "MM-dd-yy",
+      "MM/dd/yy",
+      "MM-dd-yyyy",
+      "MM/dd/yyyy",
+      "dd-MM-yy",
+      "dd.MM.yy",
+      "dd/MM/yy",
+      "dd.MM.yy.",
+      "dd-MM-yyyy",
+      "dd.MM.yyyy",
+      "dd/MM/yyyy",
+      "dd.MM.yyyy.",
+      "yy. MM. dd",
+      "yy-MM-dd",
+      "yy.MM.dd",
+      "yy/MM/dd",
+      "yy年MM月dd日",
+      "yy.dd.MM",
+      "yyyy. MM. dd",
+      "yyyy-MM-dd",
+      "yyyy.MM.dd",
+      "yyyy/MM/dd",
+      "yyyy.MM.dd.",
+      "yyyy年MM月dd日",
+      "yyyy.dd.MM",
+      "yyyyMMdd",
+      "dd MMM yyyy",
+      "dd MMMM yyyy",
+      "MMM dd yyyy",
+      "MMMM dd yyyy"
+  ).map(p -> DateTimeFormatter.ofPattern(p, Locale.US)).collect(Collectors.toList());
 
   public AllParser() {
 
@@ -103,14 +127,7 @@ public abstract class AllParser {
     }
 
     try {
-      DateTimeFormatter formatter;
-      if ("Automatic Detection".equals(dateFormat)) {
-        formatter = DateTimeFormatter.ofPattern(determineDateFormat(s));
-
-      } else {
-        formatter = DateTimeFormatter.ofPattern(dateFormat);
-      }
-
+      DateTimeFormatter formatter = getDateFormatter(s);
       currentDate = LocalDate.parse(s, formatter);
 
       parsedate = currentDate;
@@ -132,6 +149,20 @@ public abstract class AllParser {
     return true;
   }
 
+  private DateTimeFormatter getDateFormatter(String s) {
+    if (dateFormatter != null) {
+      return dateFormatter;
+    }
+    DateTimeFormatter format = null;
+    if ("Automatic Detection".equals(dateFormat)) {
+      format = determineDateFormat(s);
+    } else {
+      format = DateTimeFormatter.ofPattern(dateFormat);
+    }
+    dateFormatter = format;
+    return dateFormatter;
+  }
+
   public String getDate() {
     if (sarStartDate.equals(sarEndDate)) {
       return sarStartDate;
@@ -148,13 +179,21 @@ public abstract class AllParser {
     return currentStat;
   }
 
-  public static String determineDateFormat(String dateString) {
-    for (String regexp : DATE_FORMAT_REGEXPS.keySet()) {
-      if (dateString.toLowerCase().matches(regexp)) {
-        return DATE_FORMAT_REGEXPS.get(regexp);
+  public static DateTimeFormatter determineDateFormat(String dateString) {
+    DateTimeFormatter best = null;
+    LocalDate bestDate = null;
+    for (DateTimeFormatter format : DATE_FORMATS) {
+      try {
+        LocalDate nextDate = LocalDate.parse(dateString, format);
+        if (bestDate == null || nextDate.compareTo(bestDate) >= 0) {
+          bestDate = nextDate;
+          best = format;
+        }
+      } catch (DateTimeParseException e) {
+        /* ignore */
       }
     }
-    return null; // Unknown format.
+    return best;
   }
 
   protected String sarStartDate = null;
@@ -183,4 +222,6 @@ public abstract class AllParser {
   protected String dateFormat = "MM/dd/yy";
   protected String timeFormat = "HH:mm:ss";
   protected int timeColumn = 1;
+
+  private DateTimeFormatter dateFormatter;
 }
