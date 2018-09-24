@@ -64,7 +64,7 @@ public class Main {
     int i = 0;
     String arg;
 
-    log.trace("ksar Version : {}", VersionNumber.getVersionNumber());
+    log.trace("ksar Version : {}", VersionNumber.getVersionString());
     log.debug("Java runtime Version : {}", System.getProperty("java.runtime.version"));
     log.debug("Java runtime architecture : {}", System.getProperty("os.arch"));
 
