@@ -46,7 +46,7 @@ public class AboutBox extends javax.swing.JDialog {
 
     jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-    versionlabel.setText("kSar version: " + VersionNumber.getVersionNumber());
+    versionlabel.setText("kSar version: " + VersionNumber.getVersionString());
 
     javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
     jPanel3.setLayout(jPanel3Layout);

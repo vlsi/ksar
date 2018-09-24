@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 The kSAR Project. All rights reserved.
+ * Copyright 2008-2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
 
@@ -17,13 +17,7 @@ public class VersionNumber {
 
   private static final Logger log = LoggerFactory.getLogger(VersionNumber.class);
 
-  private static VersionNumber instance = new VersionNumber();
-
-  public static VersionNumber getInstance() {
-    return instance;
-  }
-
-  VersionNumber() {
+  private VersionNumber() {
     StringBuilder tmpstr = new StringBuilder();
     BufferedReader reader = null;
     try {
@@ -40,61 +34,16 @@ public class VersionNumber {
       return;
     }
     setVersionNumber(tmpstr.toString());
-    return;
   }
 
-  public void setVersionNumber(String version) {
-    String tmp[] = version.split("\\.");
-    if (tmp.length != 3) {
-      return;
-    }
-    major = new Integer(tmp[0]);
-    minor = new Integer(tmp[1]);
-    micro = new Integer(tmp[2]);
-    return;
+  private static void setVersionNumber(String version) {
+    version_string = version;
   }
 
-  public static String getVersionNumber() {
-    return major + "." + minor + "." + micro;
+  public static String getVersionString() {
+    return version_string;
   }
 
-  public static Integer getVersionNumberint() {
-    return (major * 100) + (minor * 10) + micro;
-  }
-
-  public static boolean isOlderThan(String version) {
-    Integer mymajor;
-    Integer myminor;
-    Integer mymicro;
-
-    String[] tmp = version.split("\\.");
-    if (tmp.length != 3) {
-      return false;
-    }
-
-    mymajor = new Integer(tmp[0]);
-    myminor = new Integer(tmp[1]);
-    mymicro = new Integer(tmp[2]);
-
-
-    if (major.intValue() < mymajor.intValue()) {
-      return true;
-    }
-
-    if (minor.intValue() < myminor.intValue()) {
-      return true;
-    }
-
-    if (micro.intValue() < mymicro.intValue()) {
-      return true;
-    }
-
-    return false;
-  }
-
-
-  private static Integer major;
-  private static Integer minor;
-  private static Integer micro;
+  private static String version_string;
 
 }

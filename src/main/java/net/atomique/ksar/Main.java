@@ -28,7 +28,7 @@ public class Main {
   }
 
   public static void show_version() {
-    log.info("ksar Version : {}", VersionNumber.getVersionNumber());
+    log.info("ksar Version : {}", VersionNumber.getVersionString());
   }
 
   private static void set_lookandfeel() {
