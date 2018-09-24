@@ -1,12 +1,5 @@
-buildscript {
-    repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-    dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
-    }
+plugins {
+    id "com.github.johnrengelman.shadow" version "2.0.4"
 }
 
 apply plugin: 'java'
@@ -29,9 +22,9 @@ repositories {
 
 dependencies {
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.11.0'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.0'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.0'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.11.1'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
 
     compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13'
     compile group: 'com.jcraft', name: 'jsch', version: '0.1.54'
@@ -60,7 +53,7 @@ checkstyle {
 
 jar {
     manifest {
-        attributes("Implementation-Title": "Gradle",
+        attributes("Implementation-Title": "kSAR",
                 "Implementation-Version": version,
                 "SplashScreen-Image": "logo_ksar.jpg")
     }
