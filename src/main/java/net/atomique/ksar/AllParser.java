@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 The kSAR Project. All rights reserved.
+ * Copyright 2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
 
@@ -111,9 +111,8 @@ public abstract class AllParser {
         formatter = DateTimeFormatter.ofPattern(dateFormat);
       }
 
+      log.debug("Date formatter: {}",formatter);
       currentDate = LocalDate.parse(s, formatter);
-
-      parsedate = currentDate;
 
       startDate = LocalDate.parse(sarStartDate, formatter);
       endDate = LocalDate.parse(sarEndDate, formatter);
@@ -123,12 +122,15 @@ public abstract class AllParser {
       return false;
     }
 
+    parsedate = currentDate;
+
     if (currentDate.compareTo(startDate) < 0) {
       sarStartDate = s;
     }
     if (currentDate.compareTo(endDate) > 0) {
       sarEndDate = s;
     }
+    log.debug("parsedDate: {}, startDate: {}, EndDate: {}",currentDate, sarStartDate, sarEndDate);
     return true;
   }
 

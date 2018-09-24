@@ -33,6 +33,7 @@ public class Linux extends OSParser {
 
   public void parse_header(String s) {
 
+    log.debug("Header Line : {}", s);
     String[] columns = s.split("\\s+");
 
     String tmpstr;
@@ -70,7 +71,7 @@ public class Linux extends OSParser {
         timeColumn = 2;
       }
     }
-
+    log.debug("Date Format: {}, Time Format: {}", dateFormat, timeFormat);
   }
 
   private void askDateFormat() {
