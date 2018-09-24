@@ -165,9 +165,9 @@ public class kSar {
 
     parsing_end = System.currentTimeMillis();
     if (GlobalOptions.isDodebug()) {
-      log.debug("time to parse: {} ms", (parsing_end - parsing_start));
+      log.trace("time to parse: {} ms", (parsing_end - parsing_start));
       if (myparser != null) {
-        log.debug("number of datesamples: {}", myparser.DateSamples.size());
+        log.trace("number of datesamples: {}", myparser.DateSamples.size());
       }
     }
     Parsing = false;

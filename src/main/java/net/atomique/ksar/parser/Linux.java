@@ -75,7 +75,7 @@ public class Linux extends OSParser {
 
   private void askDateFormat() {
 
-    log.debug("askDateFormat - provide date format");
+    log.trace("askDateFormat - provide date format");
     if (GlobalOptions.hasUI()) {
       LinuxDateFormat tmp = new LinuxDateFormat(GlobalOptions.getUI(), true);
       tmp.setTitle("Provide date format");
