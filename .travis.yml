@@ -1,6 +1,11 @@
 sudo: false
 language: java
 
+env:
+  global:
+  - COMMIT=${TRAVIS_COMMIT::8}
+  - BUILD_COMMIT=b${TRAVIS_BUILD_NUMBER}_g${COMMIT}
+
 before_cache:
 - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
@@ -9,7 +14,13 @@ cache:
   - $HOME/.gradle/native
   - $HOME/.gradle/wrapper
 
+before_install:
+- echo "[INFO] BUILD_COMMIT> $BUILD_COMMIT"
+
 script: ./gradlew check shadowJar
+
+after_success:
+- ls -lR build/
 
 matrix:
   include:
