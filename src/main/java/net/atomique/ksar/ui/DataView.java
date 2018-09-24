@@ -213,10 +213,9 @@ public class DataView extends javax.swing.JInternalFrame {
     TreePath treepath = evt.getPath();
     Object obj = treepath.getLastPathComponent();
     if (obj != null) {
-      if (GlobalOptions.isDodebug()) {
-        log.debug("mem: {}", Runtime.getRuntime().totalMemory());
-        log.debug("free: {}", Runtime.getRuntime().freeMemory());
-      }
+
+      log.trace("mem: {}", Runtime.getRuntime().totalMemory());
+      log.trace("free: {}", Runtime.getRuntime().freeMemory());
 
       SortedTreeNode treenode = (SortedTreeNode) obj;
       if (treenode.getRoot() == treenode) {
