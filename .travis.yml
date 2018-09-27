@@ -15,17 +15,19 @@ cache:
   - $HOME/.gradle/wrapper
 
 before_install:
-- echo "[INFO] BUILD_COMMIT> $BUILD_COMMIT"
+  - cat gradle.properties
+  - echo "[INFO] BUILD_COMMIT> $BUILD_COMMIT"
+  - sed -i -r  "/version/s/([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)/\1-$BUILD_COMMIT/g" gradle.properties
+  - cat gradle.properties
 
 script: ./gradlew check shadowJar
-
-after_success:
-- ls -lR build/
 
 matrix:
   include:
   - jdk: oraclejdk8
   - jdk: oraclejdk9
+  - jdk: openjdk8
+  - jdk: openjdk9
     if: tag IS blank
 
 deploy:
