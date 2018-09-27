@@ -296,7 +296,7 @@ public class XMLConfig extends DefaultHandler {
       if (currentColor.is_valid()) {
         GlobalOptions.getColorlist().put(currentColor.getData_title(), currentColor);
       } else {
-        log.error("Err: {}", currentColor.getError_message());
+        //log.error("Err: {}", currentColor.getError_message());
         currentColor = null;
       }
       in_color = false;

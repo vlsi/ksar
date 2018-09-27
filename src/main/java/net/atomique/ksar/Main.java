@@ -64,9 +64,9 @@ public class Main {
     int i = 0;
     String arg;
 
-    log.trace("ksar Version : {}", VersionNumber.getVersionString());
-    log.debug("Java runtime Version : {}", System.getProperty("java.runtime.version"));
-    log.debug("Java runtime architecture : {}", System.getProperty("os.arch"));
+    log.info("ksar Version : {}", VersionNumber.getVersionString());
+    log.info("Java runtime Version : {}", System.getProperty("java.runtime.version"));
+    log.info("Java runtime architecture : {}", System.getProperty("os.arch"));
 
     /// load default - Mac OS X Application Properties
     String mrjVersion = System.getProperty("mrj.version");
