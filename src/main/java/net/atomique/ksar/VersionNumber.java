@@ -13,31 +13,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class VersionNumber {
+public final class VersionNumber {
 
   private static final Logger log = LoggerFactory.getLogger(VersionNumber.class);
 
-  private VersionNumber() {
+  static {
+
     StringBuilder tmpstr = new StringBuilder();
-    BufferedReader reader = null;
-    try {
-      InputStream is = this.getClass().getResourceAsStream("/kSar.version");
-      InputStreamReader isr = new InputStreamReader(is);
-      reader = new BufferedReader(isr);
-      String line = "";
+
+    InputStream is = VersionNumber.class.getClassLoader().getResourceAsStream("kSar.version");
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+
+      String line;
       while ((line = reader.readLine()) != null) {
         tmpstr.append(line);
       }
-      reader.close();
-    } catch (IOException ex) {
-      log.error("Unable to read Current version", ex);
-      return;
-    }
-    setVersionNumber(tmpstr.toString());
-  }
 
-  private static void setVersionNumber(String version) {
-    version_string = version;
+      version_string = tmpstr.toString();
+
+    } catch (IOException ex) {
+      log.error("Unable to read ksar version", ex);
+    }
   }
 
   public static String getVersionString() {
