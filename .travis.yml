@@ -16,6 +16,7 @@ cache:
 
 before_install:
 - echo "[INFO] BUILD_COMMIT> $BUILD_COMMIT"
+- sed -i -e "/version/s/-/-$BUILD_COMMIT-/g" gradle.properties
 
 script: ./gradlew check shadowJar
 
@@ -26,6 +27,8 @@ matrix:
   include:
   - jdk: oraclejdk8
   - jdk: oraclejdk9
+  - jdk: openjdk8
+  - jdk: openjdk9
     if: tag IS blank
 
 deploy:
