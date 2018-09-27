@@ -40,7 +40,7 @@ public class Desktop extends javax.swing.JFrame {
       GraphicsConfiguration gc = gd.getDefaultConfiguration();
 
       Rectangle screenBounds = gc.getBounds();
-      log.trace("screen [{}] boundaries: {}", j, screenBounds.toString());
+      log.debug("screen [{}] boundaries: {}", j, screenBounds.toString());
 
       //use screen0 boundaries for Desktop placement
       if ( j == 0 ) {
@@ -55,7 +55,7 @@ public class Desktop extends javax.swing.JFrame {
     initComponents();
 
     setBounds(desktopBounds);
-    log.trace("desktop window boundaries: {}", this.getBounds().toString());
+    log.debug("desktop window boundaries: {}", this.getBounds().toString());
 
     DesktopPane.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
     setVisible(true);
