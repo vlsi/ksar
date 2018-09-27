@@ -9,7 +9,7 @@ apply plugin: 'checkstyle'
 
 group = 'com.github.vlsi.ksar'
 archivesBaseName = 'ksar'
-version = '5.2.4-SNAPSHOT'
+
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
@@ -33,11 +33,7 @@ dependencies {
 }
 
 task writeVersion << {
-    def s = version.find(/^\d.\d.\d/)
-    if (s == null) {
-        throw new InvalidUserDataException('Invalid version format')
-    }
-    new File("build/resources/main/kSar.version").text = s
+    new File("build/resources/main/kSar.version").text = version
 }
 classes.dependsOn(writeVersion)
 
