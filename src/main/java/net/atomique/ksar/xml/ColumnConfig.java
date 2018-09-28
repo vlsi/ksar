@@ -13,6 +13,7 @@ import java.awt.Color;
 public class ColumnConfig {
 
   private static final Logger log = LoggerFactory.getLogger(ColumnConfig.class);
+
   public ColumnConfig(String s) {
     data_title = s;
   }
