@@ -18,9 +18,9 @@ public class ColumnConfig {
     data_title = s;
   }
 
-  public void setData_color(String data_color_string) {
+  public void setData_color(String dataColorString) {
 
-    String[] color_indices = data_color_string.split(",");
+    String[] color_indices = dataColorString.split(",");
 
     if (color_indices.length == 3) {
       try {
@@ -28,10 +28,10 @@ public class ColumnConfig {
                 Integer.parseInt(color_indices[1]),
                 Integer.parseInt(color_indices[2]));
       } catch (IllegalArgumentException iae) {
-        log.error("Column color error for {} - <{}>", data_title, data_color_string, iae);
+        log.warn("Column color error for {} - <{}>", data_title, dataColorString, iae);
       }
     }  else {
-      log.warn("Wrong Color definition for {} - <{}>",data_title, data_color_string);
+      log.warn("Wrong Color definition for {} - <{}>",data_title, dataColorString);
     }
   }
 
