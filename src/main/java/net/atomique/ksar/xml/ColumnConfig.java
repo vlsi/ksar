@@ -5,29 +5,33 @@
 
 package net.atomique.ksar.xml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.Color;
 
 public class ColumnConfig {
+
+  private static final Logger log = LoggerFactory.getLogger(ColumnConfig.class);
 
   public ColumnConfig(String s) {
     data_title = s;
   }
 
-  public String getData_colorstr() {
-    return data_colorstr;
-  }
+  public void setData_color(String dataColorString) {
 
-  public void setData_color(String data_color) {
-    String[] color_indices = data_color.split(",");
-    this.data_colorstr = data_color;
+    String[] color_indices = dataColorString.split(",");
+
     if (color_indices.length == 3) {
       try {
-        Integer red = new Integer(color_indices[0]);
-        Integer green = new Integer(color_indices[1]);
-        Integer blue = new Integer(color_indices[2]);
-        this.data_color = new Color(red, green, blue);
-      } catch (NumberFormatException ee) {
+        this.data_color = new Color(Integer.parseInt(color_indices[0]),
+                Integer.parseInt(color_indices[1]),
+                Integer.parseInt(color_indices[2]));
+      } catch (IllegalArgumentException iae) {
+        log.warn("Column color error for {} - <{}>", data_title, dataColorString, iae);
       }
+    }  else {
+      log.warn("Wrong Color definition for {} - <{}>",data_title, dataColorString);
     }
   }
 
@@ -37,10 +41,6 @@ public class ColumnConfig {
 
   public String getData_title() {
     return data_title;
-  }
-
-  public void setData_title(String data_title) {
-    this.data_title = data_title;
   }
 
   public void setType(String s) {
@@ -57,28 +57,11 @@ public class ColumnConfig {
   }
 
   public boolean is_valid() {
-    if (data_title == null) {
-      error_message = "Column header name not found";
-      return false;
-    }
-    if (data_colorstr == null) {
-      error_message = "color info missing for " + data_title;
-      return false;
-    }
-    if (data_color == null) {
-      error_message = "color " + data_colorstr + " is not a valid color";
-      return false;
-    }
-    return true;
-  }
 
-  public String getError_message() {
-    return error_message;
+    return data_color != null;
   }
 
   private int type = 0;
   private Color data_color = null;
-  private String error_message = null;
-  private String data_title = null;
-  private String data_colorstr = null;
+  private String data_title;
 }
