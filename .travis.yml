@@ -25,9 +25,9 @@ script: ./gradlew check shadowJar
 matrix:
   include:
   - jdk: oraclejdk8
-  - jdk: oraclejdk9
+  - jdk: oraclejdk11
   - jdk: openjdk8
-  - jdk: openjdk9
+  - jdk: openjdk11
     if: tag IS blank
 
 deploy:
