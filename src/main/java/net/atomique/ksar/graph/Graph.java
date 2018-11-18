@@ -55,7 +55,7 @@ public class Graph {
 
   private static final Logger log = LoggerFactory.getLogger(Graph.class);
 
-  public Graph(kSar hissar, GraphConfig g, String Title, String hdrs, int skipcol,
+  public Graph(kSar hissar, GraphConfig g, String Title, String hdrs, int firstdatacolumn,
       SortedTreeNode pp) {
     mysar = hissar;
     graphtitle = Title;
@@ -68,7 +68,7 @@ public class Graph {
       }
 
     });
-    skipColumn = skipcol;
+    firstDataColumn = firstdatacolumn;
     if (pp != null) {
       TreeNodeInfo infotmp = new TreeNodeInfo(Title, this);
       SortedTreeNode nodetmp = new SortedTreeNode(infotmp);
@@ -80,7 +80,7 @@ public class Graph {
 
   private void create_DataStore() {
     // create timeseries
-    for (int i = skipColumn; i < HeaderStr.length; i++) {
+    for (int i = firstDataColumn; i < HeaderStr.length; i++) {
       Stats.add(new TimeSeries(HeaderStr[i]));
     }
     // create stack
@@ -112,7 +112,7 @@ public class Graph {
     String[] cols = s.split("\\s+");
     Double colvalue;
     //log.debug("graph parsing: {}", s);
-    for (int i = skipColumn; i < HeaderStr.length; i++) {
+    for (int i = firstDataColumn; i < HeaderStr.length; i++) {
       try {
         colvalue = new Double(cols[i]);
       } catch (NumberFormatException ne) {
@@ -127,7 +127,7 @@ public class Graph {
         return 0;
       }
 
-      add_datapoint_plot(now, i - skipColumn, HeaderStr[i - skipColumn], colvalue);
+      add_datapoint_plot(now, i - firstDataColumn, HeaderStr[i - firstDataColumn], colvalue);
 
 
       TimeTableXYDataset tmp = StackListbyCol.get(HeaderStr[i]);
@@ -256,8 +256,8 @@ public class Graph {
 
   public String getCsvHeader() {
     StringBuilder tmp = new StringBuilder();
-    for (int i = 1 + skipColumn; i < HeaderStr.length; i++) {
-      TimeSeries tmpseries = Stats.get(i - skipColumn);
+    for (int i = firstDataColumn; i < HeaderStr.length; i++) {
+      TimeSeries tmpseries = Stats.get(i - firstDataColumn);
       tmp.append(graphtitle).append(" ").append(tmpseries.getKey());
       tmp.append(";");
     }
@@ -266,8 +266,8 @@ public class Graph {
 
   public String getCsvLine(RegularTimePeriod t) {
     StringBuilder tmp = new StringBuilder();
-    for (int i = 1 + skipColumn; i < HeaderStr.length; i++) {
-      TimeSeries tmpseries = Stats.get(i - skipColumn);
+    for (int i = firstDataColumn; i < HeaderStr.length; i++) {
+      TimeSeries tmpseries = Stats.get(i - firstDataColumn);
       tmp.append(tmpseries.getValue(t));
 
       tmp.append(";");
@@ -477,7 +477,7 @@ public class Graph {
   private boolean printSelected = true;
   private JCheckBox printCheckBox = null;
   private GraphConfig graphconfig = null;
-  private int skipColumn = 0;
+  private int firstDataColumn = 0;
   private String[] HeaderStr = null;
   private ArrayList<TimeSeries> Stats = new ArrayList<TimeSeries>();
   private Map<String, TimeTableXYDataset> StackListbyName =
