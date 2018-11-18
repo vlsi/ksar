@@ -256,7 +256,7 @@ public class Graph {
 
   public String getCsvHeader() {
     StringBuilder tmp = new StringBuilder();
-    for (int i = 1 + firstDataColumn; i < HeaderStr.length; i++) {
+    for (int i = firstDataColumn; i < HeaderStr.length; i++) {
       TimeSeries tmpseries = Stats.get(i - firstDataColumn);
       tmp.append(graphtitle).append(" ").append(tmpseries.getKey());
       tmp.append(";");
@@ -266,7 +266,7 @@ public class Graph {
 
   public String getCsvLine(RegularTimePeriod t) {
     StringBuilder tmp = new StringBuilder();
-    for (int i = 1 + firstDataColumn; i < HeaderStr.length; i++) {
+    for (int i = firstDataColumn; i < HeaderStr.length; i++) {
       TimeSeries tmpseries = Stats.get(i - firstDataColumn);
       tmp.append(tmpseries.getValue(t));
 
