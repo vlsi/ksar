@@ -23,12 +23,12 @@ import javax.swing.border.TitledBorder;
 
 public class List {
 
-  public List(kSar hissar, GraphConfig g, String stitle, String sheader, int i) {
+  public List(kSar hissar, GraphConfig g, String stitle, String sheader, int firstdatacolumn) {
     mysar = hissar;
     HeaderStr = sheader;
     graphconfig = g;
     Title = stitle;
-    skipColumn = i;
+    FirstDataColumn = firstdatacolumn;
     ParentNodeInfo tmp = new ParentNodeInfo(Title, this);
     parentTreeNode = new SortedTreeNode(tmp);
     mysar.add2tree(mysar.graphtree, parentTreeNode);
@@ -49,15 +49,15 @@ public class List {
   public int parse_line(Second now, String s) {
     String cols[] = s.split("\\s+");
     Graph tmp;
-    if (!nodeHashList.containsKey(cols[skipColumn])) {
-      tmp = new Graph(mysar, graphconfig, Title + " " + cols[skipColumn], HeaderStr, skipColumn + 1,
+    if (!nodeHashList.containsKey(cols[FirstDataColumn])) {
+      tmp = new Graph(mysar, graphconfig, Title + " " + cols[FirstDataColumn], HeaderStr, FirstDataColumn + 1,
           null);
-      nodeHashList.put(cols[skipColumn], tmp);
-      TreeNodeInfo infotmp = new TreeNodeInfo(cols[skipColumn], tmp);
+      nodeHashList.put(cols[FirstDataColumn], tmp);
+      TreeNodeInfo infotmp = new TreeNodeInfo(cols[FirstDataColumn], tmp);
       SortedTreeNode nodetmp = new SortedTreeNode(infotmp);
       mysar.add2tree(parentTreeNode, nodetmp);
     } else {
-      tmp = nodeHashList.get(cols[skipColumn]);
+      tmp = nodeHashList.get(cols[FirstDataColumn]);
     }
 
     return tmp.parse_line(now, s);
@@ -111,7 +111,7 @@ public class List {
   protected kSar mysar = null;
   protected String HeaderStr = null;
   protected SortedMap<String, Graph> nodeHashList = new TreeMap<>(NaturalComparator.NULLS_FIRST);
-  protected int skipColumn = 0;
+  protected int FirstDataColumn = 0;
   protected String Title = null;
 
 }
