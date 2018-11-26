@@ -5,8 +5,6 @@
 
 package net.atomique.ksar.export;
 
-import com.itextpdf.awt.DefaultFontMapper;
-import com.itextpdf.awt.FontMapper;
 import com.itextpdf.awt.PdfGraphics2D;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -228,7 +226,6 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
   private PdfWriter writer = null;
   private PdfContentByte pdfcb;
   private kSar mysar = null;
-  FontMapper mapper = new DefaultFontMapper();
   BaseFont bf = FontFactory.getFont(FontFactory.COURIER).getCalculatedBaseFont(false);
   private JProgressBar progress_bar = null;
   private JDialog dialog = null;
