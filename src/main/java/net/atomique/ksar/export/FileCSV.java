@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 The kSAR Project. All rights reserved.
+ * Copyright 2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
 
@@ -33,7 +33,6 @@ public class FileCSV implements Runnable {
   public FileCSV(String filename, kSar hissar) {
     csvfilename = filename;
     mysar = hissar;
-
   }
 
   public FileCSV(String filename, kSar hissar, JProgressBar g, JDialog d) {
@@ -150,7 +149,6 @@ public class FileCSV implements Runnable {
     }
 
   }
-
 
   private StringBuilder tmpcsv = new StringBuilder();
   private int progress_info = 0;
