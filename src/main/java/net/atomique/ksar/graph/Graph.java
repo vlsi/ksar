@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 The kSAR Project. All rights reserved.
+ * Copyright 2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
 
@@ -107,14 +107,13 @@ public class Graph {
     return 0;
   }
 
-
   public int parse_line(Second now, String s) {
     String[] cols = s.split("\\s+");
-    Double colvalue;
+    double colvalue;
     //log.debug("graph parsing: {}", s);
     for (int i = firstDataColumn; i < HeaderStr.length; i++) {
       try {
-        colvalue = new Double(cols[i]);
+        colvalue = Double.parseDouble(cols[i]);
       } catch (NumberFormatException ne) {
         log.error("{} {} is NaN", graphtitle, cols[i]);
         return 0;
@@ -140,7 +139,7 @@ public class Graph {
   }
 
   private boolean add_datapoint_stack(TimeTableXYDataset dataset, Second now, int col,
-      String colheader, Double value) {
+      String colheader, double value) {
     try {
       dataset.add(now, value, colheader);
 
@@ -168,15 +167,15 @@ public class Graph {
       if (statconfig != null) {
           if (statconfig.canDuplicateTime()) {
               Number oldval = dataset.getXValue(indexcol, col);
-              Double tempval;
+              double tempval;
               if (oldval == null) {
                   return false;
               }
               ColumnConfig colconfig = GlobalOptions.getColumnConfig(colheader);
               if (colconfig.getType() == 1) {
-                  tempval = new Double((oldval.doubleValue() + value) / 2);
+                  tempval = ((oldval.doubleValue() + value) / 2);
               } else if (colconfig.getType() == 2) {
-                  tempval = new Double(oldval.doubleValue() + value);
+                  tempval = (oldval.doubleValue() + value);
               } else {
                   return false;
               }
@@ -195,7 +194,7 @@ public class Graph {
 
   }
 
-  private boolean add_datapoint_plot(Second now, int col, String colheader, Double value) {
+  private boolean add_datapoint_plot(Second now, int col, String colheader, double value) {
     try {
       ((Stats.get(col))).add(now, value);
       return true;
@@ -207,7 +206,7 @@ public class Graph {
       if (statconfig != null) {
         if (statconfig.canDuplicateTime()) {
           Number oldval = ((Stats.get(col))).getValue(now);
-          Double tempval;
+          double tempval;
           if (oldval == null) {
             return false;
           }
@@ -243,6 +242,7 @@ public class Graph {
     tmp.append("\n");
     TimeSeries datelist = Stats.get(0);
     Iterator ite = datelist.getTimePeriods().iterator();
+
     while (ite.hasNext()) {
       TimePeriod item = (TimePeriod) ite.next();
       tmp.append(item.toString());
