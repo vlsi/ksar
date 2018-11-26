@@ -80,10 +80,11 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
         break;
     }
 
-    pdfheight = document.getPageSize().getHeight();
+    float pdfheight = document.getPageSize().getHeight();
     pdfwidth = document.getPageSize().getWidth();
     pageheight = pdfheight - (2 * pdfmargins);
     pagewidth = pdfwidth - (2 * pdfmargins);
+
     try {
       writer = PdfWriter.getInstance(document, new FileOutputStream(pdffilename));
     } catch (DocumentException | FileNotFoundException ex) {
@@ -214,7 +215,6 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
   }
 
   private int progress_info = 0;
-  private float pdfheight;
   private float pdfwidth;
   private int pdfmargins = 10;
   float pageheight;
