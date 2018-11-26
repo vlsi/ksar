@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 The kSAR Project. All rights reserved.
+ * Copyright 2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
 
@@ -47,7 +47,7 @@ public class List {
   }
 
   public int parse_line(Second now, String s) {
-    String cols[] = s.split("\\s+");
+    String[] cols = s.split("\\s+");
     Graph tmp;
     if (!nodeHashList.containsKey(cols[FirstDataColumn])) {
       tmp = new Graph(mysar, graphconfig, Title + " " + cols[FirstDataColumn], HeaderStr, FirstDataColumn + 1,
