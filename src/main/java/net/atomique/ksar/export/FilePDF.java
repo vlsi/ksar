@@ -49,12 +49,11 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
   public FilePDF(String filename, kSar hissar) {
     pdffilename = filename;
     mysar = hissar;
-
   }
 
   public FilePDF(String filename, kSar hissar, JProgressBar g, JDialog d) {
-    pdffilename = filename;
-    mysar = hissar;
+    this(filename, hissar);
+
     progress_bar = g;
     dialog = d;
   }
