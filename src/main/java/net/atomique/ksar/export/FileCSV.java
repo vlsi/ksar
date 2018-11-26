@@ -36,8 +36,8 @@ public class FileCSV implements Runnable {
   }
 
   public FileCSV(String filename, kSar hissar, JProgressBar g, JDialog d) {
-    csvfilename = filename;
-    mysar = hissar;
+    this(filename, hissar);
+
     progress_bar = g;
     dialog = d;
   }
