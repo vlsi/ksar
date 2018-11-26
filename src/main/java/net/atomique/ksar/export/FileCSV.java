@@ -88,8 +88,7 @@ public class FileCSV implements Runnable {
 
   }
 
-
-  public void export_treenode_header(SortedTreeNode node) {
+  private void export_treenode_header(SortedTreeNode node) {
     int num = node.getChildCount();
 
     if (num > 0) {
@@ -115,7 +114,7 @@ public class FileCSV implements Runnable {
     }
   }
 
-  public void export_treenode_data(SortedTreeNode node, RegularTimePeriod time) {
+  private void export_treenode_data(SortedTreeNode node, RegularTimePeriod time) {
     int num = node.getChildCount();
 
     if (num > 0) {
