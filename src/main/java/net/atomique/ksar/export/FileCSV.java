@@ -44,7 +44,7 @@ public class FileCSV implements Runnable {
 
   public void run() {
     // open file
-    BufferedWriter out = null;
+    BufferedWriter out;
     try {
       out = new BufferedWriter(new FileWriter(csvfilename));
     } catch (IOException ex) {
@@ -151,8 +151,8 @@ public class FileCSV implements Runnable {
 
   private StringBuilder tmpcsv = new StringBuilder();
   private int progress_info = 0;
-  private String csvfilename = null;
-  private kSar mysar = null;
+  private String csvfilename;
+  private kSar mysar;
   private JProgressBar progress_bar = null;
   private JDialog dialog = null;
 }
