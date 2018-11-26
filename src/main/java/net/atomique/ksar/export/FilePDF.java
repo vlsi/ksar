@@ -5,8 +5,6 @@
 
 package net.atomique.ksar.export;
 
-import com.itextpdf.awt.DefaultFontMapper;
-import com.itextpdf.awt.FontMapper;
 import com.itextpdf.awt.PdfGraphics2D;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -51,12 +49,11 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
   public FilePDF(String filename, kSar hissar) {
     pdffilename = filename;
     mysar = hissar;
-
   }
 
   public FilePDF(String filename, kSar hissar, JProgressBar g, JDialog d) {
-    pdffilename = filename;
-    mysar = hissar;
+    this(filename, hissar);
+
     progress_bar = g;
     dialog = d;
   }
@@ -83,10 +80,11 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
         break;
     }
 
-    pdfheight = document.getPageSize().getHeight();
+    float pdfheight = document.getPageSize().getHeight();
     pdfwidth = document.getPageSize().getWidth();
     pageheight = pdfheight - (2 * pdfmargins);
     pagewidth = pdfwidth - (2 * pdfmargins);
+
     try {
       writer = PdfWriter.getInstance(document, new FileOutputStream(pdffilename));
     } catch (DocumentException | FileNotFoundException ex) {
@@ -217,19 +215,17 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
   }
 
   private int progress_info = 0;
-  private float pdfheight;
   private float pdfwidth;
   private int pdfmargins = 10;
-  float pageheight;
-  float pagewidth;
+  private float pageheight;
+  private float pagewidth;
   private int total_pages = 1; // page 1 (index)
   private String pdffilename = null;
   private Document document = null;
   private PdfWriter writer = null;
   private PdfContentByte pdfcb;
   private kSar mysar = null;
-  FontMapper mapper = new DefaultFontMapper();
-  BaseFont bf = FontFactory.getFont(FontFactory.COURIER).getCalculatedBaseFont(false);
+  private BaseFont bf = FontFactory.getFont(FontFactory.COURIER).getCalculatedBaseFont(false);
   private JProgressBar progress_bar = null;
   private JDialog dialog = null;
   private ChartRenderingInfo chartinfo = null;

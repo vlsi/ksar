@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 The kSAR Project. All rights reserved.
+ * Copyright 2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
 
@@ -33,19 +33,18 @@ public class FileCSV implements Runnable {
   public FileCSV(String filename, kSar hissar) {
     csvfilename = filename;
     mysar = hissar;
-
   }
 
   public FileCSV(String filename, kSar hissar, JProgressBar g, JDialog d) {
-    csvfilename = filename;
-    mysar = hissar;
+    this(filename, hissar);
+
     progress_bar = g;
     dialog = d;
   }
 
   public void run() {
     // open file
-    BufferedWriter out = null;
+    BufferedWriter out;
     try {
       out = new BufferedWriter(new FileWriter(csvfilename));
     } catch (IOException ex) {
@@ -71,7 +70,7 @@ public class FileCSV implements Runnable {
 
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
       String text = tmpLDT.format(formatter);
-      tmpcsv.append(text + ";");
+      tmpcsv.append(text).append(";");
       export_treenode_data(mysar.graphtree, tmp);
       tmpcsv.append("\n");
     }
@@ -89,8 +88,7 @@ public class FileCSV implements Runnable {
 
   }
 
-
-  public void export_treenode_header(SortedTreeNode node) {
+  private void export_treenode_header(SortedTreeNode node) {
     int num = node.getChildCount();
 
     if (num > 0) {
@@ -116,7 +114,7 @@ public class FileCSV implements Runnable {
     }
   }
 
-  public void export_treenode_data(SortedTreeNode node, RegularTimePeriod time) {
+  private void export_treenode_data(SortedTreeNode node, RegularTimePeriod time) {
     int num = node.getChildCount();
 
     if (num > 0) {
@@ -151,11 +149,10 @@ public class FileCSV implements Runnable {
 
   }
 
-
   private StringBuilder tmpcsv = new StringBuilder();
   private int progress_info = 0;
-  private String csvfilename = null;
-  private kSar mysar = null;
+  private String csvfilename;
+  private kSar mysar;
   private JProgressBar progress_bar = null;
   private JDialog dialog = null;
 }
