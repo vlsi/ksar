@@ -217,15 +217,15 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
   private int progress_info = 0;
   private float pdfwidth;
   private int pdfmargins = 10;
-  float pageheight;
-  float pagewidth;
+  private float pageheight;
+  private float pagewidth;
   private int total_pages = 1; // page 1 (index)
   private String pdffilename = null;
   private Document document = null;
   private PdfWriter writer = null;
   private PdfContentByte pdfcb;
   private kSar mysar = null;
-  BaseFont bf = FontFactory.getFont(FontFactory.COURIER).getCalculatedBaseFont(false);
+  private BaseFont bf = FontFactory.getFont(FontFactory.COURIER).getCalculatedBaseFont(false);
   private JProgressBar progress_bar = null;
   private JDialog dialog = null;
   private ChartRenderingInfo chartinfo = null;
