@@ -120,7 +120,7 @@ public class kSar {
           Class classtmp = GlobalOptions.getParser(ParserType);
           if (classtmp != null) {
             if (myparser == null) {
-              myparser = (AllParser) classtmp.newInstance();
+              myparser = (OSParser) classtmp.newInstance();
               myparser.init(this, current_line);
 
               continue;
@@ -241,7 +241,7 @@ public class kSar {
   private String reload_action = "Empty";
   private Thread launched_action = null;
   private boolean action_interrupted = false;
-  public AllParser myparser = null;
+  public OSParser myparser = null;
   private boolean Parsing = false;
   public int total_graph = 0;
   public SortedTreeNode graphtree = new SortedTreeNode("kSar");
