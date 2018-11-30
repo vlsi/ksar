@@ -1,17 +1,12 @@
 /*
- * Copyright 2017 The kSAR Project. All rights reserved.
+ * Copyright 2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
 
 package net.atomique.ksar.export;
 
 import com.itextpdf.awt.PdfGraphics2D;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.ExceptionConverter;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.PageSize;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfDestination;
@@ -40,6 +35,8 @@ import java.io.IOException;
 
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;
+
+import static com.itextpdf.text.FontFactory.*;
 
 public class FilePDF extends PdfPageEventHelper implements Runnable {
 
