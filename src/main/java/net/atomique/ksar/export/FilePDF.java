@@ -158,13 +158,22 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
 
   public void onEndPage(PdfWriter writer, Document document) {
     try {
-      String text = "Page " + writer.getPageNumber() + "/" + total_pages;
+
+      int pageNumber = writer.getPageNumber();
+      String text = "Page " + pageNumber + "/" + total_pages;
+      String hostName = mysar.myparser.gethostName();
+      String date = mysar.myparser.getDate();
 
       pdfcb.beginText();
       pdfcb.setFontAndSize(bf, 10);
       pdfcb.setColorFill(new BaseColor(0x00, 0x00, 0x00));
-      pdfcb.showTextAligned(PdfContentByte.ALIGN_RIGHT, text, ((pdfwidth - pdfmargins) - 10),
-          10 + pdfmargins, 0);
+
+      if ( pageNumber > 1) {
+        pdfcb.showTextAligned(PdfContentByte.ALIGN_LEFT, hostName, pdfmargins, pdfheight - pdfmargins, 0);
+        pdfcb.showTextAligned(PdfContentByte.ALIGN_RIGHT, date, pdfwidth - pdfmargins, pdfheight - pdfmargins, 0);
+      }
+
+      pdfcb.showTextAligned(PdfContentByte.ALIGN_RIGHT, text,pdfwidth - pdfmargins,pdfmargins - 5 ,0);
       pdfcb.endText();
     } catch (Exception e) {
       throw new ExceptionConverter(e);
