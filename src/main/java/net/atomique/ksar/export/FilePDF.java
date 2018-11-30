@@ -27,7 +27,6 @@ import net.atomique.ksar.kSar;
 import net.atomique.ksar.ui.ParentNodeInfo;
 import net.atomique.ksar.ui.SortedTreeNode;
 import net.atomique.ksar.ui.TreeNodeInfo;
-import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.JFreeChart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -181,7 +180,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
     PdfTemplate pdftpl = pdfcb.createTemplate(pagewidth, pageheight);
     Graphics2D g2d = new PdfGraphics2D(pdftpl, pagewidth, pageheight);
     Double r2d = new Rectangle2D.Double(0, 0, pagewidth, pageheight);
-    chart.draw(g2d, r2d, chartinfo);
+    chart.draw(g2d, r2d);
     g2d.dispose();
     pdfcb.addTemplate(pdftpl, pdfmargins, pdfmargins);
     try {
@@ -227,5 +226,4 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
   private BaseFont bf = getFont(COURIER).getCalculatedBaseFont(false);
   private JProgressBar progress_bar = null;
   private JDialog dialog = null;
-  private ChartRenderingInfo chartinfo = null;
 }
