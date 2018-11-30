@@ -91,8 +91,8 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
 
     // document parameter before open
     document.addTitle("kSar Grapher");
-    //document.addSubject("Sar output of " + mysar.hostName);
-    //document.addKeywords("http://ksar.atomique.net/ ");
+    //document.addSubject("SAR Statistics of " + mysar.hostName);
+    //document.addKeywords("https://github.com/vlsi/ksar");
     //document.addKeywords(mysar.hostName);
     //document.addKeywords(mysar.myOS.sarStartDate);
     //document.addKeywords(mysar.myOS.sarEndDate);
