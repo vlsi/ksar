@@ -189,17 +189,28 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
 
   private void IndexPage(Document document) {
     try {
+      float pdfCenter = ((pdfwidth - pdfmargins) / 2 );
 
-      String title = "Statistics";
-      String t_date = "On " + mysar.myparser.getDate();
+      String title = "SAR Statistics";
+      String t_date = "on " + mysar.myparser.getDate();
+      String hostName = "for " + mysar.myparser.gethostName();
+      String osType = mysar.myparser.getOstype();
+      String graphStart = mysar.myparser.getStartOfGraph().toString();
+      String graphEnd = mysar.myparser.getEndOfGraph().toString();
+
       pdfcb.beginText();
-      pdfcb.setFontAndSize(bf, 48);
+      pdfcb.setFontAndSize(bf, 40);
       pdfcb.setColorFill(new BaseColor(0x00, 0x00, 0x00));
-      pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, title, ((pdfwidth - pdfmargins) / 2), 500,
-          0);
-      pdfcb.setFontAndSize(bf, 36);
-      pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, t_date, ((pdfwidth - pdfmargins) / 2), 300,
-          0);
+      pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, title, pdfCenter, 500, 0);
+
+      pdfcb.setFontAndSize(bf, 32);
+      pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, hostName + " (" + osType + ")", pdfCenter, 400,0);
+      pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, t_date, pdfCenter, 300,0);
+
+      pdfcb.setFontAndSize(bf, 20);
+      pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, graphStart, pdfCenter, 200,0);
+      pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, graphEnd, pdfCenter, 150,0);
+
       pdfcb.endText();
       document.newPage();
 
