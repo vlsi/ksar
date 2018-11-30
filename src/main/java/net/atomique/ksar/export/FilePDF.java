@@ -79,7 +79,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
         break;
     }
 
-    float pdfheight = document.getPageSize().getHeight();
+    pdfheight = document.getPageSize().getHeight();
     pdfwidth = document.getPageSize().getWidth();
     pageheight = pdfheight - (2 * pdfmargins);
     pagewidth = pdfwidth - (2 * pdfmargins);
@@ -214,6 +214,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
 
   private int progress_info = 0;
   private float pdfwidth;
+  private float pdfheight;
   private int pdfmargins = 10;
   private float pageheight;
   private float pagewidth;
