@@ -107,7 +107,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
     pdfcb = writer.getDirectContent();
     PdfOutline root = pdfcb.getRootOutline();
 
-    IndexPage(writer, document);
+    IndexPage(document);
 
     export_treenode(mysar.graphtree, root);
 
@@ -141,7 +141,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
         TreeNodeInfo tmpnode = (TreeNodeInfo) obj1;
         Graph nodeobj = tmpnode.getNode_object();
         if (nodeobj.isPrintSelected()) {
-          root = new PdfOutline(root, new PdfDestination(PdfDestination.FIT), nodeobj.getTitle());
+          new PdfOutline(root, new PdfDestination(PdfDestination.FIT), nodeobj.getTitle());
           update_ui();
           addchart(writer, nodeobj);
           document.newPage();
@@ -188,7 +188,6 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
     } catch (IOException ioe) {
       log.error("Unable to write to : {}", pdffilename);
     }
-    return 0;
   }
 
   private void IndexPage(Document document) {
