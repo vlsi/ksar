@@ -46,7 +46,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
 
   private static final Logger log = LoggerFactory.getLogger(FilePDF.class);
 
-  public FilePDF(String filename, kSar hissar) {
+  private FilePDF(String filename, kSar hissar) {
     pdffilename = filename;
     mysar = hissar;
   }
@@ -121,8 +121,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
 
   }
 
-
-  public void export_treenode(SortedTreeNode node, PdfOutline root) {
+  private void export_treenode(SortedTreeNode node, PdfOutline root) {
     int num = node.getChildCount();
     if (num > 0) {
       Object obj1 = node.getUserObject();
@@ -176,7 +175,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
     }
   }
 
-  public int addchart(PdfWriter writer, Graph graph) {
+  private void addchart(PdfWriter writer, Graph graph) {
     JFreeChart chart =
         graph.getgraph(mysar.myparser.getStartOfGraph(), mysar.myparser.getEndOfGraph());
     PdfTemplate pdftpl = pdfcb.createTemplate(pagewidth, pageheight);
@@ -193,7 +192,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
     return 0;
   }
 
-  public void IndexPage(PdfWriter writer, Document document) {
+  private void IndexPage(Document document) {
     try {
 
       String title = "Statistics";
@@ -220,12 +219,12 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
   private float pageheight;
   private float pagewidth;
   private int total_pages = 1; // page 1 (index)
-  private String pdffilename = null;
+  private String pdffilename;
   private Document document = null;
   private PdfWriter writer = null;
   private PdfContentByte pdfcb;
-  private kSar mysar = null;
-  private BaseFont bf = FontFactory.getFont(FontFactory.COURIER).getCalculatedBaseFont(false);
+  private kSar mysar;
+  private BaseFont bf = getFont(COURIER).getCalculatedBaseFont(false);
   private JProgressBar progress_bar = null;
   private JDialog dialog = null;
   private ChartRenderingInfo chartinfo = null;
