@@ -29,6 +29,7 @@ dependencies {
     compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13'
     compile group: 'com.jcraft', name: 'jsch', version: '0.1.54'
     compile group: 'org.jfree', name: 'jfreechart', version: '1.5.0'
+    compile group: 'info.picocli', name: 'picocli', version: '3.8.1'
     testCompile 'junit:junit:4.12'
 }
 
