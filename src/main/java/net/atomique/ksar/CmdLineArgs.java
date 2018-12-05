@@ -12,7 +12,7 @@ public class CmdLineArgs {
   @Option(names = "-input", description = "sar file to be processed")
   private String filename;
 
-  @Option(names = "-help", description = "show usage", help=true)
+  @Option(names = "-help", description = "show usage", help = true)
   private boolean help;
 
   @Option(names = "-version", description = "print version information")
