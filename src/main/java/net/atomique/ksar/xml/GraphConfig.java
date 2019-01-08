@@ -9,16 +9,16 @@ import java.util.LinkedHashMap;
 
 public class GraphConfig {
 
-  public GraphConfig(String s1, String s2, String s3) {
-    name = s1;
-    Title = s2;
-    type = s3;
+  public GraphConfig(String name, String title, String type) {
+    this.name = name;
+    this.title = title;
+    this.type = type;
     plotlist = new LinkedHashMap<>();
     stacklist = new LinkedHashMap<>();
   }
 
   public String getTitle() {
-    return Title;
+    return title;
   }
 
   public String getName() {
@@ -45,9 +45,9 @@ public class GraphConfig {
     return stacklist;
   }
 
-  private String name = null;
-  private String Title = null;
-  private String type = null;
+  private String name;
+  private String title;
+  private String type;
   private LinkedHashMap<String, PlotStackConfig> plotlist;
   private LinkedHashMap<String, PlotStackConfig> stacklist;
 }
