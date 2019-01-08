@@ -18,8 +18,8 @@ public class PlotStackConfig {
   private static final Logger log = LoggerFactory.getLogger(PlotStackConfig.class);
 
 
-  public PlotStackConfig(String s) {
-    Title = s;
+  public PlotStackConfig(String title) {
+    this.title = title;
   }
 
   public String[] getHeader() {
@@ -27,7 +27,7 @@ public class PlotStackConfig {
   }
 
   public String getTitle() {
-    return Title;
+    return title;
   }
 
   public void setHeaderStr(String s) {
@@ -47,25 +47,21 @@ public class PlotStackConfig {
     this.size = size;
   }
 
-  public void setSize(String s) {
-    Integer tmp = new Integer(s);
-    if (tmp == null) {
-      return;
-    }
-    this.size = tmp.intValue();
+  public void setSize(String size) {
+    this.size = Integer.valueOf(size);
   }
 
   public NumberAxis getAxis() {
-    NumberAxis tmp = new NumberAxis(Title);
+    NumberAxis tmp = new NumberAxis(title);
 
     if (base == 1024) {
 
-      NumberFormat decimalformat1 = new IEEE1541Number(factor.intValue());
+      NumberFormat decimalformat1 = new IEEE1541Number((int) factor);
       tmp.setNumberFormatOverride(decimalformat1);
 
     } else if (base == 1000) {
 
-      NumberFormat decimalformat1 = new ISNumber(factor.intValue());
+      NumberFormat decimalformat1 = new ISNumber((int) factor);
       tmp.setNumberFormatOverride(decimalformat1);
 
     } else if (base != 0) {
@@ -92,17 +88,17 @@ public class PlotStackConfig {
   public void setRange(String s) {
     String[] t = s.split(",");
     if (t.length == 2) {
-      Double min = Double.parseDouble(t[0]);
-      Double max = Double.parseDouble(t[1]);
+      double min = Double.parseDouble(t[0]);
+      double max = Double.parseDouble(t[1]);
       range = new Range(min, max);
     }
   }
 
-  private Double factor = null;
+  private double factor;
   private int base = 0;
   private Range range = null;
   private int size = 1;
-  private String Title = null;
+  private String title;
   private String[] Header = null;
   private String HeaderStr = null;
 }
