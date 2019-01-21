@@ -27,6 +27,7 @@ public class Linux extends OSParser {
 
   private static final Logger log = LoggerFactory.getLogger(Linux.class);
   private String LinuxDateFormat;
+  private DateTimeFormatter formatter;
 
   private final HashSet<String> IgnoreLinesBeginningWith = new HashSet<>(Arrays.asList(
       "Average:", "##", "Summary", "Summary:"));
@@ -112,11 +113,18 @@ public class Linux extends OSParser {
         }
       }
 
+      if (formatter == null) {
+        if (timeColumn == 2) {
+          formatter = DateTimeFormatter.ofPattern(timeFormat, Locale.US);
+        } else {
+          formatter = DateTimeFormatter.ofPattern(timeFormat);
+        }
+        log.debug("Time formatter: {}",formatter);
+      }
+
       if (timeColumn == 2) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat, Locale.US);
         parsetime = LocalTime.parse(columns[0] + " " + columns[1], formatter);
       } else {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat);
         parsetime = LocalTime.parse(columns[0], formatter);
       }
 
