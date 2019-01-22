@@ -1,6 +1,13 @@
 sudo: false
 language: java
 
+jdk:
+  - oraclejdk8
+  - oraclejdk11
+  - oraclejdk-ea
+  - openjdk8
+  - openjdk11
+  - openjdk-ea
 env:
   global:
   - COMMIT=${TRAVIS_COMMIT::8}
@@ -23,12 +30,9 @@ before_install:
 script: ./gradlew check shadowJar
 
 matrix:
-  include:
-  - jdk: oraclejdk8
-  - jdk: oraclejdk11
-  - jdk: openjdk8
-  - jdk: openjdk11
-    if: tag IS blank
+  allow_failures:
+    - jdk: oraclejdk-ea
+    - jdk: openjdk-ea
 
 deploy:
   provider: releases
