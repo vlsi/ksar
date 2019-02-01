@@ -8,6 +8,7 @@ jdk:
   - openjdk8
   - openjdk11
   - openjdk-ea
+
 env:
   global:
   - COMMIT=${TRAVIS_COMMIT::8}
@@ -34,14 +35,18 @@ matrix:
     - jdk: oraclejdk-ea
     - jdk: openjdk-ea
 
-deploy:
-  provider: releases
-  api_key:
-    secure: iKXXqoxPMsoLGlhKMwRB7dVdU0ZvOjzRaxm73zjEsEgyErL7LJ6YG+3wJl24UW8zxgpvM5hW0DKUkWSLfVoHa/1l+Bsb8yREAKJTYldZs3pjhQxWM7OBMeKWjTA7WccYrx4ShHgbgUvl4IuHXNY91kcu1pC6lZukpDUvdX4Ii70=
-  file_glob: true
-  file: "build/libs/ksar-*all.jar"
-  skip_cleanup: true
-  on:
-    tags: true
-    repo: vlsi/ksar
-    jdk: openjdk11
+jobs:
+  include:
+    - stage: Github Release
+      jdk:  openjdk11
+      script: echo "Deploying to github.com ..."
+      deploy:
+        provider: releases
+        api_key:
+          secure: iKXXqoxPMsoLGlhKMwRB7dVdU0ZvOjzRaxm73zjEsEgyErL7LJ6YG+3wJl24UW8zxgpvM5hW0DKUkWSLfVoHa/1l+Bsb8yREAKJTYldZs3pjhQxWM7OBMeKWjTA7WccYrx4ShHgbgUvl4IuHXNY91kcu1pC6lZukpDUvdX4Ii70=
+        file_glob: true
+        file: "build/libs/ksar-*all.jar"
+        skip_cleanup: true
+        on:
+          tags: true
+          repo: vlsi/ksar
