@@ -44,3 +44,4 @@ deploy:
   on:
     tags: true
     repo: vlsi/ksar
+    jdk: openjdk11
