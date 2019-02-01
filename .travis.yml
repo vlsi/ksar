@@ -28,6 +28,7 @@ before_install:
   - sed -i -r  "/version/s/([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)/\1-$BUILD_COMMIT/g" gradle.properties
   - cat gradle.properties
 
+install: skip # will be done by gradlew check anyway
 script: ./gradlew check
 
 matrix:
@@ -40,6 +41,7 @@ jobs:
   include:
     - stage: Github Release
       jdk:  openjdk11
+      install: skip # will be done by gradlew shadowJar anyway
       script:
         - echo "Deploying to github.com ..."
         - ./gradlew shadowJar
