@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "2.0.4"
+    id "com.github.johnrengelman.shadow" version "4.0.4"
 }
 
 apply plugin: 'java'
@@ -30,6 +30,10 @@ dependencies {
     compile group: 'com.jcraft', name: 'jsch', version: '0.1.54'
     compile group: 'org.jfree', name: 'jfreechart', version: '1.5.0'
     testCompile 'junit:junit:4.12'
+}
+
+tasks.withType(JavaCompile){
+    options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
 }
 
 task writeVersion << {
