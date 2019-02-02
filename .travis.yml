@@ -1,6 +1,14 @@
 sudo: false
 language: java
 
+jdk:
+  - oraclejdk8
+  - oraclejdk11
+  - oraclejdk-ea
+  - openjdk8
+  - openjdk11
+  - openjdk-ea
+
 env:
   global:
   - COMMIT=${TRAVIS_COMMIT::8}
@@ -8,35 +16,45 @@ env:
 
 before_cache:
 - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
   - $HOME/.gradle/caches
-  - $HOME/.gradle/native
   - $HOME/.gradle/wrapper
 
-before_install:
-  - cat gradle.properties
-  - echo "[INFO] BUILD_COMMIT> $BUILD_COMMIT"
-  - sed -i -r  "/version/s/([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)/\1-$BUILD_COMMIT/g" gradle.properties
-  - cat gradle.properties
-
-script: ./gradlew check shadowJar
+#Test stage - Matrix expansion
+install: skip # will be done by gradlew check anyway
+script: ./gradlew check
 
 matrix:
-  include:
-  - jdk: oraclejdk8
-  - jdk: oraclejdk11
-  - jdk: openjdk8
-  - jdk: openjdk11
-    if: tag IS blank
+  fast_finish: true
+  allow_failures:
+    - jdk: oraclejdk-ea
+    - jdk: openjdk-ea
 
-deploy:
-  provider: releases
-  api_key:
-    secure: iKXXqoxPMsoLGlhKMwRB7dVdU0ZvOjzRaxm73zjEsEgyErL7LJ6YG+3wJl24UW8zxgpvM5hW0DKUkWSLfVoHa/1l+Bsb8yREAKJTYldZs3pjhQxWM7OBMeKWjTA7WccYrx4ShHgbgUvl4IuHXNY91kcu1pC6lZukpDUvdX4Ii70=
-  file_glob: true
-  file: "build/libs/ksar-*all.jar"
-  skip_cleanup: true
-  on:
-    tags: true
-    repo: vlsi/ksar
+# GitHub Deploy Stage
+jobs:
+  include:
+    - stage: Github Release
+      jdk:  openjdk8
+      before_install:
+        - grep version -r gradle.properties
+        - echo "[INFO] BUILD_COMMIT> $BUILD_COMMIT"
+        - sed -i -r  "/version/s/([[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+)/\1-$BUILD_COMMIT/g" gradle.properties
+        - grep version -r gradle.properties
+      install: skip #will be done by gradlew shadowJar anyway
+      script:
+        - echo "Create Jar file with new version ..."
+        - ./gradlew shadowJar
+        - echo "Deploying to github.com ..."
+      deploy:
+        provider: releases
+        prerelease: true
+        api_key:
+          secure: iKXXqoxPMsoLGlhKMwRB7dVdU0ZvOjzRaxm73zjEsEgyErL7LJ6YG+3wJl24UW8zxgpvM5hW0DKUkWSLfVoHa/1l+Bsb8yREAKJTYldZs3pjhQxWM7OBMeKWjTA7WccYrx4ShHgbgUvl4IuHXNY91kcu1pC6lZukpDUvdX4Ii70=
+        file_glob: true
+        file: "build/libs/ksar-*all.jar"
+        skip_cleanup: true
+        on:
+          tags: true
+          repo: vlsi/ksar
