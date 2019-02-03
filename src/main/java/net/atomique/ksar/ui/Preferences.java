@@ -284,9 +284,7 @@ public class Preferences extends javax.swing.JDialog {
   DefaultComboBoxModel<String> PageFormatComboBox = new DefaultComboBoxModel<>();
   DefaultComboBoxModel<String> LinuxFormatComboModel = new DefaultComboBoxModel<>();
   SpinnerNumberModel imageWidthSpinner =
-      new javax.swing.SpinnerNumberModel(Config.getImageWidth(), Integer.valueOf(1), null,
-          Integer.valueOf(1));
+      new javax.swing.SpinnerNumberModel(Config.getImageWidth(), 1, null,1 );
   SpinnerNumberModel imageHeightSpinner =
-      new javax.swing.SpinnerNumberModel(Config.getImageHeight(), Integer.valueOf(1), null,
-          Integer.valueOf(1));
+      new javax.swing.SpinnerNumberModel(Config.getImageHeight(), 1, null,1);
 }
