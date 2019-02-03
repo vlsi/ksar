@@ -221,7 +221,7 @@ public class Preferences extends javax.swing.JDialog {
       JComboBox comboBox = (JComboBox) source;
       lafClassName = (String) comboBox.getSelectedItem();
       if (lafClassName != null) {
-        String finalLafClassName = lafClassName;
+        //String finalLafClassName = lafClassName;
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
           if (lafClassName.equals(laf.getName())) {
             try {
