@@ -123,6 +123,6 @@ public class LinuxDateFormat extends javax.swing.JDialog {
   private javax.swing.JPanel jPanel4;
   // End of variables declaration//GEN-END:variables
 
-  DefaultComboBoxModel LinuxFormatComboModel = new DefaultComboBoxModel();
+  DefaultComboBoxModel<String> LinuxFormatComboModel = new DefaultComboBoxModel<>();
   boolean ok_to_proceed = false;
 }

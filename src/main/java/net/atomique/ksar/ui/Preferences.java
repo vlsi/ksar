@@ -221,7 +221,7 @@ public class Preferences extends javax.swing.JDialog {
       JComboBox comboBox = (JComboBox) source;
       lafClassName = (String) comboBox.getSelectedItem();
       if (lafClassName != null) {
-        String finalLafClassName = lafClassName;
+        //String finalLafClassName = lafClassName;
         for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
           if (lafClassName.equals(laf.getName())) {
             try {
@@ -281,12 +281,10 @@ public class Preferences extends javax.swing.JDialog {
   private javax.swing.JSpinner jSpinner2;
   // End of variables declaration//GEN-END:variables
   DefaultComboBoxModel UI_lanf_model = new DefaultComboBoxModel();
-  DefaultComboBoxModel PageFormatComboBox = new DefaultComboBoxModel();
-  DefaultComboBoxModel LinuxFormatComboModel = new DefaultComboBoxModel();
+  DefaultComboBoxModel<String> PageFormatComboBox = new DefaultComboBoxModel<>();
+  DefaultComboBoxModel<String> LinuxFormatComboModel = new DefaultComboBoxModel<>();
   SpinnerNumberModel imageWidthSpinner =
-      new javax.swing.SpinnerNumberModel(Config.getImageWidth(), Integer.valueOf(1), null,
-          Integer.valueOf(1));
+      new javax.swing.SpinnerNumberModel(Config.getImageWidth(), 1, null,1 );
   SpinnerNumberModel imageHeightSpinner =
-      new javax.swing.SpinnerNumberModel(Config.getImageHeight(), Integer.valueOf(1), null,
-          Integer.valueOf(1));
+      new javax.swing.SpinnerNumberModel(Config.getImageHeight(), 1, null,1);
 }
