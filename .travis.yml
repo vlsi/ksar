@@ -3,8 +3,6 @@ language: java
 
 jdk:
   - oraclejdk8
-  - oraclejdk11
-  - oraclejdk-ea
   - openjdk8
   - openjdk11
   - openjdk12
@@ -31,7 +29,6 @@ script: ./gradlew check
 matrix:
   fast_finish: true
   allow_failures:
-    - jdk: oraclejdk-ea
     - jdk: openjdk-ea
 
 # GitHub Deploy Stage
