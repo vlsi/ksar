@@ -70,28 +70,22 @@ public class LocalCommand extends Thread {
     if (p != null) {
       p.destroy();
     }
-
-    try {
-      if (myfilereader != null) {
-        myfilereader.close();
-      }
-    } catch (IOException ex) {
-      log.error("IO Exception", ex);
-    }
   }
 
   public void run() {
-    String current_line;
 
     if (in == null) {
       return;
     }
-    myfilereader = new BufferedReader(new InputStreamReader(in));
-    if (myfilereader == null) {
-      return;
+
+    try {
+      BufferedReader myfilereader = new BufferedReader(new InputStreamReader(in));
+      mysar.parse(myfilereader);
+      myfilereader.close();
+    } catch (IOException ex) {
+      log.error("IO Exception", ex);
     }
 
-    mysar.parse(myfilereader);
 
     close();
   }
@@ -107,6 +101,5 @@ public class LocalCommand extends Thread {
   private kSar mysar;
   private InputStream in = null;
   private String command = null;
-  private BufferedReader myfilereader = null;
   private Process p = null;
 }
