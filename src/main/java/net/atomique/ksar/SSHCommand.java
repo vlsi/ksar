@@ -369,9 +369,9 @@ public class SSHCommand extends Thread {
     }
 
     String passwd;
-    JTextField passwordField = (JTextField) new JPasswordField(20);
+    JTextField passwordField = new JPasswordField(20);
     String passphrase;
-    JTextField passphraseField = (JTextField) new JPasswordField(20);
+    JTextField passphraseField = new JPasswordField(20);
 
     public String getPassphrase() {
       return passphrase;
