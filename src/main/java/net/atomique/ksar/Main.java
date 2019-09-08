@@ -108,8 +108,8 @@ public class Main {
           } else {
             exit_error(resource.getString("INPUT_REQUIRE_ARG"));
           }
-          continue;
         }
+
       }
     }
 
