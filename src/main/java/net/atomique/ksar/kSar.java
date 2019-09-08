@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JDesktopPane;
 
@@ -93,11 +94,11 @@ public class kSar {
   }
 
   public int parse(BufferedReader br) {
-    String current_line = null;
-    long parsing_start = 0L;
-    long parsing_end = 0L;
+    String current_line;
+    long parsing_start;
+    long parsing_end;
     String[] columns;
-    int parser_return = 0;
+    int parser_return;
 
     parsing_start = System.currentTimeMillis();
 
@@ -115,12 +116,14 @@ public class kSar {
           continue;
         }
 
-        String ParserType = columns[0];
+        //log.debug("Header Line : {}", current_line);
+        String firstColumn = columns[0];
+
         try {
-          Class classtmp = GlobalOptions.getParser(ParserType);
+          Class<?> classtmp = GlobalOptions.getParser(firstColumn);
           if (classtmp != null) {
             if (myparser == null) {
-              myparser = (OSParser) classtmp.newInstance();
+              myparser = (OSParser) classtmp.getDeclaredConstructor().newInstance();
               myparser.init(this, current_line);
 
               continue;
@@ -131,7 +134,7 @@ public class kSar {
               }
             }
           }
-        } catch (InstantiationException | IllegalAccessException ex) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex) {
           log.error("Parser Exception", ex);
         }
 
@@ -166,6 +169,7 @@ public class kSar {
     parsing_end = System.currentTimeMillis();
     if (GlobalOptions.isDodebug()) {
       log.trace("time to parse: {} ms", (parsing_end - parsing_start));
+      log.trace("lines parsed: {}", lines_parsed);
       if (myparser != null) {
         log.trace("number of datesamples: {}", myparser.DateSamples.size());
       }
@@ -174,19 +178,15 @@ public class kSar {
     return -1;
   }
 
-  public void cleared() {
+  void cleared() {
     aborted();
   }
 
-  public void aborted() {
+  private void aborted() {
     if (dataview != null) {
       log.trace("reset menu");
       dataview.notifyrun(false);
     }
-  }
-
-  public boolean isAction_interrupted() {
-    return action_interrupted;
   }
 
   public void interrupt_parsing() {
@@ -207,11 +207,10 @@ public class kSar {
     return page_to_print;
   }
 
-  public void count_printSelected(SortedTreeNode node) {
+  private void count_printSelected(SortedTreeNode node) {
     int num = node.getChildCount();
 
     if (num > 0) {
-      Object obj1 = node.getUserObject();
       for (int i = 0; i < num; i++) {
         SortedTreeNode l = (SortedTreeNode) node.getChildAt(i);
         count_printSelected(l);
@@ -228,7 +227,7 @@ public class kSar {
     }
   }
 
-  public DataView getDataView() {
+  DataView getDataView() {
     return dataview;
   }
 
@@ -236,14 +235,13 @@ public class kSar {
     return Parsing;
   }
 
-  DataView dataview = null;
-  private long lines_parsed = 0L;
+  private DataView dataview = null;
+  private long lines_parsed;
   private String reload_action = "Empty";
   private Thread launched_action = null;
   private boolean action_interrupted = false;
   public OSParser myparser = null;
   private boolean Parsing = false;
-  public int total_graph = 0;
   public SortedTreeNode graphtree = new SortedTreeNode("kSar");
-  public int page_to_print = 0;
+  private int page_to_print = 0;
 }
