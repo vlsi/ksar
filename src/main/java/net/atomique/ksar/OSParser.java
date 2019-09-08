@@ -24,10 +24,10 @@ public abstract class OSParser extends AllParser {
   }
 
   public void init(kSar hissar, String header) {
-    String[] s = header.split("\\s+");
+    String parserName = header.split("\\s+", 2)[0];
     mysar = hissar;
-    ParserName = s[0];
-    myosconfig = GlobalOptions.getOSinfo(s[0]);
+    ParserName = parserName;
+    myosconfig = GlobalOptions.getOSinfo(parserName);
     parse_header(header);
   }
 
