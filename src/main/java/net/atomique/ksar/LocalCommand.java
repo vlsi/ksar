@@ -22,7 +22,7 @@ public class LocalCommand extends Thread {
 
   private static final Logger log = LoggerFactory.getLogger(LocalCommand.class);
 
-  public LocalCommand(kSar hissar) {
+  LocalCommand(kSar hissar) {
     mysar = hissar;
     try {
       command = JOptionPane.showInputDialog(GlobalOptions.getUI(), "Enter local command ", "sar -A");
@@ -42,10 +42,9 @@ public class LocalCommand extends Thread {
       in = null;
     }
 
-    return;
   }
 
-  public LocalCommand(kSar hissar, String hiscommand) {
+  LocalCommand(kSar hissar, String hiscommand) {
     mysar = hissar;
     command = hiscommand;
     try {
@@ -66,7 +65,6 @@ public class LocalCommand extends Thread {
       in = null;
     }
 
-    return;
   }
 
   private void close() {
@@ -99,7 +97,7 @@ public class LocalCommand extends Thread {
     close();
   }
 
-  public String get_action() {
+  String get_action() {
     if (command != null) {
       return "cmd://" + command;
     } else {
@@ -107,7 +105,7 @@ public class LocalCommand extends Thread {
     }
   }
 
-  private kSar mysar = null;
+  private kSar mysar;
   private InputStream in = null;
   private String command = null;
   private BufferedReader myfilereader = null;
