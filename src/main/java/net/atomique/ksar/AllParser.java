@@ -40,9 +40,9 @@ public abstract class AllParser {
   }
 
   public void init(kSar hissar, String header) {
-    String[] s = header.split("\\s+");
+    String parserName = header.split("\\s+", 2)[0];
     mysar = hissar;
-    ParserName = s[0];
+    ParserName = parserName;
     parse_header(header);
   }
 
