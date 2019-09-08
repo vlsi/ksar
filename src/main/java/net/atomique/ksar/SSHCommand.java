@@ -293,7 +293,6 @@ public class SSHCommand extends Thread {
     }
     command = tmp.getUsername() + "@" + tmp.getHostname() + "=" + commandComboBox.getSelectedItem();
     GlobalOptions.addHistory(tmp);
-    return;
 
   }
 
@@ -335,21 +334,23 @@ public class SSHCommand extends Thread {
               JOptionPane.ERROR_MESSAGE);
         }
       }
+
       myfile.close();
       myerror.close();
       tmpin.close();
       tmperr.close();
       in.close();
       err.close();
+
       channel.disconnect();
       session.disconnect();
       channel = null;
       session = null;
+
     } catch (Exception ex) {
       ex.printStackTrace();
       log.error("Exception", ex);
     }
-    return;
   }
 
   public class MyUserInfo implements UserInfo, UIKeyboardInteractive {
@@ -480,8 +481,6 @@ public class SSHCommand extends Thread {
     public void showMessage(String message) {
       if (GlobalOptions.hasUI()) {
         JOptionPane.showMessageDialog(GlobalOptions.getUI(), message);
-      } else {
-        return;
       }
     }
   }
