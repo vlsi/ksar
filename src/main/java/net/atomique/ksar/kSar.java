@@ -185,10 +185,6 @@ public class kSar {
     }
   }
 
-  public boolean isAction_interrupted() {
-    return action_interrupted;
-  }
-
   public void interrupt_parsing() {
     if (isParsing()) {
       action_interrupted = true;
@@ -243,7 +239,6 @@ public class kSar {
   private boolean action_interrupted = false;
   public OSParser myparser = null;
   private boolean Parsing = false;
-  public int total_graph = 0;
   public SortedTreeNode graphtree = new SortedTreeNode("kSar");
   public int page_to_print = 0;
 }
