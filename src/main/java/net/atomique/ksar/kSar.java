@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JDesktopPane;
 
@@ -115,12 +116,14 @@ public class kSar {
           continue;
         }
 
-        String ParserType = columns[0];
+        //log.debug("Header Line : {}", current_line);
+        String firstColumn = columns[0];
+
         try {
-          Class classtmp = GlobalOptions.getParser(ParserType);
+          Class<?> classtmp = GlobalOptions.getParser(firstColumn);
           if (classtmp != null) {
             if (myparser == null) {
-              myparser = (OSParser) classtmp.newInstance();
+              myparser = (OSParser) classtmp.getDeclaredConstructor().newInstance();
               myparser.init(this, current_line);
 
               continue;
@@ -131,7 +134,7 @@ public class kSar {
               }
             }
           }
-        } catch (InstantiationException | IllegalAccessException ex) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex) {
           log.error("Parser Exception", ex);
         }
 
@@ -166,6 +169,7 @@ public class kSar {
     parsing_end = System.currentTimeMillis();
     if (GlobalOptions.isDodebug()) {
       log.trace("time to parse: {} ms", (parsing_end - parsing_start));
+      log.trace("lines parsed: {}", lines_parsed);
       if (myparser != null) {
         log.trace("number of datesamples: {}", myparser.DateSamples.size());
       }
