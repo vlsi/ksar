@@ -6,6 +6,7 @@
 package net.atomique.ksar;
 
 import net.atomique.ksar.ui.Desktop;
+import org.apache.logging.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,8 +92,14 @@ public class Main {
           usage();
           continue;
         }
-        if ("-test".equals(arg)) {
+        if ("-test".equals(arg) || "-debug".equals(arg)) {
           GlobalOptions.setDodebug(true);
+          org.apache.logging.log4j.core.config.Configurator.setRootLevel(Level.DEBUG);
+          continue;
+        }
+        if ("-trace".equals(arg)) {
+          GlobalOptions.setDodebug(true);
+          org.apache.logging.log4j.core.config.Configurator.setRootLevel(Level.TRACE);
           continue;
         }
         if ("-input".equals(arg)) {

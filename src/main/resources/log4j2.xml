@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration status="OFF">
+<configuration status="error">
     <appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
@@ -9,11 +9,7 @@
         </File>
     </appenders>
     <Loggers>
-        <Logger name="org.apache.log4j.xml" level="all" additivity="false">
-            <AppenderRef ref="Console" />
-            <AppenderRef ref="MyFile"/>
-        </Logger>
-        <Root level="all">
+        <Root level="error">
             <AppenderRef ref="Console" />
             <AppenderRef ref="MyFile"/>
         </Root>
