@@ -24,7 +24,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.swing.DefaultComboBoxModel;
@@ -202,13 +201,14 @@ public class SSHCommand extends Thread {
   private void connect() {
     CnxHistory tmp = new CnxHistory((String) HostComboBox.getSelectedItem());
     tmp.addCommand((String) commandComboBox.getSelectedItem());
+
     jsch = new JSch();
-    //JSch.setLogger(new MyLogger());
     try {
       session = jsch.getSession(tmp.getUsername(), tmp.getHostname(), tmp.getPortInt());
     } catch (JSchException ex) {
       log.error("JSchException ", ex);
     }
+
     java.util.Properties config = new java.util.Properties();
     config.put("StrictHostKeyChecking", "no");
     session.setConfig(config);
@@ -483,28 +483,6 @@ public class SSHCommand extends Thread {
       } else {
         return;
       }
-    }
-  }
-
-  public static class MyLogger implements com.jcraft.jsch.Logger {
-
-    static HashMap<Integer, String> name = new HashMap<Integer, String>();
-
-    static {
-      name.put(new Integer(DEBUG), "DEBUG: ");
-      name.put(new Integer(INFO), "INFO: ");
-      name.put(new Integer(WARN), "WARN: ");
-      name.put(new Integer(ERROR), "ERROR: ");
-      name.put(new Integer(FATAL), "FATAL: ");
-    }
-
-    public boolean isEnabled(int level) {
-      return true;
-    }
-
-    public void log(int level, String message) {
-      log.debug(name.get(new Integer(level)));
-      log.debug(message);
     }
   }
 
