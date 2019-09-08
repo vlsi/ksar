@@ -174,11 +174,11 @@ public class kSar {
     return -1;
   }
 
-  public void cleared() {
+  void cleared() {
     aborted();
   }
 
-  public void aborted() {
+  private void aborted() {
     if (dataview != null) {
       log.trace("reset menu");
       dataview.notifyrun(false);
@@ -203,11 +203,10 @@ public class kSar {
     return page_to_print;
   }
 
-  public void count_printSelected(SortedTreeNode node) {
+  private void count_printSelected(SortedTreeNode node) {
     int num = node.getChildCount();
 
     if (num > 0) {
-      Object obj1 = node.getUserObject();
       for (int i = 0; i < num; i++) {
         SortedTreeNode l = (SortedTreeNode) node.getChildAt(i);
         count_printSelected(l);
@@ -224,7 +223,7 @@ public class kSar {
     }
   }
 
-  public DataView getDataView() {
+  DataView getDataView() {
     return dataview;
   }
 
@@ -232,7 +231,7 @@ public class kSar {
     return Parsing;
   }
 
-  DataView dataview = null;
+  private DataView dataview = null;
   private long lines_parsed;
   private String reload_action = "Empty";
   private Thread launched_action = null;
@@ -240,5 +239,5 @@ public class kSar {
   public OSParser myparser = null;
   private boolean Parsing = false;
   public SortedTreeNode graphtree = new SortedTreeNode("kSar");
-  public int page_to_print = 0;
+  private int page_to_print = 0;
 }
