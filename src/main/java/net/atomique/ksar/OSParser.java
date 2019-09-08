@@ -24,6 +24,8 @@ public abstract class OSParser extends AllParser {
   }
 
   public void init(kSar hissar, String header) {
+
+    log.debug("Initialize Parser: {}", this.getClass().getName());
     String parserName = header.split("\\s+", 2)[0];
     mysar = hissar;
     ParserName = parserName;

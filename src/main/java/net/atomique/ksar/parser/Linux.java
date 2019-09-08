@@ -100,6 +100,7 @@ public class Linux extends OSParser {
     }
 
     if (line.contains("LINUX RESTART")) {
+      log.debug("{}", line);
       return 0;
     }
 
@@ -181,13 +182,9 @@ public class Linux extends OSParser {
       }
     }
 
-    //log.trace("{} {}", currentStat, line);
-
     if (lastStat != null) {
       if (!lastStat.equals(currentStat)) {
-        if (GlobalOptions.isDodebug()) {
-          log.debug("Stat change from {} to {}", lastStat, currentStat);
-        }
+        log.debug("Stat change from {} to {}", lastStat, currentStat);
         lastStat = currentStat;
       }
     } else {
