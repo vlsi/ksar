@@ -7,7 +7,6 @@ package net.atomique.ksar.graph;
 
 import net.atomique.ksar.Config;
 import net.atomique.ksar.GlobalOptions;
-import net.atomique.ksar.OSParser;
 import net.atomique.ksar.kSar;
 import net.atomique.ksar.ui.SortedTreeNode;
 import net.atomique.ksar.ui.TreeNodeInfo;
@@ -202,7 +201,7 @@ public class Graph {
       // insert not possible
       // check if column can be update
       StatConfig statconfig =
-          ((OSParser) mysar.myparser).get_OSConfig().getStat(mysar.myparser.getCurrentStat());
+          mysar.myparser.get_OSConfig().getStat(mysar.myparser.getCurrentStat());
       if (statconfig != null) {
         if (statconfig.canDuplicateTime()) {
           Number oldval = ((Stats.get(col))).getValue(now);

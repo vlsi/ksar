@@ -81,10 +81,7 @@ public class CnxHistory {
     if (hostname == null) {
       return false;
     }
-    if (commandList.isEmpty()) {
-      return false;
-    }
-    return true;
+    return !commandList.isEmpty();
   }
 
   public void dump() {
