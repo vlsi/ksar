@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -24,7 +25,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.swing.DefaultComboBoxModel;
@@ -94,7 +94,7 @@ public class SSHCommand extends Thread {
     dialog.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     dialog.setModalityType(java.awt.Dialog.ModalityType.DOCUMENT_MODAL);
 
-    titleLabel.setFont(new java.awt.Font("Tahoma", 1, 14));
+    titleLabel.setFont(new java.awt.Font("Tahoma", Font.BOLD, 14));
     titleLabel.setText("SSH Connection");
     headerpanel.add(titleLabel);
 
@@ -202,13 +202,14 @@ public class SSHCommand extends Thread {
   private void connect() {
     CnxHistory tmp = new CnxHistory((String) HostComboBox.getSelectedItem());
     tmp.addCommand((String) commandComboBox.getSelectedItem());
+
     jsch = new JSch();
-    //JSch.setLogger(new MyLogger());
     try {
       session = jsch.getSession(tmp.getUsername(), tmp.getHostname(), tmp.getPortInt());
     } catch (JSchException ex) {
       log.error("JSchException ", ex);
     }
+
     java.util.Properties config = new java.util.Properties();
     config.put("StrictHostKeyChecking", "no");
     session.setConfig(config);
@@ -293,7 +294,6 @@ public class SSHCommand extends Thread {
     }
     command = tmp.getUsername() + "@" + tmp.getHostname() + "=" + commandComboBox.getSelectedItem();
     GlobalOptions.addHistory(tmp);
-    return;
 
   }
 
@@ -314,7 +314,7 @@ public class SSHCommand extends Thread {
         // no data and not in timeout
         try {
           Thread.sleep(100);
-        } catch (Exception ee) {
+        } catch (Exception ignored) {
         }
         max_waitdata--;
       }
@@ -335,21 +335,23 @@ public class SSHCommand extends Thread {
               JOptionPane.ERROR_MESSAGE);
         }
       }
+
       myfile.close();
       myerror.close();
       tmpin.close();
       tmperr.close();
       in.close();
       err.close();
+
       channel.disconnect();
       session.disconnect();
       channel = null;
       session = null;
+
     } catch (Exception ex) {
       ex.printStackTrace();
       log.error("Exception", ex);
     }
-    return;
   }
 
   public class MyUserInfo implements UserInfo, UIKeyboardInteractive {
@@ -367,9 +369,9 @@ public class SSHCommand extends Thread {
     }
 
     String passwd;
-    JTextField passwordField = (JTextField) new JPasswordField(20);
+    JTextField passwordField = new JPasswordField(20);
     String passphrase;
-    JTextField passphraseField = (JTextField) new JPasswordField(20);
+    JTextField passphraseField = new JPasswordField(20);
 
     public String getPassphrase() {
       return passphrase;
@@ -465,11 +467,9 @@ public class SSHCommand extends Thread {
       if (JOptionPane.showConfirmDialog(GlobalOptions.getUI(), panel, destination + " : " + name,
           JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION) {
         String[] response = new String[prompt.length];
-        StringBuilder t = new StringBuilder();
 
         for (int i = 0; i < prompt.length; i++) {
           response[i] = texts[i].getText();
-          t.append(response[i]);
         }
         return response;
       } else {
@@ -480,31 +480,7 @@ public class SSHCommand extends Thread {
     public void showMessage(String message) {
       if (GlobalOptions.hasUI()) {
         JOptionPane.showMessageDialog(GlobalOptions.getUI(), message);
-      } else {
-        return;
       }
-    }
-  }
-
-  public static class MyLogger implements com.jcraft.jsch.Logger {
-
-    static HashMap<Integer, String> name = new HashMap<Integer, String>();
-
-    static {
-      name.put(new Integer(DEBUG), "DEBUG: ");
-      name.put(new Integer(INFO), "INFO: ");
-      name.put(new Integer(WARN), "WARN: ");
-      name.put(new Integer(ERROR), "ERROR: ");
-      name.put(new Integer(FATAL), "FATAL: ");
-    }
-
-    public boolean isEnabled(int level) {
-      return true;
-    }
-
-    public void log(int level, String message) {
-      log.debug(name.get(new Integer(level)));
-      log.debug(message);
     }
   }
 
