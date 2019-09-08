@@ -314,7 +314,7 @@ public class SSHCommand extends Thread {
         // no data and not in timeout
         try {
           Thread.sleep(100);
-        } catch (Exception ee) {
+        } catch (Exception ignored) {
         }
         max_waitdata--;
       }
