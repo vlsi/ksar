@@ -31,7 +31,7 @@ public class Preferences extends javax.swing.JDialog {
   }
 
   private void load_landf() {
-    UIManager.LookAndFeelInfo looks[] = UIManager.getInstalledLookAndFeels();
+    UIManager.LookAndFeelInfo[] looks = UIManager.getInstalledLookAndFeels();
     for (int i = 0, n = looks.length; i < n; i++) {
       String tmp = looks[i].getName();
       UI_lanf_model.addElement(tmp);
