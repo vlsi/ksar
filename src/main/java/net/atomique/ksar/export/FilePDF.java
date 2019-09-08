@@ -118,6 +118,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
     export_treenode(mysar.graphtree, root);
 
     document.close();
+    writer.close();
 
     if (dialog != null) {
       dialog.dispose();

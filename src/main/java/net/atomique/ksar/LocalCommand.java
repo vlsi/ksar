@@ -22,7 +22,7 @@ public class LocalCommand extends Thread {
 
   private static final Logger log = LoggerFactory.getLogger(LocalCommand.class);
 
-  public LocalCommand(kSar hissar) {
+  LocalCommand(kSar hissar) {
     mysar = hissar;
     try {
       command = JOptionPane.showInputDialog(GlobalOptions.getUI(), "Enter local command ", "sar -A");
@@ -30,8 +30,7 @@ public class LocalCommand extends Thread {
         return;
       }
       String[] cmdArray = command.split(" +");
-      List<String> cmdList = new ArrayList<String>();
-      cmdList.addAll(Arrays.asList(cmdArray));
+      List<String> cmdList = new ArrayList<>(Arrays.asList(cmdArray));
       ProcessBuilder pb = new ProcessBuilder(cmdList);
       pb.environment().put("LC_ALL", "C");
       p = pb.start();
@@ -42,10 +41,9 @@ public class LocalCommand extends Thread {
       in = null;
     }
 
-    return;
   }
 
-  public LocalCommand(kSar hissar, String hiscommand) {
+  LocalCommand(kSar hissar, String hiscommand) {
     mysar = hissar;
     command = hiscommand;
     try {
@@ -66,40 +64,33 @@ public class LocalCommand extends Thread {
       in = null;
     }
 
-    return;
   }
 
   private void close() {
     if (p != null) {
       p.destroy();
     }
-
-    try {
-      if (myfilereader != null) {
-        myfilereader.close();
-      }
-    } catch (IOException ex) {
-      log.error("IO Exception", ex);
-    }
   }
 
   public void run() {
-    String current_line;
 
     if (in == null) {
       return;
     }
-    myfilereader = new BufferedReader(new InputStreamReader(in));
-    if (myfilereader == null) {
-      return;
+
+    try {
+      BufferedReader myfilereader = new BufferedReader(new InputStreamReader(in));
+      mysar.parse(myfilereader);
+      myfilereader.close();
+    } catch (IOException ex) {
+      log.error("IO Exception", ex);
     }
 
-    mysar.parse(myfilereader);
 
     close();
   }
 
-  public String get_action() {
+  String get_action() {
     if (command != null) {
       return "cmd://" + command;
     } else {
@@ -107,9 +98,8 @@ public class LocalCommand extends Thread {
     }
   }
 
-  private kSar mysar = null;
+  private kSar mysar;
   private InputStream in = null;
   private String command = null;
-  private BufferedReader myfilereader = null;
   private Process p = null;
 }
