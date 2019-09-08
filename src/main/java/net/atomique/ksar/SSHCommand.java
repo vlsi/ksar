@@ -466,11 +466,9 @@ public class SSHCommand extends Thread {
       if (JOptionPane.showConfirmDialog(GlobalOptions.getUI(), panel, destination + " : " + name,
           JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION) {
         String[] response = new String[prompt.length];
-        StringBuilder t = new StringBuilder();
 
         for (int i = 0; i < prompt.length; i++) {
           response[i] = texts[i].getText();
-          t.append(response[i]);
         }
         return response;
       } else {
