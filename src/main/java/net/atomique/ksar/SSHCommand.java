@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -93,7 +94,7 @@ public class SSHCommand extends Thread {
     dialog.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     dialog.setModalityType(java.awt.Dialog.ModalityType.DOCUMENT_MODAL);
 
-    titleLabel.setFont(new java.awt.Font("Tahoma", 1, 14));
+    titleLabel.setFont(new java.awt.Font("Tahoma", Font.BOLD, 14));
     titleLabel.setText("SSH Connection");
     headerpanel.add(titleLabel);
 
