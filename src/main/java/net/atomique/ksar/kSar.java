@@ -93,11 +93,11 @@ public class kSar {
   }
 
   public int parse(BufferedReader br) {
-    String current_line = null;
-    long parsing_start = 0L;
-    long parsing_end = 0L;
+    String current_line;
+    long parsing_start;
+    long parsing_end;
     String[] columns;
-    int parser_return = 0;
+    int parser_return;
 
     parsing_start = System.currentTimeMillis();
 
@@ -237,7 +237,7 @@ public class kSar {
   }
 
   DataView dataview = null;
-  private long lines_parsed = 0L;
+  private long lines_parsed;
   private String reload_action = "Empty";
   private Thread launched_action = null;
   private boolean action_interrupted = false;
