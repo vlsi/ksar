@@ -30,8 +30,7 @@ public class LocalCommand extends Thread {
         return;
       }
       String[] cmdArray = command.split(" +");
-      List<String> cmdList = new ArrayList<String>();
-      cmdList.addAll(Arrays.asList(cmdArray));
+      List<String> cmdList = new ArrayList<>(Arrays.asList(cmdArray));
       ProcessBuilder pb = new ProcessBuilder(cmdList);
       pb.environment().put("LC_ALL", "C");
       p = pb.start();
