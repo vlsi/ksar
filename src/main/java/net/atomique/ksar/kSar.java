@@ -167,11 +167,11 @@ public class kSar {
     }
 
     parsing_end = System.currentTimeMillis();
-      log.trace("time to parse: {} ms", (parsing_end - parsing_start));
-      log.trace("lines parsed: {}", lines_parsed);
-      if (myparser != null) {
-        log.trace("number of datesamples: {}", myparser.DateSamples.size());
-      }
+    log.trace("time to parse: {} ms", (parsing_end - parsing_start));
+    log.trace("lines parsed: {}", lines_parsed);
+    if (myparser != null) {
+      log.trace("number of datesamples: {}", myparser.DateSamples.size());
+    }
     Parsing = false;
     return -1;
   }
