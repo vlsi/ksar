@@ -125,14 +125,6 @@ public class GlobalOptions {
     return OSlist.get(s);
   }
 
-  public static boolean isDodebug() {
-    return dodebug;
-  }
-
-  static void setDodebug(boolean do_debug) {
-    GlobalOptions.dodebug = do_debug;
-  }
-
   static String getCLfilename() {
     return CLfilename;
   }
@@ -252,7 +244,6 @@ public class GlobalOptions {
   private static HashMap<String, OSConfig> OSlist;
   private static HashMap<String, CnxHistory> HistoryList;
   private static HashMap<String, HostInfo> HostInfoList;
-  private static boolean dodebug = false;
   private static String CLfilename = null;
   private static HashMap<String, Class> ParserMap;
   private static boolean firstrun = true;
