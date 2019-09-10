@@ -170,7 +170,7 @@
                 <graphname>IGNORE</graphname>
             </Stat>
             <Stat name="miscip4">
-                <headerstr>imsg/s omsg/s iech/s iechr/s oech/s oechr/s itm/s itmr/s otm/s otmr/s iadrmk/s iadrmkr/s  oadrmk/s oadrmkr/s</headerstr>
+                <headerstr>imsg/s omsg/s iech/s iechr/s oech/s oechr/s itm/s itmr/s otm/s otmr/s iadrmk/s iadrmkr/s oadrmk/s oadrmkr/s</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
             <Stat name="miscip5">
@@ -190,7 +190,7 @@
                 <graphname>IGNORE</graphname>
             </Stat>
             <Stat name="miscip10">
-                <headerstr>imsg6/s omsg6/s iech6/s iechr6/s oechr6/s igmbq6/s  igmbr6/s ogmbr6/s igmbrd6/s ogmbrd6/s irtsol6/s ortsol6/s irtad6/s inbsol6/s onbsol6/s inbad6/s onbad6/s</headerstr>
+                <headerstr>imsg6/s omsg6/s iech6/s iechr6/s oechr6/s igmbq6/s igmbr6/s ogmbr6/s igmbrd6/s ogmbrd6/s irtsol6/s ortsol6/s irtad6/s inbsol6/s onbsol6/s inbad6/s onbad6/s</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
             <Stat name="miscip12">
@@ -202,7 +202,7 @@
                 <graphname>IGNORE</graphname>
             </Stat>
             <Stat name="miscip15">
-                <headerstr>ierr6/s idtunr6/s odtunr6/s  itmex6/s  otmex6/s iprmpb6/s oprmpb6/s iredir6/s oredir6/s ipck2b6/s opck2b6/s</headerstr>
+                <headerstr>ierr6/s idtunr6/s odtunr6/s itmex6/s otmex6/s iprmpb6/s oprmpb6/s iredir6/s oredir6/s ipck2b6/s opck2b6/s</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
             <Stat name="misci_temp">
