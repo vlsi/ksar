@@ -189,6 +189,10 @@
                 <headerstr>idgm/s odgm/s noport/s idgmerr/s</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
+            <Stat name="miscip9">
+                <headerstr>idgm6/s odgm6/s noport6/s idgmer6/s</headerstr>
+                <graphname>IGNORE</graphname>
+            </Stat>
             <Stat name="miscip10">
                 <headerstr>imsg6/s omsg6/s iech6/s iechr6/s oechr6/s igmbq6/s igmbr6/s ogmbr6/s igmbrd6/s ogmbrd6/s irtsol6/s ortsol6/s irtad6/s inbsol6/s onbsol6/s inbad6/s onbad6/s</headerstr>
                 <graphname>IGNORE</graphname>
