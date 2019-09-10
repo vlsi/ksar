@@ -449,9 +449,9 @@ public class Graph {
     JFreeChart mychart = new JFreeChart(graphtitle, Config.getDEFAULT_FONT(), plot, true);
     long endgenerate = System.currentTimeMillis();
     mychart.setBackgroundPaint(Color.white);
-    if (GlobalOptions.isDodebug()) {
-      log.debug("graph generation: {} ms", (endgenerate - begingenerate));
-    }
+
+    log.debug("graph generation: {} ms", (endgenerate - begingenerate));
+
     return mychart;
   }
 

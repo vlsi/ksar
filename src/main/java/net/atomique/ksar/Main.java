@@ -93,12 +93,10 @@ public class Main {
           continue;
         }
         if ("-test".equals(arg) || "-debug".equals(arg)) {
-          GlobalOptions.setDodebug(true);
           org.apache.logging.log4j.core.config.Configurator.setRootLevel(Level.DEBUG);
           continue;
         }
         if ("-trace".equals(arg)) {
-          GlobalOptions.setDodebug(true);
           org.apache.logging.log4j.core.config.Configurator.setRootLevel(Level.TRACE);
           continue;
         }

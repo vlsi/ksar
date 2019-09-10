@@ -146,10 +146,10 @@ public class kSar {
         }
 
         parser_return = myparser.parse(current_line, columns);
-        if (parser_return == 1 && GlobalOptions.isDodebug()) {
+        if (parser_return == 1) {
           log.trace("### {}", current_line);
         }
-        if (parser_return < 0 && GlobalOptions.isDodebug()) {
+        if (parser_return < 0) {
           log.trace("ERR {}", current_line);
         }
 
@@ -167,12 +167,10 @@ public class kSar {
     }
 
     parsing_end = System.currentTimeMillis();
-    if (GlobalOptions.isDodebug()) {
-      log.trace("time to parse: {} ms", (parsing_end - parsing_start));
-      log.trace("lines parsed: {}", lines_parsed);
-      if (myparser != null) {
-        log.trace("number of datesamples: {}", myparser.DateSamples.size());
-      }
+    log.trace("time to parse: {} ms", (parsing_end - parsing_start));
+    log.trace("lines parsed: {}", lines_parsed);
+    if (myparser != null) {
+      log.trace("number of datesamples: {}", myparser.DateSamples.size());
     }
     Parsing = false;
     return -1;

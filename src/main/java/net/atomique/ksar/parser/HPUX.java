@@ -5,7 +5,6 @@
 
 package net.atomique.ksar.parser;
 
-import net.atomique.ksar.GlobalOptions;
 import net.atomique.ksar.OSParser;
 import net.atomique.ksar.graph.Graph;
 import net.atomique.ksar.graph.List;
@@ -114,9 +113,7 @@ public class HPUX extends OSParser {
 
     if (lastStat != null) {
       if (!lastStat.equals(currentStat)) {
-        if (GlobalOptions.isDodebug()) {
-          log.debug("Stat change from {} to {}", lastStat, currentStat);
-        }
+        log.debug("Stat change from {} to {}", lastStat, currentStat);
         lastStat = currentStat;
         under_average = false;
       }

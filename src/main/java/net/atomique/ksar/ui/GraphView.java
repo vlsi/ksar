@@ -126,9 +126,8 @@ public class GraphView extends javax.swing.JPanel {
 
     buffer = thegraph.make_csv();
 
-    if (GlobalOptions.isDodebug()) {
-      log.debug(buffer);
-    }
+    log.debug(buffer);
+
     BufferedWriter out = null;
     try {
       out = new BufferedWriter(new FileWriter(filename));
