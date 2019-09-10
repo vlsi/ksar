@@ -72,6 +72,23 @@
             <color>255,130,130</color>
         </itemcolor>
 
+        <!--CPU Network-->
+        <itemcolor name="total/s">
+            <color>0,0,0</color>
+        </itemcolor>
+        <itemcolor name="dropd/s">
+            <color>255,0,0</color>
+        </itemcolor>
+        <itemcolor name="squeezd/s">
+            <color>255,255,0</color>
+        </itemcolor>
+        <itemcolor name="rx_rps/s">
+            <color>85,90,250</color>
+        </itemcolor>
+        <itemcolor name="flw_lim/s">
+            <color>255,170,255</color>
+        </itemcolor>
+
         <!--Devices (Block)-->
         <itemcolor name="tps">
             <color>255,0,0</color>
