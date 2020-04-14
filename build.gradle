@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "4.0.4"
+    id "com.github.johnrengelman.shadow" version "5.2.0"
 }
 
 apply plugin: 'java'
@@ -36,8 +36,10 @@ tasks.withType(JavaCompile){
     options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
 }
 
-task writeVersion << {
-    new File("build/resources/main/kSar.version").text = version
+task writeVersion {
+    doLast {
+        new File("build/resources/main/kSar.version").text = version
+    }
 }
 classes.dependsOn(writeVersion)
 
@@ -54,7 +56,7 @@ checkstyle {
 jar {
     manifest {
         attributes("Implementation-Title": "kSAR",
-                "Implementation-Version": version,
+                "Implementation-Version": getArchiveVersion(),
                 "SplashScreen-Image": "logo_ksar.jpg")
     }
 }
