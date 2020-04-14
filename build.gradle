@@ -50,7 +50,7 @@ test {
 }
 
 checkstyle {
-    configFile = new File(rootDir, "/src/main/checkstyle/postgressql-checks.xml")
+    configFile = new File(rootDir, "/src/main/checkstyle/ksar-checks.xml")
 }
 
 jar {
