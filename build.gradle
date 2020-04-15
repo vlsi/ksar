@@ -1,11 +1,9 @@
 plugins {
+    id 'java'
+    id 'application'
     id "com.github.johnrengelman.shadow" version "5.2.0"
+    id 'checkstyle'
 }
-
-apply plugin: 'java'
-apply plugin: 'application'
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: 'checkstyle'
 
 group = 'com.github.vlsi.ksar'
 archivesBaseName = 'ksar'
