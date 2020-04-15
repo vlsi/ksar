@@ -5,7 +5,6 @@
 
 package net.atomique.ksar.parser;
 
-
 import static org.junit.Assert.assertEquals;
 
 import net.atomique.ksar.Config;

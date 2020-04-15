@@ -67,9 +67,9 @@ public class IEEE1541NumberFactor1024Test {
         {2725414.8, 2.6, "Gi"},     //Ki_to_1digit_Gi
         {27254140.8, 26.0, "Gi"},     //Ki_to_2digit_Gi
         {272541400.8, 259.9, "Gi"},     //Ki_to_3digit_Gi
-    //   {    2725414000.8,   2.5, "TiB"},     //Ki_to_1digit_Ti
-    //   {   27254140000.8,  25.4, "TiB"},     //Ki_to_2digit_Ti
-    //   {  272541400000.8, 253.8, "TiB"},     //Ki_to_3digit_Ti
+        //   {    2725414000.8,   2.5, "TiB"},     //Ki_to_1digit_Ti
+        //   {   27254140000.8,  25.4, "TiB"},     //Ki_to_2digit_Ti
+        //   {  272541400000.8, 253.8, "TiB"},     //Ki_to_3digit_Ti
     });
   }
 
