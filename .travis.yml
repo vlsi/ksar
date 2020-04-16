@@ -22,15 +22,15 @@ cache:
   - $HOME/.gradle/caches
   - $HOME/.gradle/wrapper
 
-# GitHub Deploy Stage
 jobs:
+  fast_finish: true
+  allow_failures:
+    - jdk:  openjdk-ea
   include:
     - stage: test
       install: skip # will be done by gradlew check anyway
       script: ./gradlew check
-    - stage: jdk-ea
-      fast_finish: true
-      jdk:  openjdk-ea
+
     - stage: Github Release
       jdk:  openjdk8
       before_install:
@@ -46,11 +46,11 @@ jobs:
       deploy:
         provider: releases
         prerelease: true
-        api_key:
+        token:
           secure: iKXXqoxPMsoLGlhKMwRB7dVdU0ZvOjzRaxm73zjEsEgyErL7LJ6YG+3wJl24UW8zxgpvM5hW0DKUkWSLfVoHa/1l+Bsb8yREAKJTYldZs3pjhQxWM7OBMeKWjTA7WccYrx4ShHgbgUvl4IuHXNY91kcu1pC6lZukpDUvdX4Ii70=
         file_glob: true
         file: "build/libs/ksar-*all.jar"
-        skip_cleanup: true
+        cleanup: false
         on:
           tags: true
           repo: vlsi/ksar
