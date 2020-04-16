@@ -1,5 +1,7 @@
-sudo: false
 language: java
+
+os:
+  - linux
 
 jdk:
   - openjdk8
@@ -20,18 +22,15 @@ cache:
   - $HOME/.gradle/caches
   - $HOME/.gradle/wrapper
 
-#Test stage - Matrix expansion
-install: skip # will be done by gradlew check anyway
-script: ./gradlew check
-
-matrix:
-  fast_finish: true
-  allow_failures:
-    - jdk: openjdk-ea
-
 # GitHub Deploy Stage
 jobs:
   include:
+    - stage: test
+      install: skip # will be done by gradlew check anyway
+      script: ./gradlew check
+    - stage: jdk-ea
+      fast_finish: true
+      jdk:  openjdk-ea
     - stage: Github Release
       jdk:  openjdk8
       before_install:
