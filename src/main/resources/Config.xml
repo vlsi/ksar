@@ -111,6 +111,12 @@
         <itemcolor name="avgqu-sz">
             <color>255,255,170</color>
         </itemcolor>
+        <itemcolor name="areq-sz">
+            <color>170,255,170</color>
+        </itemcolor>
+        <itemcolor name="aqu-sz">
+            <color>255,255,170</color>
+        </itemcolor>
         <itemcolor name="await">
             <color>255,170,255</color>
         </itemcolor>

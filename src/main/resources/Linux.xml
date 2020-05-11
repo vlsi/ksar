@@ -386,7 +386,7 @@
                     <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="areq-sz [KiB] / aqu-sz">
-                    <cols>avgrq-sz avgqu-sz</cols>
+                    <cols>areq-sz aqu-sz</cols>
                 </Plot>
                 <Plot Title="Response [ms]">
                     <cols>await</cols>
