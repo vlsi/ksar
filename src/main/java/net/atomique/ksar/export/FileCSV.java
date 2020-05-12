@@ -15,8 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -40,14 +43,6 @@ public class FileCSV implements Runnable {
   }
 
   public void run() {
-    // open file
-    BufferedWriter out;
-    try {
-      out = new BufferedWriter(new FileWriter(csvfilename));
-    } catch (IOException ex) {
-      log.error("IO Exception", ex);
-      out = null;
-    }
 
     // print header
     tmpcsv.append("Date;");
@@ -71,19 +66,20 @@ public class FileCSV implements Runnable {
 
       export_treenode_data(mysar.graphtree, tmp);
       tmpcsv.append("\n");
-    }
-    try {
-      out.write(tmpcsv.toString());
-      out.close();
-    } catch (IOException ex) {
-      log.error("IO Exception", ex);
+
     }
 
+    try (BufferedWriter out = Files.newBufferedWriter( Paths.get(csvfilename), StandardCharsets.UTF_8)) {
+
+      out.write(tmpcsv.toString());
+
+    } catch (IOException ex) {
+      log.error("CSV IO Exception", ex);
+    }
 
     if (dialog != null) {
       dialog.dispose();
     }
-
   }
 
   private void export_treenode_header(SortedTreeNode node) {
