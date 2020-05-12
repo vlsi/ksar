@@ -44,7 +44,7 @@
             </Stat>
             <Stat name="runq">
                 <headerstr>runq-sz %runocc swpq-sz %swpocc</headerstr>
-                <graphname>IGNORE</graphname>
+                <graphname>RUNQ</graphname>
             </Stat>
             <Stat name="slot">
                 <headerstr>slots cycle/s fault/s odio/s</headerstr>
@@ -74,6 +74,8 @@
                 <headerstr>%usr %sys %wio %idle physc %entc</headerstr>
                 <graphname>CPU</graphname>
             </Stat>
+
+            <!-- GRAPHS -->
             <Graph name="CPU" Title="CPU" type="unique">
                 <Stack Title="Used" size="3">
                     <cols>%usr %sys %wio</cols>
@@ -88,6 +90,18 @@
                 </Stack>
                 <Plot Title="Idle">
                     <cols>%idle</cols>
+                </Plot>
+            </Graph>
+            <Graph name="RUNQ" Title="Runq" type="unique">
+                <Plot Title="RunQueue">
+                    <cols>runq-sz</cols>
+                </Plot>
+                <Plot Title="SwapQueue">
+                    <cols>swpq-sz</cols>
+                </Plot>
+                <Plot Title="Queues Occupied [%]">
+                    <cols>%runocc %swpocc</cols>
+                    <range>0,100</range>
                 </Plot>
             </Graph>
             <Graph name="TTY" Title="Tty" type="unique">
