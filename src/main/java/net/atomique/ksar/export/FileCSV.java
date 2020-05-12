@@ -6,9 +6,7 @@
 package net.atomique.ksar.export;
 
 import net.atomique.ksar.graph.Graph;
-import net.atomique.ksar.graph.List;
 import net.atomique.ksar.kSar;
-import net.atomique.ksar.ui.ParentNodeInfo;
 import net.atomique.ksar.ui.SortedTreeNode;
 import net.atomique.ksar.ui.TreeNodeInfo;
 import org.jfree.data.time.RegularTimePeriod;
@@ -17,11 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
 
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;
@@ -43,60 +43,54 @@ public class FileCSV implements Runnable {
   }
 
   public void run() {
-    // open file
-    BufferedWriter out;
-    try {
-      out = new BufferedWriter(new FileWriter(csvfilename));
-    } catch (IOException ex) {
-      log.error("IO Exception", ex);
-      out = null;
-    }
 
     // print header
     tmpcsv.append("Date;");
 
     export_treenode_header(mysar.graphtree);
     tmpcsv.append("\n");
-    Iterator<LocalDateTime> ite = mysar.myparser.getDateSamples().iterator();
-    while (ite.hasNext()) {
-      LocalDateTime tmpLDT = ite.next();
 
-      Second tmp = new Second(tmpLDT.getSecond(),
-          tmpLDT.getMinute(),
-          tmpLDT.getHour(),
-          tmpLDT.getDayOfMonth(),
-          tmpLDT.getMonthValue(),
-          tmpLDT.getYear());
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
 
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
+    for (LocalDateTime tmpLDT : mysar.myparser.getDateSamples()) {
+
       String text = tmpLDT.format(formatter);
       tmpcsv.append(text).append(";");
+
+      Second tmp = new Second(tmpLDT.getSecond(),
+              tmpLDT.getMinute(),
+              tmpLDT.getHour(),
+              tmpLDT.getDayOfMonth(),
+              tmpLDT.getMonthValue(),
+              tmpLDT.getYear());
+
       export_treenode_data(mysar.graphtree, tmp);
       tmpcsv.append("\n");
-    }
-    try {
-      out.write(tmpcsv.toString());
-      out.close();
-    } catch (IOException ex) {
-      log.error("IO Exception", ex);
+
     }
 
+    try (BufferedWriter out = Files.newBufferedWriter( Paths.get(csvfilename), StandardCharsets.UTF_8)) {
+
+      out.write(tmpcsv.toString());
+
+    } catch (IOException ex) {
+      log.error("CSV IO Exception", ex);
+    }
 
     if (dialog != null) {
       dialog.dispose();
     }
-
   }
 
   private void export_treenode_header(SortedTreeNode node) {
     int num = node.getChildCount();
 
     if (num > 0) {
-      Object obj1 = node.getUserObject();
+/*    Object obj1 = node.getUserObject();
       if (obj1 instanceof ParentNodeInfo) {
         ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
         List nodeobj = tmpnode.getNode_object();
-      }
+      }*/
       for (int i = 0; i < num; i++) {
         SortedTreeNode l = (SortedTreeNode) node.getChildAt(i);
         export_treenode_header(l);
@@ -118,11 +112,11 @@ public class FileCSV implements Runnable {
     int num = node.getChildCount();
 
     if (num > 0) {
-      Object obj1 = node.getUserObject();
-      if (obj1 instanceof ParentNodeInfo) {
+/*    Object obj1 = node.getUserObject();
+        if (obj1 instanceof ParentNodeInfo) {
         ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
         List nodeobj = tmpnode.getNode_object();
-      }
+      }*/
       for (int i = 0; i < num; i++) {
         SortedTreeNode l = (SortedTreeNode) node.getChildAt(i);
         export_treenode_data(l, time);
@@ -149,10 +143,10 @@ public class FileCSV implements Runnable {
 
   }
 
-  private StringBuilder tmpcsv = new StringBuilder();
+  private final StringBuilder tmpcsv = new StringBuilder();
   private int progress_info = 0;
-  private String csvfilename;
-  private kSar mysar;
+  private final String csvfilename;
+  private final kSar mysar;
   private JProgressBar progress_bar = null;
   private JDialog dialog = null;
 }
