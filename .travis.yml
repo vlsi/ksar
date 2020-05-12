@@ -51,6 +51,7 @@ jobs:
         file_glob: true
         file: "build/libs/ksar-*all.jar"
         cleanup: false
+        skip_cleanup: true
         on:
           tags: true
           repo: vlsi/ksar
