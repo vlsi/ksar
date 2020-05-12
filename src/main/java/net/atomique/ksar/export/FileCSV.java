@@ -6,9 +6,7 @@
 package net.atomique.ksar.export;
 
 import net.atomique.ksar.graph.Graph;
-import net.atomique.ksar.graph.List;
 import net.atomique.ksar.kSar;
-import net.atomique.ksar.ui.ParentNodeInfo;
 import net.atomique.ksar.ui.SortedTreeNode;
 import net.atomique.ksar.ui.TreeNodeInfo;
 import org.jfree.data.time.RegularTimePeriod;
@@ -92,11 +90,11 @@ public class FileCSV implements Runnable {
     int num = node.getChildCount();
 
     if (num > 0) {
-      Object obj1 = node.getUserObject();
+/*    Object obj1 = node.getUserObject();
       if (obj1 instanceof ParentNodeInfo) {
         ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
         List nodeobj = tmpnode.getNode_object();
-      }
+      }*/
       for (int i = 0; i < num; i++) {
         SortedTreeNode l = (SortedTreeNode) node.getChildAt(i);
         export_treenode_header(l);
@@ -118,11 +116,11 @@ public class FileCSV implements Runnable {
     int num = node.getChildCount();
 
     if (num > 0) {
-      Object obj1 = node.getUserObject();
-      if (obj1 instanceof ParentNodeInfo) {
+/*    Object obj1 = node.getUserObject();
+        if (obj1 instanceof ParentNodeInfo) {
         ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
         List nodeobj = tmpnode.getNode_object();
-      }
+      }*/
       for (int i = 0; i < num; i++) {
         SortedTreeNode l = (SortedTreeNode) node.getChildAt(i);
         export_treenode_data(l, time);
