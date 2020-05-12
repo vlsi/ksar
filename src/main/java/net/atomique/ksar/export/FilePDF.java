@@ -93,35 +93,36 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
     try {
       writer = PdfWriter.getInstance(document, new FileOutputStream(pdffilename));
 
-    writer.setPageEvent(this);
-    writer.setCompressionLevel(0);
+      writer.setPageEvent(this);
+      writer.setCompressionLevel(0);
 
-    // document parameter before open
-    document.addTitle("kSar Grapher");
-    //document.addSubject("SAR Statistics of " + mysar.hostName);
-    //document.addKeywords("https://github.com/vlsi/ksar");
-    //document.addKeywords(mysar.hostName);
-    //document.addKeywords(mysar.myOS.sarStartDate);
-    //document.addKeywords(mysar.myOS.sarEndDate);
-    document.addCreator("kSar Version:" + VersionNumber.getVersionString());
-    document.addAuthor("https://github.com/vlsi/ksar");
+      // document parameter before open
+      document.addTitle("kSar Grapher");
+      //document.addSubject("SAR Statistics of " + mysar.hostName);
+      //document.addKeywords("https://github.com/vlsi/ksar");
+      //document.addKeywords(mysar.hostName);
+      //document.addKeywords(mysar.myOS.sarStartDate);
+      //document.addKeywords(mysar.myOS.sarEndDate);
+      document.addCreator("kSar Version:" + VersionNumber.getVersionString());
+      document.addAuthor("https://github.com/vlsi/ksar");
 
-    // open the doc
-    document.open();
-    pdfcb = writer.getDirectContent();
-    PdfOutline root = pdfcb.getRootOutline();
+      // open the doc
+      document.open();
+      pdfcb = writer.getDirectContent();
+      PdfOutline root = pdfcb.getRootOutline();
 
-    IndexPage(document);
+      IndexPage(document);
 
-    export_treenode(mysar.graphtree, root);
+      export_treenode(mysar.graphtree, root);
 
-    document.close();
+      document.close();
 
     } catch (DocumentException | FileNotFoundException ex) {
       log.error("PDF creation Exception", ex);
     } finally {
-      if (writer != null)
+      if (writer != null) {
         writer.close();
+      }
     }
 
     if (dialog != null) {
