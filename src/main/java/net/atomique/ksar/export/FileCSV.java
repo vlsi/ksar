@@ -19,7 +19,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
 
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;
@@ -55,20 +54,21 @@ public class FileCSV implements Runnable {
 
     export_treenode_header(mysar.graphtree);
     tmpcsv.append("\n");
-    Iterator<LocalDateTime> ite = mysar.myparser.getDateSamples().iterator();
-    while (ite.hasNext()) {
-      LocalDateTime tmpLDT = ite.next();
 
-      Second tmp = new Second(tmpLDT.getSecond(),
-          tmpLDT.getMinute(),
-          tmpLDT.getHour(),
-          tmpLDT.getDayOfMonth(),
-          tmpLDT.getMonthValue(),
-          tmpLDT.getYear());
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
 
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
+    for (LocalDateTime tmpLDT : mysar.myparser.getDateSamples()) {
+
       String text = tmpLDT.format(formatter);
       tmpcsv.append(text).append(";");
+
+      Second tmp = new Second(tmpLDT.getSecond(),
+              tmpLDT.getMinute(),
+              tmpLDT.getHour(),
+              tmpLDT.getDayOfMonth(),
+              tmpLDT.getMonthValue(),
+              tmpLDT.getYear());
+
       export_treenode_data(mysar.graphtree, tmp);
       tmpcsv.append("\n");
     }
