@@ -147,10 +147,10 @@ public class FileCSV implements Runnable {
 
   }
 
-  private StringBuilder tmpcsv = new StringBuilder();
+  private final StringBuilder tmpcsv = new StringBuilder();
   private int progress_info = 0;
-  private String csvfilename;
-  private kSar mysar;
+  private final String csvfilename;
+  private final kSar mysar;
   private JProgressBar progress_bar = null;
   private JDialog dialog = null;
 }
