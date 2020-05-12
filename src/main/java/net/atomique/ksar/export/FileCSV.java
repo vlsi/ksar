@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -86,7 +85,7 @@ public class FileCSV implements Runnable {
     int num = node.getChildCount();
 
     if (num > 0) {
-/*    Object obj1 = node.getUserObject();
+      /*Object obj1 = node.getUserObject();
       if (obj1 instanceof ParentNodeInfo) {
         ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
         List nodeobj = tmpnode.getNode_object();
@@ -112,7 +111,7 @@ public class FileCSV implements Runnable {
     int num = node.getChildCount();
 
     if (num > 0) {
-/*    Object obj1 = node.getUserObject();
+      /*Object obj1 = node.getUserObject();
         if (obj1 instanceof ParentNodeInfo) {
         ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
         List nodeobj = tmpnode.getNode_object();
