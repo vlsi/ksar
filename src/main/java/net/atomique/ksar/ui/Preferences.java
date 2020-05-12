@@ -280,7 +280,7 @@ public class Preferences extends javax.swing.JDialog {
   private javax.swing.JSpinner jSpinner1;
   private javax.swing.JSpinner jSpinner2;
   // End of variables declaration//GEN-END:variables
-  DefaultComboBoxModel UI_lanf_model = new DefaultComboBoxModel();
+  DefaultComboBoxModel<String> UI_lanf_model = new DefaultComboBoxModel<>();
   DefaultComboBoxModel<String> PageFormatComboBox = new DefaultComboBoxModel<>();
   DefaultComboBoxModel<String> LinuxFormatComboModel = new DefaultComboBoxModel<>();
   SpinnerNumberModel imageWidthSpinner =
