@@ -50,7 +50,6 @@ jobs:
           secure: iKXXqoxPMsoLGlhKMwRB7dVdU0ZvOjzRaxm73zjEsEgyErL7LJ6YG+3wJl24UW8zxgpvM5hW0DKUkWSLfVoHa/1l+Bsb8yREAKJTYldZs3pjhQxWM7OBMeKWjTA7WccYrx4ShHgbgUvl4IuHXNY91kcu1pC6lZukpDUvdX4Ii70=
         file_glob: true
         file: "build/libs/ksar-*all.jar"
-        cleanup: false
         skip_cleanup: true
         on:
           tags: true
