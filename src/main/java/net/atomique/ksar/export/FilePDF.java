@@ -92,9 +92,7 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
 
     try {
       writer = PdfWriter.getInstance(document, new FileOutputStream(pdffilename));
-    } catch (DocumentException | FileNotFoundException ex) {
-      log.error("Parser Exception", ex);
-    }
+
     writer.setPageEvent(this);
     writer.setCompressionLevel(0);
 
@@ -118,7 +116,13 @@ public class FilePDF extends PdfPageEventHelper implements Runnable {
     export_treenode(mysar.graphtree, root);
 
     document.close();
-    writer.close();
+
+    } catch (DocumentException | FileNotFoundException ex) {
+      log.error("PDF creation Exception", ex);
+    } finally {
+      if (writer != null)
+        writer.close();
+    }
 
     if (dialog != null) {
       dialog.dispose();
