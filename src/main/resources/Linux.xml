@@ -64,6 +64,10 @@
                 <headerstr>tps rtps wtps bread/s bwrtn/s</headerstr>
                 <graphname>IO</graphname>
             </Stat>
+            <Stat name="io_12.2">
+                <headerstr>tps rtps wtps dtps bread/s bwrtn/s bdscd/s</headerstr>
+                <graphname>IO</graphname>
+            </Stat>
             <Stat name="socket1">
                 <headerstr>totsck tcpsck udpsck rawsck ip-frag</headerstr>
                 <graphname>SOCKET</graphname>
@@ -136,7 +140,10 @@
                 <headerstr>DEV tps rkB/s wkB/s areq-sz aqu-sz await svctm %util</headerstr>
                 <graphname>DEV_11.5.7</graphname>
             </Stat>
-
+            <Stat name="dev_12.2.0">
+                <headerstr>DEV tps rkB/s wkB/s dkB/s areq-sz aqu-sz await %util</headerstr>
+                <graphname>DEV_11.5.7</graphname>
+            </Stat>
             <Stat name="dentunusd2">
                 <headerstr>dentunusd file-sz inode-sz super-sz %super-sz dquot-sz %dquot-sz rtsig-sz %rtsig-sz</headerstr>
                 <graphname>IGNORE</graphname>
@@ -145,9 +152,9 @@
                 <headerstr>pgpgin/s pgpgout/s fault/s majflt/s pgfree/s pgscank/s pgscand/s pgsteal/s %vmeff</headerstr>
                 <graphname>PAGING</graphname>
             </Stat>
-            <Stat name="inet21">
+            <Stat name="INET_FAIL">
                 <headerstr>IFACE rxerr/s txerr/s coll/s rxdrop/s txdrop/s txcarr/s rxfram/s rxfifo/s txfifo/s</headerstr>
-                <graphname>INET2</graphname>
+                <graphname>INET_FAIL</graphname>
             </Stat>
             <Stat name="dentunusd3">
                 <headerstr>dentunusd file-sz %file-sz inode-sz super-sz %super-sz dquot-sz %dquot-sz rtsig-sz %rtsig-sz</headerstr>
@@ -261,6 +268,10 @@
                 <headerstr>kbhugfree kbhugused %hugused</headerstr>
                 <graphname>HPAGE</graphname>
             </Stat>
+            <Stat name="hpage_12.2.0">
+                <headerstr>kbhugfree kbhugused %hugused kbhugrsvd kbhugsurp</headerstr>
+                <graphname>HPAGE</graphname>
+            </Stat>
             <Stat name="cpu_softnet_11.5.2">
                 <headerstr>CPU total/s dropd/s squeezd/s rx_rps/s flw_lim/s</headerstr>
                 <graphname>CPU_SOFTNET_11.5.2</graphname>
@@ -316,7 +327,7 @@
                     <range>0,100</range>
                 </Plot>
             </Graph>
-            <Graph name="INET2" Title="Interfaces error" type="multiple">
+            <Graph name="INET_FAIL" Title="Interfaces error" type="multiple">
                 <Plot Title="Rx">
                     <cols>rxerr/s rxdrop/s rxfram/s rxfifo/s</cols>
                 </Plot>
@@ -382,7 +393,7 @@
                     <cols>tps</cols>
                 </Plot>
                 <Plot Title="Bandwidth [B/s]">
-                    <cols>rkB/s wkB/s</cols>
+                    <cols>rkB/s wkB/s dkB/s</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="areq-sz [KiB] / aqu-sz">
@@ -394,10 +405,10 @@
             </Graph>
             <Graph name="IO" Title="I/O" type="unique">
                 <Plot Title="TPS">
-                    <cols>tps rtps wtps</cols>
+                    <cols>tps rtps wtps dtps</cols>
                 </Plot>
                 <Plot Title="blocks/s">
-                    <cols>bread/s bwrtn/s</cols>
+                    <cols>bread/s bwrtn/s bdscd/s</cols>
                 </Plot>
             </Graph>
             <Graph name="KMEM_OLD" Title="KMem" type="unique">
@@ -583,7 +594,7 @@
             </Graph>
             <Graph name="HPAGE" Title="HugePages" type="unique">
                 <Plot Title="HugePages">
-                    <cols>kbhugfree kbhugused</cols>
+                    <cols>kbhugfree kbhugused kbhugrsvd kbhugsurp</cols>
                     <format base="1024" factor="1024" />
                 </Plot>
                 <Plot Title="used [%]">

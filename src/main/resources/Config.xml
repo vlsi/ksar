@@ -105,6 +105,9 @@
         <itemcolor name="wkB/s">
             <color>170,170,255</color>
         </itemcolor>
+        <itemcolor name="dkB/s">
+            <color>100,170,255</color>
+        </itemcolor>
         <itemcolor name="avgrq-sz">
             <color>170,255,170</color>
         </itemcolor>
