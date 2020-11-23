@@ -108,6 +108,10 @@
                 <headerstr>TTY rcvin/s xmtin/s framerr/s prtyerr/s brk/s ovrun/s</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
+            <Stat name="tty_upto_12.5.1">
+                <headerstr>TTY rcvin/s txmtin/s framerr/s prtyerr/s brk/s ovrun/s</headerstr>
+                <graphname>IGNORE</graphname>
+            </Stat>
             <Stat name="inet10">
                 <headerstr>IFACE rxpck/s txpck/s rxbyt/s txbyt/s rxcmp/s txcmp/s rxmcst/s</headerstr>
                 <graphname>INET1</graphname>
@@ -275,6 +279,10 @@
             <Stat name="cpu_softnet_11.5.2">
                 <headerstr>CPU total/s dropd/s squeezd/s rx_rps/s flw_lim/s</headerstr>
                 <graphname>CPU_SOFTNET_11.5.2</graphname>
+            </Stat>
+            <Stat name="fchost_11.0.5">
+                <headerstr>fch_rxf/s fch_txf/s fch_rxw/s fch_txw/s FCHOST</headerstr>
+                <graphname>IGNORE</graphname>
             </Stat>
 
             <!-- GRAPHS -->
