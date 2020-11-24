@@ -6,7 +6,7 @@ os:
 jdk:
   - openjdk8
   - openjdk11
-  - openjdk14
+  - openjdk15
   - openjdk-ea
 
 install: skip # will be done by gradlew check anyway
@@ -50,7 +50,7 @@ jobs:
           secure: iKXXqoxPMsoLGlhKMwRB7dVdU0ZvOjzRaxm73zjEsEgyErL7LJ6YG+3wJl24UW8zxgpvM5hW0DKUkWSLfVoHa/1l+Bsb8yREAKJTYldZs3pjhQxWM7OBMeKWjTA7WccYrx4ShHgbgUvl4IuHXNY91kcu1pC6lZukpDUvdX4Ii70=
         file_glob: true
         file: "build/libs/ksar-*all.jar"
-        skip_cleanup: true
+        cleanup: false
         on:
           tags: true
           repo: vlsi/ksar
