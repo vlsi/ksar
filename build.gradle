@@ -24,7 +24,7 @@ dependencies {
 
     implementation group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.2'
     implementation group: 'com.jcraft', name: 'jsch', version: '0.1.55'
-    implementation group: 'org.jfree', name: 'jfreechart', version: '1.5.1'
+    implementation group: 'org.jfree', name: 'jfreechart', version: '1.5.2'
     testImplementation 'junit:junit:4.13.1'
 }
 
