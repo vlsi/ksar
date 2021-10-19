@@ -15,7 +15,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.JOptionPane;
 
 public class LocalCommand extends Thread {

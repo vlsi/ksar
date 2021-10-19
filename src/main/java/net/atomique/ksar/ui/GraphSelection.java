@@ -6,7 +6,6 @@
 package net.atomique.ksar.ui;
 
 import java.awt.Component;
-
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 

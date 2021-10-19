@@ -6,7 +6,6 @@
 package net.atomique.ksar.ui;
 
 import java.util.Comparator;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 

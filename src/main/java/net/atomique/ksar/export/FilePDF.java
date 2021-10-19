@@ -21,7 +21,6 @@ import com.itextpdf.text.pdf.PdfOutline;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
-
 import net.atomique.ksar.Config;
 import net.atomique.ksar.VersionNumber;
 import net.atomique.ksar.graph.Graph;
@@ -30,20 +29,16 @@ import net.atomique.ksar.kSar;
 import net.atomique.ksar.ui.ParentNodeInfo;
 import net.atomique.ksar.ui.SortedTreeNode;
 import net.atomique.ksar.ui.TreeNodeInfo;
-
 import org.jfree.chart.JFreeChart;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;
 

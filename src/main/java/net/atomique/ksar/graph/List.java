@@ -17,7 +17,6 @@ import java.awt.LayoutManager;
 import java.time.LocalDateTime;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
