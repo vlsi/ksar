@@ -4,6 +4,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.0.0"
     id("checkstyle")
     id("com.github.vlsi.gradle-extensions") version "1.74"
+    kotlin("jvm") version "1.5.31"
 }
 
 group = "com.github.vlsi.ksar"
