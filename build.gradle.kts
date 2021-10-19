@@ -30,12 +30,17 @@ dependencies {
     implementation("com.itextpdf:itextpdf:5.5.13.2")
     implementation("com.jcraft:jsch:0.1.55")
     implementation("org.jfree:jfreechart:1.5.3")
-    testImplementation("junit:junit:4.13.2")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 
 tasks.withType<JavaCompile>().configureEach {
     options.compilerArgs.add("-Xlint:unchecked")
     options.compilerArgs.add("-Xlint:deprecation")
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }
 
 val writeVersion by tasks.registering {

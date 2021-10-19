@@ -5,60 +5,39 @@
 
 package net.atomique.ksar.parser;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import net.atomique.ksar.kSar;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
-@RunWith(Parameterized.class)
 public class HpuxHeaderTest {
-  private String header;
-  private String sarString;
-  private LocalDateTime expectedDate;
-  private HPUX sut;
-
-  public HpuxHeaderTest(String header, String sarString, LocalDateTime expectedDate) {
-    this.header = header;
-    this.sarString = sarString;
-    this.expectedDate = expectedDate;
-  }
-
-  @Before
-  public void setUp() throws Exception {
-    sut = new HPUX();
-  }
-
-  @Test
-  public void test() {
+  @ParameterizedTest
+  @MethodSource("testValues")
+  public void test(String header, String sarString, LocalDateTime expectedDate) {
+    HPUX sut = new HPUX();
     String[] columns = sarString.split("\\s+");
     kSar ksar = new kSar();
     sut.init(ksar, header);
     sut.parse(sarString, columns);
-    assertEquals(expectedDate, sut.getStartOfGraph());
+    assertEquals(expectedDate, sut.getStartOfGraph(), () -> "header: " + header + ", sar string: " + sarString);
   }
 
-  @Parameters
-  public static Collection testValues() {
-
-    // current Byte, expected value, expected unit, test name
+  public static Stream<Arguments> testValues() {
     String str = "2018-03-21 00:05:01";
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
-    return Arrays.asList(new Object[][] {
-        { "HP-UX hostname.example.com B.11.31 U ia64    03/21/18",
+    return Stream.of(
+        arguments(
+            "HP-UX hostname.example.com B.11.31 U ia64    03/21/18",
             "00:05:01      19       8      29      45",
-            dateTime },
-    });
+            dateTime));
   }
-
 }

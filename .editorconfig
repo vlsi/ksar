@@ -18,3 +18,8 @@ trim_trailing_whitespace = false
 [*.java]
 indent_size = 2
 tab_width = 2
+ij_continuation_indent_size = 4
+# Doc: https://youtrack.jetbrains.com/issue/IDEA-170643#focus=streamItem-27-3708697.0-0
+# $ means "static"
+# STATIC###SPECIAL_IMPORTS###THIRD_PARTY_PACKAGE###STANDARD_JAVA_PACKAGE
+ij_java_imports_layout = $*,|,*,|,java.**,javax.**

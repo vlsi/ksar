@@ -5,84 +5,62 @@
 
 package net.atomique.ksar.parser;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import net.atomique.ksar.Config;
 import net.atomique.ksar.kSar;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
-@RunWith(Parameterized.class)
 public class LinuxHeaderTest {
-  private String datetimeformat;
-  private String header;
-  private String sarString;
-  private LocalDateTime expectedDate;
-  private Linux sut;
-
-  public LinuxHeaderTest(String header, String sarString, LocalDateTime expectedDate) {
-    this.header = header;
-    this.sarString = sarString;
-    this.expectedDate = expectedDate;
-  }
-
-  @Before
-  public void setUp() throws Exception {
-    datetimeformat = "Automatic Detection";
-    Config.setLinuxDateFormat(datetimeformat);
-    sut = new Linux();
-  }
-
-  @Test
-  public void test() {
+  @ParameterizedTest
+  @MethodSource("testValues")
+  public void test(String header, String sarString, LocalDateTime expectedDate) {
     String[] columns = sarString.split("\\s+");
     kSar ksar = new kSar();
+    Config.setLinuxDateFormat("Automatic Detection");
+    Linux sut = new Linux();
     sut.init(ksar, header);
     sut.parse(sarString, columns);
-    assertEquals(expectedDate, sut.getStartOfGraph());
+    assertEquals(expectedDate, sut.getStartOfGraph(), () -> "header: " + header + ", sar string: " + sarString);
   }
 
-  @Parameters
-  public static Collection testValues() {
-
-    // current Byte, expected value, expected unit, test name
+  public static Stream<Arguments> testValues() {
     String str = "2016-03-28 09:10:01";
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
-    return Arrays.asList(new Object[][] {
-        { "Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  03/28/16  _x86_64_  (48 CPU)",
+    return Stream.of(
+        arguments("Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  03/28/16  _x86_64_  (48 CPU)",
             "09:10:01          6      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00    100.00",
-            dateTime },
-        { "Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  03/28/2016  _x86_64_  (48 CPU)",
+            dateTime),
+        arguments("Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  03/28/2016  _x86_64_  (48 CPU)",
             "09:10:01          6      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00    100.00",
-            dateTime },
-        { "Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  20160328  _x86_64_  (48 CPU)",
+            dateTime),
+        arguments("Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  20160328  _x86_64_  (48 CPU)",
             "09:10:01          6      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00    100.00",
-            dateTime },
-        { "Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  2016-03-28  _x86_64_  (48 CPU)",
+            dateTime),
+        arguments("Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  2016-03-28  _x86_64_  (48 CPU)",
             "09:10:01          6      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00    100.00",
-            dateTime },
-        { "Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  03/28/16  _x86_64_  (48 CPU)",
+            dateTime),
+        arguments("Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  03/28/16  _x86_64_  (48 CPU)",
             "09:10:01    AM      6      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00    100.00",
-            dateTime },
-        { "Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  03/28/2016  _x86_64_  (48 CPU)",
+            dateTime),
+        arguments("Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  03/28/2016  _x86_64_  (48 CPU)",
             "09:10:01    AM      6      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00    100.00",
-            dateTime },
-        { "Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  20160328  _x86_64_  (48 CPU)",
+            dateTime),
+        arguments("Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  20160328  _x86_64_  (48 CPU)",
             "09:10:01     AM     6      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00    100.00",
-            dateTime },
-        { "Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  2016-03-28  _x86_64_  (48 CPU)",
+            dateTime),
+        arguments("Linux 3.10.0-327.el7.x86_64 (hostname.example.com)  2016-03-28  _x86_64_  (48 CPU)",
             "09:10:01    AM      6      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00    100.00",
-            dateTime }, });
+            dateTime));
   }
 
 }

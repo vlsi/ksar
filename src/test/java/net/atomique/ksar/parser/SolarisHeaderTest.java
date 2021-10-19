@@ -5,60 +5,39 @@
 
 package net.atomique.ksar.parser;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import net.atomique.ksar.kSar;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
-@RunWith(Parameterized.class)
 public class SolarisHeaderTest {
-  private String header;
-  private String sarString;
-  private LocalDateTime expectedDate;
-  private SunOS sut;
-
-  public SolarisHeaderTest(String header, String sarString, LocalDateTime expectedDate) {
-    this.header = header;
-    this.sarString = sarString;
-    this.expectedDate = expectedDate;
-  }
-
-  @Before
-  public void setUp() throws Exception {
-    sut = new SunOS();
-  }
-
-  @Test
-  public void test() {
+  @ParameterizedTest
+  @MethodSource("testValues")
+  public void test(String header, String sarString, LocalDateTime expectedDate) {
     String[] columns = sarString.split("\\s+");
     kSar ksar = new kSar();
+    SunOS sut = new SunOS();
     sut.init(ksar, header);
     sut.parse(sarString, columns);
-    assertEquals(expectedDate, sut.getStartOfGraph());
+    assertEquals(expectedDate, sut.getStartOfGraph(), () -> "header: " + header + ", sar string: " + sarString);
   }
 
-  @Parameters
-  public static Collection testValues() {
-
-    // current Byte, expected value, expected unit, test name
+  public static Stream<Arguments> testValues() {
     String str = "05/31/2018 00:05:01";
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
     LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
-    return Arrays.asList(new Object[][] {
-        { "SunOS hostname.example.com 5.11 11.3 sun4v    05/31/2018",
+    return Stream.of(
+        arguments("SunOS hostname.example.com 5.11 11.3 sun4v    05/31/2018",
             "00:05:01    %usr    %sys    %wio   %idle",
-            dateTime },
-    });
+            dateTime));
   }
 
 }
