@@ -12,6 +12,9 @@ end_of_line = lf
 [{*.bat,*.cmd}]
 end_of_line = crlf
 
+[*.md]
+trim_trailing_whitespace = false
+
 [*.java]
 indent_size = 2
 tab_width = 2

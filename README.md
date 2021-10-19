@@ -23,6 +23,14 @@ Prerequisite:
 
 - JDK 8 or later
 
+The following command would build and launch kSar from sources:
+
+```
+$ ./gradlew runShadow
+```
+
+or
+
 ```
 $ ./gradlew shadowJar
 $ java -jar build/libs/ksar-5.2.4-SNAPSHOT-all.jar
