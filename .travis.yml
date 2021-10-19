@@ -6,7 +6,7 @@ os:
 jdk:
   - openjdk8
   - openjdk11
-  - openjdk15
+  - openjdk17
   - openjdk-ea
 
 install: skip # will be done by gradlew check anyway
