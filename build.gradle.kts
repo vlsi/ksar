@@ -3,7 +3,6 @@ plugins {
     kotlin("jvm") version "1.5.31"
     id("application")
     id("com.github.johnrengelman.shadow") version "7.0.0"
-    id("checkstyle")
     id("com.github.vlsi.gradle-extensions") version "1.74"
     id("com.github.autostyle") version "3.1"
 }
@@ -84,10 +83,6 @@ val writeVersion by tasks.registering {
 }
 
 sourceSets.main.get().resources.srcDir(writeVersion)
-
-checkstyle {
-    config = project.resources.text.fromFile("src/main/checkstyle/ksar-checks.xml", "UTF-8")
-}
 
 tasks.jar {
     manifest {
