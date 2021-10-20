@@ -37,7 +37,7 @@ public class DataView extends javax.swing.JInternalFrame {
   public DataView(kSar sar) {
     initComponents();
     mysar = sar;
-    jTree1.setModel(new DefaultTreeModel(mysar.graphtree));
+    jTree1.setModel(new DefaultTreeModel(mysar.getGraphtree()));
   }
 
   /**
@@ -274,7 +274,7 @@ public class DataView extends javax.swing.JInternalFrame {
   private void PDFMenuActionPerformed(
       java.awt.event.ActionEvent evt) { //GEN-FIRST:event_PDFMenuActionPerformed
     GraphSelection tmp = new GraphSelection(GlobalOptions.getUI(), true, this);
-    ask_treenode(mysar.graphtree, tmp);
+    ask_treenode(mysar.getGraphtree(), tmp);
     tmp.setVisible(true);
     if (!tmp.OkforExport) {
       tmp = null;
@@ -296,7 +296,7 @@ public class DataView extends javax.swing.JInternalFrame {
   private void CSVMenuActionPerformed(
       java.awt.event.ActionEvent evt) { //GEN-FIRST:event_CSVMenuActionPerformed
     GraphSelection tmp = new GraphSelection(GlobalOptions.getUI(), true, this);
-    ask_treenode(mysar.graphtree, tmp);
+    ask_treenode(mysar.getGraphtree(), tmp);
     tmp.setVisible(true);
     if (!tmp.OkforExport) {
       return;
@@ -386,7 +386,7 @@ public class DataView extends javax.swing.JInternalFrame {
 
   public void doExportCSV(String filename) {
     int pages = 0;
-    pages = mysar.myparser.getDateSamples().size();
+    pages = mysar.getMyparser().getDateSamples().size();
     JPanel panel0 = new JPanel();
     JPanel panel1 = new JPanel();
     JPanel panel2 = new JPanel();

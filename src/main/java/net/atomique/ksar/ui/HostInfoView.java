@@ -21,7 +21,7 @@ public class HostInfoView extends javax.swing.JDialog {
     Hostname.setText(hostinfo.getHostname());
     AliasField.setText(hostinfo.getAlias());
     jTextArea1.setText(hostinfo.getDescription());
-    memboxcombo.setSelectedItem(hostinfo.getMemBlockSize().toString());
+    memboxcombo.setSelectedItem(String.valueOf(hostinfo.getMemBlockSize()));
     setLocationRelativeTo(parent);
   }
 

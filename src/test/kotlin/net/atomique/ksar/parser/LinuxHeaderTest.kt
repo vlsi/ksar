@@ -20,10 +20,8 @@ class LinuxHeaderTest {
     @MethodSource("testValues")
     fun test(header: String, sarString: String, expectedDate: LocalDateTime) {
         val columns = sarString.split(Regex("\\s+")).toTypedArray()
-        val ksar = kSar()
-        Config.setLinuxDateFormat("Automatic Detection")
-        val sut = Linux().apply {
-            init(ksar, header)
+        Config.linuxDateFormat = "Automatic Detection"
+        val sut = Linux(kSar(), header).apply {
             parse(sarString, columns)
         }
         assertEquals(expectedDate, sut.startOfGraph) { "header: $header, sar string: $sarString" }

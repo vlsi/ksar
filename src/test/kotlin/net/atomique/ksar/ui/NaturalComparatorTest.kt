@@ -15,8 +15,7 @@ class NaturalComparatorTest {
     @ParameterizedTest
     @MethodSource("data")
     fun testNaturalOrder(a: String, b: String, expected: Int) {
-        val c = NaturalComparator()
-        val res = c.compare(a, b)
+        val res = NaturalComparator.compare(a, b)
         assertEquals(expected, Integer.signum(res)) { "$a vs $b" }
     }
 

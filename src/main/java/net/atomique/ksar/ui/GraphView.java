@@ -36,7 +36,7 @@ public class GraphView extends javax.swing.JPanel {
     if (mychartpanel != null) {
       graphPanel.remove(mychartpanel);
     }
-    mychartpanel = graph.get_ChartPanel();
+    mychartpanel = graph.getChartPanel();
     graphPanel.add(mychartpanel);
     this.validate();
   }

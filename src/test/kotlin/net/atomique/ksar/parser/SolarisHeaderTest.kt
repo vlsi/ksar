@@ -19,9 +19,7 @@ class SolarisHeaderTest {
     @MethodSource("testValues")
     fun test(header: String, sarString: String, expectedDate: LocalDateTime) {
         val columns = sarString.split(Regex("\\s+")).toTypedArray()
-        val ksar = kSar()
-        val sut = SunOS().apply {
-            init(ksar, header)
+        val sut = SunOS(kSar(), header).apply {
             parse(sarString, columns)
         }
         assertEquals(expectedDate, sut.startOfGraph) { "header: $header, sar string: $sarString" }
