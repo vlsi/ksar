@@ -6,6 +6,9 @@ kSar
 Quick Start
 -----------
 
+ksar is a sar graphing tool that can graph for now linux, maOS and solaris sar output. sar statistics graph can be output to a pdf file.
+This is a fork of http://sourceforge.net/projects/ksar/
+
 Prerequisite:
 
 - Java 8 or later
