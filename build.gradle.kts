@@ -24,14 +24,14 @@ repositories {
 }
 
 dependencies {
-    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.14.0")
-    implementation("org.apache.logging.log4j:log4j-core:2.14.0")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.16.0")
+    implementation("org.apache.logging.log4j:log4j-core:2.16.0")
 
     implementation("com.itextpdf:itextpdf:5.5.13.2")
     implementation("com.jcraft:jsch:0.1.55")
     implementation("org.jfree:jfreechart:1.5.3")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 }
 
 tasks.withType<JavaCompile>().configureEach {
