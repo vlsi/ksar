@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("application")
-    id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
     id("checkstyle")
     id("com.github.vlsi.gradle-extensions") version "1.74"
 }
@@ -24,8 +24,8 @@ repositories {
 }
 
 dependencies {
-    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.16.0")
-    implementation("org.apache.logging.log4j:log4j-core:2.16.0")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.1")
+    implementation("org.apache.logging.log4j:log4j-core:2.17.1")
 
     implementation("com.itextpdf:itextpdf:5.5.13.2")
     implementation("com.jcraft:jsch:0.1.55")
