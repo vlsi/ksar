@@ -41,6 +41,9 @@ public class NaturalComparatorTest {
         arguments("ab42cd", "ab42cd", 0),
         arguments("ab42cd2", "ab42cd10", -1),
 
+        arguments("sdc", "sdc1", -1),
+        arguments("sdc1", "sdc", 1),
+
         arguments("cpu 2", "cpu10", -1),
         arguments("cpu 1core10", "cpu1 core 2", 1),
 

@@ -28,7 +28,15 @@ public class NaturalComparator implements Comparator<String> {
     Matcher ma = WORD_PATTERN.matcher(a);
     Matcher mb = WORD_PATTERN.matcher(b);
 
-    for (; ma.find() && mb.find(); ) {
+    while (true) {
+      boolean findA = ma.find();
+      boolean findB = mb.find();
+      if (findA && !findB) {
+        return 1;
+      }
+      if (!findA) {
+        return findB ? -1 : 0;
+      }
       String u = ma.group(1);
       String v = mb.group(1);
       boolean isDigit = Character.isDigit(u.charAt(0));
@@ -46,7 +54,5 @@ public class NaturalComparator implements Comparator<String> {
         return Long.compare(aLong, bLong);
       }
     }
-
-    return ma.find() ? 1 : (mb.find() ? -1 : 0);
   }
 }
