@@ -17,7 +17,7 @@ public class NaturalComparator implements Comparator<String> {
   public final static Comparator<String> INSTANCE = new NaturalComparator();
   public final static Comparator<String> NULLS_FIRST = Comparator.nullsFirst(INSTANCE);
 
-  private final static Pattern WORD_PATTERN = Pattern.compile("\\s*+([^0-9\\s]|\\d+)");
+  private final static Pattern WORD_PATTERN = Pattern.compile("\\s*+([^0-9\\s]++|\\d++)");
 
   @Override
   public int compare(String a, String b) {
@@ -39,19 +39,20 @@ public class NaturalComparator implements Comparator<String> {
       }
       String u = ma.group(1);
       String v = mb.group(1);
-      boolean isDigit = Character.isDigit(u.charAt(0));
-      if (!isDigit || !Character.isDigit(v.charAt(0))) {
-        int res = u.compareTo(v);
+
+      if (Character.isDigit(u.charAt(0)) && Character.isDigit(v.charAt(0))) {
+        int res = Integer.compare(u.length(), v.length());
         if (res != 0) {
+          // The shorter the length the smaller the number
           return res;
         }
-        continue;
       }
-
-      long aLong = Long.parseLong(u);
-      long bLong = Long.parseLong(v);
-      if (aLong != bLong) {
-        return Long.compare(aLong, bLong);
+      // Ether both are numeric of equal length (see above if)
+      // or they are non-numeric, then we compare as strings
+      // or one of them is numeric and another is not, then we compare as strings anyway
+      int res = u.compareTo(v);
+      if (res != 0) {
+        return res;
       }
     }
   }
