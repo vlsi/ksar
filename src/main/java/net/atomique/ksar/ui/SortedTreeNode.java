@@ -9,7 +9,7 @@ import java.util.Comparator;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 
-public class SortedTreeNode extends DefaultMutableTreeNode implements Comparable {
+public class SortedTreeNode extends DefaultMutableTreeNode implements Comparable<SortedTreeNode> {
 
   public static final long serialVersionUID = 15071L;
 
@@ -66,7 +66,7 @@ public class SortedTreeNode extends DefaultMutableTreeNode implements Comparable
     this.children.sort(null);
   }
 
-  public int compareTo(final Object o) {
+  public int compareTo(final SortedTreeNode o) {
     return comparator.compare(this.toString(), o.toString());
   }
 
