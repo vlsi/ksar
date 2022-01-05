@@ -15,7 +15,9 @@ public class SortedTreeNode extends DefaultMutableTreeNode implements Comparable
 
   private static final Comparator<String> comparator =
       Comparator.nullsFirst(
-          Comparator.<String, Boolean>comparing("all"::equals).thenComparing("sum"::equals)
+          Comparator.<String, Boolean>comparing("all"::equals)
+              .thenComparing("sum"::equals)
+              .thenComparing("lo"::equals)
               .reversed()
               .thenComparing(NaturalComparator.INSTANCE));
 
