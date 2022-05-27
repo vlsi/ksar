@@ -3,7 +3,7 @@ plugins {
     id("application")
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("checkstyle")
-    id("com.github.vlsi.gradle-extensions") version "1.74"
+    id("com.github.vlsi.gradle-extensions") version "1.78"
 }
 
 group = "com.github.vlsi.ksar"
