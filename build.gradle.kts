@@ -3,7 +3,7 @@ plugins {
     id("application")
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("checkstyle")
-    id("com.github.vlsi.gradle-extensions") version "1.78"
+    id("com.github.vlsi.gradle-extensions") version "1.82"
 }
 
 group = "com.github.vlsi.ksar"
@@ -24,14 +24,14 @@ repositories {
 }
 
 dependencies {
-    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.2")
-    implementation("org.apache.logging.log4j:log4j-core:2.17.2")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.18.0")
+    implementation("org.apache.logging.log4j:log4j-core:2.18.0")
 
     implementation("com.itextpdf:itextpdf:5.5.13.3")
     implementation("com.jcraft:jsch:0.1.55")
     implementation("org.jfree:jfreechart:1.5.3")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
 }
 
 tasks.withType<JavaCompile>().configureEach {
