@@ -119,7 +119,7 @@ public class Config {
   }
 
   public static File getLastExportDirectory() {
-    return lastReadDirectory;
+    return lastExportDirectory;
   }
 
   public static void setLastExportDirectory(String lastExportDirectory) {
