@@ -5,10 +5,10 @@
 
 package net.atomique.ksar;
 
+import ch.qos.logback.classic.Level;
 import net.atomique.ksar.ui.Desktop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ch.qos.logback.classic.Level;
 
 import java.util.ResourceBundle;
 import javax.swing.SwingUtilities;
