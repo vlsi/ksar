@@ -130,7 +130,7 @@ public class GlobalOptions {
   }
 
   static void setCLfilename(String CL_filename) {
-    GlobalOptions.CLfilename = CL_filename;
+    CLfilename = CL_filename;
   }
 
   public static String getFileseparator() {
