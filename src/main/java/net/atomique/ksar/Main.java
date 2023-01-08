@@ -5,8 +5,8 @@
 
 package net.atomique.ksar;
 
+import ch.qos.logback.classic.Level;
 import net.atomique.ksar.ui.Desktop;
-import org.apache.logging.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,6 +64,8 @@ public class Main {
     int i = 0;
     String arg;
 
+    ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger) org.slf4j.LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME);
+
     log.info("ksar Version : {}", VersionNumber.getVersionString());
     log.info("Java runtime Version : {}", System.getProperty("java.runtime.version"));
     log.info("Java runtime architecture : {}", System.getProperty("os.arch"));
@@ -92,11 +94,11 @@ public class Main {
           continue;
         }
         if ("-test".equals(arg) || "-debug".equals(arg)) {
-          org.apache.logging.log4j.core.config.Configurator.setRootLevel(Level.DEBUG);
+          root.setLevel(Level.DEBUG);
           continue;
         }
         if ("-trace".equals(arg)) {
-          org.apache.logging.log4j.core.config.Configurator.setRootLevel(Level.TRACE);
+          root.setLevel(Level.TRACE);
           continue;
         }
         if ("-input".equals(arg)) {
