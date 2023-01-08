@@ -48,14 +48,11 @@ public class Main {
     log.trace("MainScreen");
     set_lookandfeel();
 
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-
-      public void run() {
-        GlobalOptions.setUI(new Desktop());
-        SwingUtilities.updateComponentTreeUI(GlobalOptions.getUI());
-        GlobalOptions.getUI().add_window();
-        GlobalOptions.getUI().maxall();
-      }
+    javax.swing.SwingUtilities.invokeLater(() -> {
+      GlobalOptions.setUI(new Desktop());
+      SwingUtilities.updateComponentTreeUI(GlobalOptions.getUI());
+      GlobalOptions.getUI().add_window();
+      GlobalOptions.getUI().maxall();
     });
 
   }
