@@ -68,6 +68,9 @@ public class FileRead extends Thread {
 
     try {
       tmpfile = new FileReader(sarfilename);
+
+      log.debug("FileEncoding : {}", tmpfile.getEncoding());
+
     } catch (FileNotFoundException ex) {
       log.error("IO Exception", ex);
     }
