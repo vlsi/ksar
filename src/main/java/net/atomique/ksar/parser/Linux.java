@@ -41,6 +41,7 @@ public class Linux extends OSParser {
   ));
 
   public void parse_header(String s) {
+    //Linux 3.10.0-1160.53.1.el7.x86_64 (hostname)  01/03/23  _x86_64_  (8 CPU)
 
     log.debug("Header Line : {}", s);
     String[] columns = s.split("\\s+", 5);
@@ -48,8 +49,8 @@ public class Linux extends OSParser {
     setOstype(columns[0]);
     setKernel(columns[1]);
 
-    String tmpstr = columns[2];
-    setHostname(tmpstr.substring(1, tmpstr.length() - 1));
+    // remove surrounding brackets (hostname)
+    setHostname(columns[2].substring(1, columns[2].length() - 1));
 
     checkDateFormat();
     setDate(columns[3]);
@@ -67,7 +68,7 @@ public class Linux extends OSParser {
       timeColumn = 0;
     } else {
 
-      // day and year format specifiers must be lower case, month upper case
+      // day and year format specifiers must be lowercase, month uppercase
       String[] parts = LinuxDateFormat.split(" ", 3);
 
       dateFormat = parts[0];
