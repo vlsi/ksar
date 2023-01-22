@@ -104,7 +104,8 @@ public class Graph {
     //log.debug("graph parsing: {}", s);
     for (int i = firstDataColumn; i < HeaderStr.length; i++) {
       try {
-        colvalue = Double.parseDouble(cols[i]);
+        //ToDo: refactor "replace decimal separator" - allow local configuration for input file
+        colvalue = Double.parseDouble(cols[i].replace(',','.'));
       } catch (NumberFormatException ne) {
         log.error("{} {} is NaN", graphtitle, cols[i]);
         return 0;
