@@ -109,8 +109,8 @@ public class GraphView extends javax.swing.JPanel {
 
   private void csvButtonActionPerformed(
       java.awt.event.ActionEvent evt) { //GEN-FIRST:event_csvButtonActionPerformed
-    String filename = null;
-    String buffer = null;
+    String filename;
+    String buffer;
 
     filename = askSaveFilename("Export CSV", Config.getLastExportDirectory());
 
@@ -127,7 +127,7 @@ public class GraphView extends javax.swing.JPanel {
 
     log.debug(buffer);
 
-    BufferedWriter out = null;
+    BufferedWriter out;
     try {
       out = new BufferedWriter(new FileWriter(filename));
     } catch (IOException e) {

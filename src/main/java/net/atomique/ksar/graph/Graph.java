@@ -26,18 +26,12 @@ import org.jfree.chart.renderer.xy.StackedXYAreaRenderer2;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.general.SeriesException;
-import org.jfree.data.time.RegularTimePeriod;
-import org.jfree.data.time.Second;
-import org.jfree.data.time.TimePeriod;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.time.TimeTableXYDataset;
+import org.jfree.data.time.*;
 import org.jfree.data.xy.XYDataset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
@@ -45,9 +39,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import javax.swing.JCheckBox;
+import javax.swing.*;
 
 public class Graph {
 
@@ -198,7 +191,7 @@ public class Graph {
       return true;
     } catch (SeriesException se) {
       // insert not possible
-      // check if column can be update
+      // check if column can be updated
       StatConfig statconfig =
           mysar.myparser.get_OSConfig().getStat(mysar.myparser.getCurrentStat());
       if (statconfig != null) {
@@ -239,10 +232,9 @@ public class Graph {
     tmp.append(getCsvHeader());
     tmp.append("\n");
     TimeSeries datelist = Stats.get(0);
-    Iterator ite = datelist.getTimePeriods().iterator();
 
-    while (ite.hasNext()) {
-      TimePeriod item = (TimePeriod) ite.next();
+    for (Object o : datelist.getTimePeriods()) {
+      TimePeriod item = (TimePeriod) o;
       tmp.append(item.toString());
       tmp.append(";");
       tmp.append(getCsvLine((RegularTimePeriod) item));
@@ -340,11 +332,11 @@ public class Graph {
     TimeSeriesCollection graphcollection = new TimeSeriesCollection();
     TimeSeries found;
     boolean hasdata = false;
-    for (int i = 0; i < l.size(); i++) {
+    for (Object o : l) {
       found = null;
-      for (int j = 0; j < Stats.size(); j++) {
-        found = Stats.get(j);
-        if (found.getKey().equals(l.get(i))) {
+      for (TimeSeries stat : Stats) {
+        found = stat;
+        if (found.getKey().equals(o)) {
           break;
         } else {
           found = null;
@@ -468,18 +460,18 @@ public class Graph {
 
 
   private DateAxis axisofdate = new DateAxis("");
-  private kSar mysar = null;
+  private kSar mysar;
   private JFreeChart mygraph = null;
   private ChartPanel chartpanel = null;
-  private String graphtitle = null;
+  private String graphtitle;
   private boolean printSelected = true;
-  private JCheckBox printCheckBox = null;
-  private GraphConfig graphconfig = null;
-  private int firstDataColumn = 0;
-  private String[] HeaderStr = null;
-  private ArrayList<TimeSeries> Stats = new ArrayList<TimeSeries>();
+  private JCheckBox printCheckBox;
+  private GraphConfig graphconfig;
+  private int firstDataColumn;
+  private String[] HeaderStr;
+  private ArrayList<TimeSeries> Stats = new ArrayList<>();
   private Map<String, TimeTableXYDataset> StackListbyName =
-      new HashMap<String, TimeTableXYDataset>();
+      new HashMap<>();
   private Map<String, TimeTableXYDataset> StackListbyCol =
-      new HashMap<String, TimeTableXYDataset>();
+      new HashMap<>();
 }
