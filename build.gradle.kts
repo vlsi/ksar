@@ -24,15 +24,15 @@ repositories {
 }
 
 dependencies {
-    implementation("org.slf4j:slf4j-api:2.0.5")
+    implementation("org.slf4j:slf4j-api:2.0.6")
     implementation("ch.qos.logback:logback-core:1.3.5")
     implementation("ch.qos.logback:logback-classic:1.3.5")
 
     implementation("com.itextpdf:itextpdf:5.5.13.3")
     implementation("com.jcraft:jsch:0.1.55")
-    implementation("org.jfree:jfreechart:1.5.3")
+    implementation("org.jfree:jfreechart:1.5.4")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
 }
 
 tasks.withType<JavaCompile>().configureEach {
