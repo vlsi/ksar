@@ -29,8 +29,16 @@ public class Linux extends OSParser {
   private String LinuxDateFormat;
   private DateTimeFormatter formatter;
 
+  // https://translationproject.org/domain/sysstat.html
+  // https://github.com/sysstat/sysstat/tree/master/nls
+  // look for - msgid "Average:" && msgid "Summary:"
   private final HashSet<String> IgnoreLinesBeginningWith = new HashSet<>(Arrays.asList(
-      "Average:", "##", "Summary", "Summary:"));
+      "##",
+      "Average:", "Summary:", "Summary",              // en.po
+      "Moyenne :", "Moyenne?:", "Résumé:",        // fr.po (ANSI,UTF-8)
+      "Durchschn.:", "Zusammenfassung:",              // de.po
+      "Media:", "Resumen:"                            // es.po
+  ));
 
   public void parse_header(String s) {
 
