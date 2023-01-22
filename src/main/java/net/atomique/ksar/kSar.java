@@ -145,11 +145,30 @@ public class kSar {
         }
 
         parser_return = myparser.parse(current_line, columns);
-        if (parser_return == 1) {
-          log.trace("### {}", current_line);
-        }
-        if (parser_return < 0) {
-          log.trace("ERR {}", current_line);
+
+        switch (parser_return) {
+
+          case 0:
+            break;
+
+          case 1:
+            log.trace("L{} <IGNORE> {}", lines_parsed, current_line);
+            break;
+
+          case 2:
+            log.trace("L{} <HEADER> {}", lines_parsed, current_line);
+            break;
+
+          case 3:
+            log.trace("L{} <NOGRAPH> {}", lines_parsed, current_line);
+            break;
+
+          case -1:
+            log.error("L{} <ERR> {}", lines_parsed, current_line);
+            break;
+
+          default:
+            log.error("L{} <ERR> PARSE unexpected return value: " + parser_return);
         }
 
         myparser.updateUITitle();
@@ -166,10 +185,10 @@ public class kSar {
     }
 
     parsing_end = System.currentTimeMillis();
-    log.trace("time to parse: {} ms", (parsing_end - parsing_start));
-    log.trace("lines parsed: {}", lines_parsed);
+    log.debug("time to parse: {} ms", (parsing_end - parsing_start));
+    log.debug("lines parsed: {}", lines_parsed);
     if (myparser != null) {
-      log.trace("number of datesamples: {}", myparser.DateSamples.size());
+      log.debug("number of datesamples: {}", myparser.DateSamples.size());
     }
     Parsing = false;
     return -1;

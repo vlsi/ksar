@@ -96,12 +96,11 @@ public class Linux extends OSParser {
 
     if (IgnoreLinesBeginningWith.contains(columns[0])) {
       currentStat = "NONE";
-      return 0;
+      return 1;
     }
 
     if (line.contains("LINUX RESTART")) {
-      log.debug("{}", line);
-      return 0;
+      return 1;
     }
 
     try {
@@ -143,12 +142,6 @@ public class Linux extends OSParser {
       return -1;
     }
 
-
-    //00:20:01     CPU  i000/s  i001/s  i002/s  i008/s  i009/s  i010/s  i011/s  i012/s  i014/s
-    if ("CPU".equals(columns[firstdatacolumn]) && line.matches(".*i([0-9]+)/s.*")) {
-      currentStat = "IGNORE";
-      return 1;
-    }
     // XML COLUMN PARSER
     String checkStat = myosconfig.getStat(columns, firstdatacolumn);
     if (checkStat != null) {
@@ -162,23 +155,23 @@ public class Linux extends OSParser {
 
             ListofGraph.put(checkStat, obj);
             currentStat = checkStat;
-            return 0;
+            return 2;
           }
           if ("multiple".equals(mygraphinfo.getType())) {
             obj = new List(mysar, mygraphinfo, mygraphinfo.getTitle(), line, firstdatacolumn);
 
             ListofGraph.put(checkStat, obj);
             currentStat = checkStat;
-            return 0;
+            return 2;
           }
         } else {
           // no graph associate
           currentStat = checkStat;
-          return 0;
+          return 3;
         }
       } else {
         currentStat = checkStat;
-        return 0;
+        return 2;
       }
     }
 
@@ -192,7 +185,7 @@ public class Linux extends OSParser {
     }
 
     if ("IGNORE".equals(currentStat)) {
-      return 1;
+      return 0;
     }
     if ("NONE".equals(currentStat)) {
       return -1;
