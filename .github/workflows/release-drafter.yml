@@ -19,6 +19,9 @@ jobs:
     if: github.repository_owner == 'vlsi'
     name: Update Release Draft
     runs-on: ubuntu-latest
+    env:
+      # Publish pre-release files to a draft release
+      PUBLISH_SNAPSHOT: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
     steps:
       # (Optional) GitHub Enterprise requires GHE_HOST variable set
       #- name: Set GHE_HOST
@@ -26,10 +29,62 @@ jobs:
       #    echo "GHE_HOST=${GITHUB_SERVER_URL##https:\/\/}" >> $GITHUB_ENV
 
       # Drafts your next Release notes as Pull Requests are merged into "master"
-      - uses: release-drafter/release-drafter@v5
+      - name: Update release body draft
+        uses: release-drafter/release-drafter@v5
+        id: prepare_release
         # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
         # with:
         #   config-name: my-config.yml
         #   disable-autolabeler: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout sources
+        if: ${{ env.PUBLISH_SNAPSHOT }}
+        uses: actions/checkout@v3
+      - name: Set up JDK 17
+        if: ${{ env.PUBLISH_SNAPSHOT }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: liberica
+      - name: Build
+        if: ${{ env.PUBLISH_SNAPSHOT }}
+        uses: burrunan/gradle-cache-action@v1
+        with:
+          job-id: jdk17
+          arguments: --scan --no-parallel --no-daemon shadowJar
+      - name: Attach files to release
+        if: ${{ env.PUBLISH_SNAPSHOT }}
+        uses: actions/github-script@v6
+        env:
+          # https://github.com/release-drafter/release-drafter#action-outputs
+          RELEASE_ID: ${{ steps.prepare_release.outputs.id }}
+        with:
+          # language=JavaScript
+          script: |
+            const fs = require('fs');
+            const {RELEASE_ID} = process.env;
+            // remove old jar files from the release
+            const assets = await github.rest.repos.listReleaseAssets({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: RELEASE_ID
+            });
+            for (const asset of assets.data) {
+                if (asset.name.endsWith('-all.jar')) {
+                    await github.rest.repos.deleteReleaseAsset({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        asset_id: asset.id
+                    });
+                }
+            }
+            const globber = await glob.create('build/libs/ksar-*-all.jar');
+            const files = await globber.glob();
+            await github.rest.repos.uploadReleaseAsset({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: files[0].replace(/^(.*build\/libs\/ksar-)/, "ksar-"),
+                release_id: RELEASE_ID,
+                data: fs.readFileSync(files[0])
+            })
