@@ -168,7 +168,7 @@ public class kSar {
             break;
 
           default:
-            log.error("L{} <ERR> PARSE unexpected return value: " + parser_return);
+            log.error("L{} <ERR> PARSE unexpected return value: {}", lines_parsed, parser_return);
         }
 
         myparser.updateUITitle();
