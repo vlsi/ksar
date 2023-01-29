@@ -19,11 +19,10 @@ jobs:
         with:
           job-id: jdk17
           arguments: --scan --no-parallel --no-daemon -Prelease build
-      - name: Publish GitHub Release
-        id: publish_release
+      - name: Prepare GitHub Release
+        id: prepare_release
         uses: release-drafter/release-drafter@v5
         with:
-          publish: true
           tag: ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -32,7 +31,7 @@ jobs:
         env:
           TAG: ${{ github.ref_name }}
           # https://github.com/release-drafter/release-drafter#action-outputs
-          RELEASE_ID: ${{ steps.publish_release.outputs.release_id }}
+          RELEASE_ID: ${{ steps.prepare_release.outputs.id }}
         with:
           # language=JavaScript
           script: |
@@ -46,3 +45,11 @@ jobs:
               release_id: RELEASE_ID,
               data: fs.readFileSync("build/libs/ksar-" + version +  "-all.jar")
             })
+      - name: Publish GitHub Release
+        id: publish_release
+        uses: release-drafter/release-drafter@v5
+        with:
+          publish: true
+          tag: ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
