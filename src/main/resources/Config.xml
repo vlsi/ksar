@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE ConfiG PUBLIC "-//NET/ATOMIQUE/KSAR/CONFIG.DTD" "config.dtd" >
+<!DOCTYPE ConfiG PUBLIC "-//NET/ATOMIQUE/KSAR/config.dtd" "config.dtd" >
 <!--
     Description:
         Configure color of graphs

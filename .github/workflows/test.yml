@@ -10,27 +10,55 @@ on:
   pull_request:
     branches: [ master ]
 
+concurrency:
+  # On master/release, we don't want any jobs cancelled so the sha is used to name the group
+  # On PR branches, we cancel the job if new commits are pushed
+  # More info: https://stackoverflow.com/a/68422069/253468
+  group: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/release' ) && format('ci-main-{0}', github.sha) || format('ci-main-{0}', github.ref) }}
+  cancel-in-progress: true
+
 jobs:
-  build:
-    strategy:
-      fail-fast: false
-      matrix:
-        java-version:
-          - 8
-          - 17
+  matrix_prep:
+    name: Matrix Preparation
     runs-on: ubuntu-latest
-    name: 'Test (JDK ${{ matrix.java-version }})'
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    env:
+      # Ask matrix.js to produce 7 jobs
+      MATRIX_JOBS: 7
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 50
+      - id: set-matrix
+        run: |
+          node .github/workflows/matrix.js
+
+  build:
+    needs: matrix_prep
+    name: '${{ matrix.name }}'
+    runs-on: ${{ matrix.os }}
+    env:
+      TZ: ${{ matrix.tz }}
+    strategy:
+      matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
+      fail-fast: false
+      max-parallel: 4
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 50
           submodules: true
-      - name: 'Set up JDK ${{ matrix.java-version }}'
-        uses: actions/setup-java@v1
+      - name: Set up Java ${{ matrix.java_version }}, ${{ matrix.java_distribution }}
+        uses: actions/setup-java@v2
         with:
-          java-version: ${{ matrix.java-version }}
+          java-version: ${{ matrix.java_version }}
+          distribution: ${{ matrix.java_distribution }}
+          architecture: x64
       - name: 'Run tests'
         uses: burrunan/gradle-cache-action@v1
         with:
-          job-id: jdk${{ matrix.java-version }}
+          job-id: jdk${{ matrix.java_version }}
           arguments: --scan --no-parallel --no-daemon build
+        env:
+          _JAVA_OPTIONS: ${{ matrix.testExtraJvmArgs }}
