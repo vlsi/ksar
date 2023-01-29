@@ -8,6 +8,12 @@ plugins {
 
 group = "com.github.vlsi.ksar"
 
+if (!project.hasProperty("release")) {
+    version = "$version-SNAPSHOT"
+}
+
+println("Building kSar $version")
+
 setProperty("archivesBaseName", "ksar")
 
 java {
