@@ -38,10 +38,11 @@ jobs:
           script: |
             const fs = require('fs');
             const {TAG, RELEASE_ID} = process.env;
+            const version = TAG.substring(1); // remove leading v
             await github.rest.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: "ksar-" + TAG + ".jar",
+              name: "ksar-" + version + ".jar",
               release_id: RELEASE_ID,
-              data: fs.readFileSync("build/libs/ksar-" + TAG + "-all.jar")
+              data: fs.readFileSync("build/libs/ksar-" + version +  "-all.jar")
             })
