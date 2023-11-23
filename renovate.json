@@ -2,5 +2,12 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base"
+  ],
+  "schedule": ["every 3 weeks on Monday"],
+  "packageRules": [
+    {
+      "matchPackagePrefixes": ["ch.qos.logback"],
+      "groupName": "ch.qos.logback"
+    }
   ]
 }
