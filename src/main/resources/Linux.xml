@@ -156,6 +156,14 @@
                 <headerstr>pgpgin/s pgpgout/s fault/s majflt/s pgfree/s pgscank/s pgscand/s pgsteal/s %vmeff</headerstr>
                 <graphname>PAGING</graphname>
             </Stat>
+            <Stat name="paging_202309">
+                <headerstr>pgpgin/s pgpgout/s fault/s majflt/s pgfree/s pgscank/s pgscand/s pgsteal/s</headerstr>
+                <graphname>PAGING</graphname>
+            </Stat>
+            <Stat name="paging_202311">
+                <headerstr>pgpgin/s pgpgout/s fault/s majflt/s pgfree/s pgscank/s pgscand/s pgsteal/s pgprom/s pgdem/s</headerstr>
+                <graphname>PAGING_202311</graphname>
+            </Stat>
             <Stat name="INET_FAIL">
                 <headerstr>IFACE rxerr/s txerr/s coll/s rxdrop/s txdrop/s txcarr/s rxfram/s rxfifo/s txfifo/s</headerstr>
                 <graphname>INET_FAIL</graphname>
@@ -372,9 +380,20 @@
                 <Plot Title="free/scan/steal">
                     <cols>pgfree/s pgscank/s pgscand/s pgsteal/s</cols>
                 </Plot>
-                <Plot Title="%vmeff">
-                    <cols>%vmeff</cols>
-                    <range>0,100</range>
+            </Graph>
+            <Graph name="PAGING_202311" Title="Paging" type="unique">
+                <Plot Title="pgp">
+                    <cols>pgpgin/s pgpgout/s</cols>
+                    <format base="1000" factor="1" />
+                </Plot>
+                <Plot Title="fault">
+                    <cols>fault/s majflt/s</cols>
+                </Plot>
+                <Plot Title="free/scan/steal">
+                    <cols>pgfree/s pgscank/s pgscand/s pgsteal/s</cols>
+                </Plot>
+                <Plot Title="promote/demote">
+                    <cols>pgprom/s pgdem/s</cols>
                 </Plot>
             </Graph>
             <Graph name="DEV_OLD" Title="Devices" type="multiple">
