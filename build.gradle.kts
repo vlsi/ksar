@@ -37,6 +37,7 @@ dependencies {
     implementation("org.jfree:jfreechart:1.5.4")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<JavaCompile>().configureEach {
