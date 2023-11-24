@@ -14,8 +14,6 @@ if (!project.hasProperty("release")) {
 
 println("Building kSar $version")
 
-setProperty("archivesBaseName", "ksar")
-
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
