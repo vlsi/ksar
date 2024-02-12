@@ -23,7 +23,7 @@ jobs:
           arguments: --scan --no-parallel --no-daemon -Prelease build
       - name: Prepare GitHub Release
         id: prepare_release
-        uses: release-drafter/release-drafter@v5
+        uses: release-drafter/release-drafter@v6
         with:
           tag: ${{ github.ref_name }}
         env:
@@ -64,7 +64,7 @@ jobs:
             })
       - name: Publish GitHub Release
         id: publish_release
-        uses: release-drafter/release-drafter@v5
+        uses: release-drafter/release-drafter@v6
         with:
           publish: true
           tag: ${{ github.ref_name }}
