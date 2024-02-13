@@ -200,8 +200,12 @@
                 <headerstr>active/s passive/s iseg/s oseg/s</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
-            <Stat name="miscip7">
+            <Stat name="miscip7old">
                 <headerstr>atmptf/s estres/s retrans/s isegerr/s orsts/s</headerstr>
+                <graphname>IGNORE</graphname>
+            </Stat>
+            <Stat name="miscip7new">
+                <headerstr>atmptf/s estres/s retrseg/s isegerr/s orsts/s</headerstr>
                 <graphname>IGNORE</graphname>
             </Stat>
             <Stat name="miscip8">
