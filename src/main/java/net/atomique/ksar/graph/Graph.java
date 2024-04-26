@@ -17,6 +17,7 @@ import net.atomique.ksar.xml.StatConfig;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
@@ -410,7 +411,14 @@ public class Graph {
     }
     // do the line stuff
     for (PlotStackConfig tmp : graphconfig.getPlotlist().values()) {
-      XYItemRenderer renderer = new StandardXYItemRenderer();
+      XYItemRenderer renderer = new StandardXYItemRenderer() {
+          @Override
+          public LegendItem getLegendItem(int datasetIndex, int series) {
+            LegendItem item = super.getLegendItem(datasetIndex, series);
+            item.setLineStroke(new BasicStroke(5.0F));
+            return item;
+          }
+        };
       renderer.setDefaultStroke(new BasicStroke(1.0F));
       ArrayList<String> t = new ArrayList<>();
       String[] s = tmp.getHeaderStr().split("\\s+");
