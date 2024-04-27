@@ -27,7 +27,14 @@ public class Main {
   static ResourceBundle resource = ResourceBundle.getBundle("net/atomique/ksar/Language/Message");
 
   public static void usage() {
-    show_version();
+    log.info("Usage: ksar [OPTIONS]");
+    log.info("OPTIONS:");
+    log.info("  -input INPUTFILE    load INPUTFILE sa sar data");
+    log.info("  -debug              enable debug level output");
+    log.info("  -test               an alist for -debug option");
+    log.info("  -trace              enable trace level  output");
+    log.info("  -version            print the version information");
+    log.info("  -help               print this help message");
   }
 
   public static void show_version() {
