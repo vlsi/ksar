@@ -10,6 +10,7 @@ import net.atomique.ksar.ui.Desktop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -119,6 +120,9 @@ public class Main {
         exit_error(resource.getString("UNKNOWN_OPTION"), arg);
       }
 
+      if (i < args.length) {
+        exit_error(resource.getString("TOO_MANY_ARGUMENTS"),
+                   String.join(" ", Arrays.copyOfRange(args, i, args.length)));
       }
     }
 
