@@ -91,7 +91,7 @@ public class Main {
         }
         if ("-help".equals(arg)) {
           usage();
-          continue;
+          System.exit(0);
         }
         if ("-test".equals(arg) || "-debug".equals(arg)) {
           root.setLevel(Level.DEBUG);
