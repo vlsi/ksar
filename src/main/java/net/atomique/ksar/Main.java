@@ -111,10 +111,13 @@ public class Main {
         if ("-input".equals(arg)) {
           if (i < args.length) {
             GlobalOptions.setCLfilename(args[i++]);
+            continue;
           } else {
             exit_error(resource.getString("INPUT_REQUIRE_ARG"));
           }
         }
+        exit_error(resource.getString("UNKNOWN_OPTION"), arg);
+      }
 
       }
     }
@@ -123,8 +126,8 @@ public class Main {
 
   }
 
-  public static void exit_error(final String message) {
-    log.error(message);
+  public static void exit_error(final String format, final String... args) {
+    log.error(format, (Object[]) args);
     System.exit(1);
 
   }
