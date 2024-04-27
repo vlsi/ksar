@@ -18,6 +18,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Main {
 
   private static final Logger log = LoggerFactory.getLogger(Main.class);
+  static {
+    ((ch.qos.logback.classic.Logger)log).setLevel(Level.INFO);
+  }
 
   static Config config = null;
   static GlobalOptions globaloptions = null;
