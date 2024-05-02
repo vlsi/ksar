@@ -17,6 +17,7 @@ import net.atomique.ksar.xml.StatConfig;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
@@ -396,13 +397,13 @@ public class Graph {
 
       if (tmp2 != null) {
         StackedXYAreaRenderer2 renderer = new StackedXYAreaRenderer2();
+        renderer.setDefaultStroke(new BasicStroke(1.0F));
         NumberAxis graphaxistitle = tmp.getAxis();
         XYPlot temp_plot = new XYPlot(tmp2, axisofdate, graphaxistitle, renderer);
         for (int i = 0; i < tmp2.getSeriesCount(); i++) {
           Color color = GlobalOptions.getDataColor(tmp2.getSeriesKey(i).toString());
           if (color != null) {
             renderer.setSeriesPaint(i, color);
-            renderer.setDefaultStroke(new BasicStroke(1.0F));
           }
         }
         plot.add(temp_plot, tmp.getSize());
@@ -410,7 +411,15 @@ public class Graph {
     }
     // do the line stuff
     for (PlotStackConfig tmp : graphconfig.getPlotlist().values()) {
-      XYItemRenderer renderer = new StandardXYItemRenderer();
+      XYItemRenderer renderer = new StandardXYItemRenderer() {
+          @Override
+          public LegendItem getLegendItem(int datasetIndex, int series) {
+            LegendItem item = super.getLegendItem(datasetIndex, series);
+            item.setLineStroke(new BasicStroke(5.0F));
+            return item;
+          }
+        };
+      renderer.setDefaultStroke(new BasicStroke(1.0F));
       ArrayList<String> t = new ArrayList<>();
       String[] s = tmp.getHeaderStr().split("\\s+");
       Collections.addAll(t, s);
@@ -423,7 +432,6 @@ public class Graph {
         Color color = GlobalOptions.getDataColor(s[i]);
         if (color != null) {
           renderer.setSeriesPaint(i, color);
-          renderer.setDefaultStroke(new BasicStroke(1.0F));
         }
       }
       plot.add(tmpplot, tmp.getSize());
