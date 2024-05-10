@@ -4,6 +4,7 @@ build/
 
 # Temporary files
 *.bak
+*~
 
 # Ignore Gradle GUI config
 gradle-app.setting
