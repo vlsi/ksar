@@ -97,7 +97,7 @@ public class Main {
           show_version();
           System.exit(0);
         }
-        if ("-help".equals(arg)) {
+        if ("-help".equals(arg) || "--help".equals(arg) || "-h".equals(arg)) {
           usage();
           System.exit(0);
         }
