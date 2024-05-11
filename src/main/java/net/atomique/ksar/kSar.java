@@ -127,7 +127,7 @@ public class kSar {
 
               continue;
             } else {
-              if (myparser.getParserName().equals(columns[0])) {
+              if (myparser.getParserName().equals(firstColumn)) {
                 myparser.parse_header(current_line);
                 continue;
               }
