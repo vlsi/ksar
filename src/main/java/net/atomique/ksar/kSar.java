@@ -139,7 +139,7 @@ public class kSar {
 
 
         if (myparser == null) {
-          log.error("unknown parser");
+          log.error("unknown parser: {}", firstColumn);
           Parsing = false;
           return -1;
         }
