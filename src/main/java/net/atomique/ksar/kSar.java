@@ -127,7 +127,7 @@ public class kSar {
 
               continue;
             } else {
-              if (myparser.getParserName().equals(columns[0])) {
+              if (myparser.getParserName().equals(firstColumn)) {
                 myparser.parse_header(current_line);
                 continue;
               }
@@ -139,7 +139,7 @@ public class kSar {
 
 
         if (myparser == null) {
-          log.error("unknown parser");
+          log.error("unknown parser: {}", firstColumn);
           Parsing = false;
           return -1;
         }
