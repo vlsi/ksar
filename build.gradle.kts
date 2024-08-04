@@ -34,7 +34,7 @@ dependencies {
 
     implementation("com.itextpdf:itextpdf:5.5.13.4")
     implementation("com.jcraft:jsch:0.1.55")
-    implementation("org.jfree:jfreechart:1.5.4")
+    implementation("org.jfree:jfreechart:1.5.5")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
