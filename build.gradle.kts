@@ -36,7 +36,7 @@ dependencies {
     implementation("com.jcraft:jsch:0.1.55")
     implementation("org.jfree:jfreechart:1.5.5")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.3")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
