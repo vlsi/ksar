@@ -28,7 +28,7 @@ jobs:
           java-version: ${{ matrix.java-version }}
           distribution: liberica
       - name: 'Run tests'
-        uses: burrunan/gradle-cache-action@v1
+        uses: burrunan/gradle-cache-action@v2
         with:
           job-id: jdk${{ matrix.java-version }}
           arguments: --scan --no-parallel --no-daemon build
