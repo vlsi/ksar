@@ -11,12 +11,12 @@ This is a fork of http://sourceforge.net/projects/ksar/
 
 Prerequisite:
 
-- Java 8 or later
+- Java 17 or later
 
 Download a pre-built jar from [GitHub releases page](https://github.com/vlsi/ksar/releases).
 
 ```
-$ java -jar ksar-5.2.4-all.jar
+$ java -jar ksar-6.0.0-all.jar
 ```
 
 Building from source
@@ -24,7 +24,7 @@ Building from source
 
 Prerequisite:
 
-- JDK 8 or later
+- JDK 17 or later
 
 The following command would build and launch kSar from sources:
 
@@ -36,5 +36,5 @@ or
 
 ```
 $ ./gradlew shadowJar
-$ java -jar build/libs/ksar-5.2.4-SNAPSHOT-all.jar
+$ java -jar build/libs/ksar-6.0.0-SNAPSHOT-all.jar
 ```
