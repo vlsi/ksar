@@ -17,7 +17,7 @@ jobs:
           java-version: 17
           distribution: liberica
       - name: Build
-        uses: burrunan/gradle-cache-action@v2
+        uses: burrunan/gradle-cache-action@v3
         with:
           job-id: jdk17
           arguments: --scan --no-parallel --no-daemon -Prelease build
