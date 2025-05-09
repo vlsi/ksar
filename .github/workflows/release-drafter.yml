@@ -49,7 +49,7 @@ jobs:
           distribution: liberica
       - name: Build
         if: ${{ env.PUBLISH_SNAPSHOT }}
-        uses: burrunan/gradle-cache-action@v2
+        uses: burrunan/gradle-cache-action@v3
         with:
           job-id: jdk17
           arguments: --scan --no-parallel --no-daemon shadowJar
