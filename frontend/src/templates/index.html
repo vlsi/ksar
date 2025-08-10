@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}kSar Dashboard - Home{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h1 class="text-center">System Activity Reporter Dashboard</h1>
+    <p class="text-center text-muted">Monitor and analyze system performance data from SAR files</p>
+</div>
+
+{% if files %}
+    <div class="card">
+        <div class="card-header">
+            📁 Uploaded SAR Files
+        </div>
+        <div class="card-body">
+            <div class="grid">
+                {% for file in files %}
+                <div class="file-item">
+                    <div class="file-info">
+                        <div class="file-name">{{ file.filename }}</div>
+                        <div class="file-meta">
+                            Uploaded: {{ file.upload_time }} | 
+                            Size: {{ file.size }} | 
+                            Status: 
+                            <span class="status-badge 
+                                {% if file.status == 'parsed' %}status-success
+                                {% elif file.status == 'processing' %}status-pending
+                                {% else %}status-error{% endif %}">
+                                {{ file.status }}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="/file/{{ file.id }}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            📊 Quick Stats
+        </div>
+        <div class="card-body">
+            <div class="grid">
+                <div class="metric-card">
+                    <div class="metric-value">{{ files|length }}</div>
+                    <div class="metric-label">Total Files</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">{{ files | selectattr('status', 'equalto', 'parsed') | list | length }}</div>
+                    <div class="metric-label">Parsed Files</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">{{ files | selectattr('status', 'equalto', 'processing') | list | length }}</div>
+                    <div class="metric-label">Processing</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">{{ files | selectattr('status', 'equalto', 'error') | list | length }}</div>
+                    <div class="metric-label">Errors</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="card">
+        <div class="card-body text-center">
+            <div class="alert alert-info">
+                <h4>No SAR files uploaded yet</h4>
+                <p class="mb-3">Upload a SAR file to get started with performance analysis.</p>
+                <p class="text-muted">Supported formats: SAR binary files, text files, and compressed archives</p>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<div class="card">
+    <div class="card-header">
+        🚀 Getting Started
+    </div>
+    <div class="card-body">
+        <div class="grid">
+            <div class="metric-card">
+                <h4>1. Upload SAR File</h4>
+                <p>Upload your system activity reporter (SAR) file through the backend API</p>
+            </div>
+            <div class="metric-card">
+                <h4>2. Parse Data</h4>
+                <p>The system will automatically parse and extract performance metrics</p>
+            </div>
+            <div class="metric-card">
+                <h4>3. View Charts</h4>
+                <p>Explore interactive charts showing CPU, memory, disk, and network usage</p>
+            </div>
+            <div class="metric-card">
+                <h4>4. Performance Testing</h4>
+                <p>Use Locust to simulate load and test your system performance</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        📈 Performance Testing with Locust
+    </div>
+    <div class="card-body">
+        <p>This dashboard is built on top of the Locust performance testing framework, allowing you to:</p>
+        <ul style="margin-left: 20px; margin-top: 10px;">
+            <li>Simulate multiple users accessing your system</li>
+            <li>Monitor real-time performance metrics</li>
+            <li>Generate load testing reports</li>
+            <li>Identify performance bottlenecks</li>
+        </ul>
+        <div class="text-center mt-4">
+            <a href="/api/files" class="btn btn-secondary">View API Endpoints</a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

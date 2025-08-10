@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block title %}File Details - {{ file_data.filename }}{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1>📊 {{ file_data.filename }}</h1>
+            <p class="text-muted">System Performance Analysis</p>
+        </div>
+        <a href="/" class="btn btn-secondary">← Back to Dashboard</a>
+    </div>
+</div>
+
+<!-- File Information -->
+<div class="card mb-4">
+    <div class="card-header">
+        📁 File Information
+    </div>
+    <div class="card-body">
+        <div class="grid">
+            <div class="metric-card">
+                <div class="metric-value">{{ file_data.filename }}</div>
+                <div class="metric-label">Filename</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">{{ file_data.upload_time }}</div>
+                <div class="metric-label">Upload Time</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">{{ file_data.size }}</div>
+                <div class="metric-label">File Size</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">{{ file_data.status }}</div>
+                <div class="metric-label">Status</div>
+            </div>
+        </div>
+        
+        {% if file_data.system_info %}
+        <div class="mt-4">
+            <h5>System Information</h5>
+            <div class="grid">
+                <div class="metric-card">
+                    <div class="metric-value">{{ file_data.system_info.os_type }}</div>
+                    <div class="metric-label">Operating System</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">{{ file_data.system_info.hostname }}</div>
+                    <div class="metric-label">Hostname</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">{{ file_data.system_info.kernel }}</div>
+                    <div class="metric-label">Kernel Version</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">{{ file_data.system_info.architecture }}</div>
+                    <div class="metric-label">Architecture</div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Performance Charts -->
+{% if cpu_chart %}
+<div class="card mb-4">
+    <div class="card-header">
+        🖥️ CPU Utilization
+    </div>
+    <div class="card-body">
+        <div class="chart-container">
+            <img src="data:image/png;base64,{{ cpu_chart }}" alt="CPU Utilization Chart" />
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if memory_chart %}
+<div class="card mb-4">
+    <div class="card-header">
+        💾 Memory Usage
+    </div>
+    <div class="card-body">
+        <div class="chart-container">
+            <img src="data:image/png;base64,{{ memory_chart }}" alt="Memory Usage Chart" />
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if disk_chart %}
+<div class="card mb-4">
+    <div class="card-header">
+        💿 Disk I/O Activity
+    </div>
+    <div class="card-body">
+        <div class="chart-container">
+            <img src="data:image/png;base64,{{ disk_chart }}" alt="Disk I/O Chart" />
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if network_chart %}
+<div class="card mb-4">
+    <div class="card-header">
+        🌐 Network I/O Activity
+    </div>
+    <div class="card-body">
+        <div class="chart-container">
+            <img src="data:image/png;base64,{{ network_chart }}" alt="Network I/O Chart" />
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if load_chart %}
+<div class="card mb-4">
+    <div class="card-header">
+        ⚡ System Load Averages
+    </div>
+    <div class="card-body">
+        <div class="chart-container">
+            <img src="data:image/png;base64,{{ load_chart }}" alt="System Load Chart" />
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Performance Summary -->
+{% if file_data.performance_summary %}
+<div class="card mb-4">
+    <div class="card-header">
+        📈 Performance Summary
+    </div>
+    <div class="card-body">
+        <div class="grid">
+            {% if file_data.performance_summary.cpu %}
+            <div class="metric-card">
+                <div class="metric-value">{{ "%.1f"|format(file_data.performance_summary.cpu.avg) }}%</div>
+                <div class="metric-label">Avg CPU Usage</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">{{ "%.1f"|format(file_data.performance_summary.cpu.max) }}%</div>
+                <div class="metric-label">Max CPU Usage</div>
+            </div>
+            {% endif %}
+            
+            {% if file_data.performance_summary.memory %}
+            <div class="metric-card">
+                <div class="metric-value">{{ "%.1f"|format(file_data.performance_summary.memory.avg) }}%</div>
+                <div class="metric-label">Avg Memory Usage</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">{{ "%.1f"|format(file_data.performance_summary.memory.max) }}%</div>
+                <div class="metric-label">Max Memory Usage</div>
+            </div>
+            {% endif %}
+            
+            {% if file_data.performance_summary.disk %}
+            <div class="metric-card">
+                <div class="metric-value">{{ "%.0f"|format(file_data.performance_summary.disk.avg_read) }}</div>
+                <div class="metric-label">Avg Read (KB/s)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">{{ "%.0f"|format(file_data.performance_summary.disk.avg_write) }}</div>
+                <div class="metric-label">Avg Write (KB/s)</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Raw Data Preview -->
+{% if file_data.raw_data %}
+<div class="card mb-4">
+    <div class="card-header">
+        📋 Raw Data Preview
+    </div>
+    <div class="card-body">
+        <div style="max-height: 300px; overflow-y: auto; background: #f8f9fa; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 0.9rem;">
+            <pre>{{ file_data.raw_data[:1000] }}{% if file_data.raw_data|length > 1000 %}...{% endif %}</pre>
+        </div>
+        <div class="text-center mt-3">
+            <small class="text-muted">Showing first 1000 characters of raw data</small>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Actions -->
+<div class="card">
+    <div class="card-header">
+        🚀 Actions
+    </div>
+    <div class="card-body text-center">
+        <div class="grid">
+            <a href="/api/file/{{ file_data.id }}/data" class="btn btn-primary">Download JSON Data</a>
+            <a href="/" class="btn btn-secondary">Back to Dashboard</a>
+            <a href="/api/files" class="btn btn-secondary">View All Files</a>
+        </div>
+    </div>
+</div>
+{% endblock %} 
