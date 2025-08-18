@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("application")
-    id("com.gradleup.shadow") version "8.3.8"
+    id("com.gradleup.shadow") version "8.3.9"
     id("checkstyle")
     id("com.github.vlsi.gradle-extensions") version "2.0.0"
 }
