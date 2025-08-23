@@ -284,6 +284,14 @@
                 <headerstr>kbmemfree kbavail kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact kbdirty kbanonpg kbslab kbkstack kbpgtbl kbvmused</headerstr>
                 <graphname>KMEM_11.5.3</graphname>
             </Stat>
+            <Stat name="kmem_12.7.8_r">
+                <headerstr>kbmemfree kbavail kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact kbdirty kbshmem</headerstr>
+                <graphname>KMEM_11.5.3</graphname>
+            </Stat>
+            <Stat name="kmem_12.7.8_rALL">
+                <headerstr>kbmemfree kbavail kbmemused %memused kbbuffers kbcached kbcommit %commit kbactive kbinact kbdirty kbshmem kbanonpg kbslab kbkstack kbpgtbl kbvmused</headerstr>
+                <graphname>KMEM_11.5.3</graphname>
+            </Stat>
             <Stat name="hpage">
                 <headerstr>kbhugfree kbhugused %hugused</headerstr>
                 <graphname>HPAGE</graphname>
