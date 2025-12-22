@@ -29,8 +29,8 @@ repositories {
 
 dependencies {
     implementation("org.slf4j:slf4j-api:2.0.17")
-    implementation("ch.qos.logback:logback-core:1.5.21")
-    implementation("ch.qos.logback:logback-classic:1.5.21")
+    implementation("ch.qos.logback:logback-core:1.5.23")
+    implementation("ch.qos.logback:logback-classic:1.5.23")
 
     implementation("com.itextpdf:itextpdf:5.5.13.4")
     implementation("com.jcraft:jsch:0.1.55")
