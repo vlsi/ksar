@@ -32,7 +32,7 @@ dependencies {
     implementation("ch.qos.logback:logback-core:1.5.25")
     implementation("ch.qos.logback:logback-classic:1.5.25")
 
-    implementation("com.itextpdf:itextpdf:5.5.13.4")
+    implementation("com.itextpdf:itextpdf:5.5.13.5")
     implementation("com.jcraft:jsch:0.1.55")
     implementation("org.jfree:jfreechart:1.5.6")
 
