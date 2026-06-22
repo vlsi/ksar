@@ -26,7 +26,7 @@ public class SunOS extends OSParser {
 
   boolean under_average = false;
 
-  public void parse_header(String s) {
+  public void parseHeader(String s) {
 
     String[] columns = s.split("\\s+");
 

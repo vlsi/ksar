@@ -55,6 +55,10 @@ tasks.withType<Test>().configureEach {
         ?.split(" ::: ")
         ?.filter { it.isNotBlank() }
         ?.let { jvmArgs(it) }
+    // Forward the generator switch to the test workers so DateFormatHelperTest can be run with
+    // -Pksar.generateDateFormats=true, without editing the test source.
+    (project.findProperty("ksar.generateDateFormats") as String?)
+        ?.let { systemProperty("ksar.generateDateFormats", it) }
 }
 
 val writeVersion by tasks.registering {
