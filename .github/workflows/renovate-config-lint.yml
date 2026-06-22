@@ -1,0 +1,23 @@
+name: Validate Renovate Config
+
+on:
+  push:
+    paths:
+      - renovate.json
+      - .github/workflows/renovate-config-lint.yml
+  pull_request:
+    paths:
+      - renovate.json
+      - .github/workflows/renovate-config-lint.yml
+
+permissions:
+  contents: read
+
+jobs:
+  validate-renovate-config:
+    name: Validate renovate.json
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Validate renovate.json
+        run: docker run --rm -v "$PWD":/work -w /work renovate/renovate:latest renovate-config-validator renovate.json
