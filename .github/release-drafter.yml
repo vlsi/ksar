@@ -30,6 +30,9 @@ template: |
 
   $CHANGES
 # See https://github.com/release-drafter/release-drafter#autolabeler
+# Kept as a reference only. The Release Drafter workflow runs on push and sets
+# disable-autolabeler: true, because labelling a PR needs pull-requests: write,
+# which read-only fork PR runs do not get. Label PRs by hand instead.
 autolabeler:
   - label: 'chore'
     files:
