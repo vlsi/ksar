@@ -47,6 +47,14 @@ tasks.withType<JavaCompile>().configureEach {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+    // The CI matrix (see .github/workflows/matrix.mjs) injects per-job JVM options such as
+    // the test locale and JIT-stress flags here, so they reach the test workers without
+    // affecting the Gradle daemon. Arguments are separated with " ::: " because a single
+    // value may contain spaces.
+    (project.findProperty("testExtraJvmArgs") as String?)
+        ?.split(" ::: ")
+        ?.filter { it.isNotBlank() }
+        ?.let { jvmArgs(it) }
 }
 
 val writeVersion by tasks.registering {
