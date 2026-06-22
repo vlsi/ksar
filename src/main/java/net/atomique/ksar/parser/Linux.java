@@ -40,7 +40,7 @@ public class Linux extends OSParser {
       "Media:", "Resumen:"                            // es.po
   ));
 
-  public void parse_header(String s) {
+  public void parseHeader(String s) {
     //Linux 3.10.0-1160.53.1.el7.x86_64 (hostname)  01/03/23  _x86_64_  (8 CPU)
 
     log.debug("Header Line : {}", s);
