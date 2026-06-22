@@ -4,6 +4,8 @@
     "config:base"
   ],
   "schedule": ["every 3 weeks on Monday"],
+  "automerge": true,
+  "platformAutomerge": false,
   "packageRules": [
     {
       "matchPackagePrefixes": ["ch.qos.logback"],
