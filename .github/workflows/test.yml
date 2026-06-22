@@ -33,3 +33,17 @@ jobs:
         with:
           job-id: jdk${{ matrix.java-version }}
           arguments: --scan --no-parallel --no-daemon build
+
+  # Aggregate gate over the JDK matrix. Branch protection requires this single,
+  # stable check name so the required-checks list survives matrix changes.
+  tests:
+    name: Tests
+    if: always()
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if any matrix job did not succeed
+        if: needs.build.result != 'success'
+        run: |
+          echo "Test matrix result: ${{ needs.build.result }}"
+          exit 1

@@ -5,7 +5,7 @@
   ],
   "schedule": ["every 3 weeks on Monday"],
   "automerge": true,
-  "platformAutomerge": false,
+  "platformAutomerge": true,
   "packageRules": [
     {
       "matchPackagePrefixes": ["ch.qos.logback"],
