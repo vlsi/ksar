@@ -1,15 +1,25 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:recommended"
+  ],
+  "labels": [
+    "dependencies"
   ],
   "schedule": ["every 3 weeks on Monday"],
   "automerge": true,
   "platformAutomerge": true,
+  "vulnerabilityAlerts": {
+    "description": "Security updates bypass the packageRules grouping below (Renovate resets their groupName), so apply the same groupId grouping to them here.",
+    "groupName": "{{{replace ':.*' '' depName}}}"
+  },
   "packageRules": [
     {
-      "matchPackagePrefixes": ["ch.qos.logback"],
-      "groupName": "ch.qos.logback"
+      "description": "Group every Maven update by its groupId. Add a more specific rule after this one to span several groupIds, pin a version, or disable a dependency.",
+      "matchDatasources": [
+        "maven"
+      ],
+      "groupName": "{{{replace ':.*' '' depName}}}"
     }
   ]
 }
