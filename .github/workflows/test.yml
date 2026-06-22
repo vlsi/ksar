@@ -4,46 +4,82 @@
 name: Test
 
 on:
+  # Run on pushes to master only; pull_request covers everything else,
+  # so feature branches with an open PR are not built twice.
   push:
     branches:
-      - '*'
+      - master
   pull_request:
     branches: [ master ]
+  workflow_dispatch:
+    inputs:
+      matrix_rng_seed:
+        description: RNG seed for reproducing a previous matrix
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  # On master/release we keep every job so no build is cancelled; the sha names the group.
+  # On PR branches a new push cancels the in-progress run.
+  # More info: https://stackoverflow.com/a/68422069/253468
+  group: ${{ (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/release') && format('ci-test-{0}', github.sha) || format('ci-test-{0}', github.ref) }}
+  cancel-in-progress: true
 
 jobs:
-  build:
-    strategy:
-      fail-fast: false
-      matrix:
-        java-version:
-          - 17
-          - 21
-          - 25
+  matrix_prep:
+    name: Matrix preparation
     runs-on: ubuntu-latest
-    name: 'Test (JDK ${{ matrix.java-version }})'
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    env:
+      MATRIX_JOBS: 6
+      GITHUB_PR_NUMBER: ${{ github.event.number }}
+      RNG_SEED: ${{ github.event.inputs.matrix_rng_seed }}
     steps:
       - uses: actions/checkout@v6
-      - name: 'Set up JDK ${{ matrix.java-version }}'
+      - id: set-matrix
+        shell: bash
+        run: |
+          npm ci --prefix .github/workflows
+          node .github/workflows/matrix.mjs
+
+  build:
+    needs: matrix_prep
+    name: '${{ matrix.name }}'
+    runs-on: ${{ matrix.os }}
+    env:
+      TZ: ${{ matrix.tz }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.matrix_prep.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: 'Set up JDK ${{ matrix.java_version }}, ${{ matrix.java_distribution }}'
         uses: actions/setup-java@v5
         with:
-          java-version: ${{ matrix.java-version }}
-          distribution: liberica
+          java-version: ${{ matrix.java_version }}
+          distribution: ${{ matrix.java_distribution }}
       - name: 'Run tests'
         uses: burrunan/gradle-cache-action@v3
         with:
-          job-id: jdk${{ matrix.java-version }}
+          job-id: jdk${{ matrix.java_version }}
           arguments: --scan --no-parallel --no-daemon build
+          properties: |
+            testExtraJvmArgs=${{ matrix.testExtraJvmArgs }}
 
-  # Aggregate gate over the JDK matrix. Branch protection requires this single,
-  # stable check name so the required-checks list survives matrix changes.
+  # Aggregate gate over the matrix. Branch protection requires this single, stable
+  # check name, so the required-checks list survives changes to the matrix job names.
   tests:
     name: Tests
     if: always()
-    needs: build
+    needs: [matrix_prep, build]
     runs-on: ubuntu-latest
     steps:
-      - name: Fail if any matrix job did not succeed
-        if: needs.build.result != 'success'
+      - name: Fail if matrix preparation or any matrix job did not succeed
+        if: needs.matrix_prep.result != 'success' || needs.build.result != 'success'
         run: |
-          echo "Test matrix result: ${{ needs.build.result }}"
+          echo "matrix_prep: ${{ needs.matrix_prep.result }}"
+          echo "build: ${{ needs.build.result }}"
           exit 1

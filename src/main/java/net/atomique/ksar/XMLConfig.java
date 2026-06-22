@@ -40,7 +40,6 @@ public class XMLConfig extends DefaultHandler {
     }
 
     String dtdFile = publicId.substring(KSAR_DTD_PREFIX.length() - 1);
-    dtdFile = dtdFile.toLowerCase();
     InputStream inputStream = getClass().getResourceAsStream(dtdFile);
     if (inputStream == null) {
       throw new FileNotFoundException("File " + publicId + " is not found in kSar resources");
