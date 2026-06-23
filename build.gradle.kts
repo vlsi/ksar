@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    kotlin("jvm") version "2.2.20"
     id("application")
     id("com.gradleup.shadow") version "9.4.2"
     id("checkstyle")
@@ -17,6 +18,12 @@ println("Building kSar $version")
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+    }
 }
 
 application {
