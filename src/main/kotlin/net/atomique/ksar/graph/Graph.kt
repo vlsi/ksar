@@ -2,143 +2,153 @@
  * Copyright 2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
+package net.atomique.ksar.graph
 
-package net.atomique.ksar.graph;
+import net.atomique.ksar.Config
+import net.atomique.ksar.kSar
+import net.atomique.ksar.xml.GraphConfig
+import net.atomique.ksar.ui.SortedTreeNode
+import org.jfree.data.time.TimeSeries
+import org.jfree.data.time.TimeTableXYDataset
+import java.time.LocalDateTime
+import org.jfree.data.time.Second
+import java.lang.NumberFormatException
+import java.lang.ArrayIndexOutOfBoundsException
+import org.jfree.data.general.SeriesException
+import net.atomique.ksar.GlobalOptions
+import java.lang.StringBuilder
+import org.jfree.data.time.RegularTimePeriod
+import org.jfree.chart.ChartUtils
+import java.io.IOException
+import javax.swing.JCheckBox
+import org.jfree.chart.JFreeChart
+import org.jfree.data.xy.XYDataset
+import org.jfree.data.time.TimeSeriesCollection
+import org.jfree.chart.ChartPanel
+import org.jfree.chart.plot.CombinedDomainXYPlot
+import org.jfree.chart.renderer.xy.StackedXYAreaRenderer2
+import org.jfree.chart.plot.XYPlot
+import java.awt.Color
+import java.awt.BasicStroke
+import org.jfree.chart.renderer.xy.StandardXYItemRenderer
+import org.jfree.chart.LegendItem
+import org.jfree.chart.plot.PlotOrientation
+import org.jfree.chart.axis.DateAxis
+import java.util.HashMap
+import java.awt.event.ItemEvent
+import net.atomique.ksar.ui.TreeNodeInfo
+import org.slf4j.LoggerFactory
+import java.io.File
+import java.lang.Exception
+import java.util.ArrayList
 
-import net.atomique.ksar.Config;
-import net.atomique.ksar.GlobalOptions;
-import net.atomique.ksar.kSar;
-import net.atomique.ksar.ui.SortedTreeNode;
-import net.atomique.ksar.ui.TreeNodeInfo;
-import net.atomique.ksar.xml.ColumnConfig;
-import net.atomique.ksar.xml.GraphConfig;
-import net.atomique.ksar.xml.PlotStackConfig;
-import net.atomique.ksar.xml.StatConfig;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.ChartUtils;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.LegendItem;
-import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.CombinedDomainXYPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.StackedXYAreaRenderer2;
-import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.data.general.SeriesException;
-import org.jfree.data.time.*;
-import org.jfree.data.xy.XYDataset;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import javax.swing.*;
-
-public class Graph {
-
-  private static final Logger log = LoggerFactory.getLogger(Graph.class);
-
-  public Graph(kSar hissar, GraphConfig g, String Title, String hdrs, int firstdatacolumn,
-      SortedTreeNode pp) {
-    mysar = hissar;
-    graphtitle = Title;
-    graphconfig = g;
-    printCheckBox = new JCheckBox(graphtitle, printSelected);
-    printCheckBox.addItemListener((ItemEvent evt) -> {
-
-      if (evt.getSource() == printCheckBox) {
-        printSelected = printCheckBox.isSelected();
-      }
-
-    });
-    firstDataColumn = firstdatacolumn;
-    if (pp != null) {
-      TreeNodeInfo infotmp = new TreeNodeInfo(Title, this);
-      SortedTreeNode nodetmp = new SortedTreeNode(infotmp);
-      mysar.add2tree(pp, nodetmp);
-    }
-    HeaderStr = hdrs.split("\\s+");
-    create_DataStore();
-  }
-
-  private void create_DataStore() {
-    // create timeseries
-    for (int i = firstDataColumn; i < HeaderStr.length; i++) {
-      Stats.add(new TimeSeries(HeaderStr[i]));
-    }
-    // create stack
-    for (PlotStackConfig tmp : graphconfig.getStacklist().values()) {
-      TimeTableXYDataset tmp2 = new TimeTableXYDataset();
-      String[] s = tmp.getHeaderStr().split("\\s+");
-      for (String value : s) {
-        StackListbyCol.put(value, tmp2);
-      }
-      StackListbyName.put(tmp.getTitle(), tmp2);
-    }
-  }
-
-  public int parse_line(LocalDateTime ldt, String s) {
-
-    Second now = new Second(ldt.getSecond(),
-        ldt.getMinute(),
-        ldt.getHour(),
-        ldt.getDayOfMonth(),
-        ldt.getMonthValue(),
-        ldt.getYear());
-
-    parse_line(now, s);
-    return 0;
-  }
-
-  public int parse_line(Second now, String s) {
-    String[] cols = s.split("\\s+");
-    double colvalue;
-    //log.debug("graph parsing: {}", s);
-    for (int i = firstDataColumn; i < HeaderStr.length; i++) {
-      try {
-        //ToDo: refactor "replace decimal separator" - allow local configuration for input file
-        colvalue = Double.parseDouble(cols[i].replace(',','.'));
-      } catch (NumberFormatException ne) {
-        log.error("{} {} is NaN", graphtitle, cols[i]);
-        return 0;
-      } catch (ArrayIndexOutOfBoundsException aie) {
-        log.error("{} col {} is missing {}", graphtitle, i, s);
-        return 0;
-      } catch (Exception ae) {
-        log.error("{} {} is undef {}", graphtitle, cols[i], s);
-        ae.printStackTrace();
-        return 0;
-      }
-
-      add_datapoint_plot(now, i - firstDataColumn, HeaderStr[i - firstDataColumn], colvalue);
-
-
-      TimeTableXYDataset tmp = StackListbyCol.get(HeaderStr[i]);
-      if (tmp != null) {
-        add_datapoint_stack(tmp, now, i, HeaderStr[i], colvalue);
-      }
+class Graph(
+    private val mysar: kSar,
+    private val graphConfig: GraphConfig,
+    val title: String,
+    hdrs: String,
+    private val firstDataColumn: Int,
+    pp: SortedTreeNode?
+) {
+    companion object {
+        private val log = LoggerFactory.getLogger(Graph::class.java)
     }
 
-    return 0;
-  }
+    private val axisOfDate = DateAxis("")
+    private lateinit var mygraph: JFreeChart
+    private var chartPanel: ChartPanel? = null
 
-  private boolean add_datapoint_stack(TimeTableXYDataset dataset, Second now, int col,
-      String colheader, double value) {
-    try {
-      dataset.add(now, value, colheader);
+    var isPrintSelected = true
+    private var printCheckBox = JCheckBox(this.title, isPrintSelected).apply {
+        val checkBox = this
+        addItemListener { evt: ItemEvent ->
+            if (evt.source === checkBox) {
+                isPrintSelected = checkBox.isSelected
+            }
+        }
+    }
 
-      return true;
-    } catch (SeriesException se) {
-      /*
+    private var headerStr = hdrs.split(Regex("\\s+"))
+    private val stats = ArrayList<TimeSeries>()
+    private val stackListByName: MutableMap<String, TimeTableXYDataset> = HashMap()
+    private val stackListByCol: MutableMap<String, TimeTableXYDataset> = HashMap()
+
+    init {
+        if (pp != null) {
+            mysar.add2tree(pp, SortedTreeNode(TreeNodeInfo(title, this)))
+        }
+        createDataStore()
+    }
+
+    private fun createDataStore() {
+        // create timeseries
+        for (i in firstDataColumn until headerStr.size) {
+            stats.add(TimeSeries(headerStr[i]))
+        }
+        // create stack
+        for (tmp in graphConfig.stacklist.values) {
+            val dataSet = TimeTableXYDataset()
+            val s = tmp.headerStr!!.split(Regex("\\s+"))
+            for (value in s) {
+                stackListByCol[value] = dataSet
+            }
+            stackListByName[tmp.title] = dataSet
+        }
+    }
+
+    fun parse_line(ldt: LocalDateTime, s: String): Int {
+        val now = Second(
+            ldt.second,
+            ldt.minute,
+            ldt.hour,
+            ldt.dayOfMonth,
+            ldt.monthValue,
+            ldt.year
+        )
+        parse_line(now, s)
+        return 0
+    }
+
+    fun parse_line(now: Second, s: String): Int {
+        val cols = s.split(Regex("\\s+"))
+        var colvalue: Double
+        // log.debug("graph parsing: {}", s);
+        for (i in firstDataColumn until headerStr.size) {
+            colvalue = try {
+                // ToDo: refactor "replace decimal separator" - allow local configuration for input file
+                cols[i].replace(',', '.').toDouble()
+            } catch (ne: NumberFormatException) {
+                log.error("{} {} is NaN", title, cols[i])
+                return 0
+            } catch (aie: ArrayIndexOutOfBoundsException) {
+                log.error("{} col {} is missing {}", title, i, s)
+                return 0
+            } catch (ae: Exception) {
+                log.error("{} {} is undef {}", title, cols[i], s)
+                ae.printStackTrace()
+                return 0
+            }
+            addDatapointPlot(now, i - firstDataColumn, headerStr[i - firstDataColumn], colvalue)
+            val tmp = stackListByCol[headerStr[i]]
+            if (tmp != null) {
+                add_datapoint_stack(tmp, now, i, headerStr[i], colvalue)
+            }
+        }
+        return 0
+    }
+
+    private fun add_datapoint_stack(
+        dataset: TimeTableXYDataset,
+        now: Second,
+        col: Int,
+        colHeader: String,
+        value: Double
+    ): Boolean {
+        return try {
+            dataset.add(now, value, colHeader)
+            true
+        } catch (se: SeriesException) {
+            /*
        *
        * not update on stack
        *
@@ -182,305 +192,249 @@ public class Graph {
           }
       }
       */
-      return false;
-    }
-
-  }
-
-  private boolean add_datapoint_plot(Second now, int col, String colheader, double value) {
-    try {
-      ((Stats.get(col))).add(now, value);
-      return true;
-    } catch (SeriesException se) {
-      // insert not possible
-      // check if column can be updated
-      StatConfig statconfig =
-          mysar.myparser.get_OSConfig().getStat(mysar.myparser.getCurrentStat());
-      if (statconfig != null) {
-        if (statconfig.canDuplicateTime()) {
-          Number oldval = ((Stats.get(col))).getValue(now);
-          double tempval;
-          if (oldval == null) {
-            return false;
-          }
-          ColumnConfig colconfig = GlobalOptions.getColumnConfig(colheader);
-          if (colconfig == null) {
-            return false;
-          }
-          if (colconfig.getType() == 1) {
-            tempval = ((oldval.doubleValue() + value) / 2);
-          } else if (colconfig.getType() == 2) {
-            tempval = (oldval.doubleValue() + value);
-          } else {
-            return false;
-          }
-
-          try {
-            ( (Stats.get(col))).update(now, tempval);
-            return true;
-          } catch (SeriesException se2) {
-            return false;
-          }
+            false
         }
-      }
-      return false;
     }
 
-  }
-
-  public String make_csv() {
-    StringBuilder tmp = new StringBuilder();
-    tmp.append("Date;");
-    tmp.append(getCsvHeader());
-    tmp.append("\n");
-    TimeSeries datelist = Stats.get(0);
-
-    for (Object o : datelist.getTimePeriods()) {
-      TimePeriod item = (TimePeriod) o;
-      tmp.append(item.toString());
-      tmp.append(";");
-      tmp.append(getCsvLine((RegularTimePeriod) item));
-      tmp.append("\n");
+    private fun addDatapointPlot(now: Second, col: Int, colHeader: String, value: Double): Boolean {
+        return try {
+            stats[col].add(now, value)
+            true
+        } catch (se: SeriesException) {
+            // insert not possible
+            // check if column can be update
+            val statConfig = mysar.myparser.get_OSConfig().getStat(mysar.myparser.currentStat)
+            if (statConfig != null) {
+                if (statConfig.canDuplicateTime()) {
+                    val oldVal = stats[col].getValue(now)
+                    val tempVal: Double
+                    if (oldVal == null) {
+                        return false
+                    }
+                    val colConfig = GlobalOptions.getColumnConfig(colHeader) ?: return false
+                    tempVal = if (colConfig.type == 1) {
+                        (oldVal.toDouble() + value) / 2
+                    } else if (colConfig.type == 2) {
+                        oldVal.toDouble() + value
+                    } else {
+                        return false
+                    }
+                    return try {
+                        stats[col].update(now, tempVal)
+                        true
+                    } catch (se2: SeriesException) {
+                        false
+                    }
+                }
+            }
+            false
+        }
     }
 
-    return tmp.toString();
-  }
-
-  public String getCsvHeader() {
-    StringBuilder tmp = new StringBuilder();
-    for (int i = firstDataColumn; i < HeaderStr.length; i++) {
-      TimeSeries tmpseries = Stats.get(i - firstDataColumn);
-      tmp.append(graphtitle).append(" ").append(tmpseries.getKey());
-      tmp.append(";");
+    fun make_csv(): String {
+        val tmp = StringBuilder()
+        tmp.append("Date;")
+        tmp.append(csvHeader)
+        tmp.append("\n")
+        val dateList = stats[0]
+        for (item in dateList.timePeriods) {
+            tmp.append(item)
+            tmp.append(";")
+            tmp.append(getCsvLine(item as RegularTimePeriod))
+            tmp.append("\n")
+        }
+        return tmp.toString()
     }
-    return tmp.toString();
-  }
 
-  public String getCsvLine(RegularTimePeriod t) {
-    StringBuilder tmp = new StringBuilder();
-    for (int i = firstDataColumn; i < HeaderStr.length; i++) {
-      TimeSeries tmpseries = Stats.get(i - firstDataColumn);
-      tmp.append(tmpseries.getValue(t));
+    val csvHeader: String
+        get() {
+            val tmp = StringBuilder()
+            for (i in firstDataColumn until headerStr.size) {
+                val tmpSeries = stats[i - firstDataColumn]
+                tmp.append(title).append(" ").append(tmpSeries.key)
+                tmp.append(";")
+            }
+            return tmp.toString()
+        }
 
-      tmp.append(";");
+    fun getCsvLine(t: RegularTimePeriod?): String {
+        val tmp = StringBuilder()
+        for (i in firstDataColumn until headerStr.size) {
+            val tmpSeries = stats[i - firstDataColumn]
+            tmp.append(tmpSeries.getValue(t))
+            tmp.append(";")
+        }
+        return tmp.toString()
     }
-    return tmp.toString();
-  }
 
-  public int savePNG(final String filename,
-      final int width, final int height) {
-    try {
-      ChartUtils.saveChartAsPNG(new File(filename),
-          this.getgraph(mysar.myparser.getStartOfGraph(), mysar.myparser.getEndOfGraph()), width,
-          height);
-    } catch (IOException e) {
-      log.error("Unable to write to : {}", filename);
-      return -1;
+    fun savePNG(
+        filename: String,
+        width: Int,
+        height: Int
+    ): Int {
+        try {
+            ChartUtils.saveChartAsPNG(
+                File(filename),
+                getgraph(mysar.myparser.startOfGraph, mysar.myparser.endOfGraph), width,
+                height
+            )
+        } catch (e: IOException) {
+            log.error("Unable to write to : {}", filename)
+            return -1
+        }
+        return 0
     }
-    return 0;
-  }
 
-  public int saveJPG(final String filename,
-      final int width, final int height) {
-    try {
-      ChartUtils.saveChartAsJPEG(new File(filename),
-          this.getgraph(mysar.myparser.getStartOfGraph(), mysar.myparser.getEndOfGraph()), width,
-          height);
-    } catch (IOException e) {
-      log.error("Unable to write to : {}", filename);
-      return -1;
+    fun saveJPG(
+        filename: String,
+        width: Int,
+        height: Int
+    ): Int {
+        try {
+            ChartUtils.saveChartAsJPEG(
+                File(filename),
+                getgraph(mysar.myparser.startOfGraph, mysar.myparser.endOfGraph), width,
+                height
+            )
+        } catch (e: IOException) {
+            log.error("Unable to write to : {}", filename)
+            return -1
+        }
+        return 0
     }
-    return 0;
-  }
 
-  public JCheckBox getprintform() {
-    return printCheckBox;
-  }
+    fun getprintform(): JCheckBox = printCheckBox
 
-  public boolean doPrint() {
-    return printSelected;
-  }
+    fun doPrint(): Boolean = isPrintSelected
 
-  public JFreeChart getgraph(LocalDateTime start, LocalDateTime end) {
-
-    if (mygraph == null) {
-      mygraph = makegraph(start, end);
-    } else {
-      //TODO - get rid of Second, convert from LocalDateTime directly to java.util.Date - How to deal with required timezone in that case?
-      java.util.Date getStartofGraphStart =
-          convertLocalDateTimeToSecond(mysar.myparser.getStartOfGraph()).getStart();
-      java.util.Date GetEndofGraphEnd =
-          convertLocalDateTimeToSecond(mysar.myparser.getEndOfGraph()).getEnd();
-
-      if (!axisofdate.getMinimumDate().equals(getStartofGraphStart)) {
-        axisofdate.setMinimumDate(getStartofGraphStart);
-      }
-      if (!axisofdate.getMaximumDate().equals(GetEndofGraphEnd)) {
-        axisofdate.setMaximumDate(GetEndofGraphEnd);
-      }
-    }
-    return mygraph;
-  }
-
-  public String getTitle() {
-    return graphtitle;
-  }
-
-  public boolean isPrintSelected() {
-    return printSelected;
-  }
-
-  private XYDataset create_collection(ArrayList l) {
-    TimeSeriesCollection graphcollection = new TimeSeriesCollection();
-    TimeSeries found;
-    boolean hasdata = false;
-    for (Object o : l) {
-      found = null;
-      for (TimeSeries stat : Stats) {
-        found = stat;
-        if (found.getKey().equals(o)) {
-          break;
+    fun getgraph(start: LocalDateTime?, end: LocalDateTime?): JFreeChart {
+        if (!::mygraph.isInitialized) {
+            mygraph = makeGraph(start, end)!!
         } else {
-          found = null;
+            // TODO - get rid of Second, convert from LocalDateTime directly to java.util.Date - How to deal with required timezone in that case?
+            val getStartOfGraphStart = convertLocalDateTimeToSecond(mysar.myparser.startOfGraph!!).start
+            val getEndOfGraphEnd = convertLocalDateTimeToSecond(mysar.myparser.endOfGraph!!).end
+            if (axisOfDate.minimumDate != getStartOfGraphStart) {
+                axisOfDate.minimumDate = getStartOfGraphStart
+            }
+            if (axisOfDate.maximumDate != getEndOfGraphEnd) {
+                axisOfDate.maximumDate = getEndOfGraphEnd
+            }
         }
-      }
-
-      if (found != null) {
-        graphcollection.addSeries(found);
-        hasdata = true;
-      }
+        return mygraph
     }
-    if (!hasdata) {
-      return null;
-    }
-    return graphcollection;
-  }
 
-  public ChartPanel get_ChartPanel() {
-    if (chartpanel == null) {
-      if (mysar.isParsing()) {
-        chartpanel = new ChartPanel(getgraph(null, null));
-      } else {
-        chartpanel = new ChartPanel(
-            getgraph(mysar.myparser.getStartOfGraph(), mysar.myparser.getEndOfGraph()));
-      }
-    } else {
-      if (!mysar.isParsing()) {
-        //TODO - get rid of Second, convert from LocalDateTime directly to java.util.Date - How to deal with required timezone in that case?
-        java.util.Date getStartofGraphStart =
-            convertLocalDateTimeToSecond(mysar.myparser.getStartOfGraph()).getStart();
-        java.util.Date GetEndofGraphEnd =
-            convertLocalDateTimeToSecond(mysar.myparser.getEndOfGraph()).getEnd();
-
-        if (!axisofdate.getMinimumDate().equals(getStartofGraphStart)) {
-          axisofdate.setMinimumDate(getStartofGraphStart);
+    private fun createCollection(list: kotlin.collections.List<String>): XYDataset? {
+        val graphCollection = TimeSeriesCollection()
+        var found: TimeSeries?
+        var hasdata = false
+        for (item in list) {
+            found = null
+            for (j in stats.indices) {
+                found = stats[j]
+                found = if (found.key == item) {
+                    break
+                } else {
+                    null
+                }
+            }
+            if (found != null) {
+                graphCollection.addSeries(found)
+                hasdata = true
+            }
         }
-        if (!axisofdate.getMaximumDate().equals(GetEndofGraphEnd)) {
-          axisofdate.setMaximumDate(GetEndofGraphEnd);
+        return graphCollection.takeIf { hasdata }
+    }
+
+    fun getChartPanel(): ChartPanel {
+        if (chartPanel == null) {
+            chartPanel = if (mysar.isParsing) {
+                ChartPanel(getgraph(null, null))
+            } else {
+                ChartPanel(
+                    getgraph(mysar.myparser.startOfGraph, mysar.myparser.endOfGraph)
+                )
+            }
+        } else {
+            if (!mysar.isParsing) {
+                // TODO - get rid of Second, convert from LocalDateTime directly to java.util.Date - How to deal with required timezone in that case?
+                val getStartOfGraphStart = convertLocalDateTimeToSecond(mysar.myparser.startOfGraph!!).start
+                val getEndOfGraphEnd = convertLocalDateTimeToSecond(mysar.myparser.endOfGraph!!).end
+                if (axisOfDate.minimumDate != getStartOfGraphStart) {
+                    axisOfDate.minimumDate = getStartOfGraphStart
+                }
+                if (axisOfDate.maximumDate != getEndOfGraphEnd) {
+                    axisOfDate.maximumDate = getEndOfGraphEnd
+                }
+            }
         }
-      }
+        return chartPanel!!
     }
-    return chartpanel;
-  }
 
-  private JFreeChart makegraph(LocalDateTime start, LocalDateTime end) {
-
-    long begingenerate = System.currentTimeMillis();
-
-    CombinedDomainXYPlot plot = new CombinedDomainXYPlot(axisofdate);
-    // do the stacked stuff
-    for (PlotStackConfig tmp : graphconfig.getStacklist().values()) {
-      if (tmp == null) {
-        continue;
-      }
-      TimeTableXYDataset tmp2 = StackListbyName.get(tmp.getTitle());
-
-      if (tmp2 != null) {
-        StackedXYAreaRenderer2 renderer = new StackedXYAreaRenderer2();
-        renderer.setDefaultStroke(new BasicStroke(1.0F));
-        NumberAxis graphaxistitle = tmp.getAxis();
-        XYPlot temp_plot = new XYPlot(tmp2, axisofdate, graphaxistitle, renderer);
-        for (int i = 0; i < tmp2.getSeriesCount(); i++) {
-          Color color = GlobalOptions.getDataColor(tmp2.getSeriesKey(i).toString());
-          if (color != null) {
-            renderer.setSeriesPaint(i, color);
-          }
+    private fun makeGraph(start: LocalDateTime?, end: LocalDateTime?): JFreeChart? {
+        val beginGenerate = System.currentTimeMillis()
+        val plot = CombinedDomainXYPlot(axisOfDate)
+        // do the stacked stuff
+        for (plotStackConfig in graphConfig.stacklist.values) {
+            stackListByName[plotStackConfig.title]?.let { timeTableXYDataset ->
+                val renderer = StackedXYAreaRenderer2()
+                renderer.defaultStroke = BasicStroke(1.0f)
+                val graphAxisTitle = plotStackConfig.axis
+                val tempPlot = XYPlot(timeTableXYDataset, axisOfDate, graphAxisTitle, renderer)
+                for (i in 0 until timeTableXYDataset.seriesCount) {
+                    val color = GlobalOptions.getDataColor(timeTableXYDataset.getSeriesKey(i).toString())
+                    if (color != null) {
+                        renderer.setSeriesPaint(i, color)
+                    }
+                }
+                plot.add(tempPlot, plotStackConfig.size)
+            }
         }
-        plot.add(temp_plot, tmp.getSize());
-      }
-    }
-    // do the line stuff
-    for (PlotStackConfig tmp : graphconfig.getPlotlist().values()) {
-      XYItemRenderer renderer = new StandardXYItemRenderer() {
-          @Override
-          public LegendItem getLegendItem(int datasetIndex, int series) {
-            LegendItem item = super.getLegendItem(datasetIndex, series);
-            item.setLineStroke(new BasicStroke(5.0F));
-            return item;
-          }
-        };
-      renderer.setDefaultStroke(new BasicStroke(1.0F));
-      ArrayList<String> t = new ArrayList<>();
-      String[] s = tmp.getHeaderStr().split("\\s+");
-      Collections.addAll(t, s);
-
-      XYDataset c = create_collection(t);
-      NumberAxis graphaxistitle = tmp.getAxis();
-      XYPlot tmpplot = new XYPlot(c, axisofdate, graphaxistitle, renderer);
-
-      for (int i = 0; i < s.length; i++) {
-        Color color = GlobalOptions.getDataColor(s[i]);
-        if (color != null) {
-          renderer.setSeriesPaint(i, color);
+        // do the line stuff
+        for (tmp in graphConfig.plotlist.values) {
+            val renderer = object : StandardXYItemRenderer() {
+                override fun getLegendItem(datasetIndex: Int, series: Int): LegendItem {
+                    val item = super.getLegendItem(datasetIndex, series)
+                    item.lineStroke = BasicStroke(5.0f)
+                    return item
+                }
+            }
+            renderer.defaultStroke = BasicStroke(1.0f)
+            val headers = tmp.headerStr!!.split(Regex("\\s+"))
+            val c = createCollection(headers)
+            val graphAxisTitle = tmp.axis
+            val tmpPlot = XYPlot(c, axisOfDate, graphAxisTitle, renderer)
+            for ((index, header) in headers.withIndex()) {
+                val color = GlobalOptions.getDataColor(header)
+                if (color != null) {
+                    renderer.setSeriesPaint(index, color)
+                }
+            }
+            plot.add(tmpPlot, tmp.size)
         }
-      }
-      plot.add(tmpplot, tmp.getSize());
+        if (plot.subplots.isEmpty()) {
+            return null
+        }
+        if (start != null && end != null) {
+            val gStart = convertLocalDateTimeToSecond(start)
+            val gEnd = convertLocalDateTimeToSecond(end)
+            axisOfDate.setRange(gStart.start, gEnd.end)
+        }
+        plot.orientation = PlotOrientation.VERTICAL
+        val myChart = JFreeChart(title, Config.dEFAULT_FONT, plot, true)
+        val endGenerate = System.currentTimeMillis()
+        myChart.backgroundPaint = Color.white
+        log.debug("graph generation: {} ms", endGenerate - beginGenerate)
+        return myChart
     }
-    if (plot.getSubplots().isEmpty()) {
-      return null;
+
+    private fun convertLocalDateTimeToSecond(ldt: LocalDateTime): Second {
+        val day = ldt.dayOfMonth
+        val month = ldt.monthValue
+        val year = ldt.year
+        val hour = ldt.hour
+        val minute = ldt.minute
+        val second = ldt.second
+        return Second(second, minute, hour, day, month, year)
     }
-    if (start != null && end != null) {
-      Second g_start = convertLocalDateTimeToSecond(start);
-      Second g_end = convertLocalDateTimeToSecond(end);
-      axisofdate.setRange(g_start.getStart(), g_end.getEnd());
-    }
-
-    plot.setOrientation(PlotOrientation.VERTICAL);
-    JFreeChart mychart = new JFreeChart(graphtitle, Config.getDEFAULT_FONT(), plot, true);
-    long endgenerate = System.currentTimeMillis();
-    mychart.setBackgroundPaint(Color.white);
-
-    log.debug("graph generation: {} ms", (endgenerate - begingenerate));
-
-    return mychart;
-  }
-
-  private Second convertLocalDateTimeToSecond(LocalDateTime ldt) {
-
-    int day = ldt.getDayOfMonth();
-    int month = ldt.getMonthValue();
-    int year = ldt.getYear();
-    int hour = ldt.getHour();
-    int minute = ldt.getMinute();
-    int second = ldt.getSecond();
-
-    return new Second(second, minute, hour, day, month, year);
-  }
-
-
-  private DateAxis axisofdate = new DateAxis("");
-  private kSar mysar;
-  private JFreeChart mygraph = null;
-  private ChartPanel chartpanel = null;
-  private String graphtitle;
-  private boolean printSelected = true;
-  private JCheckBox printCheckBox;
-  private GraphConfig graphconfig;
-  private int firstDataColumn;
-  private String[] HeaderStr;
-  private ArrayList<TimeSeries> Stats = new ArrayList<>();
-  private Map<String, TimeTableXYDataset> StackListbyName =
-      new HashMap<>();
-  private Map<String, TimeTableXYDataset> StackListbyCol =
-      new HashMap<>();
 }

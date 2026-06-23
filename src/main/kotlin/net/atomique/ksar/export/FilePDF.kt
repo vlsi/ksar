@@ -2,255 +2,220 @@
  * Copyright 2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
+package net.atomique.ksar.export
 
-package net.atomique.ksar.export;
+import net.atomique.ksar.kSar
+import com.itextpdf.text.pdf.PdfPageEventHelper
+import java.lang.Runnable
+import javax.swing.JProgressBar
+import javax.swing.JDialog
+import com.itextpdf.text.pdf.PdfWriter
+import java.io.FileOutputStream
+import net.atomique.ksar.VersionNumber
+import com.itextpdf.text.pdf.PdfOutline
+import java.io.FileNotFoundException
+import net.atomique.ksar.ui.SortedTreeNode
+import net.atomique.ksar.ui.ParentNodeInfo
+import com.itextpdf.text.pdf.PdfDestination
+import net.atomique.ksar.ui.TreeNodeInfo
+import com.itextpdf.text.pdf.PdfContentByte
+import java.awt.Graphics2D
+import com.itextpdf.awt.PdfGraphics2D
+import com.itextpdf.text.*
+import java.io.IOException
+import net.atomique.ksar.Config
+import net.atomique.ksar.graph.Graph
+import org.slf4j.LoggerFactory
+import java.awt.geom.Rectangle2D
+import java.lang.Exception
 
-import static com.itextpdf.text.FontFactory.COURIER;
-import static com.itextpdf.text.FontFactory.getFont;
+class FilePDF private constructor(private val pdffilename: String, private val mysar: kSar) :
+    PdfPageEventHelper(),
+    Runnable {
 
-import com.itextpdf.awt.PdfGraphics2D;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.ExceptionConverter;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfDestination;
-import com.itextpdf.text.pdf.PdfOutline;
-import com.itextpdf.text.pdf.PdfPageEventHelper;
-import com.itextpdf.text.pdf.PdfTemplate;
-import com.itextpdf.text.pdf.PdfWriter;
-import net.atomique.ksar.Config;
-import net.atomique.ksar.VersionNumber;
-import net.atomique.ksar.graph.Graph;
-import net.atomique.ksar.graph.List;
-import net.atomique.ksar.kSar;
-import net.atomique.ksar.ui.ParentNodeInfo;
-import net.atomique.ksar.ui.SortedTreeNode;
-import net.atomique.ksar.ui.TreeNodeInfo;
-import org.jfree.chart.JFreeChart;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+    private var progressInfo = 0
+    private var pdfwidth = 0f
+    private var pdfheight = 0f
+    private val pdfmargins = 10
+    private var pageheight = 0f
+    private var pagewidth = 0f
+    private var totalPages = 1 // page 1 (index)
+    private lateinit var document: Document
+    private lateinit var writer: PdfWriter
+    private lateinit var pdfcb: PdfContentByte
+    private val bf = FontFactory.getFont(FontFactory.COURIER).getCalculatedBaseFont(false)
+    private var progressBar: JProgressBar? = null
+    private var dialog: JDialog? = null
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import javax.swing.JDialog;
-import javax.swing.JProgressBar;
-
-public class FilePDF extends PdfPageEventHelper implements Runnable {
-
-  private static final Logger log = LoggerFactory.getLogger(FilePDF.class);
-
-  private FilePDF(String filename, kSar hissar) {
-    pdffilename = filename;
-    mysar = hissar;
-  }
-
-  public FilePDF(String filename, kSar hissar, JProgressBar g, JDialog d) {
-    this(filename, hissar);
-
-    progress_bar = g;
-    dialog = d;
-  }
-
-  public void run() {
-    total_pages += mysar.get_page_to_print();
-
-    switch (Config.getPDFPageFormat()) {
-
-      case  "A4":
-        document = new Document(PageSize.A4.rotate());
-        break;
-
-      case "LEGAL":
-        document = new Document(PageSize.LEGAL.rotate());
-        break;
-
-      case "LETTER":
-        document = new Document(PageSize.LETTER.rotate());
-        break;
-
-      default:
-        document = new Document(PageSize.A4.rotate());
-        break;
+    companion object {
+        private val log = LoggerFactory.getLogger(FilePDF::class.java)
     }
 
-    pdfheight = document.getPageSize().getHeight();
-    pdfwidth = document.getPageSize().getWidth();
-    pageheight = pdfheight - (2 * pdfmargins);
-    pagewidth = pdfwidth - (2 * pdfmargins);
-
-    try {
-      writer = PdfWriter.getInstance(document, new FileOutputStream(pdffilename));
-
-      writer.setPageEvent(this);
-      writer.setCompressionLevel(0);
-
-      // document parameter before open
-      document.addTitle("kSar Grapher");
-      //document.addSubject("SAR Statistics of " + mysar.hostName);
-      //document.addKeywords("https://github.com/vlsi/ksar");
-      //document.addKeywords(mysar.hostName);
-      //document.addKeywords(mysar.myOS.sarStartDate);
-      //document.addKeywords(mysar.myOS.sarEndDate);
-      document.addCreator("kSar Version:" + VersionNumber.getVersionString());
-      document.addAuthor("https://github.com/vlsi/ksar");
-
-      // open the doc
-      document.open();
-      pdfcb = writer.getDirectContent();
-      PdfOutline root = pdfcb.getRootOutline();
-
-      IndexPage(document);
-
-      export_treenode(mysar.graphtree, root);
-
-      document.close();
-
-    } catch (DocumentException | FileNotFoundException ex) {
-      log.error("PDF creation Exception", ex);
-    } finally {
-      if (writer != null) {
-        writer.close();
-      }
+    constructor(filename: String, hissar: kSar, g: JProgressBar?, d: JDialog?) : this(filename, hissar) {
+        progressBar = g
+        dialog = d
     }
 
-    if (dialog != null) {
-      dialog.dispose();
-    }
-
-
-  }
-
-  private void export_treenode(SortedTreeNode node, PdfOutline root) {
-    int num = node.getChildCount();
-    if (num > 0) {
-      Object obj1 = node.getUserObject();
-      if (obj1 instanceof ParentNodeInfo) {
-        ParentNodeInfo tmpnode = (ParentNodeInfo) obj1;
-        List nodeobj = tmpnode.getNode_object();
-        if (nodeobj.isPrintSelected()) {
-          root = new PdfOutline(root, new PdfDestination(PdfDestination.FIT), nodeobj.getTitle());
+    override fun run() {
+        totalPages += mysar.get_page_to_print()
+        document = when (Config.pDFPageFormat) {
+            "A4" -> Document(PageSize.A4.rotate())
+            "LEGAL" -> Document(PageSize.LEGAL.rotate())
+            "LETTER" -> Document(PageSize.LETTER.rotate())
+            else -> Document(PageSize.A4.rotate())
         }
-      }
-      for (int i = 0; i < num; i++) {
-        SortedTreeNode l = (SortedTreeNode) node.getChildAt(i);
-        export_treenode(l, root);
-      }
-    } else {
-      Object obj1 = node.getUserObject();
-      if (obj1 instanceof TreeNodeInfo) {
-        TreeNodeInfo tmpnode = (TreeNodeInfo) obj1;
-        Graph nodeobj = tmpnode.getNode_object();
-        if (nodeobj.isPrintSelected()) {
-          new PdfOutline(root, new PdfDestination(PdfDestination.FIT), nodeobj.getTitle());
-          update_ui();
-          addchart(writer, nodeobj);
-          document.newPage();
+        pdfheight = document.pageSize.height
+        pdfwidth = document.pageSize.width
+        pageheight = pdfheight - 2 * pdfmargins
+        pagewidth = pdfwidth - 2 * pdfmargins
+        try {
+            writer = PdfWriter.getInstance(document, FileOutputStream(pdffilename))
+            writer.pageEvent = this
+            writer.compressionLevel = 0
 
+            // document parameter before open
+            document.addTitle("kSar Grapher")
+            // document.addSubject("SAR Statistics of " + mysar.hostName);
+            // document.addKeywords("https://github.com/vlsi/ksar");
+            // document.addKeywords(mysar.hostName);
+            // document.addKeywords(mysar.myOS.sarStartDate);
+            // document.addKeywords(mysar.myOS.sarEndDate);
+            document.addCreator("kSar Version:" + VersionNumber.versionString)
+            document.addAuthor("https://github.com/vlsi/ksar")
+
+            // open the doc
+            document.open()
+            pdfcb = writer.directContent
+            val root = pdfcb.rootOutline
+            indexPage(document)
+            exportTreeNode(mysar.graphtree, root)
+            document.close()
+        } catch (ex: DocumentException) {
+            log.error("PDF creation Exception", ex)
+        } catch (ex: FileNotFoundException) {
+            log.error("PDF creation Exception", ex)
+        } finally {
+            if (::writer.isInitialized) {
+                writer.close()
+            }
         }
-      }
-    }
-  }
-
-  private void update_ui() {
-    if (progress_bar != null) {
-      progress_bar.setValue(++progress_info);
-      progress_bar.repaint();
+        dialog?.dispose()
     }
 
-  }
-
-  public void onEndPage(PdfWriter writer, Document document) {
-    try {
-
-      int pageNumber = writer.getPageNumber();
-      String text = "Page " + pageNumber + "/" + total_pages;
-      String hostName = mysar.myparser.gethostName();
-      String date = mysar.myparser.getDate();
-
-      pdfcb.beginText();
-      pdfcb.setFontAndSize(bf, 10);
-      pdfcb.setColorFill(new BaseColor(0x00, 0x00, 0x00));
-
-      if ( pageNumber > 1) {
-        pdfcb.showTextAligned(PdfContentByte.ALIGN_LEFT, hostName, pdfmargins, pdfheight - pdfmargins, 0);
-        pdfcb.showTextAligned(PdfContentByte.ALIGN_RIGHT, date, pdfwidth - pdfmargins, pdfheight - pdfmargins, 0);
-      }
-
-      pdfcb.showTextAligned(PdfContentByte.ALIGN_RIGHT, text,pdfwidth - pdfmargins,pdfmargins - 5 ,0);
-      pdfcb.endText();
-    } catch (Exception e) {
-      throw new ExceptionConverter(e);
+    private fun exportTreeNode(node: SortedTreeNode, root: PdfOutline) {
+        var root = root
+        val num = node.childCount
+        if (num > 0) {
+            val obj1 = node.userObject
+            if (obj1 is ParentNodeInfo) {
+                val nodeObj = obj1.node_object
+                if (nodeObj.isPrintSelected) {
+                    root = PdfOutline(root, PdfDestination(PdfDestination.FIT), nodeObj.title)
+                }
+            }
+            for (i in 0 until num) {
+                val l = node.getChildAt(i) as SortedTreeNode
+                exportTreeNode(l, root)
+            }
+        } else {
+            val obj1 = node.userObject
+            if (obj1 is TreeNodeInfo) {
+                val nodeObj = obj1.node_object
+                if (nodeObj.isPrintSelected) {
+                    PdfOutline(root, PdfDestination(PdfDestination.FIT), nodeObj.title)
+                    updateUi()
+                    addChart(nodeObj)
+                    document.newPage()
+                }
+            }
+        }
     }
-  }
 
-  private void addchart(PdfWriter writer, Graph graph) {
-    JFreeChart chart =
-        graph.getgraph(mysar.myparser.getStartOfGraph(), mysar.myparser.getEndOfGraph());
-    PdfTemplate pdftpl = pdfcb.createTemplate(pagewidth, pageheight);
-    Graphics2D g2d = new PdfGraphics2D(pdftpl, pagewidth, pageheight);
-    Double r2d = new Rectangle2D.Double(0, 0, pagewidth, pageheight);
-    chart.draw(g2d, r2d);
-    g2d.dispose();
-    pdfcb.addTemplate(pdftpl, pdfmargins, pdfmargins);
-    try {
-      writer.releaseTemplate(pdftpl);
-    } catch (IOException ioe) {
-      log.error("Unable to write to : {}", pdffilename);
+    private fun updateUi() {
+        progressBar?.let {
+            it.value = ++progressInfo
+            it.repaint()
+        }
     }
-  }
 
-  private void IndexPage(Document document) {
-    try {
-      float pdfCenter = ((pdfwidth - pdfmargins) / 2 );
-
-      String title = "SAR Statistics";
-      String t_date = "on " + mysar.myparser.getDate();
-      String hostName = "for " + mysar.myparser.gethostName();
-      String osType = mysar.myparser.getOstype();
-      String graphStart = mysar.myparser.getStartOfGraph().toString();
-      String graphEnd = mysar.myparser.getEndOfGraph().toString();
-
-      pdfcb.beginText();
-      pdfcb.setFontAndSize(bf, 40);
-      pdfcb.setColorFill(new BaseColor(0x00, 0x00, 0x00));
-      pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, title, pdfCenter, 500, 0);
-
-      pdfcb.setFontAndSize(bf, 32);
-      pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, hostName + " (" + osType + ")", pdfCenter, 400,0);
-      pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, t_date, pdfCenter, 300,0);
-
-      pdfcb.setFontAndSize(bf, 20);
-      pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, graphStart, pdfCenter, 200,0);
-      pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, graphEnd, pdfCenter, 150,0);
-
-      pdfcb.endText();
-      document.newPage();
-
-    } catch (Exception de) {
-      log.error("IndexPage Exception", de);
+    override fun onEndPage(writer: PdfWriter, document: Document) {
+        try {
+            val pageNumber = writer.pageNumber
+            val text = "Page $pageNumber/$totalPages"
+            val parser = mysar.myparser
+            val hostName = parser.gethostName()
+            val date = parser.date
+            pdfcb.beginText()
+            pdfcb.setFontAndSize(bf, 10f)
+            pdfcb.setColorFill(BaseColor(0x00, 0x00, 0x00))
+            if (pageNumber > 1) {
+                pdfcb.showTextAligned(
+                    PdfContentByte.ALIGN_LEFT,
+                    hostName,
+                    pdfmargins.toFloat(),
+                    pdfheight - pdfmargins,
+                    0f
+                )
+                pdfcb.showTextAligned(
+                    PdfContentByte.ALIGN_RIGHT,
+                    date,
+                    pdfwidth - pdfmargins,
+                    pdfheight - pdfmargins,
+                    0f
+                )
+            }
+            pdfcb.showTextAligned(
+                PdfContentByte.ALIGN_RIGHT,
+                text,
+                pdfwidth - pdfmargins,
+                (pdfmargins - 5).toFloat(),
+                0f
+            )
+            pdfcb.endText()
+        } catch (e: Exception) {
+            throw ExceptionConverter(e)
+        }
     }
-  }
 
-  private int progress_info = 0;
-  private float pdfwidth;
-  private float pdfheight;
-  private int pdfmargins = 10;
-  private float pageheight;
-  private float pagewidth;
-  private int total_pages = 1; // page 1 (index)
-  private String pdffilename;
-  private Document document = null;
-  private PdfWriter writer = null;
-  private PdfContentByte pdfcb;
-  private kSar mysar;
-  private BaseFont bf = getFont(COURIER).getCalculatedBaseFont(false);
-  private JProgressBar progress_bar = null;
-  private JDialog dialog = null;
+    private fun addChart(graph: Graph) {
+        val chart = graph.getgraph(mysar.myparser.startOfGraph, mysar.myparser.endOfGraph)
+        val pdftpl = pdfcb.createTemplate(pagewidth, pageheight)
+        val g2d: Graphics2D = PdfGraphics2D(pdftpl, pagewidth, pageheight)
+        val r2d = Rectangle2D.Double(0.0, 0.0, pagewidth.toDouble(), pageheight.toDouble())
+        chart.draw(g2d, r2d)
+        g2d.dispose()
+        pdfcb.addTemplate(pdftpl, pdfmargins.toFloat(), pdfmargins.toFloat())
+        try {
+            writer.releaseTemplate(pdftpl)
+        } catch (ioe: IOException) {
+            log.error("Unable to write to : {}", pdffilename)
+        }
+    }
+
+    private fun indexPage(document: Document) {
+        try {
+            val pdfCenter = (pdfwidth - pdfmargins) / 2
+            val title = "SAR Statistics"
+            val parser = mysar.myparser
+            val tDate = "on " + parser.date
+            val hostName = "for " + parser.gethostName()
+            val osType = parser.ostype
+            val graphStart = parser.startOfGraph.toString()
+            val graphEnd = parser.endOfGraph.toString()
+            pdfcb.beginText()
+            pdfcb.setFontAndSize(bf, 40f)
+            pdfcb.setColorFill(BaseColor(0x00, 0x00, 0x00))
+            pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, title, pdfCenter, 500f, 0f)
+            pdfcb.setFontAndSize(bf, 32f)
+            pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, "$hostName ($osType)", pdfCenter, 400f, 0f)
+            pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, tDate, pdfCenter, 300f, 0f)
+            pdfcb.setFontAndSize(bf, 20f)
+            pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, graphStart, pdfCenter, 200f, 0f)
+            pdfcb.showTextAligned(PdfContentByte.ALIGN_CENTER, graphEnd, pdfCenter, 150f, 0f)
+            pdfcb.endText()
+            document.newPage()
+        } catch (de: Exception) {
+            log.error("IndexPage Exception", de)
+        }
+    }
 }

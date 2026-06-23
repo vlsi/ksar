@@ -2,153 +2,132 @@
  * Copyright 2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
+package net.atomique.ksar.parser
 
-package net.atomique.ksar.parser;
+import net.atomique.ksar.kSar
+import net.atomique.ksar.OSParser
+import net.atomique.ksar.graph.Graph
+import net.atomique.ksar.graph.List
+import java.time.format.DateTimeFormatter
+import java.time.LocalTime
+import java.time.LocalDateTime
+import java.time.format.DateTimeParseException
+import org.slf4j.LoggerFactory
 
-import net.atomique.ksar.OSParser;
-import net.atomique.ksar.graph.Graph;
-import net.atomique.ksar.graph.List;
-import net.atomique.ksar.xml.GraphConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+class HPUX(hissar: kSar, header: String) : OSParser(hissar, header) {
+    var under_average = false
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
-public class HPUX extends OSParser {
-
-  private static final Logger log = LoggerFactory.getLogger(HPUX.class);
-
-  boolean under_average = false;
-
-  public void parseHeader(String s) {
-    String[] columns = s.split("\\s+");
-    setOstype(columns[0]);
-    setHostname(columns[1]);
-    setOSversion(columns[2]);
-    setKernel(columns[3]);
-    setCpuType(columns[4]);
-    setDate(columns[5]);
-
-  }
-
-
-  @Override
-  public int parse(String line, String[] columns) {
-
-    if ("Average".equals(columns[0])) {
-      under_average = true;
-      return 0;
+    companion object {
+        private val log = LoggerFactory.getLogger(HPUX::class.java)
     }
 
-    if (line.indexOf("unix restarts") >= 0 || line.indexOf(" unix restarted") >= 0) {
-      return 0;
+    override fun parseHeader(s: String) {
+        val columns = s.split(Regex("\\s+"))
+        ostype = columns[0]
+        Hostname = columns[1]
+        OSversion = columns[2]
+        Kernel = columns[3]
+        CpuType = columns[4]
+        setDate(columns[5])
     }
 
-    // match the System [C|c]onfiguration line on AIX
-    if (line.indexOf("System Configuration") >= 0 || line.indexOf("System configuration") >= 0) {
-      return 0;
-    }
-
-    if (line.indexOf("State change") >= 0) {
-      return 0;
-    }
-
-
-    try {
-      timeFormat = "HH:mm:ss";
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timeFormat);
-      parsetime = LocalTime.parse(columns[0], formatter);
-
-      LocalDateTime nowStat;
-      nowStat = LocalDateTime.of(parsedate, parsetime);
-
-      this.setStartAndEndOfGraph(nowStat);
-      firstdatacolumn = 1;
-    } catch (DateTimeParseException ex) {
-      if (!"DEVICE".equals(currentStat) && !"CPU".equals(currentStat)) {
-        log.error("unable to parse time {}", columns[0], ex);
-        return -1;
-      }
-      firstdatacolumn = 0;
-    }
-
-
-    /** XML COLUMN PARSER **/
-    String checkStat = myosconfig.getStat(columns, firstdatacolumn);
-
-    if (checkStat != null) {
-      Object obj = ListofGraph.get(checkStat);
-      if (obj == null) {
-        GraphConfig mygraphinfo = myosconfig.getGraphConfig(checkStat);
-        if (mygraphinfo != null) {
-          if ("unique".equals(mygraphinfo.getType())) {
-            obj = new Graph(mysar, mygraphinfo, mygraphinfo.getTitle(), line, firstdatacolumn,
-                mysar.graphtree);
-            ListofGraph.put(checkStat, obj);
-            currentStat = checkStat;
-            return 0;
-          }
-          if ("multiple".equals(mygraphinfo.getType())) {
-            obj = new List(mysar, mygraphinfo, mygraphinfo.getTitle(), line, firstdatacolumn);
-            ListofGraph.put(checkStat, obj);
-            currentStat = checkStat;
-            return 0;
-          }
-        } else {
-          // no graph associate
-          currentStat = checkStat;
-          return 0;
+    override fun parse(line: String, columns: Array<String>): Int {
+        if ("Average" == columns[0]) {
+            under_average = true
+            return 0
         }
-      } else {
-        currentStat = checkStat;
-        return 0;
-      }
+        if (line.indexOf("unix restarts") >= 0 || line.indexOf(" unix restarted") >= 0) {
+            return 0
+        }
+
+        // match the System [C|c]onfiguration line on AIX
+        if (line.indexOf("System Configuration") >= 0 || line.indexOf("System configuration") >= 0) {
+            return 0
+        }
+        if (line.indexOf("State change") >= 0) {
+            return 0
+        }
+        try {
+            timeFormat = "HH:mm:ss"
+            val formatter = DateTimeFormatter.ofPattern(timeFormat)
+            parsetime = LocalTime.parse(columns[0], formatter)
+            val nowStat = LocalDateTime.of(parsedate, parsetime)
+            setStartAndEndOfGraph(nowStat)
+            firstdatacolumn = 1
+        } catch (ex: DateTimeParseException) {
+            if ("DEVICE" != currentStat && "CPU" != currentStat) {
+                log.error("unable to parse time {}", columns[0], ex)
+                return -1
+            }
+            firstdatacolumn = 0
+        }
+        /** XML COLUMN PARSER  */
+        val checkStat = myosconfig.getStat(columns, firstdatacolumn)
+        if (checkStat != null) {
+            var obj = ListofGraph[checkStat]
+            if (obj == null) {
+                val mygraphinfo = myosconfig.getGraphConfig(checkStat)
+                if (mygraphinfo != null) {
+                    if ("unique" == mygraphinfo.type) {
+                        obj = Graph(
+                            mysar, mygraphinfo, mygraphinfo.title, line, firstdatacolumn,
+                            mysar.graphtree
+                        )
+                        ListofGraph[checkStat] = obj
+                        currentStat = checkStat
+                        return 0
+                    }
+                    if ("multiple" == mygraphinfo.type) {
+                        obj = List(mysar, mygraphinfo, mygraphinfo.title, line, firstdatacolumn)
+                        ListofGraph[checkStat] = obj
+                        currentStat = checkStat
+                        return 0
+                    }
+                } else {
+                    // no graph associate
+                    currentStat = checkStat
+                    return 0
+                }
+            } else {
+                currentStat = checkStat
+                return 0
+            }
+        }
+
+        // log.trace("{} {}", currentStat, line);
+        if (lastStat != null) {
+            if (lastStat != currentStat) {
+                log.debug("Stat change from {} to {}", lastStat, currentStat)
+                lastStat = currentStat
+                under_average = false
+            }
+        } else {
+            lastStat = currentStat
+        }
+        if ("IGNORE" == currentStat) {
+            return 1
+        }
+        if ("NONE" == currentStat) {
+            return -1
+        }
+        if (under_average) {
+            return 0
+        }
+        currentStatObj = ListofGraph[currentStat]
+        if (currentStatObj == null) {
+            return -1
+        } else {
+            val nowStat = LocalDateTime.of(parsedate, parsetime)
+            dateSamples.add(nowStat)
+            if (currentStatObj is Graph) {
+                val ag = currentStatObj as Graph
+                return ag.parse_line(nowStat, line)
+            }
+            if (currentStatObj is List) {
+                val ag = currentStatObj as List
+                return ag.parse_line(nowStat, line)
+            }
+        }
+        return -1
     }
-
-    //log.trace("{} {}", currentStat, line);
-
-
-    if (lastStat != null) {
-      if (!lastStat.equals(currentStat)) {
-        log.debug("Stat change from {} to {}", lastStat, currentStat);
-        lastStat = currentStat;
-        under_average = false;
-      }
-    } else {
-      lastStat = currentStat;
-    }
-
-    if ("IGNORE".equals(currentStat)) {
-      return 1;
-    }
-    if ("NONE".equals(currentStat)) {
-      return -1;
-    }
-
-    if (under_average) {
-      return 0;
-    }
-    currentStatObj = ListofGraph.get(currentStat);
-    if (currentStatObj == null) {
-      return -1;
-    } else {
-
-      LocalDateTime nowStat = LocalDateTime.of(parsedate, parsetime);
-
-      DateSamples.add(nowStat);
-
-      if (currentStatObj instanceof Graph) {
-        Graph ag = (Graph) currentStatObj;
-        return ag.parse_line(nowStat, line);
-      }
-      if (currentStatObj instanceof List) {
-        List ag = (List) currentStatObj;
-        return ag.parse_line(nowStat, line);
-      }
-    }
-    return -1;
-  }
 }

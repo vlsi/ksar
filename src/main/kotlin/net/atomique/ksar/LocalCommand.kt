@@ -2,103 +2,93 @@
  * Copyright 2008 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
+package net.atomique.ksar
 
-package net.atomique.ksar;
+import net.atomique.ksar.GlobalOptions.uI
+import net.atomique.ksar.GlobalOptions.hasUI
+import javax.swing.JOptionPane
+import java.lang.ProcessBuilder
+import org.slf4j.LoggerFactory
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.lang.Exception
+import java.lang.Process
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+class LocalCommand internal constructor(private val mysar: kSar) : Thread() {
+    private var `in`: InputStream? = null
+    private var command: String? = null
+    private var p: Process? = null
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import javax.swing.JOptionPane;
-
-public class LocalCommand extends Thread {
-
-  private static final Logger log = LoggerFactory.getLogger(LocalCommand.class);
-
-  LocalCommand(kSar hissar) {
-    mysar = hissar;
-    try {
-      command = JOptionPane.showInputDialog(GlobalOptions.getUI(), "Enter local command ", "sar -A");
-      if (command == null) {
-        return;
-      }
-      String[] cmdArray = command.split(" +");
-      List<String> cmdList = new ArrayList<>(Arrays.asList(cmdArray));
-      ProcessBuilder pb = new ProcessBuilder(cmdList);
-      pb.environment().put("LC_ALL", "C");
-      p = pb.start();
-      in = p.getInputStream();
-    } catch (Exception e) {
-      JOptionPane.showMessageDialog(GlobalOptions.getUI(), "There was a problem while running the command ",
-          "Local error", JOptionPane.ERROR_MESSAGE);
-      in = null;
+    companion object {
+        private val log = LoggerFactory.getLogger(LocalCommand::class.java)
     }
 
-  }
-
-  LocalCommand(kSar hissar, String hiscommand) {
-    mysar = hissar;
-    command = hiscommand;
-    try {
-      String[] envvar;
-      envvar = new String[1];
-      envvar[0] = "LC_ALL=C";
-
-      p = Runtime.getRuntime().exec(command, envvar);
-      in = p.getInputStream();
-    } catch (Exception e) {
-      if (GlobalOptions.hasUI()) {
-        JOptionPane.showMessageDialog(GlobalOptions.getUI(),
-            "There was a problem while running the command " + command, "Local error",
-            JOptionPane.ERROR_MESSAGE);
-      } else {
-        log.error("There was a problem while running the command {}", command);
-      }
-      in = null;
+    init {
+        try {
+            command = JOptionPane.showInputDialog(uI, "Enter local command ", "sar -A")
+            val cmdList = command!!.split(Regex(" +"))
+            val pb = ProcessBuilder(cmdList)
+            pb.environment()["LC_ALL"] = "C"
+            p = pb.start().also {
+                `in` = it.inputStream
+            }
+        } catch (e: Exception) {
+            JOptionPane.showMessageDialog(
+                uI, "There was a problem while running the command ",
+                "Local error", JOptionPane.ERROR_MESSAGE
+            )
+            `in` = null
+        }
     }
 
-  }
-
-  private void close() {
-    if (p != null) {
-      p.destroy();
+    internal constructor(mysar: kSar, hiscommand: String?) : this(mysar) {
+        command = hiscommand
+        try {
+            val envvar: Array<String?>
+            envvar = arrayOfNulls(1)
+            envvar[0] = "LC_ALL=C"
+            p = Runtime.getRuntime().exec(command, envvar).also {
+                `in` = it.inputStream
+            }
+        } catch (e: Exception) {
+            if (hasUI()) {
+                JOptionPane.showMessageDialog(
+                    uI,
+                    "There was a problem while running the command $command", "Local error",
+                    JOptionPane.ERROR_MESSAGE
+                )
+            } else {
+                log.error("There was a problem while running the command {}", command)
+            }
+            `in` = null
+        }
     }
-  }
 
-  public void run() {
-
-    if (in == null) {
-      return;
+    private fun close() {
+        p?.destroy()
     }
 
-    try {
-      BufferedReader myfilereader = new BufferedReader(new InputStreamReader(in));
-      mysar.parse(myfilereader);
-      myfilereader.close();
-    } catch (IOException ex) {
-      log.error("IO Exception", ex);
+    override fun run() {
+        if (`in` == null) {
+            return
+        }
+        try {
+            val myfilereader = BufferedReader(InputStreamReader(`in`))
+            mysar.parse(myfilereader)
+            myfilereader.close()
+        } catch (ex: IOException) {
+            log.error("IO Exception", ex)
+        }
+        close()
     }
 
-
-    close();
-  }
-
-  String get_action() {
-    if (command != null) {
-      return "cmd://" + command;
-    } else {
-      return null;
+    fun get_action(): String? {
+        return if (command != null) {
+            "cmd://$command"
+        } else {
+            null
+        }
     }
-  }
-
-  private kSar mysar;
-  private InputStream in = null;
-  private String command = null;
-  private Process p = null;
 }

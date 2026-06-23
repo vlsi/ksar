@@ -2,357 +2,334 @@
  * Copyright 2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
+package net.atomique.ksar
 
-package net.atomique.ksar;
+import net.atomique.ksar.GlobalOptions.colorlist
+import net.atomique.ksar.GlobalOptions.historyList
+import net.atomique.ksar.GlobalOptions.hostInfoList
+import net.atomique.ksar.GlobalOptions.oSlist
+import net.atomique.ksar.xml.*
+import org.slf4j.LoggerFactory
+import org.xml.sax.Attributes
+import org.xml.sax.InputSource
+import org.xml.sax.SAXException
+import org.xml.sax.helpers.DefaultHandler
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.util.*
+import java.util.function.Consumer
+import javax.xml.parsers.ParserConfigurationException
+import javax.xml.parsers.SAXParser
+import javax.xml.parsers.SAXParserFactory
 
-import net.atomique.ksar.xml.CnxHistory;
-import net.atomique.ksar.xml.ColumnConfig;
-import net.atomique.ksar.xml.GraphConfig;
-import net.atomique.ksar.xml.HostInfo;
-import net.atomique.ksar.xml.OSConfig;
-import net.atomique.ksar.xml.PlotStackConfig;
-import net.atomique.ksar.xml.StatConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
+class XMLConfig : DefaultHandler() {
+    private var beenparse = false
+    private lateinit var tempval: String
+    private var in_color = false
+    private var in_colors = false
+    private var in_OS = false
+    private var in_history = false
+    private var in_cnx = false
+    private var in_hostinfo = false
+    private var in_host = false
+    private var currentColor: ColumnConfig? = null
+    private var currentOS: OSConfig? = null
+    private var currentStat: StatConfig? = null
+    private var currentGraph: GraphConfig? = null
+    private var currentPlot: PlotStackConfig? = null
+    private var currentStack: PlotStackConfig? = null
+    private var currentCnx: CnxHistory? = null
+    private var currentHost: HostInfo? = null
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-public class XMLConfig extends DefaultHandler {
-  private static final String KSAR_DTD_PREFIX = "-//NET/ATOMIQUE/KSAR/";
-
-  private static final Logger log = LoggerFactory.getLogger(XMLConfig.class);
-
-  public InputSource resolveEntity(String publicId, String systemId)
-      throws IOException {
-
-    if (publicId == null || !publicId.startsWith(KSAR_DTD_PREFIX)) {
-      return null;
+    companion object {
+        private const val KSAR_DTD_PREFIX = "-//NET/ATOMIQUE/KSAR/"
+        private val log = LoggerFactory.getLogger(XMLConfig::class.java)
     }
 
-    String dtdFile = publicId.substring(KSAR_DTD_PREFIX.length() - 1);
-    InputStream inputStream = getClass().getResourceAsStream(dtdFile);
-    if (inputStream == null) {
-      throw new FileNotFoundException("File " + publicId + " is not found in kSar resources");
+    @Throws(IOException::class)
+    override fun resolveEntity(publicId: String?, systemId: String): InputSource? {
+        if (publicId == null || !publicId.startsWith(KSAR_DTD_PREFIX)) {
+            return null
+        }
+        val dtdFile = publicId.substring(KSAR_DTD_PREFIX.length - 1)
+        val inputStream = javaClass.getResourceAsStream(dtdFile)
+            ?: throw FileNotFoundException("File $publicId is not found in kSar resources")
+        return InputSource(inputStream)
     }
-    return new InputSource(inputStream);
-  }
 
-  void loadFromResources(String fileName) {
-    try (InputStream is = getClass().getResourceAsStream(fileName)) {
-      if (is == null) {
-        throw new FileNotFoundException("File " + fileName + " is not found in kSar resources");
-      }
-      InputSource source = new InputSource(is);
-      source.setPublicId(KSAR_DTD_PREFIX + fileName);
-      loadConfig(source);
-    } catch (IOException e) {
-      log.warn("XML error while parsing " + fileName, e);
+    fun loadFromResources(fileName: String) {
+        try {
+            javaClass.getResourceAsStream(fileName).use { `is` ->
+                if (`is` == null) {
+                    throw FileNotFoundException("File $fileName is not found in kSar resources")
+                }
+                val source = InputSource(`is`)
+                source.publicId = KSAR_DTD_PREFIX + fileName
+                loadConfig(source)
+            }
+        } catch (e: IOException) {
+            log.warn("XML error while parsing $fileName", e)
+        }
     }
-  }
 
-  void loadConfig(File file) {
-    InputSource source = new InputSource(file.toURI().toASCIIString());
-    loadConfig(source);
-  }
-
-  private void loadConfig(InputSource source) {
-    SAXParserFactory fabric;
-    SAXParser parser;
-    String id = source.getSystemId() + " (" + source.getPublicId() + ")";
-    try {
-      fabric = SAXParserFactory.newInstance();
-      parser = fabric.newSAXParser();
-      parser.parse(source, this);
-
-    } catch (ParserConfigurationException | SAXException ex) {
-      log.warn("XML error while parsing " + id, ex);
-    } catch (IOException ioe) {
-      String msg = "IO exception while parsing " + id;
-      log.error(msg, ioe);
-      throw new IllegalArgumentException(msg, ioe);
+    fun loadConfig(file: File) {
+        val source = InputSource(file.toURI().toASCIIString())
+        loadConfig(source)
     }
-  }
 
-  void dump_XML() {
+    private fun loadConfig(source: InputSource) {
+        val fabric: SAXParserFactory
+        val parser: SAXParser
+        val id = source.systemId + " (" + source.publicId + ")"
+        try {
+            fabric = SAXParserFactory.newInstance()
+            parser = fabric.newSAXParser()
+            parser.parse(source, this)
+        } catch (ex: ParserConfigurationException) {
+            log.warn("XML error while parsing $id", ex)
+        } catch (ex: SAXException) {
+            log.warn("XML error while parsing $id", ex)
+        } catch (ioe: IOException) {
+            val msg = "IO exception while parsing $id"
+            log.error(msg, ioe)
+            throw IllegalArgumentException(msg, ioe)
+        }
+    }
 
-    GlobalOptions.getOSlist().keySet().forEach((String item) -> {
+    fun dump_XML() {
+        oSlist.keys.forEach(
+            Consumer { item: String? ->
+                val tmp = oSlist[item]
+                log.trace("-OS-{}", tmp!!.osName)
+                tmp.statHash.keys.forEach(
+                    Consumer { stat: String? ->
+                        val tmp2 = tmp.statHash[stat]
+                        log.trace(
+                            "--STAT-- " +
+                                tmp2!!.statName + "=> " +
+                                tmp2.graphName + " " +
+                                tmp2.headerStr
+                        )
+                    }
+                )
+                tmp.graphHash.keys.forEach(
+                    Consumer { graph: String? ->
+                        val tmp3 = tmp.graphHash[graph]
+                        log.trace(
+                            "---GRAPH--- " +
+                                tmp3!!.name + "=> " +
+                                tmp3.title
+                        )
+                        tmp3.plotlist.keys.forEach(
+                            Consumer { plot: String? ->
+                                val tmp4 = tmp3.plotlist[plot]
+                                log.trace(
+                                    "----PLOT---- " +
+                                        tmp4!!.title + "=> " +
+                                        tmp4.headerStr
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+        )
+    }
 
-      OSConfig tmp = GlobalOptions.getOSlist().get(item);
-      log.trace("-OS-{}", tmp.getOsName());
+    @Throws(SAXException::class)
+    override fun characters(ch: CharArray, start: Int, length: Int) {
+        tempval = String(ch, start, length)
+    }
 
-      tmp.getStatHash().keySet().forEach((String stat) -> {
+    @Throws(SAXException::class)
+    override fun startElement(uri: String, localName: String, qName: String, attributes: Attributes) {
 
-        StatConfig tmp2 = tmp.getStatHash().get(stat);
-        log.trace("--STAT-- "
-            + tmp2.getStatName() + "=> "
-            + tmp2.getGraphName() + " "
-            + tmp2.getHeaderStr());
-      });
-
-      tmp.getGraphHash().keySet().forEach((String graph) -> {
-
-        GraphConfig tmp3 = tmp.getGraphHash().get(graph);
-        log.trace("---GRAPH--- "
-            + tmp3.getName() + "=> "
-            + tmp3.getTitle());
-
-        tmp3.getPlotlist().keySet().forEach((String plot) -> {
-
-          PlotStackConfig tmp4 = tmp3.getPlotlist().get(plot);
-          log.trace("----PLOT---- "
-              + tmp4.getTitle() + "=> "
-              + tmp4.getHeaderStr());
-
-        });
-      });
-    });
-
-  }
-
-  public void characters(char[] ch, int start, int length) throws SAXException {
-    tempval = new String(ch, start, length);
-  }
-
-  public void startElement(String uri, String localName, String qName, Attributes attributes)
-      throws SAXException {
-
-    /*
+        /*
     if ("ConfiG".equals(qName)) {
       // config found
     }
     */
-    if ("colors".equals(qName)) {
-      in_colors = true;
-    }
-    if ("OS".equals(qName)) {
-      in_OS = true;
-    }
-
-    if ("History".equals(qName)) {
-      in_history = true;
-    }
-
-    if ("HostInfo".equals(qName)) {
-      in_hostinfo = true;
-    }
-
-    // COLORS
-    if (in_colors) {
-      if ("itemcolor".equals(qName)) {
-        currentColor = new ColumnConfig(attributes.getValue("name"));
-        in_color = true;
-      }
-    }
-
-    // history
-    if (in_history) {
-      if ("cnx".equals(qName)) {
-        currentCnx = new CnxHistory(attributes.getValue("link"));
-        in_cnx = true;
-      }
-    }
-    // hostinfo
-    if (in_hostinfo) {
-      if ("host".equals(qName)) {
-        currentHost = new HostInfo(attributes.getValue("name"));
-        in_host = true;
-      }
-    }
-
-    // OS
-    if (in_OS) {
-      if ("OSType".equals(qName)) {
-        currentOS = GlobalOptions.getOSlist().get(attributes.getValue("name"));
-        if (currentOS == null) {
-          currentOS = new OSConfig(attributes.getValue("name"));
-          GlobalOptions.getOSlist().put(currentOS.getOsName(), currentOS);
+        if ("colors" == qName) {
+            in_colors = true
         }
-      }
-      if (currentOS != null) {
-        if ("Stat".equals(qName)) {
-          currentStat = new StatConfig(attributes.getValue("name"));
-          currentOS.addStat(currentStat);
+        if ("OS" == qName) {
+            in_OS = true
         }
-        if ("Graph".equals(qName)) {
-          currentGraph = new GraphConfig(attributes.getValue("name"), attributes.getValue("Title"),
-              attributes.getValue("type"));
-          currentOS.addGraph(currentGraph);
+        if ("History" == qName) {
+            in_history = true
         }
-        if (currentGraph != null) {
-          if ("Plot".equals(qName)) {
-            currentPlot = new PlotStackConfig(attributes.getValue("Title"));
-            String size_tmp = attributes.getValue("size");
-            if (size_tmp != null) {
-              currentPlot.setSize(size_tmp);
-            }
-            currentGraph.addPlot(currentPlot);
-          }
-          if ("Stack".equals(qName)) {
-            currentStack = new PlotStackConfig(attributes.getValue("Title"));
-            String size_tmp = attributes.getValue("size");
-            if (size_tmp != null) {
-              currentStack.setSize(size_tmp);
-            }
-            currentGraph.addStack(currentStack);
-          }
-
-          if (currentPlot != null) {
-            if ("format".equals(qName)) {
-              currentPlot.setBase(attributes.getValue("base"));
-              currentPlot.setFactor(attributes.getValue("factor"));
-            }
-          }
-          if (currentStack != null) {
-            if ("format".equals(qName)) {
-              currentStack.setBase(attributes.getValue("base"));
-              currentStack.setFactor(attributes.getValue("factor"));
-            }
-          }
+        if ("HostInfo" == qName) {
+            in_hostinfo = true
         }
 
-      }
-    }
-  }
+        // COLORS
+        if (in_colors) {
+            if ("itemcolor" == qName) {
+                currentColor = ColumnConfig(attributes.getValue("name"))
+                in_color = true
+            }
+        }
 
-  public void endElement(String uri, String localName, String qName) throws SAXException {
+        // history
+        if (in_history) {
+            if ("cnx" == qName) {
+                currentCnx = CnxHistory(attributes.getValue("link"))
+                in_cnx = true
+            }
+        }
+        // hostinfo
+        if (in_hostinfo) {
+            if ("host" == qName) {
+                currentHost = HostInfo(attributes.getValue("name"))
+                in_host = true
+            }
+        }
 
-    // clean up tempval;
-    tempval = tempval.trim();
-    if ("ConfiG".equals(qName)) {
-      beenparse = true;
-    }
-    if ("colors".equals(qName)) {
-      in_colors = false;
-    }
-    if ("OSType".equals(qName)) {
-      currentOS = null;
-    }
-    if ("Stat".equals(qName)) {
-      currentStat = null;
-    }
-    if ("Graph".equals(qName)) {
-      currentGraph = null;
-    }
-    if ("Cnx".equals(qName)) {
-      currentCnx = null;
-    }
-    if ("Plot".equals(qName)) {
-      currentPlot = null;
-    }
-    if ("Stack".equals(qName)) {
-      currentStack = null;
-    }
-    if ("HostInfo".equals(qName)) {
-      in_hostinfo = false;
-    }
-
-
-    if (currentStat != null) {
-      if ("headerstr".equals(qName)) {
-        currentStat.setHeaderStr(tempval);
-      }
-      if ("graphname".equals(qName)) {
-        currentStat.setGraphName(tempval);
-      }
-      if ("duplicate".equals(qName)) {
-        currentStat.setDuplicateTime(tempval);
-      }
-    }
-
-    if ("cols".equals(qName)) {
-      if (currentPlot != null) {
-        currentPlot.setHeaderStr(tempval);
-
-      }
-      if (currentStack != null) {
-        currentStack.setHeaderStr(tempval);
-      }
-    }
-    if ("range".equals(qName)) {
-      if (currentPlot != null) {
-        currentPlot.setRange(tempval);
-
-      }
-      if (currentStack != null) {
-        currentStack.setRange(tempval);
-      }
-    }
-
-
-    if ("itemcolor".equals(qName)) {
-      if (currentColor.is_valid()) {
-        GlobalOptions.getColorlist().put(currentColor.getData_title(), currentColor);
-      } else {
-        //log.error("Err: {}", currentColor.getError_message());
-        currentColor = null;
-      }
-      in_color = false;
-    }
-
-    if (in_color) {
-      if ("color".equals(qName) && currentColor != null) {
-        currentColor.setData_color(tempval);
-      }
+        // OS
+        if (in_OS) {
+            if ("OSType" == qName) {
+                currentOS = oSlist[attributes.getValue("name")]
+                if (currentOS == null) {
+                    currentOS = OSConfig(attributes.getValue("name")).also {
+                        oSlist[it.osName] = it
+                    }
+                    oSlist[currentOS!!.osName] = currentOS!!
+                }
+            }
+            if (currentOS != null) {
+                if ("Stat" == qName) {
+                    currentStat = StatConfig(attributes.getValue("name")).also {
+                        currentOS?.addStat(it)
+                    }
+                }
+                if ("Graph" == qName) {
+                    currentGraph = GraphConfig(
+                        attributes.getValue("name"), attributes.getValue("Title"),
+                        attributes.getValue("type")
+                    ).also {
+                        currentOS?.addGraph(it)
+                    }
+                }
+                if (currentGraph != null) {
+                    if ("Plot" == qName) {
+                        currentPlot = PlotStackConfig(attributes.getValue("Title")).also { plot ->
+                            attributes.getValue("size")?.let {
+                                plot.setSize(it)
+                            }
+                            currentGraph?.addPlot(plot)
+                        }
+                    }
+                    if ("Stack" == qName) {
+                        currentStack = PlotStackConfig(attributes.getValue("Title")).also { stack ->
+                            attributes.getValue("size")?.let {
+                                stack.setSize(it)
+                            }
+                            currentGraph?.addStack(stack)
+                        }
+                    }
+                    if ("format" == qName) {
+                        currentPlot?.setBase(attributes.getValue("base"))
+                        currentPlot?.setFactor(attributes.getValue("factor"))
+                    }
+                    if ("format" == qName) {
+                        currentStack?.setBase(attributes.getValue("base"))
+                        currentStack?.setFactor(attributes.getValue("factor"))
+                    }
+                }
+            }
+        }
     }
 
-    if (in_cnx) {
-      if ("command".equals(qName) && currentCnx != null) {
-        currentCnx.addCommand(tempval);
-      }
+    @Throws(SAXException::class)
+    override fun endElement(uri: String, localName: String, qName: String) {
+        // clean up tempval;
+        tempval = tempval.trim { it <= ' ' }
+        if ("ConfiG" == qName) {
+            beenparse = true
+        }
+        if ("colors" == qName) {
+            in_colors = false
+        }
+        if ("OSType" == qName) {
+            currentOS = null
+        }
+        if ("Stat" == qName) {
+            currentStat = null
+        }
+        if ("Graph" == qName) {
+            currentGraph = null
+        }
+        if ("Cnx" == qName) {
+            currentCnx = null
+        }
+        if ("Plot" == qName) {
+            currentPlot = null
+        }
+        if ("Stack" == qName) {
+            currentStack = null
+        }
+        if ("HostInfo" == qName) {
+            in_hostinfo = false
+        }
+        if ("headerstr" == qName) {
+            currentStat?.headerStr = tempval
+        }
+        if ("graphname" == qName) {
+            currentStat?.graphName = tempval
+        }
+        if ("duplicate" == qName) {
+            currentStat?.setDuplicateTime(tempval)
+        }
+        if ("cols" == qName) {
+            currentPlot?.setHeaderStr(tempval)
+            currentStack?.setHeaderStr(tempval)
+        }
+        if ("range" == qName) {
+            currentPlot?.setRange(tempval)
+            currentStack?.setRange(tempval)
+        }
+        if ("itemcolor" == qName) {
+            if (currentColor!!.isValid()) {
+                colorlist[currentColor!!.data_title] = currentColor!!
+            } else {
+                // log.error("Err: {}", currentColor.getError_message());
+                currentColor = null
+            }
+            in_color = false
+        }
+        if (in_color) {
+            if ("color" == qName) {
+                currentColor?.setDataColor(tempval)
+            }
+        }
+        if (in_cnx) {
+            if ("command" == qName) {
+                currentCnx?.addCommand(tempval)
+            }
+        }
+        if ("cnx" == qName) {
+            if (currentCnx!!.isValid) {
+                historyList[currentCnx!!.link] = currentCnx!!
+            } else {
+                log.error("Err cnx is not valid")
+                currentCnx = null
+            }
+        }
+        if (in_hostinfo) {
+            if ("alias" == qName) {
+                currentHost!!.alias = tempval
+            }
+            if ("description" == qName) {
+                currentHost!!.description = tempval
+            }
+            if ("memblocksize" == qName) {
+                currentHost!!.setMemBlockSize(tempval)
+            }
+        }
+        if ("host" == qName) {
+            hostInfoList[currentHost!!.hostname] = currentHost!!
+            currentHost = null
+        }
     }
-    if ("cnx".equals(qName)) {
-      if (currentCnx.isValid()) {
-        GlobalOptions.getHistoryList().put(currentCnx.getLink(), currentCnx);
-      } else {
-        log.error("Err cnx is not valid");
-        currentCnx = null;
-      }
-    }
-    if (in_hostinfo) {
-      if ("alias".equals(qName)) {
-        currentHost.setAlias(tempval);
-      }
-      if ("description".equals(qName)) {
-        currentHost.setDescription(tempval);
-      }
-      if ("memblocksize".equals(qName)) {
-        currentHost.setMemBlockSize(tempval);
-      }
-    }
-    if ("host".equals(qName)) {
-      GlobalOptions.getHostInfoList().put(currentHost.getHostname(), currentHost);
-      currentHost = null;
-    }
-  }
-
-
-  private boolean beenparse = false;
-  private String tempval;
-  private boolean in_color = false;
-  private boolean in_colors = false;
-  private boolean in_OS = false;
-  private boolean in_history = false;
-  private boolean in_cnx = false;
-  private boolean in_hostinfo = false;
-  private boolean in_host = false;
-  private ColumnConfig currentColor = null;
-  private OSConfig currentOS = null;
-  private StatConfig currentStat = null;
-  private GraphConfig currentGraph = null;
-  private PlotStackConfig currentPlot = null;
-  private PlotStackConfig currentStack = null;
-  private CnxHistory currentCnx = null;
-  private HostInfo currentHost = null;
-
 }
-

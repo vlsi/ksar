@@ -1,46 +1,63 @@
 /*
- * Copyright 2022 The kSAR Project. All rights reserved.
+ * Copyright 2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
+package net.atomique.ksar.ui
 
-package net.atomique.ksar.ui;
+import javax.swing.tree.DefaultMutableTreeNode
+import javax.swing.tree.MutableTreeNode
+import java.util.*
 
-import java.util.Comparator;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
+class SortedTreeNode : DefaultMutableTreeNode, Comparable<Any?> {
+    private var leaf_num = 0
 
-public class SortedTreeNode extends DefaultMutableTreeNode implements Comparable<SortedTreeNode> {
+    companion object {
+        const val serialVersionUID = 15071L
+        private val comparator = Comparator.nullsFirst(
+            Comparator.comparing { v: String -> "all" == v }
+                .thenComparing { v -> "sum" == v }
+                .reversed()
+                .thenComparing(NaturalComparator)
+        )
+    }
 
-  public static final long serialVersionUID = 15071L;
+    constructor(name: String?) : super(name) {}
+    constructor(tmp: TreeNodeInfo?) : super(tmp) {}
+    constructor(tmp: ParentNodeInfo?) : super(tmp) {}
 
-  private static final Comparator<String> comparator =
-      Comparator.nullsFirst(
-          Comparator.<String, Boolean>comparing("all"::equals)
-              .thenComparing("sum"::equals)
-              .thenComparing("lo"::equals)
-              .reversed()
-              .thenComparing(NaturalComparator.INSTANCE));
-
-  public SortedTreeNode(String name) {
-    super(name);
+    /*
+  public SortedTreeNode (GraphDescription graphdesc) {
+      super(graphdesc);
   }
+  */
+    fun count_graph(node: SortedTreeNode) {
+        val num = node.childCount
+        if (num > 0) {
+            for (i in 0 until num) {
+                val l = node.getChildAt(i) as SortedTreeNode
+                count_graph(l)
+            }
+        } else {
+            val obj1 = node.getUserObject()
+            if (obj1 is TreeNodeInfo) {
+                leaf_num++
+            }
+        }
+    }
 
-  public SortedTreeNode(TreeNodeInfo tmp) {
-    super(tmp);
-  }
+    fun LeafCount(): Int {
+        leaf_num = 0
+        count_graph(this)
+        return leaf_num
+    }
 
-  public SortedTreeNode(ParentNodeInfo tmp) {
-    super(tmp);
-  }
+    @Suppress("UNCHECKED_CAST")
+    override fun insert(newChild: MutableTreeNode, childIndex: Int) {
+        super.insert(newChild, childIndex)
+        (children as Vector<SortedTreeNode>).sort()
+    }
 
-  @Override
-  public void insert(final MutableTreeNode newChild, final int childIndex) {
-    super.insert(newChild, childIndex);
-    this.children.sort(null);
-  }
-
-  public int compareTo(final SortedTreeNode o) {
-    return comparator.compare(this.toString(), o.toString());
-  }
-
+    override fun compareTo(other: Any?): Int {
+        return comparator.compare(this.toString(), other.toString())
+    }
 }

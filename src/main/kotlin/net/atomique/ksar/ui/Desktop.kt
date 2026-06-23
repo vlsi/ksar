@@ -2,338 +2,344 @@
  * Copyright 2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
+package net.atomique.ksar.ui
 
-package net.atomique.ksar.ui;
+import net.atomique.ksar.kSar
+import org.slf4j.LoggerFactory
+import java.awt.GraphicsEnvironment
+import java.awt.Rectangle
+import java.beans.PropertyVetoException
+import javax.swing.JDesktopPane
+import javax.swing.JInternalFrame
+import javax.swing.JOptionPane
 
-import net.atomique.ksar.kSar;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+class Desktop : javax.swing.JFrame() {
 
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Rectangle;
-import java.beans.PropertyVetoException;
-import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
+    /**
+     * Creates new form Desktop
+     */
+    init {
+        val wmargins = 90
+        val hmargins = 60
+        var desktopBounds = Rectangle()
 
-public class Desktop extends javax.swing.JFrame {
+        val ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
+        val gs = ge.screenDevices
 
-  private static final Logger log = LoggerFactory.getLogger(Desktop.class);
+        //get configuration from all screens for tracing
+        for (j in gs.indices) {
+            val gd = gs[j]
+            val gc = gd.defaultConfiguration
 
-  /**
-   * Creates new form Desktop
-   */
-  public Desktop() {
-    int wmargins = 90;
-    int hmargins = 60;
-    Rectangle desktopBounds = new Rectangle();
+            val screenBounds = gc.bounds
+            log.debug("screen [{}] boundaries: {}", j, screenBounds.toString())
 
-    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-    GraphicsDevice[] gs = ge.getScreenDevices();
-
-    //get configuration from all screens for tracing
-    for (int j = 0; j < gs.length; j++) {
-      GraphicsDevice gd = gs[j];
-      GraphicsConfiguration gc = gd.getDefaultConfiguration();
-
-      Rectangle screenBounds = gc.getBounds();
-      log.debug("screen [{}] boundaries: {}", j, screenBounds.toString());
-
-      //use screen0 boundaries for Desktop placement
-      if ( j == 0 ) {
-        desktopBounds = screenBounds;
-        desktopBounds.x += wmargins;
-        desktopBounds.y += hmargins;
-        desktopBounds.width -= (wmargins * 2);
-        desktopBounds.height -= (hmargins * 2);
-      }
-    }
-
-    initComponents();
-
-    setBounds(desktopBounds);
-    log.debug("desktop window boundaries: {}", this.getBounds().toString());
-
-    DesktopPane.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
-    setVisible(true);
-  }
-
-
-  private static JInternalFrame[] filterFrame(JInternalFrame[] frames) {
-    int n = 0;
-    for (int i = 0; i < frames.length; i++) {
-      if (frames[i].isVisible() && !frames[i].isIcon()) {
-        n++;
-      }
-    }
-
-    JInternalFrame[] newfs = new JInternalFrame[n];
-    for (int i = 0, j = 0; i < frames.length; i++) {
-      if (frames[i].isVisible() && !frames[i].isIcon()) {
-        newfs[j++] = frames[i];
-      }
-    }
-    return newfs;
-  }
-
-  public static void iconify(JDesktopPane desktopPane) {
-    JInternalFrame[] frames = filterFrame(desktopPane.getAllFrames());
-    if (frames.length == 0) {
-      return;
-    }
-    for (int i = 0; i < frames.length; i++) {
-      if (frames[i].isVisible() && !frames[i].isIcon()) {
-        try {
-          frames[i].setIcon(true);
-        } catch (PropertyVetoException ex) {
-          log.error("PropertyVetoException", ex);
+            //use screen0 boundaries for Desktop placement
+            if (j == 0) {
+                desktopBounds = screenBounds
+                desktopBounds.x += wmargins
+                desktopBounds.y += hmargins
+                desktopBounds.width -= (wmargins * 2)
+                desktopBounds.height -= (hmargins * 2)
+            }
         }
-      }
-    }
-  }
 
-  public void maxall() {
-    maximize(DesktopPane);
-  }
+        initComponents()
 
-  private static void maximize(JDesktopPane desktopPane) {
-    JInternalFrame[] frames = filterFrame(desktopPane.getAllFrames());
-    if (frames.length == 0) {
-      return;
+        bounds = desktopBounds
+        log.debug("desktop window boundaries: {}", this.bounds.toString())
+
+        DesktopPane.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE)
+        isVisible = true
     }
-    for (int i = 0; i < frames.length; i++) {
-      if (frames[i].isVisible() && !frames[i].isIcon()) {
-        try {
-          frames[i].setMaximum(true);
-        } catch (PropertyVetoException ex) {
-          log.error("PropertyVetoException", ex);
+
+    fun maxall() {
+        maximize(DesktopPane)
+    }
+
+    /**
+     * This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private fun initComponents() {
+
+        DesktopPane = javax.swing.JDesktopPane()
+        MenuBar = javax.swing.JMenuBar()
+        FileMenu = javax.swing.JMenu()
+        NewMenu = javax.swing.JMenuItem()
+        QuitMenu = javax.swing.JMenuItem()
+        OptionsMenu = javax.swing.JMenu()
+        SysprefMenu = javax.swing.JMenuItem()
+        WindowMenu = javax.swing.JMenu()
+        TileMenu = javax.swing.JMenuItem()
+        IconifyMenu = javax.swing.JMenuItem()
+        MaximizeMenu = javax.swing.JMenuItem()
+        HelpMenu = javax.swing.JMenu()
+        AboutMenu = javax.swing.JMenuItem()
+
+        defaultCloseOperation = javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE
+        title = "kSar : a sar grapher"
+        addWindowListener(object : java.awt.event.WindowAdapter() {
+            override fun windowClosing(evt: java.awt.event.WindowEvent) {
+                formWindowClosing(evt)
+            }
+        })
+        contentPane.add(DesktopPane, java.awt.BorderLayout.CENTER)
+
+        FileMenu.text = "File" // NOI18N
+
+        NewMenu.text = "New window"
+        NewMenu.addActionListener(object : java.awt.event.ActionListener {
+            override fun actionPerformed(evt: java.awt.event.ActionEvent) {
+                NewMenuActionPerformed(evt)
+            }
+        })
+        FileMenu.add(NewMenu)
+
+        QuitMenu.text = "Quit"
+        QuitMenu.addActionListener(object : java.awt.event.ActionListener {
+            override fun actionPerformed(evt: java.awt.event.ActionEvent) {
+                QuitMenuActionPerformed(evt)
+            }
+        })
+        FileMenu.add(QuitMenu)
+
+        MenuBar.add(FileMenu)
+
+        OptionsMenu.text = "Options" // NOI18N
+
+        SysprefMenu.text = "System Preferences"
+        SysprefMenu.addActionListener(object : java.awt.event.ActionListener {
+            override fun actionPerformed(evt: java.awt.event.ActionEvent) {
+                SysprefMenuActionPerformed(evt)
+            }
+        })
+        OptionsMenu.add(SysprefMenu)
+
+        MenuBar.add(OptionsMenu)
+
+        WindowMenu.text = "Window"
+
+        TileMenu.text = "Tile"
+        TileMenu.actionCommand = "TileMenu"
+        TileMenu.addActionListener(object : java.awt.event.ActionListener {
+            override fun actionPerformed(evt: java.awt.event.ActionEvent) {
+                TileMenuActionPerformed(evt)
+            }
+        })
+        WindowMenu.add(TileMenu)
+
+        IconifyMenu.text = "Iconify"
+        IconifyMenu.actionCommand = "IconifyMenu"
+        IconifyMenu.addActionListener(object : java.awt.event.ActionListener {
+            override fun actionPerformed(evt: java.awt.event.ActionEvent) {
+                IconifyMenuActionPerformed(evt)
+            }
+        })
+        WindowMenu.add(IconifyMenu)
+
+        MaximizeMenu.text = "Maximize"
+        MaximizeMenu.addActionListener(object : java.awt.event.ActionListener {
+            override fun actionPerformed(evt: java.awt.event.ActionEvent) {
+                MaximizeMenuActionPerformed(evt)
+            }
+        })
+        WindowMenu.add(MaximizeMenu)
+
+        MenuBar.add(WindowMenu)
+
+        HelpMenu.text = "?"
+
+        AboutMenu.text = "About"
+        AboutMenu.addActionListener(object : java.awt.event.ActionListener {
+            override fun actionPerformed(evt: java.awt.event.ActionEvent) {
+                AboutMenuActionPerformed(evt)
+            }
+        })
+        HelpMenu.add(AboutMenu)
+
+        MenuBar.add(HelpMenu)
+
+        jMenuBar = MenuBar
+
+        pack()
+    } // </editor-fold>//GEN-END:initComponents
+
+    private fun formWindowClosing(
+        evt: java.awt.event.WindowEvent
+    ) { //GEN-FIRST:event_formWindowClosing
+        tryToQuit()
+    } //GEN-LAST:event_formWindowClosing
+
+    private fun QuitMenuActionPerformed(
+        evt: java.awt.event.ActionEvent
+    ) { //GEN-FIRST:event_QuitMenuActionPerformed
+        tryToQuit()
+    } //GEN-LAST:event_QuitMenuActionPerformed
+
+    private fun AboutMenuActionPerformed(
+        evt: java.awt.event.ActionEvent
+    ) { //GEN-FIRST:event_AboutMenuActionPerformed
+        val myAboutBox = AboutBox(this)
+    } //GEN-LAST:event_AboutMenuActionPerformed
+
+    private fun SysprefMenuActionPerformed(
+        evt: java.awt.event.ActionEvent
+    ) { //GEN-FIRST:event_SysprefMenuActionPerformed
+        val myPreferences = Preferences(this)
+    } //GEN-LAST:event_SysprefMenuActionPerformed
+
+    private fun NewMenuActionPerformed(
+        evt: java.awt.event.ActionEvent
+    ) { //GEN-FIRST:event_NewMenuActionPerformed
+        add_window()
+    } //GEN-LAST:event_NewMenuActionPerformed
+
+    private fun TileMenuActionPerformed(
+        evt: java.awt.event.ActionEvent
+    ) { //GEN-FIRST:event_TileMenuActionPerformed
+        tile(DesktopPane)
+    } //GEN-LAST:event_TileMenuActionPerformed
+
+    private fun IconifyMenuActionPerformed(
+        evt: java.awt.event.ActionEvent
+    ) { //GEN-FIRST:event_IconifyMenuActionPerformed
+        iconify(DesktopPane)
+    } //GEN-LAST:event_IconifyMenuActionPerformed
+
+    private fun MaximizeMenuActionPerformed(
+        evt: java.awt.event.ActionEvent
+    ) { //GEN-FIRST:event_MaximizeMenuActionPerformed
+        maximize(DesktopPane)
+    } //GEN-LAST:event_MaximizeMenuActionPerformed
+
+    fun add_window() {
+        val mysar = kSar(DesktopPane)
+    }
+
+    fun getDesktopPane(): JDesktopPane {
+        return DesktopPane
+    }
+
+    private fun tryToQuit() {
+        val i = JOptionPane.showConfirmDialog(
+            this, "Are you sure you want to exit kSar ?", "Confirm",
+            JOptionPane.YES_NO_OPTION
+        )
+        if (i == JOptionPane.YES_OPTION) {
+            System.exit(0)
         }
-      }
-    }
-  }
-
-  public static void tile(JDesktopPane desktopPane) {
-    JInternalFrame[] frames = filterFrame(desktopPane.getAllFrames());
-    if (frames.length == 0) {
-      return;
     }
 
-    tile(frames, desktopPane.getBounds());
-  }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private lateinit var AboutMenu: javax.swing.JMenuItem
+    private lateinit var DesktopPane: javax.swing.JDesktopPane
+    private lateinit var FileMenu: javax.swing.JMenu
+    private lateinit var HelpMenu: javax.swing.JMenu
+    private lateinit var IconifyMenu: javax.swing.JMenuItem
+    private lateinit var MaximizeMenu: javax.swing.JMenuItem
+    private lateinit var MenuBar: javax.swing.JMenuBar
+    private lateinit var NewMenu: javax.swing.JMenuItem
+    private lateinit var OptionsMenu: javax.swing.JMenu
+    private lateinit var QuitMenu: javax.swing.JMenuItem
+    private lateinit var SysprefMenu: javax.swing.JMenuItem
+    private lateinit var TileMenu: javax.swing.JMenuItem
+    private lateinit var WindowMenu: javax.swing.JMenu
+    // End of variables declaration//GEN-END:variables
 
-  private static void tile(JInternalFrame[] frames, Rectangle dBounds) {
-    int cols = (int) Math.sqrt(frames.length);
-    int rows = (int) (Math.ceil(((double) frames.length) / cols));
-    int lastRow = frames.length - cols * (rows - 1);
-    int width;
-    int height;
+    companion object {
+        private val log = LoggerFactory.getLogger(Desktop::class.java)
 
-    if (lastRow == 0) {
-      rows--;
-      height = dBounds.height / rows;
-    } else {
-      height = dBounds.height / rows;
-      if (lastRow < cols) {
-        rows--;
-        width = dBounds.width / lastRow;
-        for (int i = 0; i < lastRow; i++) {
-          frames[cols * rows + i].setBounds(i * width, rows * height, width, height);
+        private fun filterFrame(frames: Array<JInternalFrame>): Array<JInternalFrame> {
+            var n = 0
+            for (i in frames.indices) {
+                if (frames[i].isVisible && !frames[i].isIcon) {
+                    n++
+                }
+            }
+
+            val newfs = arrayOfNulls<JInternalFrame>(n)
+            var j = 0
+            for (i in frames.indices) {
+                if (frames[i].isVisible && !frames[i].isIcon) {
+                    newfs[j++] = frames[i]
+                }
+            }
+            @Suppress("UNCHECKED_CAST")
+            return newfs as Array<JInternalFrame>
         }
-      }
+
+        fun iconify(desktopPane: JDesktopPane) {
+            val frames = filterFrame(desktopPane.allFrames)
+            if (frames.isEmpty()) {
+                return
+            }
+            for (i in frames.indices) {
+                if (frames[i].isVisible && !frames[i].isIcon) {
+                    try {
+                        frames[i].setIcon(true)
+                    } catch (ex: PropertyVetoException) {
+                        log.error("PropertyVetoException", ex)
+                    }
+                }
+            }
+        }
+
+        private fun maximize(desktopPane: JDesktopPane) {
+            val frames = filterFrame(desktopPane.allFrames)
+            if (frames.isEmpty()) {
+                return
+            }
+            for (i in frames.indices) {
+                if (frames[i].isVisible && !frames[i].isIcon) {
+                    try {
+                        frames[i].setMaximum(true)
+                    } catch (ex: PropertyVetoException) {
+                        log.error("PropertyVetoException", ex)
+                    }
+                }
+            }
+        }
+
+        fun tile(desktopPane: JDesktopPane) {
+            val frames = filterFrame(desktopPane.allFrames)
+            if (frames.isEmpty()) {
+                return
+            }
+
+            tile(frames, desktopPane.bounds)
+        }
+
+        private fun tile(frames: Array<JInternalFrame>, dBounds: Rectangle) {
+            val cols = Math.sqrt(frames.size.toDouble()).toInt()
+            var rows = Math.ceil(frames.size.toDouble() / cols).toInt()
+            val lastRow = frames.size - cols * (rows - 1)
+            var width: Int
+            val height: Int
+
+            if (lastRow == 0) {
+                rows--
+                height = dBounds.height / rows
+            } else {
+                height = dBounds.height / rows
+                if (lastRow < cols) {
+                    rows--
+                    width = dBounds.width / lastRow
+                    for (i in 0 until lastRow) {
+                        frames[cols * rows + i].setBounds(i * width, rows * height, width, height)
+                    }
+                }
+            }
+
+            width = dBounds.width / cols
+            for (j in 0 until rows) {
+                for (i in 0 until cols) {
+                    frames[i + j * cols].setBounds(i * width, j * height, width, height)
+                }
+            }
+        }
     }
-
-    width = dBounds.width / cols;
-    for (int j = 0; j < rows; j++) {
-      for (int i = 0; i < cols; i++) {
-        frames[i + j * cols].setBounds(i * width, j * height, width, height);
-      }
-    }
-  }
-
-  /**
-   * This method is called from within the constructor to
-   * initialize the form.
-   * WARNING: Do NOT modify this code. The content of this method is
-   * always regenerated by the Form Editor.
-   */
-  @SuppressWarnings("unchecked")
-  // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-  private void initComponents() {
-
-    DesktopPane = new javax.swing.JDesktopPane();
-    MenuBar = new javax.swing.JMenuBar();
-    FileMenu = new javax.swing.JMenu();
-    NewMenu = new javax.swing.JMenuItem();
-    QuitMenu = new javax.swing.JMenuItem();
-    OptionsMenu = new javax.swing.JMenu();
-    SysprefMenu = new javax.swing.JMenuItem();
-    WindowMenu = new javax.swing.JMenu();
-    TileMenu = new javax.swing.JMenuItem();
-    IconifyMenu = new javax.swing.JMenuItem();
-    MaximizeMenu = new javax.swing.JMenuItem();
-    HelpMenu = new javax.swing.JMenu();
-    AboutMenu = new javax.swing.JMenuItem();
-
-    setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-    setTitle("kSar : a sar grapher");
-    addWindowListener(new java.awt.event.WindowAdapter() {
-      public void windowClosing(java.awt.event.WindowEvent evt) {
-        formWindowClosing(evt);
-      }
-    });
-    getContentPane().add(DesktopPane, java.awt.BorderLayout.CENTER);
-
-    FileMenu.setText("File"); // NOI18N
-
-    NewMenu.setText("New window");
-    NewMenu.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        NewMenuActionPerformed(evt);
-      }
-    });
-    FileMenu.add(NewMenu);
-
-    QuitMenu.setText("Quit");
-    QuitMenu.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        QuitMenuActionPerformed(evt);
-      }
-    });
-    FileMenu.add(QuitMenu);
-
-    MenuBar.add(FileMenu);
-
-    OptionsMenu.setText("Options"); // NOI18N
-
-    SysprefMenu.setText("System Preferences");
-    SysprefMenu.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        SysprefMenuActionPerformed(evt);
-      }
-    });
-    OptionsMenu.add(SysprefMenu);
-
-    MenuBar.add(OptionsMenu);
-
-    WindowMenu.setText("Window");
-
-    TileMenu.setText("Tile");
-    TileMenu.setActionCommand("TileMenu");
-    TileMenu.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        TileMenuActionPerformed(evt);
-      }
-    });
-    WindowMenu.add(TileMenu);
-
-    IconifyMenu.setText("Iconify");
-    IconifyMenu.setActionCommand("IconifyMenu");
-    IconifyMenu.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        IconifyMenuActionPerformed(evt);
-      }
-    });
-    WindowMenu.add(IconifyMenu);
-
-    MaximizeMenu.setText("Maximize");
-    MaximizeMenu.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        MaximizeMenuActionPerformed(evt);
-      }
-    });
-    WindowMenu.add(MaximizeMenu);
-
-    MenuBar.add(WindowMenu);
-
-    HelpMenu.setText("?");
-
-    AboutMenu.setText("About");
-    AboutMenu.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        AboutMenuActionPerformed(evt);
-      }
-    });
-    HelpMenu.add(AboutMenu);
-
-    MenuBar.add(HelpMenu);
-
-    setJMenuBar(MenuBar);
-
-    pack();
-  } // </editor-fold>//GEN-END:initComponents
-
-  private void formWindowClosing(
-      java.awt.event.WindowEvent evt) { //GEN-FIRST:event_formWindowClosing
-    tryToQuit();
-  } //GEN-LAST:event_formWindowClosing
-
-  private void QuitMenuActionPerformed(
-      java.awt.event.ActionEvent evt) { //GEN-FIRST:event_QuitMenuActionPerformed
-    tryToQuit();
-  } //GEN-LAST:event_QuitMenuActionPerformed
-
-  private void AboutMenuActionPerformed(
-      java.awt.event.ActionEvent evt) { //GEN-FIRST:event_AboutMenuActionPerformed
-    AboutBox myAboutBox = new AboutBox(this);
-  } //GEN-LAST:event_AboutMenuActionPerformed
-
-  private void SysprefMenuActionPerformed(
-      java.awt.event.ActionEvent evt) { //GEN-FIRST:event_SysprefMenuActionPerformed
-    Preferences myPreferences = new Preferences(this);
-  } //GEN-LAST:event_SysprefMenuActionPerformed
-
-  private void NewMenuActionPerformed(
-      java.awt.event.ActionEvent evt) { //GEN-FIRST:event_NewMenuActionPerformed
-    add_window();
-  } //GEN-LAST:event_NewMenuActionPerformed
-
-  private void TileMenuActionPerformed(
-      java.awt.event.ActionEvent evt) { //GEN-FIRST:event_TileMenuActionPerformed
-    tile(DesktopPane);
-  } //GEN-LAST:event_TileMenuActionPerformed
-
-  private void IconifyMenuActionPerformed(
-      java.awt.event.ActionEvent evt) { //GEN-FIRST:event_IconifyMenuActionPerformed
-    iconify(DesktopPane);
-  } //GEN-LAST:event_IconifyMenuActionPerformed
-
-  private void MaximizeMenuActionPerformed(
-      java.awt.event.ActionEvent evt) { //GEN-FIRST:event_MaximizeMenuActionPerformed
-    maximize(DesktopPane);
-  } //GEN-LAST:event_MaximizeMenuActionPerformed
-
-  public void add_window() {
-    kSar mysar = new kSar(DesktopPane);
-  }
-
-  public JDesktopPane getDesktopPane() {
-    return DesktopPane;
-  }
-
-
-  private void tryToQuit() {
-    int i = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit kSar ?", "Confirm",
-        JOptionPane.YES_NO_OPTION);
-    if (i == JOptionPane.YES_OPTION) {
-      System.exit(0);
-    }
-  }
-
-  // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JMenuItem AboutMenu;
-  private javax.swing.JDesktopPane DesktopPane;
-  private javax.swing.JMenu FileMenu;
-  private javax.swing.JMenu HelpMenu;
-  private javax.swing.JMenuItem IconifyMenu;
-  private javax.swing.JMenuItem MaximizeMenu;
-  private javax.swing.JMenuBar MenuBar;
-  private javax.swing.JMenuItem NewMenu;
-  private javax.swing.JMenu OptionsMenu;
-  private javax.swing.JMenuItem QuitMenu;
-  private javax.swing.JMenuItem SysprefMenu;
-  private javax.swing.JMenuItem TileMenu;
-  private javax.swing.JMenu WindowMenu;
-  // End of variables declaration//GEN-END:variables
 }

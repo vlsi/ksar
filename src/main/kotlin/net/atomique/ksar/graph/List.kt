@@ -2,115 +2,98 @@
  * Copyright 2018 The kSAR Project. All rights reserved.
  * See the LICENSE file in the project root for more information.
  */
+package net.atomique.ksar.graph
 
-package net.atomique.ksar.graph;
+import net.atomique.ksar.kSar
+import net.atomique.ksar.xml.GraphConfig
+import java.time.LocalDateTime
+import org.jfree.data.time.Second
+import net.atomique.ksar.ui.TreeNodeInfo
+import net.atomique.ksar.ui.SortedTreeNode
+import javax.swing.JPanel
+import java.awt.GridLayout
+import javax.swing.border.TitledBorder
+import javax.swing.BoxLayout
+import java.util.SortedMap
+import java.util.TreeMap
+import net.atomique.ksar.ui.NaturalComparator
+import net.atomique.ksar.ui.ParentNodeInfo
+import kotlin.math.floor
 
-import net.atomique.ksar.kSar;
-import net.atomique.ksar.ui.NaturalComparator;
-import net.atomique.ksar.ui.ParentNodeInfo;
-import net.atomique.ksar.ui.SortedTreeNode;
-import net.atomique.ksar.ui.TreeNodeInfo;
-import net.atomique.ksar.xml.GraphConfig;
-import org.jfree.data.time.Second;
+class List(
+    private var mysar: kSar,
+    private val graphConfig: GraphConfig,
+    val title: String,
+    private val headerStr: String,
+    private val firstDataColumn: Int
+) {
+    private val parentTreeNode = SortedTreeNode(ParentNodeInfo(title, this))
+    private val nodeHashList: SortedMap<String, Graph> = TreeMap(NaturalComparator.NULLS_FIRST)
 
-import java.awt.LayoutManager;
-import java.time.LocalDateTime;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-
-public class List {
-
-  public List(kSar hissar, GraphConfig g, String stitle, String sheader, int firstdatacolumn) {
-    mysar = hissar;
-    HeaderStr = sheader;
-    graphconfig = g;
-    Title = stitle;
-    FirstDataColumn = firstdatacolumn;
-    ParentNodeInfo tmp = new ParentNodeInfo(Title, this);
-    parentTreeNode = new SortedTreeNode(tmp);
-    mysar.add2tree(mysar.graphtree, parentTreeNode);
-  }
-
-  public int parse_line(LocalDateTime ldt, String s) {
-
-    Second now = new Second(ldt.getSecond(),
-        ldt.getMinute(),
-        ldt.getHour(),
-        ldt.getDayOfMonth(),
-        ldt.getMonthValue(),
-        ldt.getYear());
-
-    return parse_line(now, s);
-  }
-
-  public int parse_line(Second now, String s) {
-    String[] cols = s.split("\\s+");
-    Graph tmp;
-    if (!nodeHashList.containsKey(cols[FirstDataColumn])) {
-      tmp = new Graph(mysar, graphconfig, Title + " " + cols[FirstDataColumn], HeaderStr, FirstDataColumn + 1,
-          null);
-      nodeHashList.put(cols[FirstDataColumn], tmp);
-      TreeNodeInfo infotmp = new TreeNodeInfo(cols[FirstDataColumn], tmp);
-      SortedTreeNode nodetmp = new SortedTreeNode(infotmp);
-      mysar.add2tree(parentTreeNode, nodetmp);
-    } else {
-      tmp = nodeHashList.get(cols[FirstDataColumn]);
+    init {
+        mysar.add2tree(mysar.graphtree, parentTreeNode)
     }
 
-    return tmp.parse_line(now, s);
-  }
-
-
-  public JPanel run() {
-    JPanel tmppanel = new JPanel();
-    LayoutManager tmplayout;
-    int graphnumber = nodeHashList.size();
-    int linenum = (int) Math.floor(graphnumber / 2);
-    if (graphnumber % 2 != 0) {
-      linenum++;
-    }
-    tmplayout = new java.awt.GridLayout(linenum, 2);
-    tmppanel.setLayout(tmplayout);
-
-
-    for (Graph graph : nodeHashList.values()) {
-      tmppanel.add(graph.get_ChartPanel());
+    fun parse_line(ldt: LocalDateTime, s: String): Int {
+        val now = Second(
+            ldt.second,
+            ldt.minute,
+            ldt.hour,
+            ldt.dayOfMonth,
+            ldt.monthValue,
+            ldt.year
+        )
+        return parse_line(now, s)
     }
 
-    return tmppanel;
-  }
-
-  public boolean isPrintSelected() {
-    boolean leaftoprint = false;
-    for (Graph graph : nodeHashList.values()) {
-      if (graph.isPrintSelected()) {
-        leaftoprint = true;
-        break;
-      }
+    fun parse_line(now: Second, s: String): Int {
+        val cols = s.split(Regex("\\s+"))
+        val tmp: Graph
+        if (!nodeHashList.containsKey(cols[firstDataColumn])) {
+            tmp = Graph(
+                mysar, graphConfig, title + " " + cols[firstDataColumn], headerStr, firstDataColumn + 1,
+                null
+            )
+            nodeHashList[cols[firstDataColumn]] = tmp
+            val treeNodeInfo = TreeNodeInfo(cols[firstDataColumn], tmp)
+            val sortedTreeNode = SortedTreeNode(treeNodeInfo)
+            mysar.add2tree(parentTreeNode, sortedTreeNode)
+        } else {
+            tmp = nodeHashList.getValue(cols[firstDataColumn])
+        }
+        return tmp.parse_line(now, s)
     }
-    return leaftoprint;
-  }
 
-  public String getTitle() {
-    return Title;
-  }
+    fun run(): JPanel {
+        val graphNumber = nodeHashList.size
+        var linenum = floor((graphNumber / 2).toDouble()).toInt()
+        if (graphNumber % 2 != 0) {
+            linenum++
+        }
+        val tmppanel = JPanel()
+        tmppanel.layout = GridLayout(linenum, 2)
+        for (graph in nodeHashList.values) {
+            tmppanel.add(graph.getChartPanel())
+        }
+        return tmppanel
+    }
 
-  public JPanel getprintform() {
-    JPanel panel = new JPanel();
-    panel.setBorder(new TitledBorder(Title));
-    panel.setLayout(new javax.swing.BoxLayout(panel, javax.swing.BoxLayout.PAGE_AXIS));
-    return panel;
-  }
+    val isPrintSelected: Boolean
+        get() {
+            var leaftoprint = false
+            for (graph in nodeHashList.values) {
+                if (graph.isPrintSelected) {
+                    leaftoprint = true
+                    break
+                }
+            }
+            return leaftoprint
+        }
 
-
-  protected GraphConfig graphconfig = null;
-  protected SortedTreeNode parentTreeNode = null;
-  protected kSar mysar = null;
-  protected String HeaderStr = null;
-  protected SortedMap<String, Graph> nodeHashList = new TreeMap<>(NaturalComparator.NULLS_FIRST);
-  protected int FirstDataColumn = 0;
-  protected String Title = null;
-
+    fun getprintform(): JPanel {
+        val panel = JPanel()
+        panel.border = TitledBorder(title)
+        panel.layout = BoxLayout(panel, BoxLayout.PAGE_AXIS)
+        return panel
+    }
 }
