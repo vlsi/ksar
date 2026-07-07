@@ -26,3 +26,6 @@ out/
 
 # Node modules used by the CI matrix generator (.github/workflows)
 node_modules/
+
+# NetBeans GUI-builder source files, no longer used
+*.form
