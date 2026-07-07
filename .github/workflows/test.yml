@@ -38,7 +38,7 @@ jobs:
       GITHUB_PR_NUMBER: ${{ github.event.number }}
       RNG_SEED: ${{ github.event.inputs.matrix_rng_seed }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: set-matrix
         shell: bash
         run: |
@@ -55,7 +55,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.matrix_prep.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: 'Set up JDK ${{ matrix.java_version }}, ${{ matrix.java_distribution }}'
         uses: actions/setup-java@v5
         with:
